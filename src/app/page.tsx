@@ -8,8 +8,6 @@ export default function Home() {
 			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8">
 				{/* Header */}
 				<Header />
-
-
 				<div className="flex flex-col items-center justify-center gap-4 md:p-24 xl:p-48">
 					{/* About */}
 					<About />
