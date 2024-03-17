@@ -1,6 +1,6 @@
 <div id="logo" align="center">
   <a href="https://github.com/emilkrebs/emilkrebs-website" target="_blank" rel="noopener noreferrer">
-   <img width="256" alt="WatchLock Logo" src="./public/favicon.svg">
+   <img width="256" alt="Emil Krebs Logo" src="./public/favicon.svg">
  </a>
   <h3>
     <a href="https://emilkrebs.dev/">emilkrebs.dev</a>
