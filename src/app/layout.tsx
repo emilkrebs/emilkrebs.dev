@@ -1,8 +1,7 @@
 import './globals.css';
+import { Metadata } from 'next';
 import Footer from './components/footer';
 import Navbar from './components/navbar';
-import { Metadata } from 'next';
-import { Components } from 'react-markdown';
 
 export const metadata: Metadata = {
 	title: 'Emil Krebs',
@@ -26,7 +25,9 @@ export default function RootLayout({
 
 			<body className='font-sans'>
 				<Navbar />
+
 				{children}
+				
 				<Footer />
 			</body>
 		</html>
