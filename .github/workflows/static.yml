@@ -38,7 +38,7 @@ jobs:
       - name: Build Next.js Project
         run: npm run build
       - name: Replace Next Paths
-        run: replacePaths.sh
+        run: LC_ALL=C find "out/_next/static/css" -type f -exec sed -i '' 's/.\/_next\/static/\.\./g' {} +
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
