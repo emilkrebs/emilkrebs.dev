@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import LinkButton from './components/LinkButton';
-import Technologies from './components/TechnologySection';
+import LinkButton from './components/link-button';
+import Technologies from './components/technologies';
+import Projects from './components/projects';
 
 export default function Home() {
 	return (
@@ -8,16 +9,15 @@ export default function Home() {
 			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8">
 				{/* Header */}
 				<Header />
-				<div className="flex flex-col items-center justify-center gap-4 md:p-24 xl:p-48">
-					{/* About */}
+				<div className="flex flex-col items-center justify-center gap-4 w-fit max-w-screen-xl  md:p-24 xl:p-48">
+				
 					<About />
-
-					{/* Technologies */}
+			
 					<Technologies />
 
-
+					<Projects />
+				
 				</div>
-
 			</div>
 		</main>
 	);
@@ -82,7 +82,7 @@ function About() {
 
 			<section className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
 				<p className="text-base text-start font-light w-full ">
-          Hi There 👋
+          Hi there 👋
 					<br />
           I am a passionate software engineer from Kiel, Germany learning and growing every day.
 					<br />

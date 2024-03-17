@@ -6,6 +6,7 @@ const nextConfig = {
 	assetPrefix: './',
 	images: {
 		domains: ['github.com'],
+		unoptimized: true,
 	},
 };
 
