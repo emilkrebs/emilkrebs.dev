@@ -5,7 +5,7 @@ export default function Projects() {
 		<div className="w-full">
 			<h2 className="text-2xl text-start font-bold uppercase w-full mt-8">Featured Projects</h2>
 
-			<section className="flex flex-wrap justify-between gap-4 bg-transparent rounded-lg w-full">
+			<section className="flex flex-wrap justify-between gap-4 bg-transparent rounded-lg w-full mt-2">
 				<Project
 					title="Emil Krebs Website"
 					icon="/favicon.svg"

@@ -65,7 +65,7 @@ export default function Technologies() {
 				<div className="flex flex-col gap-4 w-full">
 					{technologies.map((section) => (
 						<div key={section.name} className="flex flex-col gap-2">
-							<h3 className="text-lg text-start font-bold uppercase w-full">{section.name}</h3>
+							<h3 className="text-lg text-start font-bold uppercase w-full mt-2">{section.name}</h3>
 
 							<div className="flex flex-row flex-wrap gap-4">
 								{section.technologies.map((technology) => (
