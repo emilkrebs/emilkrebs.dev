@@ -1,5 +1,4 @@
-import Markdown from 'react-markdown';
-import { markdownComponents } from '../layout';
+import RenderMarkdown from '../components/markdown';
 
 const markdown = `
 
@@ -35,7 +34,7 @@ export default function PrivacyPolicy() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-start p-4">
 			<section className="flex flex-col justify-center items-center gap-2 gap-x-4 w-full h-full p-4">
-				<Markdown components={markdownComponents} >{markdown}</Markdown>
+				<RenderMarkdown content={markdown} />
 			</section>
 		</main>
 	);
