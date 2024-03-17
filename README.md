@@ -17,11 +17,12 @@
 
 # How to setup
 
-## Install dependencies
+### Install dependencies
 ```
 npm install
 ```
-## Build the Website
+
+### Build the Website
 ```
 npm run build
 ```
@@ -30,3 +31,7 @@ npm run build
 ```
 npm run dev
 ```
+
+## Screenshot
+
+![screenshot](https://github.com/emilkrebs/emilkrebs-website/assets/68400102/c1993c83-c638-4f6f-b2d6-f962e906ee41)
