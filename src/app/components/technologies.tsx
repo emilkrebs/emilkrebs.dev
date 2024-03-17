@@ -7,7 +7,7 @@ const technologies: TechnologySection[] = [
 			{ path: '/icons/typescript.svg', title: 'TypeScript' },
 			{ path: '/icons/kotlin.svg', title: 'Kotlin' },
 			{ path: '/icons/python.svg', title: 'Python' },
-			{ path: '/icons/csharp.svg', title: 'C#' },
+			{ path: '/icons/csharp.svg', title: 'C-Sharp' },
 			{ path: '/icons/javascript.svg', title: 'JavaScript' },
 		],
 	},
@@ -43,13 +43,13 @@ const technologies: TechnologySection[] = [
 ];
 
 interface TechnologyItem {
-    path: string;
-    title: string;
+	path: string;
+	title: string;
 }
 
 interface TechnologySection {
-    name: string;
-    technologies: TechnologyItem[];
+	name: string;
+	technologies: TechnologyItem[];
 }
 
 export default function Technologies() {
@@ -59,7 +59,7 @@ export default function Technologies() {
 
 			<section className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
 				<p className="text-base text-start font-light w-full ">
-                    I have experience with a wide range of technologies, including but not limited to:
+					I have experience with a wide range of technologies, including but not limited to:
 				</p>
 
 				<div className="flex flex-col gap-4 w-full">
@@ -70,9 +70,8 @@ export default function Technologies() {
 							<div className="flex flex-row flex-wrap gap-4">
 								{section.technologies.map((technology) => (
 									<div
-										className="w-fit h-fit"
+										className="group flex flex-col items-center gap-2 w-fit h-fit hover:translate-y-[-0.25em] transform transition-transform duration-300 ease-in-out"
 										key={technology.title}
-										title={technology.title}
 									>
 										<Image
 											className="filter-white"
@@ -81,6 +80,7 @@ export default function Technologies() {
 											width={50}
 											height={50}
 										/>
+										<span className="text-xs hidden sm:block text-center font-light group-hover:block">{technology.title}</span>
 									</div>
 								))}
 							</div>
