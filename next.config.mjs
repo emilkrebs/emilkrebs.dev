@@ -3,7 +3,7 @@ const nextConfig = {
 	reactStrictMode: true,
 	output: 'export',
 	distDir: 'out',
-	assetPrefix: '/',
+	assetPrefix: './',
 	images: {
 		domains: ['github.com'],
 	},
