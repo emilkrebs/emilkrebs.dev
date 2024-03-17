@@ -13,3 +13,20 @@
 
 </div>
 <hr>
+
+
+# How to setup
+
+## Install dependencies
+```
+npm install
+```
+## Build the Website
+```
+npm run build
+```
+
+## For developers
+```
+npm run dev
+```
