@@ -1,7 +1,7 @@
 import './globals.css';
 import { Metadata } from 'next';
-import Footer from './components/footer';
 import Navbar from './components/navbar';
+import { Footer } from './components/footer';
 
 export const metadata: Metadata = {
 	title: 'Emil Krebs',
@@ -27,7 +27,7 @@ export default function RootLayout({
 				<Navbar />
 
 				{children}
-				
+
 				<Footer />
 			</body>
 		</html>

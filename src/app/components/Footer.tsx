@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function Footer() {
+export function Footer() {
 	return (
 		<footer className="flex flex-col sm:flex-row items-center justify-between w-full gap-y-4 bg-black px-16 py-4">
 			<a className="uppercase text-lg hover:underline" href="/imprint">Imprint</a>
