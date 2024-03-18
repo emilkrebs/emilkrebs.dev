@@ -17,7 +17,7 @@ export default function Projects() {
 
 				<Project
 					title="WatchLock"
-					icon="https://github.com/emilkrebs/WatchLock/raw/main/images/WatchLock.png"
+					icon="https://github.com/emilkrebs/WatchLock/raw/main/images/WatchLock.webp"
 					description="An Android & WearOS app to lock your phone using your smartwatch"
 					link="https://github.com/emilkrebs/WatchLock"
 					tags={['Android', 'Kotlin', 'WearOS']}
