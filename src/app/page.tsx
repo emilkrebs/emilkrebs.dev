@@ -10,13 +10,13 @@ export default function Home() {
 				{/* Header */}
 				<Header />
 				<div className="flex flex-col items-center justify-center gap-4 w-fit max-w-screen-xl  md:p-24 xl:p-48">
-				
+
 					<About />
-			
+
 					<Technologies />
 
 					<Projects />
-				
+
 				</div>
 			</div>
 		</main>
@@ -82,14 +82,14 @@ function About() {
 
 			<section className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
 				<p className="text-base text-start font-light w-full ">
-          Hi there 👋
+					Hi there 👋
 					<br />
-          I am a passionate software engineer from Kiel, Germany, learning and growing every day.
+					I am a passionate software engineer from Kiel, Germany, learning and growing every day.
 					<br />
-          I contribute to open-source projects and I love constantly learning new skills with my side projects.
+					I contribute to open-source projects and I love constantly learning new skills with my side projects.
 					<br />
 					<br />
-          I am driven by creativity and a never-ending urge for knowledge.
+					I am driven by creativity and a never-ending urge for knowledge.
 				</p>
 
 				{/* Download Resume Button */}

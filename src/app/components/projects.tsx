@@ -28,7 +28,7 @@ export default function Projects() {
 					icon="https://github.com/emilkrebs/Generator-Discord/raw/main/assets/icon.svg"
 					description="A Yeoman generator for Discord bots supporting multiple languages"
 					link="https://github.com/emilkrebs/Generator-Discord"
-					tags={['Node.js', 'TypeScript', 'Discord.js', 'Rust', 'Python', 'Yeoman']}
+					tags={['Node.js', 'TypeScript', 'Discord.js', 'Rust', 'Python', 'Yeoman', 'npm']}
 				/>
 
 				<Project
