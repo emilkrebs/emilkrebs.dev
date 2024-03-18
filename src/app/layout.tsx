@@ -15,7 +15,7 @@ function Footer() {
 
 			{/* GitHub */}
 			<a
-				href="https://github.com/emilkrebs/emilkrebs-website"
+				href="https://github.com/emilkrebs/emilkrebs.dev"
 				target="_blank"
 			>
 				<Image

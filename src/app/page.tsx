@@ -49,7 +49,7 @@ function Header() {
 							<Image
 								className="filter-white"
 								src="/icons/linkedin.svg"
-								alt="LinkedIn"
+								alt="Open LinkedIn"
 								width={20}
 								height={20}
 							/>
@@ -62,7 +62,7 @@ function Header() {
 							<Image
 								className="filter-white"
 								src="/icons/github.svg"
-								alt="GitHub"
+								alt="Open GitHub"
 								width={20}
 								height={20}
 							/>
@@ -98,7 +98,7 @@ function About() {
 						<Image
 							className="filter-white"
 							src="/icons/download.svg"
-							alt="Download"
+							alt="Download Resume"
 							width={20}
 							height={20}
 						/>
