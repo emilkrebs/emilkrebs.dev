@@ -31,6 +31,14 @@ export default function Projects() {
 					tags={['Node.js', 'TypeScript', 'Discord.js', 'Rust', 'Python', 'Yeoman']}
 				/>
 
+				<Project
+					title="Langium Showcase"
+					icon="https://langium.org/assets/nib.svg"
+					description="Showcases for DSLs built with Langium (State Machine, Arithmetics, MiniLogo, Domain Model)"
+					link="https://langium.org/showcase/"
+					tags={['Langium', 'Node.js', 'TypeScript', 'React', 'Hugo']}
+				/>
+
 				<LinkButton href="https://github.com/emilkrebs?tab=repositories">View More</LinkButton>
 			</section>
 		</div>
