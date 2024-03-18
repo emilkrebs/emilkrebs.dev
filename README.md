@@ -14,6 +14,7 @@
 </div>
 <hr>
 
+My personal website made with Next.js, TypeScript and Tailwind CSS deployed using GitHub-Pages.
 
 # How to setup
 
