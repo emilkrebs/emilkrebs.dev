@@ -1,3 +1,4 @@
+
 export const EMAIL_ADDRESS = 'emil.krebs@outlook.de';
 export const PHONE_NUMBER = '+49 157 74601 701';
 

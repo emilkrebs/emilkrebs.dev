@@ -26,7 +26,7 @@ This website may contain links to other websites operated by third parties. We a
 
 We reserve the right to update this privacy policy at any time. We will notify you of any changes by posting the new privacy policy on this website.
 
-##Contact us
+## Contact us
 
 If you have any questions about this privacy policy, please contact me at [emil.krebs@outlook.de](mailto:emil.krebs@outlook.de).
 

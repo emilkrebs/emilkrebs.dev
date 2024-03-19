@@ -1,5 +1,6 @@
 import RenderMarkdown from '../components/markdown';
-import { EMAIL_ADDRESS } from '../constants';
+import { EMAIL_ADDRESS, PHONE_NUMBER } from '../constants';
+
 
 const markdown = `
 # Imprint
@@ -14,6 +15,8 @@ Hansastraße 70,
 
 
 E-Mail: [${EMAIL_ADDRESS}](mailto:${EMAIL_ADDRESS})
+
+Phone: ${PHONE_NUMBER}
 
 ## Disclaimer
 
