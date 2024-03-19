@@ -1,4 +1,5 @@
 import RenderMarkdown from '../components/markdown';
+import { EMAIL_ADDRESS } from '../constants';
 
 const markdown = `
 # Imprint
@@ -12,7 +13,7 @@ Hansastraße 70,
 24118 Kiel
 
 
-E-Mail: [emil.krebs@outlook.de](mailto:emil.krebs@outlook.de)
+E-Mail: [${EMAIL_ADDRESS}](mailto:${EMAIL_ADDRESS})
 
 ## Disclaimer
 

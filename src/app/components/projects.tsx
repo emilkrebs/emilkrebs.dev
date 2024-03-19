@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import LinkButton from './link-button';
+import { GITHUB_URL } from '../constants';
 
 export default function Projects() {
 	return (
@@ -39,7 +40,7 @@ export default function Projects() {
 					tags={['Langium', 'Node.js', 'TypeScript', 'React', 'Hugo']}
 				/>
 
-				<LinkButton href="https://github.com/emilkrebs?tab=repositories">View More</LinkButton>
+				<LinkButton href={`${GITHUB_URL}?tab=repositories`}>View More</LinkButton>
 			</section>
 		</div>
 

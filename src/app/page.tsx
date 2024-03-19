@@ -2,6 +2,7 @@ import Image from 'next/image';
 import LinkButton from './components/link-button';
 import Technologies from './components/technologies';
 import Projects from './components/projects';
+import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from './constants';
 
 export default function Home() {
 	return (
@@ -44,7 +45,7 @@ function Header() {
 				<h2 className="text-base text-center font-light w-full text-gray-200">Passionate Software Engineer</h2>
 
 				<div className="flex flex-col items-center justify-start gap-4 mt-4 h-full">
-					<LinkButton className="w-full" href="https://linkedin.com/in/emilkrebs" target="_blank">
+					<LinkButton className="w-full" href={LINKEDIN_URL} target="_blank">
 						<div className="flex items-center gap-2">
 							<Image
 								className="filter-white"
@@ -57,7 +58,7 @@ function Header() {
 						</div>
 					</LinkButton>
 
-					<LinkButton className="w-full" href="https://github.com/emilkrebs" target="_blank">
+					<LinkButton className="w-full" href={GITHUB_URL} target="_blank">
 						<div className="flex items-center gap-2">
 							<Image
 								className="filter-white"
@@ -92,19 +93,21 @@ function About() {
 					I am driven by creativity and a never-ending urge for knowledge.
 				</p>
 
-				{/* Download Resume Button */}
-				<LinkButton href="/resume.pdf" download>
-					<div className="flex items-center gap-2">
-						<Image
-							className="filter-white"
-							src="/icons/download.svg"
-							alt="Download Resume"
-							width={20}
-							height={20}
-						/>
-						<span>Download Resume</span>
-					</div>
-				</LinkButton>
+				<div className="flex flex-row w-full justify-start flex-wrap gap-2">
+					{/* Download Resume Button */}
+					<LinkButton className="w-fit" href="/resume.pdf" download>
+						<div className="flex items-center gap-2">
+							<Image
+								className="filter-white"
+								src="/icons/download.svg"
+								alt="Download Resume"
+								width={20}
+								height={20}
+							/>
+							<span>Download Resume</span>
+						</div>
+					</LinkButton>
+				</div>
 			</section>
 		</div>
 
