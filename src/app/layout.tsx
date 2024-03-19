@@ -3,8 +3,19 @@ import './globals.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Emil Krebs',
-	description: 'Emil Krebs Website',
+	title: 'emilkrebs.dev',
+	description: 'Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
+	icons: [
+		'/favicon.svg'
+	],
+	authors: [
+		{
+			name: 'Emil Krebs',
+			url: 'https://emilkrebs.dev'
+		}
+	],
+	creator: 'Emil Krebs',
+	robots: 'index, follow',
 };
 
 
