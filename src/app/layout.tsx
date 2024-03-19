@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
 	metadataBase: new URL('https://emilkrebs.dev'),
 	title: 'emilkrebs.dev',
-	description: 'Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
+	description: 'emilkrebs.dev: Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
 	icons: [
 		'/favicon.svg',
 		'/favicon.ico'
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		title: 'Emil Krebs',
-		description: 'Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
+		description: 'emilkrebs.dev: Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
 		images: [
 			{
 				url: '/opengraph_image.webp',
