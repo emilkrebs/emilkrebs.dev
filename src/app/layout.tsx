@@ -6,8 +6,11 @@ export const metadata: Metadata = {
 	title: 'emilkrebs.dev',
 	description: 'Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
 	icons: [
-		'/favicon.svg'
+		'/favicon.svg',
+		'/favicon.ico'
 	],
+	themeColor: '#4A148C',
+	colorScheme: 'dark light',
 	authors: [
 		{
 			name: 'Emil Krebs',
@@ -16,6 +19,19 @@ export const metadata: Metadata = {
 	],
 	creator: 'Emil Krebs',
 	robots: 'index, follow',
+	openGraph: {
+		type: 'website',
+		title: 'Emil Krebs',
+		description: 'Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
+		images: [
+			{
+				url: '/opengraph_image.webp',
+				width: 1200,
+				height: 591,
+				alt: 'Emil Krebs'
+			}
+		]
+	}
 };
 
 
