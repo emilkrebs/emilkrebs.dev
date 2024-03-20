@@ -1,17 +1,15 @@
 import { Footer } from './components/footer';
 import './globals.css';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
 	metadataBase: new URL('https://emilkrebs.dev'),
-	title: 'emilkrebs.dev',
-	description: 'emilkrebs.dev: Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
+	title: 'Emil Krebs',
+	description: 'I am a software engineer with expertise in web development and Android applications. I am constantly growing and learning new skills every day.',
 	icons: [
 		'/favicon.svg',
 		'/favicon.ico'
 	],
-	themeColor: '#4A148C',
-	colorScheme: 'dark light',
 	authors: [
 		{
 			name: 'Emil Krebs',
@@ -23,16 +21,23 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		title: 'Emil Krebs',
-		description: 'emilkrebs.dev: Emil Krebs is a software engineer with expertise in web development and Android applications. He is also an active contributor to open-source projects.',
+		description: 'I am a software engineer with expertise in web development and Android applications. I am constantly growing and learning new skills every day.',
 		images: [
 			{
 				url: '/opengraph_image.webp',
 				width: 1200,
-				height: 591,
+				height: 630,
 				alt: 'Emil Krebs'
 			}
 		]
 	}
+};
+
+export const viewport: Viewport = {
+	themeColor: '#4A148C',
+	colorScheme: 'dark light',
+	initialScale: 1,
+	width: 'device-width',
 };
 
 
@@ -45,10 +50,7 @@ export default function RootLayout({
 		<html lang="en">
 			<head>
 				<meta charSet="UTF-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 				<link rel="canonical" href="https://emilkrebs.dev" />
-
-				<title>Emil Krebs</title>
 			</head>
 
 			<body className='font-sans'>
