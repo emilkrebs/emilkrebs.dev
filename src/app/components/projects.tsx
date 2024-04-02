@@ -1,13 +1,15 @@
 import Image from 'next/image';
 import LinkButton from './link-button';
-import { GITHUB_URL } from '../constants';
+import { GITHUB_URL } from '../lib/constants';
+
+
 
 export default function Projects() {
 	return (
 		<div className="w-full">
 			<h2 className="text-2xl text-start font-bold uppercase w-full mt-8">Featured Projects</h2>
 
-			<section className="flex flex-wrap justify-end gap-4 bg-transparent rounded-lg w-full mt-2">
+			<section id="projects" className="flex flex-wrap justify-end gap-4 bg-transparent rounded-lg w-full mt-2">
 				<Project
 					title="Emil Krebs Website"
 					icon="/favicon.svg"

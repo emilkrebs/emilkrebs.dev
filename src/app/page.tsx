@@ -2,9 +2,9 @@ import Image from 'next/image';
 import LinkButton from './components/link-button';
 import Technologies from './components/technologies';
 import Projects from './components/projects';
-import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from './constants';
+import { LINKEDIN_URL, GITHUB_URL } from './lib/constants';
 
-export default function Home() {
+export default async function Page() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-center p-4">
 			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8">
@@ -17,7 +17,6 @@ export default function Home() {
 					<Technologies />
 
 					<Projects />
-
 				</div>
 			</div>
 		</main>
@@ -81,7 +80,7 @@ function About() {
 		<div className="w-full">
 			<h2 className="text-2xl text-start font-bold uppercase w-full">About</h2>
 
-			<section className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
+			<section id="about" className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
 				<p className="text-base text-start font-light w-full ">
 					Hi there 👋
 					<br />
@@ -100,7 +99,7 @@ function About() {
 							<Image
 								className="filter-white"
 								src="/icons/download.svg"
-								alt="Download Resume"
+								alt="Download"
 								width={20}
 								height={20}
 							/>
@@ -110,6 +109,5 @@ function About() {
 				</div>
 			</section>
 		</div>
-
 	);
 }
