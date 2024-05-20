@@ -1,6 +1,6 @@
-import { EMAIL_ADDRESS } from '../lib/constants';
-import LinkButton from './link-button';
-import Image from 'next/image';
+import { EMAIL_ADDRESS } from "../lib/constants";
+import LinkButton from "./link-button";
+import Image from "next/image";
 
 export function Footer() {
 	return (

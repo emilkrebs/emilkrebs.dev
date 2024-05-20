@@ -1,5 +1,5 @@
-import RenderMarkdown from '../components/markdown';
-import { EMAIL_ADDRESS, PHONE_NUMBER } from '../lib/constants';
+import RenderMarkdown from "../components/markdown";
+import { EMAIL_ADDRESS, PHONE_NUMBER } from "../lib/constants";
 
 
 const markdown = `

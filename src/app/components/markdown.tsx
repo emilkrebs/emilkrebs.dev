@@ -1,4 +1,4 @@
-import Markdown from 'react-markdown';
+import Markdown from "react-markdown";
 
 interface MarkdownProps {
     content: string;

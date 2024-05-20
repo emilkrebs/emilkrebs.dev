@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import LinkButton from './link-button';
-import { GITHUB_URL } from '../lib/constants';
+import Image from "next/image";
+import LinkButton from "./link-button";
+import { GITHUB_URL } from "../lib/constants";
 
 
 
@@ -15,7 +15,7 @@ export default function Projects() {
 					icon="/favicon.svg"
 					description="My personal website built with Next.js, Tailwind CSS and TypeScript"
 					link="/"
-					tags={['Next.js', 'Tailwind CSS', 'TypeScript']}
+					tags={["Next.js", "Tailwind CSS", "TypeScript"]}
 				/>
 
 				<Project
@@ -23,7 +23,7 @@ export default function Projects() {
 					icon="https://github.com/emilkrebs/WatchLock/raw/main/images/WatchLock.webp"
 					description="An Android & WearOS app to lock your phone using your smartwatch"
 					link="https://github.com/emilkrebs/WatchLock"
-					tags={['Android', 'Kotlin', 'WearOS']}
+					tags={["Android", "Kotlin", "WearOS"]}
 				/>
 
 				<Project
@@ -31,7 +31,7 @@ export default function Projects() {
 					icon="https://github.com/emilkrebs/Generator-Discord/raw/main/assets/icon.svg"
 					description="A Yeoman generator for Discord bots supporting multiple languages"
 					link="https://github.com/emilkrebs/Generator-Discord"
-					tags={['Node.js', 'TypeScript', 'Discord.js', 'Rust', 'Python', 'Yeoman', 'npm']}
+					tags={["Node.js", "TypeScript", "Discord.js", "Rust", "Python", "Yeoman", "npm"]}
 				/>
 
 				<Project
@@ -39,7 +39,7 @@ export default function Projects() {
 					icon="https://langium.org/assets/nib.svg"
 					description="Showcases for DSLs built with Langium (State Machine, Arithmetics, MiniLogo, Domain Model)"
 					link="https://langium.org/showcase/"
-					tags={['Langium', 'Node.js', 'TypeScript', 'React', 'Hugo']}
+					tags={["Langium", "Node.js", "TypeScript", "React", "Hugo"]}
 				/>
 
 				<LinkButton href={`${GITHUB_URL}?tab=repositories`}>View More</LinkButton>

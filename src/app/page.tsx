@@ -1,13 +1,13 @@
-import Image from 'next/image';
-import LinkButton from './components/link-button';
-import Technologies from './components/technologies';
-import Projects from './components/projects';
-import { LINKEDIN_URL, GITHUB_URL } from './lib/constants';
+import Image from "next/image";
+import LinkButton from "./components/link-button";
+import Technologies from "./components/technologies";
+import Projects from "./components/projects";
+import { LINKEDIN_URL, GITHUB_URL } from "./lib/constants";
 
 export default async function Page() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-center p-4">
-			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8">
+			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8 overflow-x-hidden">
 				{/* Header */}
 				<Header />
 				<div className="flex flex-col items-center justify-center gap-4 w-fit max-w-screen-xl  md:p-24 xl:p-48">
@@ -17,8 +17,13 @@ export default async function Page() {
 					<Technologies />
 
 					<Projects />
+
 				</div>
+
+				<BusinessCards />
+
 			</div>
+
 		</main>
 	);
 }
@@ -72,6 +77,28 @@ function Header() {
 				</div>
 			</div>
 		</section>
+	);
+}
+
+function BusinessCards() {
+	return (
+		<a
+			href="https://www.instagram.com/p/C7HkuPnIMto/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
+			target="_blank"
+			className="group hidden xl:flex flex-col absolute -right-16 h-fit hover:-translate-x-2 transition-transform"
+		>
+			<Image
+				className="size-64 object-contain"
+				title="Business Card Gallery"
+				src="/business_cards.webp"
+				alt="Business Cards"
+				width={100}
+				height={100}
+			/>
+			<span className="group-hover:opacity-100 absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 opacity-0 transition-opacity">
+				New business cards available!
+			</span>
+		</a>
 	);
 }
 
