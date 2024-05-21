@@ -45,7 +45,7 @@ function Header() {
 
 
 			<div className="flex flex-col items-center justify-start flex-nowrap min-w-fit h-full">
-				<h1 className="text-[5vb] text-center font-bold uppercase w-full">Emil Krebs</h1>
+				<h1 className="text-5xl my-2 text-center font-bold uppercase w-full">Emil Krebs</h1>
 				<h2 className="text-base text-center font-light w-full text-gray-200">Passionate Software Engineer</h2>
 
 				<div className="flex flex-col items-center justify-start gap-4 mt-4 h-full">
