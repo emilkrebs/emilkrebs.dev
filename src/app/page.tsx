@@ -89,7 +89,6 @@ function BusinessCards() {
 		>
 			<Image
 				className="size-64 object-contain"
-				title="Business Card Gallery"
 				src="/business_cards.webp"
 				alt="Business Cards"
 				width={100}
