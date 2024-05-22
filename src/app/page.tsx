@@ -90,7 +90,7 @@ function BusinessCards() {
 			<Image
 				className="size-64 object-contain"
 				src="/business_cards.webp"
-				alt="Business Cards"
+				alt="Emil Krebs Business Cards"
 				width={100}
 				height={100}
 			/>

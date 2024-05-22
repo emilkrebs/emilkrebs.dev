@@ -7,7 +7,7 @@ const nextConfig = {
 	images: {
 		domains: ['github.com'],
 		unoptimized: true,
-		minimumCacheTTL: 3600,
+		minimumCacheTTL: 60 * 60 * 6 // 6 hours
 	},
 };
 

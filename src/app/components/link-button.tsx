@@ -1,9 +1,4 @@
-
-interface LinkButtonProps extends React.HTMLProps<HTMLAnchorElement>{
-  
-}
-
-export default function LinkButton(props: LinkButtonProps) {
+export default function LinkButton(props: React.HTMLProps<HTMLAnchorElement>) {
 	return (
 		<a
 			{...props}

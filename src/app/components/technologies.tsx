@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export const technologies: TechnologySection[] = [
+const technologies: TechnologySection[] = [
 	{
 		name: "Languages",
 		technologies: [
