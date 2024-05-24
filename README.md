@@ -14,7 +14,9 @@
 </div>
 <hr>
 
-My personal website made with Next.js, TypeScript and Tailwind CSS deployed using GitHub-Pages.
+My website was made with Next.js, TypeScript, and Tailwind CSS deployed using GitHub-Pages.
+
+All rights reserved.
 
 # How to setup
 
@@ -32,6 +34,11 @@ npm run build
 ```
 npm run dev
 ```
+
+## Performance [*↗*](https://pagespeed.web.dev/analysis/https-emilkrebs-dev/ca0xfmzgyy?utm_source=search_console&form_factor=mobile&hl=en_GB)
+
+![performance](https://github.com/emilkrebs/emilkrebs.dev/assets/68400102/fd5defb4-3747-43bf-b799-79690297428a)
+
 
 ## Screenshot
 
