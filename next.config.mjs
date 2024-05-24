@@ -4,6 +4,7 @@ const nextConfig = {
 	output: 'export',
 	distDir: 'out',
 	assetPrefix: './',
+	optimizeFonts: true,
 	images: {
 		domains: ['github.com'],
 		unoptimized: true,
