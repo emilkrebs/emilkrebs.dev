@@ -7,7 +7,7 @@ import PageNotification from "./components/notification";
 
 
 const notificationContent = <>
-	<div className="flex flex-col items-start justify-center gap-2 w-96 p-6">
+	<div className="flex flex-col items-start justify-center gap-2 w-fit sm:w-96 px-4 py-6 sm:p-6">
 		<h2 className="text-lg font-bold ">📢 Are you going to the gym?</h2>
 		<p className="text-sm text-start text-wrap">Get the chance to win a <strong className="shine-effect">10€ Amazon gift card</strong> by participating at this <strong>2 minute</strong> survey!</p>
 
