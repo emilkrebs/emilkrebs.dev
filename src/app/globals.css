@@ -12,28 +12,46 @@
 
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 173, 82, 148;
-  --background-end-rgb: 37, 34, 197;
+	--foreground-rgb: 255, 255, 255;
+	--background-start-rgb: 173, 82, 148;
+	--background-end-rgb: 37, 34, 197;
 }
 
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to right bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+	color: rgb(var(--foreground-rgb));
+	background: linear-gradient(to right bottom,
+			transparent,
+			rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	.text-balance {
+		text-wrap: balance;
+	}
 }
 
 .filter-white {
-  filter: invert(1);
+	filter: invert(1);
+}
+
+/* Add this to your global CSS file */
+@keyframes shine {
+	0% {
+		background-position: 500%;
+	}
+
+	100% {
+		background-position: -500%;
+	}
+}
+
+.shine-effect {
+	position: relative;
+	color: transparent;
+	background: linear-gradient(90deg, theme('colors.yellow.500') 0%, theme('colors.orange.500') 50%, theme('colors.yellow.500') 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	animation: shine 14s linear infinite;
+	background-size: 200% 100%;
 }

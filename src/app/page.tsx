@@ -3,6 +3,17 @@ import LinkButton from "./components/link-button";
 import Technologies from "./components/technologies";
 import Projects from "./components/projects";
 import { LINKEDIN_URL, GITHUB_URL } from "./lib/constants";
+import PageNotification from "./components/notification";
+
+
+const notificationContent = <>
+	<div className="flex flex-col items-start justify-center gap-2 w-96 p-6">
+		<h2 className="text-lg font-bold ">📢 Are you going to the gym?</h2>
+		<p className="text-sm text-start text-wrap">Get the chance to win a <strong className="shine-effect">10€ Amazon gift card</strong> by participating at this <strong>2 minute</strong> survey!</p>
+
+		<LinkButton href="https://forms.gle/VoqPnzx83hUq6faj6" target="_blank">Take the survey</LinkButton>
+	</div>
+</>;
 
 export default async function Page() {
 	return (
@@ -24,6 +35,7 @@ export default async function Page() {
 
 			</div>
 
+			<PageNotification content={notificationContent} />
 		</main>
 	);
 }
