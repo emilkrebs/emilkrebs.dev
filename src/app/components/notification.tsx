@@ -13,7 +13,7 @@ export default function PageNotification(props: NotificationProps) {
 
 	return (
 		visible &&
-		<div className={"fixed bottom-4 right-2 left-2 sm:right-4 sm:left-auto bg-purple-900 border border-gray-300 rounded-lg shadow-2xl"}>
+		<div className={"fixed bottom-4 right-2 left-2 sm:right-4 sm:left-auto bg-purple-900 border border-gray-300 rounded-lg shadow-2xl z-50"}>
 			{props.content}
 
 			<button

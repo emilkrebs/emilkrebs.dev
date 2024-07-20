@@ -4,6 +4,7 @@ import Technologies from "./components/technologies";
 import Projects from "./components/projects";
 import { LINKEDIN_URL, GITHUB_URL } from "./lib/constants";
 import PageNotification from "./components/notification";
+import Link from "next/link";
 
 
 const notificationContent = <>
@@ -94,7 +95,7 @@ function Header() {
 
 function BusinessCards() {
 	return (
-		<a
+		<Link
 			href="https://www.instagram.com/p/C7HkuPnIMto/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
 			target="_blank"
 			className="group hidden xl:flex flex-col absolute -right-16 h-fit hover:-translate-x-2 transition-transform"
@@ -109,7 +110,7 @@ function BusinessCards() {
 			<span className="group-hover:opacity-100 absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 opacity-0 transition-opacity">
 				New business cards available!
 			</span>
-		</a>
+		</Link>
 	);
 }
 

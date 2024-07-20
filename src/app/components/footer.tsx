@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { EMAIL_ADDRESS } from "../lib/constants";
 import LinkButton from "./link-button";
 import Image from "next/image";
@@ -5,7 +6,7 @@ import Image from "next/image";
 export function Footer() {
 	return (
 		<footer className="flex flex-col mt-auto sm:flex-row items-center justify-between w-full gap-y-4 bg-black px-16 py-4">
-			<a className="uppercase text-lg hover:underline" href="/imprint">Imprint</a>
+			<Link className="uppercase text-lg hover:underline" href="/imprint">Imprint</Link>
 
 
 			{/* Contact Me Button */}
@@ -22,7 +23,7 @@ export function Footer() {
 				</div>
 			</LinkButton>
 
-			<a className="uppercase text-lg hover:underline" href="/privacy">Privacy Policy</a>
+			<Link className="uppercase text-lg hover:underline" href="/privacy">Privacy Policy</Link>
 		</footer>
 	);
 }
