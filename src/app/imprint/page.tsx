@@ -12,7 +12,6 @@ Emil Krebs
 Hansastraße 70,
 24118 Kiel
 
-VAT-ID: DE2006700670
 
 \
 E-Mail: [${EMAIL_ADDRESS}](mailto:${EMAIL_ADDRESS})
