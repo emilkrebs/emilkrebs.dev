@@ -8,14 +8,15 @@ import Link from "next/link";
 export default function Projects() {
 	return (
 		<div className="w-full">
-			<h2 className="text-2xl text-start font-bold uppercase w-full mt-8">Featured Projects</h2>
+			<h2 className="w-full mt-8 text-2xl font-bold uppercase text-start">Featured Projects</h2>
 
-			<section id="projects" className="flex flex-wrap justify-end gap-4 bg-transparent rounded-lg w-full mt-2">
+			<section id="projects" className="flex flex-wrap justify-end w-full gap-4 mt-2 bg-transparent rounded-lg">
+
 				<Project
-					title="Emil Krebs Website"
-					icon="/favicon.svg"
-					description="My personal website built with Next.js, Tailwind CSS and TypeScript"
-					link="/"
+					title="BIPoC Climate Justice Summit Website"
+					icon="https://bipoclimatejusticenetwork.org/logo.jpg"
+					description="The official website for the BIPoC Climate Justice Summit 2024"
+					link="https://bipoclimatejusticenetwork.org/"
 					tags={["Next.js", "Tailwind CSS", "TypeScript"]}
 				/>
 
@@ -25,6 +26,14 @@ export default function Projects() {
 					description="An Android & WearOS app to lock your phone using your smartwatch"
 					link="https://github.com/emilkrebs/WatchLock"
 					tags={["Android", "Kotlin", "WearOS"]}
+				/>
+
+				<Project
+					title="Emil Krebs Website"
+					icon="/favicon.svg"
+					description="My personal website built with Next.js, Tailwind CSS and TypeScript"
+					link="/"
+					tags={["Next.js", "Tailwind CSS", "TypeScript"]}
 				/>
 
 				<Project
@@ -61,16 +70,21 @@ interface ProjectProps {
 export function Project(props: ProjectProps) {
 	return (
 
-		<Link href={props.link} className="flex flex-row items-start justify-start gap-2 border-2 bg-gray-900 bg-opacity-10 hover:bg-opacity-20 border-white w-full h-fit rounded-lg hover:shadow-md p-4">
-			{props.icon && <Image src={props.icon} alt={props.title} className="w-28 h-28 rounded-md" width={36} height={36} />}
+		<Link href={props.link} className="flex flex-row items-start justify-start w-full gap-4 p-4 bg-gray-900 border-2 border-white rounded-lg bg-opacity-10 hover:bg-opacity-20 h-fit hover:shadow-md">
+			{props.icon && <Image src={props.icon} alt={props.title} className="hidden rounded-md sm:block size-32" width={36} height={36} />}
 
-			<div className="flex flex-col items-start justify-between h-full">
-				<h3 className="text-xl font-bold">{props.title}</h3>
-				<p className="text-base sm:text-lg text-gray-200">{props.description}</p>
+			<div className="flex flex-col items-start justify-between h-full gap-2">
 
-				<div className="flex flex-wrap gap-2 mt-2">
+				<div className="flex flex-row items-center justify-start w-full gap-2">
+					{props.icon && <Image src={props.icon} alt={props.title} className="block rounded-md sm:hidden size-8" width={36} height={36} />}
+					<h3 className="text-xl font-bold">{props.title}</h3>
+				</div>
+
+				<p className="text-base text-gray-200 sm:text-lg size-full">{props.description}</p>
+
+				<div className="flex flex-wrap h-full gap-2">
 					{props.tags.map((tag, index) => (
-						<span key={index} className="text-sm bg-purple-900 px-2 py-1 rounded-lg">{tag}</span>
+						<span key={index} className="px-2 py-1 text-sm bg-purple-900 rounded-lg">{tag}</span>
 					))}
 				</div>
 			</div>

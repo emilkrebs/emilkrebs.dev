@@ -8,11 +8,11 @@ interface MarkdownProps {
 export default function RenderMarkdown(props: MarkdownProps) {
 	return (
 		<Markdown components={{
-			h1: ({ node, ...props }) => <h1 className="text-2xl font-bold uppercase w-full" {...props} />,
-			h2: ({ node, ...props }) => <h2 className="text-xl font-bold w-full mt-4 mb-2" {...props} />,
-			h3: ({ node, ...props }) => <h3 className="text-lg font-bold w-full mt-4 mb-2" {...props} />,
-			a: ({ node, ...props }) => <Link className="hover:underline" {...props} href={props.href ?? "#"} />,
-			p: ({ node, ...props }) => <p className="text-base w-full" {...props} />,
+			h1: ({ node, ...props }) => <h1 className="w-full text-2xl font-bold uppercase" {...props} />,
+			h2: ({ node, ...props }) => <h2 className="w-full mt-4 mb-2 text-xl font-bold" {...props} />,
+			h3: ({ node, ...props }) => <h3 className="w-full mt-4 mb-2 text-lg font-bold" {...props} />,
+			a: ({ node, ...props }) => <Link className="text-blue-500 hover:underline" {...props} href={props.href ?? "#"} />,
+			p: ({ node, ...props }) => <p className="w-full text-base" {...props} />,
 		}} >{props.content}</Markdown>
 	);
 }

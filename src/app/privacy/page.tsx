@@ -4,15 +4,14 @@ const markdown = `
 
 # Privacy Policy
 
+## How do we collect information?
+
+To get critical information about the behavior of our visitors, this website uses [Simple Analytics](https://simpleanalytics.com). 
+
 ## What information do we collect?
 
-We do not collect any personal information from visitors to this website. This means we do not collect any data that could be used to identify you individually, such as your name, email address, phone number, or IP address.
-
-## How do we use your information?
-Since we do not collect any personal information from you, there is no information for us to use.
-Sharing your information
-
-We do not share any personal information with third parties because we do not collect any.
+Simple Analytics gives insight about visitors only in general, but not about individuals per say, as it does not track visitors and does not store any personal identifiable information. 
+[Go to their documentation](https://docs.simpleanalytics.com/what-we-collect) to find out what Simple Analytics collects (and most importantly what they don't).
 
 ## Cookies
 
@@ -20,7 +19,7 @@ This website does not use cookies. Cookies are small data files that a website t
 
 ## Third-party links
 
-This website may contain links to other websites operated by third parties. We are not responsible for the privacy practices of any third-party websites. We encourage you to be aware of when you leave our website and to read the privacy statements of any other website that you visit.
+This site contains links to external websites over which we have no control. Therefore we can not accept any responsibility for their content. The respective provider or operator of the pages is always responsible for the contents of any Linked Site. The linked sites were checked at the time of linking for possible violations of law. Illegal contents did not exist at the time of linking. A permanent control of the linked pages is unreasonable without concrete evidence of a violation. Upon notification of violations, we will remove such links immediately.
 
 ## Changes to this privacy policy
 
@@ -35,8 +34,8 @@ The source code for this website is available on [GitHub](https://github.com/emi
 
 export default function PrivacyPolicy() {
 	return (
-		<main className="flex min-h-screen w-full flex-col items-center justify-start p-4">
-			<section className="flex flex-col justify-center items-center gap-2 gap-x-4 w-full h-full p-4">
+		<main className="flex flex-col items-center justify-start w-full min-h-screen p-4">
+			<section className="flex flex-col items-center justify-center w-full h-full gap-2 p-4 gap-x-4">
 				<RenderMarkdown content={markdown} />
 			</section>
 		</main>
