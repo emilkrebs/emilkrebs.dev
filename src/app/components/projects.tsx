@@ -14,7 +14,7 @@ export default function Projects() {
 
 				<Project
 					title="BIPoC Climate Justice Summit Website"
-					icon="https://bipoclimatejusticenetwork.org/logo.jpg"
+					icon="https://bipoclimatejusticenetwork.org/logo.webp"
 					description="The official website for the BIPoC Climate Justice Summit 2024"
 					link="https://bipoclimatejusticenetwork.org/"
 					tags={["Next.js", "Tailwind CSS", "TypeScript"]}
