@@ -7,18 +7,18 @@ import PageNotification from "./components/notification";
 import Link from "next/link";
 
 
-const notificationContent = <>
-	<div className="flex flex-col items-start justify-center gap-2 w-fit sm:w-96 px-4 py-6 sm:p-6">
-		<h2 className="text-lg font-bold ">📢 Are you going to the gym?</h2>
-		<p className="text-sm text-start text-wrap">Get the chance to win a <strong className="shine-effect">10€ Amazon gift card</strong> by participating in this <strong>2-minute</strong> survey!</p>
-
-		<LinkButton href="https://forms.gle/VoqPnzx83hUq6faj6" target="_blank">Take the survey</LinkButton>
-	</div>
-</>;
-
 export default async function Page() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-center p-4">
+			<PageNotification>
+				<div className="flex flex-col items-start justify-center gap-2 w-fit sm:w-96 px-4 py-6 sm:p-6">
+					<h2 className="text-lg font-bold ">📢 Are you going to the gym?</h2>
+					<p className="text-sm text-start text-wrap">Get the chance to win a <strong className="shine-effect">10€ Amazon gift card</strong> by participating in this <strong>2-minute</strong> survey!</p>
+
+					<LinkButton href="https://forms.gle/VoqPnzx83hUq6faj6" target="_blank">Take the survey</LinkButton>
+				</div>
+			</PageNotification>
+
 			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8 overflow-x-hidden">
 				{/* Header */}
 				<Header />
@@ -35,8 +35,6 @@ export default async function Page() {
 				<BusinessCards />
 
 			</div>
-
-			<PageNotification content={notificationContent} />
 		</main>
 	);
 }
