@@ -21,12 +21,12 @@ export function Tabs({ children }: TabsProps) {
 	return (
 		<div className="flex flex-col items-start bg-purple-900 rounded-lg shadow-md overflow-hidden">
 
-			<div className="flex w-full">
+			<div className="flex flex-row flex-wrap w-full">
 				{React.Children.map(children, (child, index) => {
 					const tab = child as React.ReactElement<TabProps>;
 					return (
 						<div
-							className={`flex-1 p-2 text-center cursor-pointer w-min ${
+							className={`flex items-center justify-center flex-1 p-2 text-center cursor-pointer ${
 								activeTab === index ? "bg-purple-900" : "bg-purple-800"
 							}`}
 							
@@ -38,7 +38,9 @@ export function Tabs({ children }: TabsProps) {
 				})}
 			</div>
 
-			<div className="p-4">{(children as React.ReactElement<TabProps>[])[activeTab].props.children}</div>
+			<div className="p-4 overflow-auto">
+				{(children as React.ReactElement<TabProps>[])[activeTab].props.children}
+			</div>
 		</div>
 	);
 }

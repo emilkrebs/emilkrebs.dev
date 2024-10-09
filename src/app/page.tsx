@@ -13,8 +13,8 @@ import { ContactMeButton } from "./components/footer";
 export default async function Page() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-center p-4">
-			<BusinessCards />
-
+			
+				
 			<PageNotification>
 				<div className="flex flex-col items-start justify-center gap-2 w-fit sm:w-96 px-4 py-6 sm:p-6">
 					<h2 className="text-lg font-bold ">📢 Are you going to the gym?</h2>
@@ -25,9 +25,12 @@ export default async function Page() {
 			</PageNotification>
 
 			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8 overflow-x-hidden">
+
 				{/* Header */}
 				<Header />
+
 				<div className="flex flex-col items-center justify-center gap-12 w-fit max-w-screen-xl md:p-24 xl:p-48">
+
 
 					<About />
 
@@ -38,7 +41,8 @@ export default async function Page() {
 					<Projects />
 
 				</div>
-
+				
+				<BusinessCards />
 			</div>
 		</main>
 	);
@@ -155,6 +159,7 @@ function About() {
 }
 
 function HireMe() {
+
 	const tabs = [
 		{
 			title: "Web Development",
@@ -223,7 +228,7 @@ Let's discuss your unique requirements and find a solution that works for you.
 
 	return (
 		<div className="w-full">
-
+			<h2 className="text-2xl text-start font-bold uppercase w-full">Hire Me</h2>
 			<Tabs>
 				{tabs.map((tab, index) => (
 					<Tab title={tab.title} key={index}>
