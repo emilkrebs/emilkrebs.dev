@@ -53,7 +53,7 @@ interface TechnologySection {
 export default function Technologies() {
 	return (
 		<div className="w-full">
-			<h2 className="text-2xl text-start font-bold uppercase w-full mt-8">Technologies</h2>
+			<h2 className="text-2xl text-start font-bold uppercase w-full">Technologies</h2>
 
 			<section id="technologies" className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
 				<p className="text-base text-start font-light w-full ">

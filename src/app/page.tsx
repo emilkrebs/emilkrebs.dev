@@ -2,14 +2,19 @@ import Image from "next/image";
 import LinkButton from "./components/link-button";
 import Technologies from "./components/technologies";
 import Projects from "./components/projects";
-import { LINKEDIN_URL, GITHUB_URL } from "./lib/constants";
+import { LINKEDIN_URL, GITHUB_URL, EMAIL_ADDRESS } from "./lib/constants";
 import PageNotification from "./components/notification";
 import Link from "next/link";
+import { Tab, Tabs } from "./components/tab-component";
+import RenderMarkdown from "./components/markdown";
+import { ContactMeButton } from "./components/footer";
 
 
 export default async function Page() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-center p-4">
+			<BusinessCards />
+
 			<PageNotification>
 				<div className="flex flex-col items-start justify-center gap-2 w-fit sm:w-96 px-4 py-6 sm:p-6">
 					<h2 className="text-lg font-bold ">📢 Are you going to the gym?</h2>
@@ -22,17 +27,17 @@ export default async function Page() {
 			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8 overflow-x-hidden">
 				{/* Header */}
 				<Header />
-				<div className="flex flex-col items-center justify-center gap-4 w-fit max-w-screen-xl  md:p-24 xl:p-48">
+				<div className="flex flex-col items-center justify-center gap-12 w-fit max-w-screen-xl md:p-24 xl:p-48">
 
 					<About />
 
 					<Technologies />
 
+					<HireMe />
+
 					<Projects />
 
 				</div>
-
-				<BusinessCards />
 
 			</div>
 		</main>
@@ -145,6 +150,93 @@ function About() {
 					</LinkButton>
 				</div>
 			</section>
+		</div>
+	);
+}
+
+function HireMe() {
+	const tabs = [
+		{
+			title: "Web Development",
+			content: `
+**Crafting Web Experiences**
+
+As a seasoned full-stack web developer, I specialize in creating dynamic or static web experiences. Whether you need a sleek business website, a web application, or a personalized online presence, I've got you covered.
+
+**My Expertise Includes:**
+
+- **Frontend Development:** Building interfaces using HTML, CSS, TypeScript, and popular frameworks like React and Tailwind CSS.
+- **Backend Development:** Designing robust and scalable server-side architecture with languages like Node.js, Python, and C#.
+- **Full-Stack Development:** Seamlessly integrating frontend and backend technologies to deliver a complete web solution using full-stack frameworks like Next.js, ASP.net or Fresh.
+- **Progressive Web Apps (PWAs):** Developing web applications that offer a native app-like experience across all devices.
+
+Let's discuss your project and see how I can help you achieve your goals.
+		  `,
+		},
+		{
+			title: "Mobile Development",
+			content: `
+**Bringing Your Mobile App Ideas to Life**
+
+I'm passionate about creating innovative and intuitive mobile applications that deliver exceptional user experiences. With a strong foundation in Android development using Kotlin and Java, I can turn your app concept into a reality.
+
+**My Skills Include:**
+
+- **Android App Development:** Building native Android or WearOS apps with Kotlin and Java, leveraging the latest Android SDK and design guidelines.
+- **Cross-Platform Development:** Exploring options like Xamarin and React Native for efficient development across iOS and Android platforms.
+
+Let's talk about your app idea and how we can collaborate to build something amazing.
+		  `,
+		},
+		{
+			title: "Windows Development",
+			content: `
+**Crafting Desktop Solutions**
+
+If you're looking for a desktop application to streamline your business processes or enhance user productivity, I can help. With experience in developing desktop applications for Windows and Linux, I can create custom solutions tailored to your specific needs.
+
+**My Expertise Includes:**
+
+- **Windows Development:** Building desktop applications using C# and WPF for a seamless Windows experience.
+
+Let's discuss your desktop application project and explore the possibilities together.
+		  `,
+		},
+		{
+			title: "Other",
+			content: `
+**Open to New Challenges**
+
+If your project doesn't fall neatly into the categories above, don't hesitate to reach out. I'm always eager to learn new technologies and tackle exciting challenges.
+
+**Some areas I'm interested in exploring include:**
+
+- Embedded Systems Development
+- Machine Learning
+- Game Development
+- IoT 
+
+Let's discuss your unique requirements and find a solution that works for you.
+		  `,
+		},
+	];
+
+	return (
+		<div className="w-full">
+
+			<Tabs>
+				{tabs.map((tab, index) => (
+					<Tab title={tab.title} key={index}>
+						<div className="flex flex-col items-start gap-4">
+							<RenderMarkdown content={tab.content} />
+
+							{/* Intersted? Contact me! */}
+							<h3 className="text-lg font-bold">Interested in working together?</h3>
+							<ContactMeButton />
+						</div>
+					</Tab>
+				))}
+			</Tabs>
 		</div>
 	);
 }
