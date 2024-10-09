@@ -41,8 +41,6 @@ export default async function Page() {
 					<Projects />
 
 				</div>
-				
-				<BusinessCards />
 			</div>
 		</main>
 	);
