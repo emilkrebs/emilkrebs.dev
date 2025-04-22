@@ -70,7 +70,7 @@ interface ProjectProps {
 export function Project(props: ProjectProps) {
 	return (
 
-		<Link href={props.link} className="flex flex-row items-start justify-start w-full gap-4 p-4 bg-gray-900 border-2 border-white rounded-lg bg-opacity-10 hover:bg-opacity-20 h-fit hover:shadow-md">
+		<Link href={props.link} className="flex flex-row items-start justify-start w-full gap-4 p-4 border-2 border-white rounded-lg hover:backdrop-blur-lg h-fit hover:shadow-md">
 			{props.icon && <Image src={props.icon} alt={props.title} className="hidden rounded-md sm:block size-32" width={36} height={36} />}
 
 			<div className="flex flex-col items-start justify-between h-full gap-2">

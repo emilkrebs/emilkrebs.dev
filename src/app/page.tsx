@@ -4,7 +4,6 @@ import Technologies from "./components/technologies";
 import Projects from "./components/projects";
 import { LINKEDIN_URL, GITHUB_URL, EMAIL_ADDRESS } from "./lib/constants";
 import PageNotification from "./components/notification";
-import Link from "next/link";
 import { Tab, Tabs } from "./components/tab-component";
 import RenderMarkdown from "./components/markdown";
 import { ContactMeButton } from "./components/footer";
@@ -13,14 +12,34 @@ import { ContactMeButton } from "./components/footer";
 export default async function Page() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-center p-4">
-			
-				
+
+
 			<PageNotification>
 				<div className="flex flex-col items-start justify-center gap-2 w-fit sm:w-96 px-4 py-6 sm:p-6">
-					<h2 className="text-lg font-bold ">📢 Are you going to the gym?</h2>
-					<p className="text-sm text-start text-wrap">Get the chance to win a <strong className="shine-effect">10€ Amazon gift card</strong> by participating in this <strong>2-minute</strong> survey!</p>
+					<h2 className="text-lg font-bold ">📢 Looking for testers (places limited)</h2>
+					<p className="text-sm text-start text-wrap">
+						Requirements to participate:
+						
+						<ul className="list-disc list-inside text-sm">
+							<li>
+								Android phone with Android 11.0 or higher
+							</li>
+							<li>
+								WearOS smartwatch with WearOS 3.0 or higher
+							</li>
+						</ul>
 
-					<LinkButton href="https://forms.gle/VoqPnzx83hUq6faj6" target="_blank">Take the survey</LinkButton>
+
+						<details className="w-full mt-1">
+							<summary className="cursor-pointer">More Info</summary>
+							<p className="text-sm text-start text-wrap">
+								WatchLock is a WearOS app for personal security that allows you to unlock your phone with your smartwatch. Never leave your phone unlocked for bad people.<br />
+							</p>
+						</details>
+
+					</p>
+
+					<LinkButton href="https://groups.google.com/g/watchlock" target="_blank">Join Now! 🚀💪</LinkButton>
 				</div>
 			</PageNotification>
 
@@ -69,7 +88,7 @@ function Header() {
 					width={100}
 					height={100}
 				/>
-		
+
 			</div>
 
 
@@ -106,27 +125,6 @@ function Header() {
 				</div>
 			</div>
 		</section>
-	);
-}
-
-function BusinessCards() {
-	return (
-		<Link
-			href="https://www.instagram.com/p/C7HkuPnIMto/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
-			target="_blank"
-			className="group hidden xl:flex flex-col absolute -right-16 h-fit hover:-translate-x-2 transition-transform"
-		>
-			<Image
-				className="size-64 object-contain"
-				src="/business_cards.webp"
-				alt="Emil Krebs Business Cards"
-				width={100}
-				height={100}
-			/>
-			<span className="group-hover:opacity-100 absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs p-1 opacity-0 transition-opacity">
-				New business cards available!
-			</span>
-		</Link>
 	);
 }
 
