@@ -65,7 +65,7 @@ export default function Projects() {
 
 			</section>
 			
-			<div className="flex justify-center mt-12">
+			<div className="flex justify-end mt-12">
 				<LinkButton href={`${GITHUB_URL}?tab=repositories`}>
 					<span className="text-lg font-medium">View More Projects</span>
 				</LinkButton>

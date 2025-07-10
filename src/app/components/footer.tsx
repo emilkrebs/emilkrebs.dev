@@ -5,16 +5,18 @@ import Image from "next/image";
 
 export function ContactMeButton() {
 	return (
-		<LinkButton className="w-fit" href={`mailto:${EMAIL_ADDRESS}`}>
-			<div className="flex items-center gap-2">
-				<Image
-					className="filter-white"
-					src="/icons/email.svg"
-					alt="Contact"
-					width={20}
-					height={20}
-				/>
-				<span>Contact Me</span>
+		<LinkButton className="group" href={`mailto:${EMAIL_ADDRESS}`}>
+			<div className="flex items-center gap-3">
+				<div className="p-1 bg-purple-500/20 rounded-lg group-hover:bg-purple-500/40 transition-colors duration-300">
+					<Image
+						className="filter-white group-hover:scale-110 transition-transform duration-300"
+						src="/icons/email.svg"
+						alt="Contact"
+						width={18}
+						height={18}
+					/>
+				</div>
+				<span className="font-medium">Contact Me</span>
 			</div>
 		</LinkButton>
 	);
@@ -22,14 +24,45 @@ export function ContactMeButton() {
 
 export function Footer() {
 	return (
-		<footer className="flex flex-col mt-auto sm:flex-row items-center justify-between w-full gap-y-4 bg-black px-16 py-4">
-			<Link className="uppercase text-lg hover:underline" href="/imprint">Imprint</Link>
+		<footer className="w-full mt-auto bg-gradient-to-t from-slate-900 to-slate-800 border-t border-purple-500/20">
+			<div className="flex justify-center w-full px-4 sm:px-6 lg:px-8 py-12">
+				<div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-7xl gap-y-6">
+					
+					{/* Left side - Links */}
+					<div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+						<Link 
+							className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:scale-105 relative group" 
+							href="/imprint"
+						>
+							<span className="relative z-10">Imprint</span>
+							<div className="absolute inset-0 bg-purple-500/20 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 -z-10"></div>
+						</Link>
+						<Link 
+							className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:scale-105 relative group" 
+							href="/privacy"
+						>
+							<span className="relative z-10">Privacy Policy</span>
+							<div className="absolute inset-0 bg-purple-500/20 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 -z-10"></div>
+						</Link>
+					</div>
 
+					{/* Center - Contact Button */}
+					<div className="flex-shrink-0">
+						<ContactMeButton />
+					</div>
 
-			{/* Contact Me Button */}
-			<ContactMeButton />
+					{/* Right side - Copyright */}
+					<div className="text-center sm:text-right">
+						<p className="text-gray-400 text-sm">
+							© {new Date().getFullYear()} Emil Krebs
+						</p>
+						<p className="text-gray-500 text-xs mt-1">
+							Built with Next.js & Tailwind CSS
+						</p>
+					</div>
 
-			<Link className="uppercase text-lg hover:underline" href="/privacy">Privacy Policy</Link>
+				</div>
+			</div>
 		</footer>
 	);
 }
