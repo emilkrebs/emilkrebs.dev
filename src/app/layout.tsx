@@ -53,7 +53,7 @@ export default function RootLayout({
 				<link rel="canonical" href="https://emilkrebs.dev" />
 			</head>
 			<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-			<body className="font-sans overflow-x-hidden">
+			<body className="overflow-x-hidden">
 				{children}
 				<Footer />
 			</body>

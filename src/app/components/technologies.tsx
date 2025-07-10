@@ -56,7 +56,7 @@ export default function Technologies() {
 			<h2 className="text-2xl text-start font-bold uppercase w-full">Technologies</h2>
 
 			<section id="technologies" className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
-				<p className="text-base text-start font-light w-full ">
+				<p className="text-base text-start w-full ">
 					I have experience with a wide range of technologies, including but not limited to:
 				</p>
 

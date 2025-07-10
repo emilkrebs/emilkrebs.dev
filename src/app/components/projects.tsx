@@ -13,11 +13,20 @@ export default function Projects() {
 			<section id="projects" className="flex flex-wrap justify-end w-full gap-4 mt-2 bg-transparent rounded-lg">
 
 				<Project
+					title="VailNote"
+					icon="https://vailnote.com/logo.png"
+					description="Open-source, encrypted note sharing with zero-knowledge encryption, self-destructing notes, and anonymous rate limiting."
+					link="https://vailnote.com/"
+					tags={["TypeScript", "Fresh", "Tailwind CSS", "Deno", "Preact", "MongoDB", "Cybersecurity", "Encryption", "Zero-Knowledge"]}
+				/>
+
+
+				<Project
 					title="BIPoC Climate Justice Summit Website"
-					icon="https://bipoclimatejusticenetwork.org/logo.webp"
-					description="The official website for the BIPoC Climate Justice Summit 2024"
+					icon="https://bipoclimatejusticenetwork.org/poster.png"
+					description="The official website for the BIPoC Climate Justice Summit 2024 & 2025 featuring localized content and 100% markdown support."
 					link="https://bipoclimatejusticenetwork.org/"
-					tags={["Next.js", "Tailwind CSS", "TypeScript"]}
+					tags={["Next.js", "Tailwind CSS", "TypeScript", "React"]}
 				/>
 
 				<Project
@@ -76,7 +85,7 @@ export function Project(props: ProjectProps) {
 			<div className="flex flex-col items-start justify-between h-full gap-2">
 
 				<div className="flex flex-row items-center justify-start w-full gap-2">
-					{props.icon && <Image src={props.icon} alt={props.title} className="block rounded-md sm:hidden size-8" width={36} height={36} />}
+					{props.icon && <Image src={props.icon} alt={props.title} className="block rounded-md sm:hidden size-8 object-cover" width={36} height={36} />}
 					<h3 className="text-xl font-bold">{props.title}</h3>
 				</div>
 
@@ -84,7 +93,7 @@ export function Project(props: ProjectProps) {
 
 				<div className="flex flex-wrap h-full gap-2">
 					{props.tags.map((tag, index) => (
-						<span key={index} className="px-2 py-1 text-sm bg-purple-900 rounded-lg">{tag}</span>
+						<span key={index} className="px-2 py-1 text-sm bg-purple-900 rounded-lg">#{tag}</span>
 					))}
 				</div>
 			</div>

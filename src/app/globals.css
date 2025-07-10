@@ -1,14 +1,7 @@
 @tailwind utilities;
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-
-@layer base {
-	@font-face {
-		font-family: 'Montserrat';
-		src: url('/fonts/Montserrat.ttf') format('truetype');
-		font-display: swap;
-	}
-}
 
 
 :root {
@@ -23,6 +16,8 @@ body {
 	background: linear-gradient(to right bottom,
 			transparent,
 			rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+	font-family: "Montserrat", sans-serif;
+	@apply font-sans text-base;
 }
 
 @layer utilities {

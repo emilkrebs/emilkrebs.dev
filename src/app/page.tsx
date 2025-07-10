@@ -12,8 +12,6 @@ import { ContactMeButton } from "./components/footer";
 export default async function Page() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-center p-4">
-
-
 			<PageNotification>
 				<div className="flex flex-col items-start justify-center gap-2 w-fit sm:w-96 px-4 py-6 sm:p-6">
 					<h2 className="text-lg font-bold ">📢 Looking for testers (places limited)</h2>
@@ -120,7 +118,7 @@ function About() {
 			<h2 className="text-2xl text-start font-bold uppercase w-full">About</h2>
 
 			<section id="about" className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
-				<p className="text-base text-start font-light w-full ">
+				<p className="text-base text-start w-full">
 					Hi there 👋
 					<br />
 					I am a passionate software engineer from Kiel, Germany, learning and growing every day.
