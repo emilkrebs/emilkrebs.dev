@@ -7,14 +7,16 @@ import Link from "next/link";
 
 export default function Projects() {
 	return (
-		<div className="w-full">
-			<h2 className="w-full mt-8 text-2xl font-bold uppercase text-start">Featured Projects</h2>
+		<div className="w-full animate-slide-up">
+			<h2 className="text-3xl md:text-4xl font-bold uppercase mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+				Featured Projects
+			</h2>
 
-			<section id="projects" className="flex flex-wrap justify-end w-full gap-4 mt-2 bg-transparent rounded-lg">
+			<section id="projects" className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
 
 				<Project
 					title="VailNote"
-					icon="https://vailnote.com/logo.png"
+					icon="https://vailnote.com/apple-touch-icon.png"
 					description="Open-source, encrypted note sharing with zero-knowledge encryption, self-destructing notes, and anonymous rate limiting."
 					link="https://vailnote.com/"
 					tags={["TypeScript", "Fresh", "Tailwind CSS", "Deno", "Preact", "MongoDB", "Cybersecurity", "Encryption", "Zero-Knowledge"]}
@@ -61,8 +63,13 @@ export default function Projects() {
 					tags={["Langium", "Node.js", "TypeScript", "React", "Hugo"]}
 				/>
 
-				<LinkButton href={`${GITHUB_URL}?tab=repositories`}>View More</LinkButton>
 			</section>
+			
+			<div className="flex justify-center mt-12">
+				<LinkButton href={`${GITHUB_URL}?tab=repositories`}>
+					<span className="text-lg font-medium">View More Projects</span>
+				</LinkButton>
+			</div>
 		</div>
 
 	);
@@ -78,22 +85,46 @@ interface ProjectProps {
 
 export function Project(props: ProjectProps) {
 	return (
-
-		<Link href={props.link} className="flex flex-row items-start justify-start w-full gap-4 p-4 border-2 border-white rounded-lg hover:backdrop-blur-lg h-fit hover:shadow-md">
-			{props.icon && <Image src={props.icon} alt={props.title} className="hidden rounded-md sm:block size-32" width={36} height={36} />}
-
-			<div className="flex flex-col items-start justify-between h-full gap-2">
-
-				<div className="flex flex-row items-center justify-start w-full gap-2">
-					{props.icon && <Image src={props.icon} alt={props.title} className="block rounded-md sm:hidden size-8 object-cover" width={36} height={36} />}
-					<h3 className="text-xl font-bold">{props.title}</h3>
+		<Link 
+			href={props.link} 
+			className="group card-modern rounded-2xl p-6 md:p-8 transition-all duration-300 hover:scale-105 hover:shadow-purple-500/30 cursor-pointer block"
+		>
+			<div className="flex flex-col gap-6 h-full">
+				{/* Header with icon and title */}
+				<div className="flex items-start gap-4">
+					{props.icon && (
+						<div className="relative flex-shrink-0">
+							<div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-blue-400 rounded-xl blur opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+							<Image 
+								src={props.icon} 
+								alt={props.title} 
+								className="relative rounded-xl object-contain w-16 h-16 md:w-20 md:h-20" 
+								width={80} 
+								height={80} 
+							/>
+						</div>
+					)}
+					<div className="flex-1 min-w-0">
+						<h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-purple-200 transition-colors duration-300 mb-2">
+							{props.title}
+						</h3>
+					</div>
 				</div>
 
-				<p className="text-base text-gray-200 sm:text-lg size-full">{props.description}</p>
+				{/* Description */}
+				<p className="text-gray-300 leading-relaxed flex-1 group-hover:text-gray-100 transition-colors duration-300">
+					{props.description}
+				</p>
 
-				<div className="flex flex-wrap h-full gap-2">
+				{/* Tags */}
+				<div className="flex flex-wrap gap-2">
 					{props.tags.map((tag, index) => (
-						<span key={index} className="px-2 py-1 text-sm bg-purple-900 rounded-lg">#{tag}</span>
+						<span 
+							key={index} 
+							className="px-3 py-1 text-xs md:text-sm bg-gradient-to-r from-purple-600/30 to-blue-600/30 border border-purple-500/30 rounded-full text-purple-200 group-hover:from-purple-500/40 group-hover:to-blue-500/40 transition-all duration-300"
+						>
+							#{tag}
+						</span>
 					))}
 				</div>
 			</div>
