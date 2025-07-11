@@ -4,11 +4,26 @@ import { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
 	metadataBase: new URL("https://emilkrebs.dev"),
-	title: "Emil Krebs",
-	description: "I am a software engineer with expertise in web development and Android applications. I am constantly growing and learning new skills every day.",
-	icons: [
-		"/favicon.svg",
-		"/favicon.ico"
+	title: {
+		default: "Emil Krebs - Full-Stack Software Engineer",
+		template: "%s | Emil Krebs"
+	},
+	description: "Passionate full-stack software engineer from Kiel, Germany, specializing in TypeScript, React, Next.js, Android development, and open-source contributions. Available for freelance projects and full-time opportunities.",
+	keywords: [
+		"Emil Krebs",
+		"Full-Stack Developer",
+		"Software Engineer", 
+		"TypeScript",
+		"React",
+		"Next.js",
+		"Android Development",
+		"Kotlin",
+		"Web Development",
+		"Mobile Development",
+		"Open Source",
+		"Freelance Developer",
+		"Germany",
+		"Kiel"
 	],
 	authors: [
 		{
@@ -17,19 +32,47 @@ export const metadata: Metadata = {
 		}
 	],
 	creator: "Emil Krebs",
-	robots: "index, follow",
+	publisher: "Emil Krebs",
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			"max-video-preview": -1,
+			"max-image-preview": "large",
+			"max-snippet": -1
+		}
+	},
 	openGraph: {
 		type: "website",
-		title: "Emil Krebs",
-		description: "I am a software engineer with expertise in web development and Android applications. I am constantly growing and learning new skills every day.",
+		locale: "en_US",
+		url: "https://emilkrebs.dev",
+		title: "Emil Krebs - Full-Stack Software Engineer",
+		description: "Passionate full-stack software engineer from Kiel, Germany, specializing in TypeScript, React, Next.js, Android development, and open-source contributions.",
+		siteName: "Emil Krebs Portfolio",
 		images: [
 			{
 				url: "/opengraph_image.webp",
 				width: 1200,
 				height: 630,
-				alt: "Emil Krebs"
+				alt: "Emil Krebs - Full-Stack Software Engineer Portfolio"
 			}
 		]
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Emil Krebs - Full-Stack Software Engineer",
+		description: "Passionate full-stack software engineer from Kiel, Germany, specializing in TypeScript, React, Next.js, Android development, and open-source contributions.",
+		images: ["/opengraph_image.webp"]
+	},
+	icons: {
+		icon: "/favicon.svg",
+		shortcut: "/favicon.ico",
+		apple: "/favicon.svg"
+	},
+	verification: {
+		google: "verification_token_here" // Add your Google Search Console verification
 	}
 };
 
