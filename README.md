@@ -35,11 +35,11 @@ npm run build
 npm run dev
 ```
 
-## Performance [*↗*](https://pagespeed.web.dev/analysis/https-emilkrebs-dev/ca0xfmzgyy?utm_source=search_console&form_factor=mobile&hl=en_GB)
+## Performance [*↗*](https://pagespeed.web.dev/analysis/https-emilkrebs-dev/oai9o409h0?hl=en_GB&form_factor=mobile)
 
-![performance](https://github.com/emilkrebs/emilkrebs.dev/assets/68400102/fd5defb4-3747-43bf-b799-79690297428a)
-
+<img width="1016" height="1069" alt="image" src="https://github.com/user-attachments/assets/87a32615-5980-4608-b28b-ed3c8170310a" />
 
 ## Screenshot
 
-![screenshot](https://github.com/emilkrebs/emilkrebs-website/assets/68400102/c1993c83-c638-4f6f-b2d6-f962e906ee41)
+<img width="1920" height="947" alt="image" src="https://github.com/user-attachments/assets/f3c216ba-4565-4b34-806a-66380c9d7cff" />
+
