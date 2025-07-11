@@ -1,23 +1,17 @@
 import Link from "next/link";
 import { EMAIL_ADDRESS } from "../lib/constants";
 import LinkButton from "./link-button";
-import Image from "next/image";
 
 export function ContactMeButton() {
 	return (
-		<LinkButton className="group" href={`mailto:${EMAIL_ADDRESS}`}>
-			<div className="flex items-center gap-3">
-				<div className="p-1 bg-purple-500/20 rounded-lg group-hover:bg-purple-500/40 transition-colors duration-300">
-					<Image
-						className="filter-white group-hover:scale-110 transition-transform duration-300"
-						src="/icons/email.svg"
-						alt="Contact"
-						width={18}
-						height={18}
-					/>
-				</div>
-				<span className="font-medium">Contact Me</span>
-			</div>
+		<LinkButton 
+			className="group" 
+			href={`mailto:${EMAIL_ADDRESS}`}
+			icon="/icons/email.svg"
+			iconAlt="Contact"
+			iconSize={18}
+		>
+			<span className="font-medium">Contact Me</span>
 		</LinkButton>
 	);
 }

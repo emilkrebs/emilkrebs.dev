@@ -15,12 +15,12 @@ export default async function Page() {
 			<PageNotification>
 				<div className="flex flex-col items-start justify-center gap-3 w-fit sm:w-96 px-6 py-8 sm:p-8">
 					<h2 className="text-xl font-bold flex items-center gap-2">
-						📢 Looking for testers 
+						📢 Looking for testers
 						<span className="text-sm bg-red-500 text-white px-2 py-1 rounded-full">Limited</span>
 					</h2>
 					<p className="text-sm text-start text-wrap leading-relaxed">
 						Requirements to participate:
-						
+
 						<ul className="list-disc list-inside text-sm mt-2 space-y-1">
 							<li>
 								Android phone with Android 11.0 or higher
@@ -87,35 +87,31 @@ function Header() {
 						Emil Krebs
 					</h1>
 					<h2 className="text-lg md:text-xl font-light text-gray-300 max-w-md">
-						Passionate Software Engineer from Kiel, Germany
+						Passionate Software Engineer
 					</h2>
 				</div>
 
 				<div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
-					<LinkButton className="min-w-[140px]" href={LINKEDIN_URL} target="_blank">
-						<div className="flex items-center gap-2">
-							<Image
-								className="filter-white"
-								src="/icons/linkedin.svg"
-								alt="Open LinkedIn"
-								width={20}
-								height={20}
-							/>
-							<span>LinkedIn</span>
-						</div>
+					<LinkButton 
+						className="min-w-[140px]" 
+						href={LINKEDIN_URL} 
+						target="_blank"
+						icon="/icons/linkedin.svg"
+						iconAlt="Open LinkedIn"
+						iconSize={20}
+					>
+						<span>LinkedIn</span>
 					</LinkButton>
 
-					<LinkButton className="min-w-[140px]" href={GITHUB_URL} target="_blank">
-						<div className="flex items-center gap-2">
-							<Image
-								className="filter-white"
-								src="/icons/github.svg"
-								alt="Open GitHub"
-								width={20}
-								height={20}
-							/>
-							<span>GitHub</span>
-						</div>
+					<LinkButton 
+						className="min-w-[140px]" 
+						href={GITHUB_URL} 
+						target="_blank"
+						icon="/icons/github.svg"
+						iconAlt="Open GitHub"
+						iconSize={20}
+					>
+						<span>GitHub</span>
 					</LinkButton>
 				</div>
 
@@ -145,24 +141,21 @@ function About() {
 						<br className="mb-4" />
 						I am a passionate software engineer from Kiel, Germany, learning and growing every day.
 						<br className="mb-4" />
-						I contribute to open-source projects and I love constantly learning new skills with my side projects.
+						I often contribute to the open-source community and I love constantly learning new skills with my side projects.
 						<br className="mb-4" />
 						<span className="text-purple-300 font-medium">I am driven by creativity and a never-ending urge for knowledge.</span>
 					</p>
 
 					<div className="flex justify-center">
 						{/* Download Resume Button */}
-						<LinkButton href="/resume.pdf" download>
-							<div className="flex items-center gap-3">
-								<Image
-									className="filter-white"
-									src="/icons/download.svg"
-									alt="Download"
-									width={24}
-									height={24}
-								/>
-								<span className="text-lg font-medium">Download Resume</span>
-							</div>
+						<LinkButton 
+							href="/resume.pdf" 
+							download
+							icon="/icons/download.svg"
+							iconAlt="Download"
+							iconSize={24}
+						>
+							<span className="text-lg font-medium">Download Resume</span>
 						</LinkButton>
 					</div>
 				</div>
@@ -186,9 +179,9 @@ As a seasoned full-stack web developer, I specialize in creating dynamic or stat
 - **Frontend Development:** Building interfaces using HTML, CSS, TypeScript, and popular frameworks like React and Tailwind CSS.
 - **Backend Development:** Designing robust and scalable server-side architecture with languages like Node.js, Python, and C#.
 - **Full-Stack Development:** Seamlessly integrating frontend and backend technologies to deliver a complete web solution using full-stack frameworks like Next.js, ASP.net or Fresh.
-- **Progressive Web Apps (PWAs):** Developing web applications that offer a native app-like experience across all devices.
-
+- **Static Site Generators:** Creating fast and SEO-friendly static websites like this one using modern tools like Next.js.
 Let's discuss your project and see how I can help you achieve your goals.
+- **Cybersecurity:** Implementing best practices to secure web applications and protect user data using the latest encryption and security protocols.
 		  `,
 		},
 		{
