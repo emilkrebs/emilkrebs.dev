@@ -74,12 +74,12 @@ export default async function Page() {
 			/>
 
 			<PageNotification>
-				<div className="flex flex-col items-start justify-center gap-3 w-fit sm:w-96 px-6 py-8 sm:p-8">
-					<h2 className="text-xl font-bold flex items-center gap-2">
-						📢 Looking for testers
-						<span className="text-sm bg-red-500 text-white px-2 py-1 rounded-full">Limited</span>
+				<div className="flex flex-col items-start justify-center gap-3 w-full sm:w-96 px-4 py-6 sm:px-6 sm:py-8 md:p-8">
+					<h2 className="text-lg sm:text-xl font-bold flex flex-col sm:flex-row items-start sm:items-center gap-2">
+						<span>📢 Looking for testers</span>
+						<span className="text-xs sm:text-sm bg-red-500 text-white px-2 py-1 rounded-full">Limited</span>
 					</h2>
-					<div className="text-sm text-start text-wrap leading-relaxed">
+					<div className="text-sm leading-relaxed w-full">
 						Requirements to participate:
 
 						<ul className="list-disc list-inside text-sm mt-2 space-y-1">
@@ -91,26 +91,27 @@ export default async function Page() {
 							</li>
 						</ul>
 
-
 						<details className="w-full mt-3">
 							<summary className="cursor-pointer hover:text-purple-300 transition-colors">More Info</summary>
-							<p className="text-sm text-start text-wrap mt-2 leading-relaxed">
+							<p className="text-sm mt-2 leading-relaxed">
 								WatchLock is a WearOS app for personal security that allows you to unlock your phone with your smartwatch. Never leave your phone unlocked for bad people.<br />
 							</p>
 						</details>
 
 					</div>
 
-					<LinkButton href="https://groups.google.com/g/watchlock" target="_blank">Join Now! 🚀💪</LinkButton>
+					<LinkButton href="https://groups.google.com/g/watchlock" target="_blank" className="w-full sm:w-auto">
+						<span className="text-sm sm:text-base">Join Now! 🚀💪</span>
+					</LinkButton>
 				</div>
 			</PageNotification>
 
-			<div className="flex flex-col items-center justify-center w-full gap-16 pt-12 pb-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
+			<div className="flex flex-col items-center justify-center w-full gap-12 sm:gap-16 pt-8 sm:pt-12 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
 
 				{/* Header */}
 				<Header />
 
-				<div className="flex flex-col items-center justify-center gap-20 w-full max-w-7xl">
+				<div className="flex flex-col items-center justify-center gap-16 sm:gap-20 w-full max-w-7xl">
 
 					<About />
 
@@ -128,52 +129,53 @@ export default async function Page() {
 
 function Header() {
 	return (
-		<header className="flex flex-col justify-center items-center gap-8 w-full max-w-2xl mx-auto text-center animate-fade-in">
+		<header className="flex flex-col justify-center items-center gap-6 sm:gap-8 w-full max-w-2xl mx-auto text-center animate-fade-in px-4">
 			<div className="relative group">
 				<div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-blue-400 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
 				<Image
-					className="relative rounded-3xl w-48 h-48 object-cover shadow-2xl border-2 border-white/20"
+					className="relative rounded-3xl w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-cover shadow-2xl border-2 border-white/20"
 					src="/pictures/main.webp"
 					alt="Emil Krebs - Full-Stack Software Engineer from Kiel, Germany"
 					placeholder="blur"
 					blurDataURL=" data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMzQgMTM0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zOnNlcmlmPSJodHRwOi8vd3d3LnNlcmlmLmNvbS8iIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MjsiPjxyZWN0IGlkPSJBcnRib2FyZDEiIHg9IjAiIHk9IjAiIHdpZHRoPSIxMzMuMzMzIiBoZWlnaHQ9IjEzMy4zMzMiIHN0eWxlPSJmaWxsOiM4ODNlY2U7Ii8+PGcgaWQ9IkFydGJvYXJkMTEiIHNlcmlmOmlkPSJBcnRib2FyZDEiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDQuNTM3OTIsMCwwLDQuNTM3OTIsLTE2LjMwMDEsLTcuMTQ1MDcpIj48dGV4dCB4PSI1LjA4NnB4IiB5PSIyMi4wNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vbnRzZXJyYXQtQm9sZCcsICdNb250c2VycmF0Jztmb250LXdlaWdodDo3MDA7Zm9udC1zaXplOjE2LjUyN3B4O2ZpbGw6I2ZmZjsiPkU8L3RleHQ+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMTYuNTI3NCwwLDAsMTYuNTI3NCwyOC42MDQ0LDIyLjA1MDEpIj48L2c+PHRleHQgeD0iMTYuMTc2cHgiIHk9IjIyLjA1cHgiIHN0eWxlPSJmb250LWZhbWlseTonTW9udHNlcnJhdC1FeHRyYUJvbGRJdGFsaWMnLCAnTW9udHNlcnJhdCc7Zm9udC13ZWlnaHQ6ODAwO2ZvbnQtc3R5bGU6aXRhbGljO2ZvbnQtc2l6ZToxNi41MjdweDtmaWxsOiNmZmY7Ij5LPC90ZXh0PjwvZz48L2c+PC9zdmc+"
 					width={192}
 					height={192}
+					sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
 					priority
 				/>
 			</div>
 
-			<div className="flex flex-col items-center justify-center gap-6">
-				<div className="space-y-2">
-					<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold uppercase bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+			<div className="flex flex-col items-center justify-center gap-4 sm:gap-6 w-full">
+				<div className="space-y-1 sm:space-y-2">
+					<h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight">
 						Emil Krebs
 					</h1>
-					<h2 className="text-lg md:text-xl font-light text-gray-300 max-w-md">
+					<h2 className="text-base sm:text-lg md:text-xl font-light text-gray-300 max-w-md px-4">
 						Passionate Software Engineer from Kiel, Germany
 					</h2>
 				</div>
 
-				<div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
-					<LinkButton 
-						className="min-w-[140px]" 
-						href={LINKEDIN_URL} 
+				<div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-2 w-full sm:w-auto">
+					<LinkButton
+						className="min-w-[120px] sm:min-w-[140px] w-full sm:w-auto"
+						href={LINKEDIN_URL}
 						target="_blank"
 						icon="/icons/linkedin.svg"
 						iconAlt="Open LinkedIn"
 						iconSize={20}
 					>
-						<span>LinkedIn</span>
+						<span className="text-sm sm:text-base">LinkedIn</span>
 					</LinkButton>
 
-					<LinkButton 
-						className="min-w-[140px]" 
-						href={GITHUB_URL} 
+					<LinkButton
+						className="min-w-[120px] sm:min-w-[140px] w-full sm:w-auto"
+						href={GITHUB_URL}
 						target="_blank"
 						icon="/icons/github.svg"
 						iconAlt="Open GitHub"
 						iconSize={20}
 					>
-						<span>GitHub</span>
+						<span className="text-sm sm:text-base">GitHub</span>
 					</LinkButton>
 				</div>
 
@@ -192,7 +194,7 @@ function Header() {
 function About() {
 	return (
 		<section className="w-full animate-slide-up" id="about" aria-labelledby="about-heading">
-			<h2 
+			<h2
 				id="about-heading"
 				className="text-3xl md:text-4xl font-bold uppercase mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
 			>
@@ -204,19 +206,16 @@ function About() {
 					<p className="text-lg md:text-xl leading-relaxed text-gray-100 mb-8 text-center">
 						Hi there! 👋
 						<br className="mb-4" />
-						I&apos;m a passionate <span className="text-purple-300 font-medium">full-stack software engineer</span> from Kiel, Germany, who believes that great code is the intersection of creativity and logic.
-						<br className="mb-6" />
-						When I&apos;m not crafting elegant solutions for complex problems, you&apos;ll find me <span className="text-blue-300 font-medium">contributing to open-source projects</span> and experimenting with cutting-edge technologies through my side projects.
-						<br className="mb-6" />
-						What drives me? <span className="text-purple-300 font-medium">The thrill of turning ideas into reality</span> and the endless possibilities that come with every new challenge.
+						I&apos;m a passionate software engineer from Kiel, Germany, always learning and growing every day.
+						I love learning new skills, building side projects, and contributing to the open-source community.
 						<br className="mb-4" />
 						<span className="text-gradient bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-semibold">Let&apos;s build something amazing together!</span>
 					</p>
 
 					<div className="flex justify-center">
 						{/* Download Resume Button */}
-						<LinkButton 
-							href="/resume.pdf" 
+						<LinkButton
+							href="/resume.pdf"
 							download
 							icon="/icons/download.svg"
 							iconAlt="Download Resume"
@@ -301,7 +300,7 @@ Let's discuss your unique requirements and find a solution that works for you.
 
 	return (
 		<section className="w-full animate-slide-up" id="hire-me" aria-labelledby="hire-me-heading">
-			<h2 
+			<h2
 				id="hire-me-heading"
 				className="text-3xl md:text-4xl font-bold uppercase mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
 			>
