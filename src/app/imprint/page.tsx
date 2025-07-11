@@ -1,4 +1,5 @@
 import RenderMarkdown from "../components/markdown";
+import LinkButton from "../components/link-button";
 import { EMAIL_ADDRESS, PHONE_NUMBER } from "../lib/constants";
 
 
@@ -33,7 +34,12 @@ This site contains links to external websites over which we have no control. The
 export default function Imprint() {
 	return (
 		<main className="flex min-h-screen w-full flex-col items-center justify-start p-4">
-			<section className="flex flex-col justify-center items-start gap-x-4 w-full h-full p-4">
+			<div className="w-full max-w-4xl my-8">
+				<LinkButton href="/">
+					← Back to Home
+				</LinkButton>
+			</div>
+			<section className="flex flex-col justify-center items-start gap-x-4 w-full max-w-4xl h-full p-4">
 				<RenderMarkdown content={markdown} />
 			</section>
 		</main>

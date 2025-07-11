@@ -8,17 +8,81 @@ import { Tab, Tabs } from "./components/tab-component";
 import RenderMarkdown from "./components/markdown";
 import { ContactMeButton } from "./components/footer";
 
+// Generate structured data for the person/developer
+function generatePersonJsonLd() {
+	return {
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"name": "Emil Krebs",
+		"jobTitle": "Full-Stack Software Engineer",
+		"description": "Passionate full-stack software engineer from Kiel, Germany, specializing in web development, mobile apps, and open-source contributions.",
+		"url": "https://emilkrebs.dev",
+		"image": "https://emilkrebs.dev/pictures/main.webp",
+		"sameAs": [
+			"https://github.com/emilkrebs",
+			"https://linkedin.com/in/emilkrebs"
+		],
+		"address": {
+			"@type": "PostalAddress",
+			"addressLocality": "Kiel",
+			"addressCountry": "Germany"
+		},
+		"knowsAbout": [
+			"TypeScript", "JavaScript", "React", "Next.js", "Node.js", "Python", "Kotlin", "Android Development", "Web Development", "Mobile Development", "Cybersecurity", "Open Source"
+		],
+		"alumniOf": {
+			"@type": "Organization",
+			"name": "Software Engineering"
+		}
+	};
+}
+
+function generateWebsiteJsonLd() {
+	return {
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "Emil Krebs - Software Engineer Portfolio",
+		"description": "Professional portfolio of Emil Krebs, a full-stack software engineer from Kiel, Germany, specializing in web development, mobile apps, and open-source projects.",
+		"url": "https://emilkrebs.dev",
+		"author": {
+			"@type": "Person",
+			"name": "Emil Krebs"
+		},
+		"inLanguage": "en-US",
+		"copyrightHolder": {
+			"@type": "Person",
+			"name": "Emil Krebs"
+		}
+	};
+}
+
 
 export default async function Page() {
+	const personJsonLd = generatePersonJsonLd();
+	const websiteJsonLd = generateWebsiteJsonLd();
+
 	return (
-		<main className="flex min-h-screen w-full flex-col items-center justify-center p-4">
+		<main className="flex min-h-screen w-full flex-col items-center justify-start">
+			{/* Structured Data */}
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+			/>
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+			/>
+
 			<PageNotification>
-				<div className="flex flex-col items-start justify-center gap-2 w-fit sm:w-96 px-4 py-6 sm:p-6">
-					<h2 className="text-lg font-bold ">📢 Looking for testers (places limited)</h2>
-					<p className="text-sm text-start text-wrap">
+				<div className="flex flex-col items-start justify-center gap-3 w-full sm:w-96 px-4 py-6 sm:px-6 sm:py-8 md:p-8">
+					<h2 className="text-lg sm:text-xl font-bold flex flex-col sm:flex-row items-start sm:items-center gap-2">
+						<span>📢 Looking for testers</span>
+						<span className="text-xs sm:text-sm bg-red-500 text-white px-2 py-1 rounded-full">Limited</span>
+					</h2>
+					<div className="text-sm leading-relaxed w-full">
 						Requirements to participate:
-						
-						<ul className="list-disc list-inside text-sm">
+
+						<ul className="list-disc list-inside text-sm mt-2 space-y-1">
 							<li>
 								Android phone with Android 11.0 or higher
 							</li>
@@ -27,27 +91,27 @@ export default async function Page() {
 							</li>
 						</ul>
 
-
-						<details className="w-full mt-1">
-							<summary className="cursor-pointer">More Info</summary>
-							<p className="text-sm text-start text-wrap">
+						<details className="w-full mt-3">
+							<summary className="cursor-pointer hover:text-purple-300 transition-colors">More Info</summary>
+							<p className="text-sm mt-2 leading-relaxed">
 								WatchLock is a WearOS app for personal security that allows you to unlock your phone with your smartwatch. Never leave your phone unlocked for bad people.<br />
 							</p>
 						</details>
 
-					</p>
+					</div>
 
-					<LinkButton href="https://groups.google.com/g/watchlock" target="_blank">Join Now! 🚀💪</LinkButton>
+					<LinkButton href="https://groups.google.com/g/watchlock" target="_blank" className="w-full sm:w-auto">
+						<span className="text-sm sm:text-base">Join Now! 🚀💪</span>
+					</LinkButton>
 				</div>
 			</PageNotification>
 
-			<div className="flex flex-col items-center justify-center w-full gap-4 mt-8 overflow-x-hidden">
+			<div className="flex flex-col items-center justify-center w-full gap-12 sm:gap-16 pt-8 sm:pt-12 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
 
 				{/* Header */}
 				<Header />
 
-				<div className="flex flex-col items-center justify-center gap-12 w-fit max-w-screen-xl md:p-24 xl:p-48">
-
+				<div className="flex flex-col items-center justify-center gap-16 sm:gap-20 w-full max-w-7xl">
 
 					<About />
 
@@ -65,92 +129,109 @@ export default async function Page() {
 
 function Header() {
 	return (
-		<section className="flex flex-col justify-center items-center gap-2 gap-x-4 w-full h-full">
-			<Image
-				className="rounded-3xl w-44 h-full shadow-md"
-				src="/pictures/main.webp"
-				alt="Picture of Emil Krebs"
-				placeholder="blur"
-				blurDataURL=" data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMzQgMTM0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zOnNlcmlmPSJodHRwOi8vd3d3LnNlcmlmLmNvbS8iIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MjsiPjxyZWN0IGlkPSJBcnRib2FyZDEiIHg9IjAiIHk9IjAiIHdpZHRoPSIxMzMuMzMzIiBoZWlnaHQ9IjEzMy4zMzMiIHN0eWxlPSJmaWxsOiM4ODNlY2U7Ii8+PGcgaWQ9IkFydGJvYXJkMTEiIHNlcmlmOmlkPSJBcnRib2FyZDEiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDQuNTM3OTIsMCwwLDQuNTM3OTIsLTE2LjMwMDEsLTcuMTQ1MDcpIj48dGV4dCB4PSI1LjA4NnB4IiB5PSIyMi4wNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vbnRzZXJyYXQtQm9sZCcsICdNb250c2VycmF0Jztmb250LXdlaWdodDo3MDA7Zm9udC1zaXplOjE2LjUyN3B4O2ZpbGw6I2ZmZjsiPkU8L3RleHQ+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMTYuNTI3NCwwLDAsMTYuNTI3NCwyOC42MDQ0LDIyLjA1MDEpIj48L2c+PHRleHQgeD0iMTYuMTc2cHgiIHk9IjIyLjA1cHgiIHN0eWxlPSJmb250LWZhbWlseTonTW9udHNlcnJhdC1FeHRyYUJvbGRJdGFsaWMnLCAnTW9udHNlcnJhdCc7Zm9udC13ZWlnaHQ6ODAwO2ZvbnQtc3R5bGU6aXRhbGljO2ZvbnQtc2l6ZToxNi41MjdweDtmaWxsOiNmZmY7Ij5LPC90ZXh0PjwvZz48L2c+PC9zdmc+"
-				width={100}
-				height={100}
-			/>
+		<header className="flex flex-col justify-center items-center gap-6 sm:gap-8 w-full max-w-2xl mx-auto text-center animate-fade-in px-4">
+			<div className="relative group">
+				<div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-blue-400 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
+				<Image
+					className="relative rounded-3xl w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-cover shadow-2xl border-2 border-white/20"
+					src="/pictures/main.webp"
+					alt="Emil Krebs - Full-Stack Software Engineer from Kiel, Germany"
+					placeholder="blur"
+					blurDataURL="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMzQgMTM0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zOnNlcmlmPSJodHRwOi8vd3d3LnNlcmlmLmNvbS8iIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MjsiPjxyZWN0IGlkPSJBcnRib2FyZDEiIHg9IjAiIHk9IjAiIHdpZHRoPSIxMzMuMzMzIiBoZWlnaHQ9IjEzMy4zMzMiIHN0eWxlPSJmaWxsOiM4ODNlY2U7Ii8+PGcgaWQ9IkFydGJvYXJkMTEiIHNlcmlmOmlkPSJBcnRib2FyZDEiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDQuNTM3OTIsMCwwLDQuNTM3OTIsLTE2LjMwMDEsLTcuMTQ1MDcpIj48dGV4dCB4PSI1LjA4NnB4IiB5PSIyMi4wNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vbnRzZXJyYXQtQm9sZCcsICdNb250c2VycmF0Jztmb250LXdlaWdodDo3MDA7Zm9udC1zaXplOjE2LjUyN3B4O2ZpbGw6I2ZmZjsiPkU8L3RleHQ+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMTYuNTI3NCwwLDAsMTYuNTI3NCwyOC42MDQ0LDIyLjA1MDEpIj48L2c+PHRleHQgeD0iMTYuMTc2cHgiIHk9IjIyLjA1cHgiIHN0eWxlPSJmb250LWZhbWlseTonTW9udHNlcnJhdC1FeHRyYUJvbGRJdGFsaWMnLCAnTW9udHNlcnJhdCc7Zm9udC13ZWlnaHQ6ODAwO2ZvbnQtc3R5bGU6aXRhbGljO2ZvbnQtc2l6ZToxNi41MjdweDtmaWxsOiNmZmY7Ij5LPC90ZXh0PjwvZz48L2c+PC9zdmc+"
+					width={192}
+					height={192}
+					sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
+					priority
+				/>
+			</div>
 
-			<div className="flex flex-col items-center justify-start flex-nowrap min-w-fit h-full">
-				<h1 className="text-5xl my-2 text-center font-bold uppercase w-full">Emil Krebs</h1>
-				<h2 className="text-base text-center font-light w-full text-gray-200">Passionate Software Engineer</h2>
+			<div className="flex flex-col items-center justify-center gap-4 sm:gap-6 w-full">
+				<div className="space-y-1 sm:space-y-2">
+					<h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight">
+						Emil Krebs
+					</h1>
+					<h2 className="text-base sm:text-lg md:text-xl font-light text-gray-300 max-w-md px-4">
+						Passionate Software Engineer from Kiel, Germany
+					</h2>
+				</div>
 
-				<div className="flex flex-col items-center justify-start gap-4 mt-4 h-full">
-					<LinkButton className="w-full" href={LINKEDIN_URL} target="_blank">
-						<div className="flex items-center gap-2">
-							<Image
-								className="filter-white"
-								src="/icons/linkedin.svg"
-								alt="Open LinkedIn"
-								width={20}
-								height={20}
-							/>
-							<span>LinkedIn</span>
-						</div>
+				<div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-2 w-full sm:w-auto">
+					<LinkButton
+						className="min-w-[120px] sm:min-w-[140px] w-full sm:w-auto"
+						href={LINKEDIN_URL}
+						target="_blank"
+						icon="/icons/linkedin.svg"
+						iconAlt="Open LinkedIn"
+						iconSize={20}
+					>
+						<span className="text-sm sm:text-base">LinkedIn</span>
 					</LinkButton>
 
-					<LinkButton className="w-full" href={GITHUB_URL} target="_blank">
-						<div className="flex items-center gap-2">
-							<Image
-								className="filter-white"
-								src="/icons/github.svg"
-								alt="Open GitHub"
-								width={20}
-								height={20}
-							/>
-							<span>GitHub</span>
-						</div>
+					<LinkButton
+						className="min-w-[120px] sm:min-w-[140px] w-full sm:w-auto"
+						href={GITHUB_URL}
+						target="_blank"
+						icon="/icons/github.svg"
+						iconAlt="Open GitHub"
+						iconSize={20}
+					>
+						<span className="text-sm sm:text-base">GitHub</span>
 					</LinkButton>
 				</div>
+
+				{/* Scroll indicator */}
+				<div className="flex flex-col items-center mt-12 animate-bounce">
+					<div className="w-1 h-12 bg-gradient-to-b from-purple-400 to-transparent rounded-full"></div>
+					<svg className="w-6 h-6 text-purple-300 mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+					</svg>
+				</div>
 			</div>
-		</section>
+		</header>
 	);
 }
 
 function About() {
 	return (
-		<div className="w-full">
-			<h2 className="text-2xl text-start font-bold uppercase w-full">About</h2>
+		<section className="w-full animate-slide-up" id="about" aria-labelledby="about-heading">
+			<h2
+				id="about-heading"
+				className="text-3xl md:text-4xl font-bold uppercase mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+			>
+				About
+			</h2>
 
-			<section id="about" className="flex flex-col items-start gap-4 bg-purple-900 rounded-lg p-4 shadow-md">
-				<p className="text-base text-start w-full">
-					Hi there 👋
-					<br />
-					I am a passionate software engineer from Kiel, Germany, learning and growing every day.
-					<br />
-					I contribute to open-source projects and I love constantly learning new skills with my side projects.
-					<br />
-					<br />
-					I am driven by creativity and a never-ending urge for knowledge.
-				</p>
+			<article className="card-modern rounded-2xl p-8 md:p-12 shadow-2xl transition-all duration-300 hover:shadow-purple-500/20">
+				<div className="max-w-4xl mx-auto">
+					<p className="text-lg md:text-xl leading-relaxed text-gray-100 mb-8 text-center">
+						Hi there! 👋
+						<br className="mb-4" />
+						I&apos;m a passionate software engineer from Kiel, Germany, always learning and growing every day.
+						I love learning new skills, building side projects, and contributing to the open-source community.
+						<br className="mb-4" />
+						<span className="text-gradient bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-semibold">Let&apos;s build something amazing together!</span>
+					</p>
 
-				<div className="flex flex-row w-full justify-start flex-wrap gap-2">
-					{/* Download Resume Button */}
-					<LinkButton className="w-fit" href="/resume.pdf" download>
-						<div className="flex items-center gap-2">
-							<Image
-								className="filter-white"
-								src="/icons/download.svg"
-								alt="Download"
-								width={20}
-								height={20}
-							/>
-							<span>Download Resume</span>
-						</div>
-					</LinkButton>
+					<div className="flex justify-center">
+						{/* Download Resume Button */}
+						<LinkButton
+							href="/resume.pdf"
+							download
+							icon="/icons/download.svg"
+							iconAlt="Download Resume"
+							iconSize={24}
+							aria-label="Download Emil Krebs Resume PDF"
+						>
+							<span className="text-lg font-medium">Download Resume</span>
+						</LinkButton>
+					</div>
 				</div>
-			</section>
-		</div>
+			</article>
+		</section>
 	);
 }
 
 function HireMe() {
-
 	const tabs = [
 		{
 			title: "Web Development",
@@ -164,9 +245,9 @@ As a seasoned full-stack web developer, I specialize in creating dynamic or stat
 - **Frontend Development:** Building interfaces using HTML, CSS, TypeScript, and popular frameworks like React and Tailwind CSS.
 - **Backend Development:** Designing robust and scalable server-side architecture with languages like Node.js, Python, and C#.
 - **Full-Stack Development:** Seamlessly integrating frontend and backend technologies to deliver a complete web solution using full-stack frameworks like Next.js, ASP.net or Fresh.
-- **Progressive Web Apps (PWAs):** Developing web applications that offer a native app-like experience across all devices.
-
+- **Static Site Generators:** Creating fast and SEO-friendly static websites like this one using modern tools like Next.js.
 Let's discuss your project and see how I can help you achieve your goals.
+- **Cybersecurity:** Implementing best practices to secure web applications and protect user data using the latest encryption and security protocols.
 		  `,
 		},
 		{
@@ -218,21 +299,28 @@ Let's discuss your unique requirements and find a solution that works for you.
 	];
 
 	return (
-		<div className="w-full">
-			<h2 className="text-2xl text-start font-bold uppercase w-full">Hire Me</h2>
+		<section className="w-full animate-slide-up" id="hire-me" aria-labelledby="hire-me-heading">
+			<h2
+				id="hire-me-heading"
+				className="text-3xl md:text-4xl font-bold uppercase mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
+			>
+				Hire Me
+			</h2>
 			<Tabs>
 				{tabs.map((tab, index) => (
 					<Tab title={tab.title} key={index}>
-						<div className="flex flex-col items-start gap-4">
+						<article className="flex flex-col items-start gap-6 max-w-4xl">
 							<RenderMarkdown content={tab.content} />
 
-							{/* Intersted? Contact me! */}
-							<h3 className="text-lg font-bold">Interested in working together?</h3>
-							<ContactMeButton />
-						</div>
+							{/* Interested? Contact me! */}
+							<div className="mt-8 p-6 glass rounded-xl border border-purple-500/30">
+								<h3 className="text-xl font-bold mb-4 text-purple-200">Interested in working together?</h3>
+								<ContactMeButton />
+							</div>
+						</article>
 					</Tab>
 				))}
 			</Tabs>
-		</div>
+		</section>
 	);
 }
