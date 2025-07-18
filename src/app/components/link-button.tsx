@@ -1,5 +1,5 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from 'next/link';
+import Image from 'next/image';
 
 interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 	icon?: string;
@@ -11,7 +11,7 @@ export default function LinkButton({ icon, iconAlt, iconSize = 20, ...props }: L
 	return (
 		<Link
 			{...props}
-			href={props.href ?? "#"}
+			href={props.href ?? '#'}
 			className={`${props.className} relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-medium transition-all duration-300 border-2 border-purple-400 rounded-full group hover:border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-gray-900`}
 		>
 			<span className="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-600 via-purple-700 to-blue-700 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
@@ -23,7 +23,7 @@ export default function LinkButton({ icon, iconAlt, iconSize = 20, ...props }: L
 						<Image
 							className="filter-white group-hover:scale-110 transition-transform duration-300"
 							src={icon}
-							alt={iconAlt || "Icon"}
+							alt={iconAlt || 'Icon'}
 							width={iconSize}
 							height={iconSize}
 						/>

@@ -1,5 +1,5 @@
 export async function getRepositories(): Promise<Repository[]> {
-	const response = await fetch("https://api.github.com/users/emilkrebs/repos");
+	const response = await fetch('https://api.github.com/users/emilkrebs/repos');
 
 	return await response.json();
 }

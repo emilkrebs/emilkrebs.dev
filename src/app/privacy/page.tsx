@@ -1,5 +1,5 @@
-import RenderMarkdown from "../components/markdown";
-import LinkButton from "../components/link-button";
+import RenderMarkdown from '../components/markdown';
+import LinkButton from '../components/link-button';
 
 const markdown = `
 
@@ -41,7 +41,7 @@ export default function PrivacyPolicy() {
 					← Back to Home
 				</LinkButton>
 			</div>
-			<section className="flex flex-col items-center justify-center w-full max-w-4xl h-full gap-2 p-4 gap-x-4">
+			<section className="flex flex-col justify-center items-start gap-x-4 w-full max-w-4xl h-full p-4">
 				<RenderMarkdown content={markdown} />
 			</section>
 		</main>

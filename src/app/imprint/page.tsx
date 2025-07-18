@@ -1,6 +1,6 @@
-import RenderMarkdown from "../components/markdown";
-import LinkButton from "../components/link-button";
-import { EMAIL_ADDRESS, PHONE_NUMBER } from "../lib/constants";
+import RenderMarkdown from '../components/markdown';
+import LinkButton from '../components/link-button';
+import { EMAIL_ADDRESS, PHONE_NUMBER } from '../lib/constants';
 
 
 const markdown = `

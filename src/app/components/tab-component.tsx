@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface TabProps {
 	title: string;
@@ -28,8 +28,8 @@ export function Tabs({ children }: TabsProps) {
 						<button
 							className={`relative flex-1 p-4 md:p-6 text-center cursor-pointer font-medium transition-all duration-300 ${
 								activeTab === index 
-									? "text-white bg-gradient-to-r from-purple-600/50 to-blue-600/50" 
-									: "text-gray-300 hover:text-white hover:bg-purple-600/20"
+									? 'text-white bg-gradient-to-r from-purple-600/50 to-blue-600/50' 
+									: 'text-gray-300 hover:text-white hover:bg-purple-600/20'
 							}`}
 							onClick={() => setActiveTab(index)}
 						>

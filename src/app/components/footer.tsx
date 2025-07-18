@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { EMAIL_ADDRESS } from "../lib/constants";
-import LinkButton from "./link-button";
+import Link from 'next/link';
+import { EMAIL_ADDRESS } from '../lib/constants';
+import LinkButton from './link-button';
 
 export function ContactMeButton() {
 	return (

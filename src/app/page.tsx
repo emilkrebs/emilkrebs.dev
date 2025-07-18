@@ -1,57 +1,57 @@
-import Image from "next/image";
-import LinkButton from "./components/link-button";
-import Technologies from "./components/technologies";
-import Projects from "./components/projects";
-import { LINKEDIN_URL, GITHUB_URL, EMAIL_ADDRESS } from "./lib/constants";
-import PageNotification from "./components/notification";
-import { Tab, Tabs } from "./components/tab-component";
-import RenderMarkdown from "./components/markdown";
-import { ContactMeButton } from "./components/footer";
+import Image from 'next/image';
+import LinkButton from './components/link-button';
+import Technologies from './components/technologies';
+import Projects from './components/projects';
+import { LINKEDIN_URL, GITHUB_URL, EMAIL_ADDRESS } from './lib/constants';
+import PageNotification from './components/notification';
+import { Tab, Tabs } from './components/tab-component';
+import RenderMarkdown from './components/markdown';
+import { ContactMeButton } from './components/footer';
 
 // Generate structured data for the person/developer
 function generatePersonJsonLd() {
 	return {
-		"@context": "https://schema.org",
-		"@type": "Person",
-		"name": "Emil Krebs",
-		"jobTitle": "Full-Stack Software Engineer",
-		"description": "Passionate full-stack software engineer from Kiel, Germany, specializing in web development, mobile apps, and open-source contributions.",
-		"url": "https://emilkrebs.dev",
-		"image": "https://emilkrebs.dev/pictures/main.webp",
-		"sameAs": [
-			"https://github.com/emilkrebs",
-			"https://linkedin.com/in/emilkrebs"
+		'@context': 'https://schema.org',
+		'@type': 'Person',
+		'name': 'Emil Krebs',
+		'jobTitle': 'Full-Stack Software Engineer',
+		'description': 'Passionate full-stack software engineer from Kiel, Germany, specializing in web development, mobile apps, and open-source contributions.',
+		'url': 'https://emilkrebs.dev',
+		'image': 'https://emilkrebs.dev/pictures/main.webp',
+		'sameAs': [
+			'https://github.com/emilkrebs',
+			'https://linkedin.com/in/emilkrebs'
 		],
-		"address": {
-			"@type": "PostalAddress",
-			"addressLocality": "Kiel",
-			"addressCountry": "Germany"
+		'address': {
+			'@type': 'PostalAddress',
+			'addressLocality': 'Kiel',
+			'addressCountry': 'Germany'
 		},
-		"knowsAbout": [
-			"TypeScript", "JavaScript", "React", "Next.js", "Node.js", "Python", "Kotlin", "Android Development", "Web Development", "Mobile Development", "Cybersecurity", "Open Source"
+		'knowsAbout': [
+			'TypeScript', 'JavaScript', 'React', 'Next.js', 'Node.js', 'Python', 'Kotlin', 'Android Development', 'Web Development', 'Mobile Development', 'Cybersecurity', 'Open Source'
 		],
-		"alumniOf": {
-			"@type": "Organization",
-			"name": "Software Engineering"
+		'alumniOf': {
+			'@type': 'Organization',
+			'name': 'Software Engineering'
 		}
 	};
 }
 
 function generateWebsiteJsonLd() {
 	return {
-		"@context": "https://schema.org",
-		"@type": "WebSite",
-		"name": "Emil Krebs - Software Engineer Portfolio",
-		"description": "Professional portfolio of Emil Krebs, a full-stack software engineer from Kiel, Germany, specializing in web development, mobile apps, and open-source projects.",
-		"url": "https://emilkrebs.dev",
-		"author": {
-			"@type": "Person",
-			"name": "Emil Krebs"
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		'name': 'Emil Krebs - Software Engineer Portfolio',
+		'description': 'Professional portfolio of Emil Krebs, a full-stack software engineer from Kiel, Germany, specializing in web development, mobile apps, and open-source projects.',
+		'url': 'https://emilkrebs.dev',
+		'author': {
+			'@type': 'Person',
+			'name': 'Emil Krebs'
 		},
-		"inLanguage": "en-US",
-		"copyrightHolder": {
-			"@type": "Person",
-			"name": "Emil Krebs"
+		'inLanguage': 'en-US',
+		'copyrightHolder': {
+			'@type': 'Person',
+			'name': 'Emil Krebs'
 		}
 	};
 }
@@ -234,7 +234,7 @@ function About() {
 function HireMe() {
 	const tabs = [
 		{
-			title: "Web Development",
+			title: 'Web Development',
 			content: `
 **Crafting Web Experiences**
 
@@ -251,7 +251,7 @@ Let's discuss your project and see how I can help you achieve your goals.
 		  `,
 		},
 		{
-			title: "Mobile Development",
+			title: 'Mobile Development',
 			content: `
 **Bringing Your Mobile App Ideas to Life**
 
@@ -266,7 +266,7 @@ Let's talk about your app idea and how we can collaborate to build something ama
 		  `,
 		},
 		{
-			title: "Windows Development",
+			title: 'Windows Development',
 			content: `
 **Crafting Desktop Solutions**
 
@@ -280,7 +280,7 @@ Let's discuss your desktop application project and explore the possibilities tog
 		  `,
 		},
 		{
-			title: "Other",
+			title: 'Other',
 			content: `
 **Open to New Challenges**
 

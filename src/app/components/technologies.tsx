@@ -1,41 +1,41 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 const technologies: TechnologySection[] = [
 	{
-		name: "Languages",
+		name: 'Languages',
 		technologies: [
-			{ path: "/icons/typescript.svg", title: "TypeScript" },
-			{ path: "/icons/kotlin.svg", title: "Kotlin" },
-			{ path: "/icons/python.svg", title: "Python" },
-			{ path: "/icons/csharp.svg", title: "C-Sharp" },
-			{ path: "/icons/javascript.svg", title: "JavaScript" },
+			{ path: '/icons/typescript.svg', title: 'TypeScript' },
+			{ path: '/icons/kotlin.svg', title: 'Kotlin' },
+			{ path: '/icons/python.svg', title: 'Python' },
+			{ path: '/icons/csharp.svg', title: 'C-Sharp' },
+			{ path: '/icons/javascript.svg', title: 'JavaScript' },
 		],
 	},
 	{
-		name: "Frameworks & Libraries",
+		name: 'Frameworks & Libraries',
 		technologies: [
-			{ path: "/icons/react.svg", title: "React" },
-			{ path: "/icons/tailwindcss.svg", title: "Tailwind CSS" },
-			{ path: "/icons/nodedotjs.svg", title: "Node.js" },
-			{ path: "/icons/nextdotjs.svg", title: "Next.js" },
-			{ path: "/icons/express.svg", title: "Express" },
-			{ path: "/icons/dotnet.svg", title: ".NET" },
-			{ path: "/icons/jetpackcompose.svg", title: "Jetpack Compose" },
-			{ path: "/icons/html5.svg", title: "HTML5" },
-			{ path: "/icons/css3.svg", title: "CSS3" },
-			{ path: "/icons/deno.svg", title: "Deno" },
-			{ path: "/icons/fresh.svg", title: "Fresh" },
+			{ path: '/icons/react.svg', title: 'React' },
+			{ path: '/icons/tailwindcss.svg', title: 'Tailwind CSS' },
+			{ path: '/icons/nodedotjs.svg', title: 'Node.js' },
+			{ path: '/icons/nextdotjs.svg', title: 'Next.js' },
+			{ path: '/icons/express.svg', title: 'Express' },
+			{ path: '/icons/dotnet.svg', title: '.NET' },
+			{ path: '/icons/jetpackcompose.svg', title: 'Jetpack Compose' },
+			{ path: '/icons/html5.svg', title: 'HTML5' },
+			{ path: '/icons/css3.svg', title: 'CSS3' },
+			{ path: '/icons/deno.svg', title: 'Deno' },
+			{ path: '/icons/fresh.svg', title: 'Fresh' },
 		],
 	},
 	{
-		name: "Others",
+		name: 'Others',
 		technologies: [
-			{ path: "/icons/git.svg", title: "Git" },
-			{ path: "/icons/mongodb.svg", title: "MongoDB" },
-			{ path: "/icons/postgresql.svg", title: "PostgreSQL" },
-			{ path: "/icons/npm.svg", title: "npm" },
-			{ path: "/icons/mysql.svg", title: "MySQL" },
-			{ path: "/icons/affinity.svg", title: "Affinity" },
+			{ path: '/icons/git.svg', title: 'Git' },
+			{ path: '/icons/mongodb.svg', title: 'MongoDB' },
+			{ path: '/icons/postgresql.svg', title: 'PostgreSQL' },
+			{ path: '/icons/npm.svg', title: 'npm' },
+			{ path: '/icons/mysql.svg', title: 'MySQL' },
+			{ path: '/icons/affinity.svg', title: 'Affinity' },
 		],
 	},
 ];
@@ -70,7 +70,7 @@ export default function Technologies() {
 						<div key={section.name} className="flex flex-col gap-4 sm:gap-6">
 							<h3 
 								className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-purple-200 mb-2 sm:mb-4"
-								id={`${section.name.toLowerCase().replace(/\s+/g, "-")}-heading`}
+								id={`${section.name.toLowerCase().replace(/\s+/g, '-')}-heading`}
 							>
 								{section.name}
 							</h3>
@@ -78,7 +78,7 @@ export default function Technologies() {
 							<div 
 								className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8 gap-3 sm:gap-4 md:gap-6 lg:gap-8 justify-items-center"
 								role="list"
-								aria-labelledby={`${section.name.toLowerCase().replace(/\s+/g, "-")}-heading`}
+								aria-labelledby={`${section.name.toLowerCase().replace(/\s+/g, '-')}-heading`}
 							>
 								{section.technologies.map((technology, techIndex) => (
 									<div
