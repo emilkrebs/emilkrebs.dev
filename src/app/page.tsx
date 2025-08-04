@@ -56,6 +56,11 @@ function generateWebsiteJsonLd() {
 	};
 }
 
+const STATUS = {
+	message: "On vacation", // Main status text
+	tooltip: "I may not have access to emails or messages during this time.",
+	variant: "info" // Can be "success", "info", or "error"
+};
 
 export default async function Page() {
 	const personJsonLd = generatePersonJsonLd();
@@ -128,21 +133,61 @@ export default async function Page() {
 }
 
 function Header() {
+	const getStatusColor = (variant: string) => {
+		switch (variant) {
+		case "success":
+			return "bg-green-500";
+		case "info":
+			return "bg-blue-500";
+		case "error":
+			return "bg-red-500";
+		default:
+			return "bg-blue-500";
+		}
+	};
+
+	const statusColorClass = getStatusColor(STATUS.variant);
 	return (
 		<header className="flex flex-col justify-center items-center gap-6 sm:gap-8 w-full max-w-2xl mx-auto text-center animate-fade-in px-4">
 			<div className="relative group">
 				<div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-blue-400 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-500"></div>
-				<Image
-					className="relative rounded-3xl w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-cover shadow-2xl border-2 border-white/20"
-					src="/pictures/main.webp"
-					alt="Emil Krebs - Full-Stack Software Engineer from Kiel, Germany"
-					placeholder="blur"
-					blurDataURL="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMzQgMTM0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zOnNlcmlmPSJodHRwOi8vd3d3LnNlcmlmLmNvbS8iIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MjsiPjxyZWN0IGlkPSJBcnRib2FyZDEiIHg9IjAiIHk9IjAiIHdpZHRoPSIxMzMuMzMzIiBoZWlnaHQ9IjEzMy4zMzMiIHN0eWxlPSJmaWxsOiM4ODNlY2U7Ii8+PGcgaWQ9IkFydGJvYXJkMTEiIHNlcmlmOmlkPSJBcnRib2FyZDEiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDQuNTM3OTIsMCwwLDQuNTM3OTIsLTE2LjMwMDEsLTcuMTQ1MDcpIj48dGV4dCB4PSI1LjA4NnB4IiB5PSIyMi4wNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vbnRzZXJyYXQtQm9sZCcsICdNb250c2VycmF0Jztmb250LXdlaWdodDo3MDA7Zm9udC1zaXplOjE2LjUyN3B4O2ZpbGw6I2ZmZjsiPkU8L3RleHQ+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMTYuNTI3NCwwLDAsMTYuNTI3NCwyOC42MDQ0LDIyLjA1MDEpIj48L2c+PHRleHQgeD0iMTYuMTc2cHgiIHk9IjIyLjA1cHgiIHN0eWxlPSJmb250LWZhbWlseTonTW9udHNlcnJhdC1FeHRyYUJvbGRJdGFsaWMnLCAnTW9udHNlcnJhdCc7Zm9udC13ZWlnaHQ6ODAwO2ZvbnQtc3R5bGU6aXRhbGljO2ZvbnQtc2l6ZToxNi41MjdweDtmaWxsOiNmZmY7Ij5LPC90ZXh0PjwvZz48L2c+PC9zdmc+"
-					width={192}
-					height={192}
-					sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
-					priority
-				/>
+				<div className="relative">
+					<Image
+						className="relative rounded-3xl w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-cover shadow-2xl border-2 border-white/20"
+						src="/pictures/main.webp"
+						alt="Emil Krebs - Full-Stack Software Engineer from Kiel, Germany"
+						placeholder="blur"
+						blurDataURL="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMzQgMTM0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zOnNlcmlmPSJodHRwOi8vd3d3LnNlcmlmLmNvbS8iIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MjsiPjxyZWN0IGlkPSJBcnRib2FyZDEiIHg9IjAiIHk9IjAiIHdpZHRoPSIxMzMuMzMzIiBoZWlnaHQ9IjEzMy4zMzMiIHN0eWxlPSJmaWxsOiM4ODNlY2U7Ii8+PGcgaWQ9IkFydGJvYXJkMTEiIHNlcmlmOmlkPSJBcnRib2FyZDEiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDQuNTM3OTIsMCwwLDQuNTM3OTIsLTE2LjMwMDEsLTcuMTQ1MDcpIj48dGV4dCB4PSI1LjA4NnB4IiB5PSIyMi4wNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vbnRzZXJyYXQtQm9sZCcsICdNb250c2VycmF0Jztmb250LXdlaWdodDo3MDA7Zm9udC1zaXplOjE2LjUyN3B4O2ZpbGw6I2ZmZjsiPkU8L3RleHQ+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMTYuNTI3NCwwLDAsMTYuNTI3NCwyOC42MDQ0LDIyLjA1MDEpIj48L2c+PHRleHQgeD0iMTYuMTc2cHgiIHk9IjIyLjA1cHgiIHN0eWxlPSJmb250LWZhbWlseTonTW9udHNlcnJhdC1FeHRyYUJvbGRJdGFsaWMnLCAnTW9udHNlcnJhdCc7Zm9udC13ZWlnaHQ6ODAwO2ZvbnQtc3R5bGU6aXRhbGljO2ZvbnQtc2l6ZToxNi41MjdweDtmaWxsOiNmZmY7Ij5LPC90ZXh0PjwvZz48L2c+PC9zdmc+"
+						width={192}
+						height={192}
+						sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
+						priority
+					/>
+					
+					{/* Status Indicator */}
+					<div className="absolute -bottom-1 -right-1 sm:bottom-0 sm:right-0 group/status cursor-pointer">
+						{/* Status Dot */}
+						<div className="relative">
+							<div className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${statusColorClass} rounded-full border-2 border-white shadow-lg animate-pulse`}></div>
+							<div className={`absolute inset-0 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${statusColorClass} rounded-full animate-ping opacity-75`}></div>
+						</div>
+						
+						{/* Tooltip */}
+						<div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover/status:opacity-100 transition-all duration-300 transform translate-y-2 group-hover/status:translate-y-0 pointer-events-none z-10">
+							<div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs sm:text-sm px-3 py-2 rounded-lg shadow-xl border border-white/10 whitespace-nowrap min-w-max">
+								<div className="flex items-center gap-2">
+									<div className={`w-2 h-2 ${statusColorClass} rounded-full animate-pulse`}></div>
+									<span className="font-medium">{STATUS.message}</span>
+								</div>
+								<div className="text-gray-300 text-xs mt-1">
+									{STATUS.tooltip}
+								</div>
+							</div>
+							{/* Tooltip Arrow */}
+							<div className="absolute top-full right-3 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900/95"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div className="flex flex-col items-center justify-center gap-4 sm:gap-6 w-full">
