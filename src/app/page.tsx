@@ -57,9 +57,10 @@ function generateWebsiteJsonLd() {
 }
 
 const STATUS = {
-	message: "On vacation", // Main status text
-	tooltip: "I may not have access to emails or messages during this time.",
-	variant: "info" // Can be "success", "info", or "error"
+	hidden: true, // Set to true to hide the status indicator
+	message: "", // Main status text
+	tooltip: "",
+	variant: "success" // Can be "success", "info", or "error"
 };
 
 export default async function Page() {
@@ -165,28 +166,30 @@ function Header() {
 					/>
 					
 					{/* Status Indicator */}
-					<div className="absolute -bottom-1 -right-1 sm:bottom-0 sm:right-0 group/status cursor-pointer">
-						{/* Status Dot */}
-						<div className="relative">
-							<div className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${statusColorClass} rounded-full border-2 border-white shadow-lg animate-pulse`}></div>
-							<div className={`absolute inset-0 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${statusColorClass} rounded-full animate-ping opacity-75`}></div>
-						</div>
-						
-						{/* Tooltip */}
-						<div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover/status:opacity-100 transition-all duration-300 transform translate-y-2 group-hover/status:translate-y-0 pointer-events-none z-10">
-							<div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs sm:text-sm px-3 py-2 rounded-lg shadow-xl border border-white/10 whitespace-nowrap min-w-max">
-								<div className="flex items-center gap-2">
-									<div className={`w-2 h-2 ${statusColorClass} rounded-full animate-pulse`}></div>
-									<span className="font-medium">{STATUS.message}</span>
-								</div>
-								<div className="text-gray-300 text-xs mt-1">
-									{STATUS.tooltip}
-								</div>
+					{!STATUS.hidden && (
+						<div className="absolute -bottom-1 -right-1 sm:bottom-0 sm:right-0 group/status cursor-pointer">
+							{/* Status Dot */}
+							<div className="relative">
+								<div className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${statusColorClass} rounded-full border-2 border-white shadow-lg animate-pulse`}></div>
+								<div className={`absolute inset-0 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${statusColorClass} rounded-full animate-ping opacity-75`}></div>
 							</div>
-							{/* Tooltip Arrow */}
-							<div className="absolute top-full right-3 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900/95"></div>
+						
+							{/* Tooltip */}
+							<div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover/status:opacity-100 transition-all duration-300 transform translate-y-2 group-hover/status:translate-y-0 pointer-events-none z-10">
+								<div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs sm:text-sm px-3 py-2 rounded-lg shadow-xl border border-white/10 whitespace-nowrap min-w-max">
+									<div className="flex items-center gap-2">
+										<div className={`w-2 h-2 ${statusColorClass} rounded-full animate-pulse`}></div>
+										<span className="font-medium">{STATUS.message}</span>
+									</div>
+									<div className="text-gray-300 text-xs mt-1">
+										{STATUS.tooltip}
+									</div>
+								</div>
+								{/* Tooltip Arrow */}
+								<div className="absolute top-full right-3 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900/95"></div>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 			</div>
 
