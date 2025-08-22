@@ -95,8 +95,8 @@ export default function RootLayout({
 				<meta charSet="UTF-8" />
 				<link rel="canonical" href="https://emilkrebs.dev" />
 			</head>
-			<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 			<body className="overflow-x-hidden">
+				<script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 				{children}
 				<Footer />
 			</body>
