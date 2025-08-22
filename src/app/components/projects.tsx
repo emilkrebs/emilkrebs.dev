@@ -16,7 +16,7 @@ export default function Projects() {
 		},
 		{
 			title: "BIPoC Climate Justice Conference Website",
-			icon: "https://bipoclimatejusticenetwork.org/poster.png",
+			icon: "./pictures/bipoc_poster.webp",
 			description: "The official website for the BIPoC Climate Justice Conference 2024 & 2025. Featuring localized content and 100% markdown support using static site generation.",
 			link: "https://bipoclimatejusticenetwork.org/",
 			tags: ["Next.js", "Tailwind CSS", "TypeScript", "React", "Localization"]
@@ -133,7 +133,7 @@ export function Project(props: ProjectProps) {
 					</p>
 
 					{/* Tags */}
-					<footer className="flex flex-wrap gap-1.5 sm:gap-2" role="list" aria-label="Technologies used">
+					<div className="flex flex-wrap gap-1.5 sm:gap-2" role="list" aria-label="Technologies used">
 						{props.tags.map((tag, index) => (
 							<span 
 								key={index} 
@@ -143,7 +143,7 @@ export function Project(props: ProjectProps) {
 								#{tag}
 							</span>
 						))}
-					</footer>
+					</div>
 				</div>
 			</Link>
 		</article>

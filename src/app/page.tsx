@@ -266,7 +266,7 @@ function About() {
 							href="/resume.pdf"
 							download
 							icon="/icons/download.svg"
-							iconAlt="Download Resume"
+							iconAlt="Download Icon"
 							iconSize={24}
 							aria-label="Download Emil Krebs Resume PDF"
 						>
