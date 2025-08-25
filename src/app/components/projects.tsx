@@ -9,7 +9,7 @@ export default function Projects() {
 	const projects: ProjectProps[] = [
 		{
 			title: "VailNote",
-			icon: "https://vailnote.com/apple-touch-icon.png",
+			icon: "./pictures/vailnote.webp",
 			description: "Open-source, encrypted note sharing with zero-knowledge encryption, self-destructing notes, and anonymous rate limiting.",
 			link: "https://vailnote.com/",
 			tags: ["TypeScript", "Fresh", "Tailwind CSS", "Deno", "Preact", "MongoDB", "Cybersecurity", "Encryption", "Zero-Knowledge"]
@@ -113,10 +113,6 @@ export function Project(props: ProjectProps) {
 									height={80}
 									sizes="(max-width: 640px) 48px, (max-width: 768px) 64px, 80px"
 									loading="lazy"
-									onError={(e) => {
-										const target = e.target as HTMLImageElement;
-										target.src = "/favicon.svg";
-									}}
 								/>
 							</div>
 						)}
