@@ -2,146 +2,174 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-
-
 :root {
-	--foreground-rgb: 255, 255, 255;
-	--background-start-rgb: 139, 69, 19;
-	--background-end-rgb: 15, 23, 42;
-	--card-bg: rgba(147, 51, 234, 0.1);
-	--card-border: rgba(147, 51, 234, 0.3);
-	--accent-purple: 147, 51, 234;
-	--glass-bg: rgba(255, 255, 255, 0.05);
-	--glass-border: rgba(255, 255, 255, 0.1);
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 139, 69, 19;
+  --background-end-rgb: 15, 23, 42;
+  --card-bg: rgba(147, 51, 234, 0.1);
+  --card-border: rgba(147, 51, 234, 0.3);
+  --accent-purple: 147, 51, 234;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 body {
-	color: rgb(var(--foreground-rgb));
-	background: 
-		radial-gradient(ellipse at top, rgba(147, 51, 234, 0.3) 0%, transparent 50%),
-		radial-gradient(ellipse at bottom, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-		linear-gradient(135deg, rgb(15, 23, 42) 0%, rgb(30, 41, 59) 50%, rgb(15, 23, 42) 100%);
-	background-attachment: fixed;
-	font-family: "Montserrat", sans-serif;
-	min-height: 100vh;
+  color: rgb(var(--foreground-rgb));
+  background:
+    radial-gradient(
+      ellipse at top,
+      rgba(147, 51, 234, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+    ellipse at bottom,
+    rgba(59, 130, 246, 0.3) 0%,
+    transparent 50%
+  ),
+    linear-gradient(
+    135deg,
+    rgb(15, 23, 42) 0%,
+    rgb(30, 41, 59) 50%,
+    rgb(15, 23, 42) 100%
+  );
+  background-attachment: fixed;
+  font-family: "Montserrat", sans-serif;
+  min-height: 100vh;
 }
 
 @layer utilities {
-	.text-balance {
-		text-wrap: balance;
-	}
-	
-	.glass {
-		background: var(--glass-bg);
-		backdrop-filter: blur(20px);
-		border: 1px solid var(--glass-border);
-	}
-	
-	.card-modern {
-		background: linear-gradient(135deg, rgba(147, 51, 234, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
-		border: 1px solid rgba(147, 51, 234, 0.2);
-		backdrop-filter: blur(10px);
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-	}
-	
-	.animate-float {
-		animation: float 6s ease-in-out infinite;
-	}
-	
-	.animate-fade-in {
-		animation: fadeIn 0.6s ease-out;
-	}
-	
-	.animate-slide-up {
-		animation: slideUp 0.6s ease-out;
-	}
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .card-modern {
+    background: linear-gradient(
+      135deg,
+      rgba(147, 51, 234, 0.1) 0%,
+      rgba(59, 130, 246, 0.1) 100%
+    );
+    border: 1px solid rgba(147, 51, 234, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out;
+  }
 }
 
 .filter-white {
-	filter: invert(1);
+  filter: invert(1);
 }
 
 /* Add this to your global CSS file */
 @keyframes shine {
-	0% {
-		background-position: 500%;
-	}
+  0% {
+    background-position: 500%;
+  }
 
-	100% {
-		background-position: -500%;
-	}
+  100% {
+    background-position: -500%;
+  }
 }
 
 @keyframes float {
-	0%, 100% {
-		transform: translateY(0px);
-	}
-	50% {
-		transform: translateY(-10px);
-	}
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes fadeIn {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-	from {
-		opacity: 0;
-		transform: translateY(30px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .shine-effect {
-	position: relative;
-	color: transparent;
-	background: linear-gradient(90deg, theme('colors.yellow.500') 0%, theme('colors.orange.500') 50%, theme('colors.yellow.500') 100%);
-	background-clip: text;
-	-webkit-background-clip: text;
-	animation: shine 14s linear infinite;
-	background-size: 200% 100%;
+  position: relative;
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    theme("colors.yellow.500") 0%,
+    theme("colors.orange.500") 50%,
+    theme("colors.yellow.500") 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shine 14s linear infinite;
+  background-size: 200% 100%;
 }
 
 /* Smooth scrolling and modern behaviors */
 html {
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
-	width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-	background: rgba(15, 23, 42, 0.5);
+  background: rgba(15, 23, 42, 0.5);
 }
 
 ::-webkit-scrollbar-thumb {
-	background: linear-gradient(135deg, rgba(147, 51, 234, 0.8), rgba(59, 130, 246, 0.8));
-	border-radius: 4px;
+  background: linear-gradient(
+    135deg,
+    rgba(147, 51, 234, 0.8),
+    rgba(59, 130, 246, 0.8)
+  );
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: linear-gradient(135deg, rgba(147, 51, 234, 1), rgba(59, 130, 246, 1));
+  background: linear-gradient(
+    135deg,
+    rgba(147, 51, 234, 1),
+    rgba(59, 130, 246, 1)
+  );
 }
 
 /* Focus states for accessibility */
 *:focus {
-	outline: 2px solid rgba(147, 51, 234, 0.5);
-	outline-offset: 2px;
+  outline: 2px solid rgba(147, 51, 234, 0.5);
+  outline-offset: 2px;
 }
 
 /* Selection styling */
 ::selection {
-	background: rgba(147, 51, 234, 0.3);
-	color: white;
+  background: rgba(147, 51, 234, 0.3);
+  color: white;
 }

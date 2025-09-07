@@ -34,16 +34,16 @@ The source code for this website is available on [GitHub](https://github.com/emi
 `;
 
 export default function PrivacyPolicy() {
-	return (
-		<main className="flex flex-col items-center justify-start w-full min-h-screen p-4">
-			<div className="w-full max-w-4xl my-8">
-				<LinkButton href="/">
-					← Back to Home
-				</LinkButton>
-			</div>
-			<section className="flex flex-col items-center justify-center w-full max-w-4xl h-full gap-2 p-4 gap-x-4">
-				<RenderMarkdown content={markdown} />
-			</section>
-		</main>
-	);
+    return (
+        <main className="flex flex-col items-center justify-start w-full min-h-screen p-4">
+            <div className="w-full max-w-4xl my-8">
+                <LinkButton href="/">
+          ← Back to Home
+                </LinkButton>
+            </div>
+            <section className="flex flex-col items-center justify-center w-full max-w-4xl h-full gap-2 p-4 gap-x-4">
+                <RenderMarkdown content={markdown} />
+            </section>
+        </main>
+    );
 }

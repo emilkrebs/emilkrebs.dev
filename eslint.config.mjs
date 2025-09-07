@@ -1,4 +1,4 @@
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
@@ -7,28 +7,30 @@ import { FlatCompat } from "@eslint/eslintrc";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-	allConfig: js.configs.all
+    baseDirectory: __dirname,
+    recommendedConfig: js.configs.recommended,
+    allConfig: js.configs.all,
 });
 
-export default defineConfig([{
-	extends: compat.extends("next/core-web-vitals", "prettier"),
+export default defineConfig([
+    globalIgnores(["node_modules", ".next", "out", "public"]),
+    {
+        extends: compat.extends("next/core-web-vitals", "prettier"),
 
-	settings: {
-		react: {
-			version: "detect",
-		},
+        settings: {
+            react: {
+                version: "detect",
+            },
 
-		next: {
-			rootDir: "./src",
-		},
-	},
+            next: {
+                rootDir: "./src",
+            },
+        },
 
-	rules: {
-		indent: ["error", "tab"],
-		"linebreak-style": "off",
-		quotes: ["error", "double"],
-		semi: ["error", "always"],
-	},
-}]);
+        rules: {
+            indent: ["error", 4],
+            "linebreak-style": "off",
+            quotes: ["error", "double"],
+            semi: ["error", "always"],
+        },
+    }]);
