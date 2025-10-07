@@ -2,11 +2,9 @@ import Image from "next/image";
 import LinkButton from "./components/link-button";
 import Technologies from "./components/technologies";
 import Projects from "./components/projects";
-import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "./lib/constants";
+import { GITHUB_URL, LINKEDIN_URL } from "./lib/constants";
 import PageNotification from "./components/notification";
-import { Tab, Tabs } from "./components/tab-component";
-import RenderMarkdown from "./components/markdown";
-import { ContactMeButton } from "./components/footer";
+
 
 // Generate structured data for the person/developer
 function generatePersonJsonLd() {
@@ -14,9 +12,9 @@ function generatePersonJsonLd() {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Emil Krebs",
-        "jobTitle": "Full-Stack Software Engineer",
+        "jobTitle": "Software Engineer",
         "description":
-      "Passionate full-stack software engineer from Kiel, Germany, specializing in web development, mobile apps, and open-source contributions.",
+      "Software engineer at TypeFox GmbH from Kiel, Germany, specializing in language engineering, developer tools, and open-source contributions.",
         "url": "https://emilkrebs.dev",
         "image": "https://emilkrebs.dev/pictures/main.webp",
         "sameAs": [
@@ -28,18 +26,24 @@ function generatePersonJsonLd() {
             "addressLocality": "Kiel",
             "addressCountry": "Germany",
         },
+        "worksFor": {
+            "@type": "Organization",
+            "name": "TypeFox GmbH",
+            "url": "https://typefox.io",
+        },
         "knowsAbout": [
             "TypeScript",
             "JavaScript",
+            "Language Engineering",
+            "VS Code Extensions",
+            "Language Server Protocol",
             "React",
             "Next.js",
             "Node.js",
             "Python",
             "Kotlin",
-            "Android Development",
             "Web Development",
-            "Mobile Development",
-            "Cybersecurity",
+            "Developer Tools",
             "Open Source",
         ],
         "alumniOf": {
@@ -53,9 +57,9 @@ function generateWebsiteJsonLd() {
     return {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Emil Krebs - Software Engineer Portfolio",
+        "name": "Emil Krebs - Software Engineer",
         "description":
-      "Professional portfolio of Emil Krebs, a full-stack software engineer from Kiel, Germany, specializing in web development, mobile apps, and open-source projects.",
+      "Personal website of Emil Krebs, a software engineer at TypeFox GmbH from Kiel, Germany, specializing in language engineering, developer tools, and open-source projects.",
         "url": "https://emilkrebs.dev",
         "author": {
             "@type": "Person",
@@ -70,10 +74,10 @@ function generateWebsiteJsonLd() {
 }
 
 const STATUS = {
-    hidden: true, // Set to true to hide the status indicator
-    message: "", // Main status text
-    tooltip: "",
-    variant: "success", // Can be "success", "info", or "error"
+    hidden: false,
+    message: "Working at TypeFox GmbH",
+    tooltip: "Full-time Software Engineer",
+    variant: "success" as const,
 };
 
 export default async function Page() {
@@ -143,9 +147,8 @@ export default async function Page() {
 
                     <Technologies />
 
-                    <HireMe />
-
                     <Projects />
+
                 </div>
             </div>
         </main>
@@ -229,7 +232,7 @@ function Header() {
             Emil Krebs
                     </h1>
                     <h2 className="text-base sm:text-lg md:text-xl font-light text-gray-300 max-w-md px-4">
-            Passionate Software Engineer from Kiel, Germany
+            Software Engineer at TypeFox GmbH • Kiel, Germany
                     </h2>
                 </div>
 
@@ -299,12 +302,11 @@ function About() {
                     <p className="text-lg md:text-xl leading-relaxed text-gray-100 mb-8 text-center">
             Hi there! 👋
                         <br className="mb-4" />
-            I&apos;m a passionate software engineer from Kiel, Germany, always
-            learning and growing every day. I love learning new skills, building
-            side projects, and contributing to the open-source community.
+            I&apos;m a passionate software engineer from Kiel, Germany, currently working at TypeFox GmbH.
+            I love learning new technologies, building innovative solutions, and contributing to the open-source community.
                         <br className="mb-4" />
                         <span className="text-gradient bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-semibold">
-              Let&apos;s build something amazing together!
+              Let&apos;s connect and share ideas!
                         </span>
                     </p>
 
@@ -323,106 +325,6 @@ function About() {
                     </div>
                 </div>
             </article>
-        </section>
-    );
-}
-
-function HireMe() {
-    const tabs = [
-        {
-            title: "Web Development",
-            content: `
-**Crafting Web Experiences**
-
-As a seasoned full-stack web developer, I specialize in creating dynamic or static web experiences. Whether you need a sleek business website, a web application, or a personalized online presence, I've got you covered.
-
-**My Expertise Includes:**
-
-- **Frontend Development:** Building interfaces using HTML, CSS, TypeScript, and popular frameworks like React and Tailwind CSS.
-- **Backend Development:** Designing robust and scalable server-side architecture with languages like Node.js, Python, and C#.
-- **Full-Stack Development:** Seamlessly integrating frontend and backend technologies to deliver a complete web solution using full-stack frameworks like Next.js, ASP.net or Fresh.
-- **Static Site Generators:** Creating fast and SEO-friendly static websites like this one using modern tools like Next.js.
-Let's discuss your project and see how I can help you achieve your goals.
-- **Cybersecurity:** Implementing best practices to secure web applications and protect user data using the latest encryption and security protocols.
-		  `,
-        },
-        {
-            title: "Mobile Development",
-            content: `
-**Bringing Your Mobile App Ideas to Life**
-
-I'm passionate about creating innovative and intuitive mobile applications that deliver exceptional user experiences. With a strong foundation in Android development using Kotlin and Java, I can turn your app concept into a reality.
-
-**My Skills Include:**
-
-- **Android App Development:** Building native Android or WearOS apps with Kotlin and Java, leveraging the latest Android SDK and design guidelines.
-- **Cross-Platform Development:** Exploring options like Xamarin and React Native for efficient development across iOS and Android platforms.
-
-Let's talk about your app idea and how we can collaborate to build something amazing.
-		  `,
-        },
-        {
-            title: "Windows Development",
-            content: `
-**Crafting Desktop Solutions**
-
-If you're looking for a desktop application to streamline your business processes or enhance user productivity, I can help. With experience in developing desktop applications for Windows and Linux, I can create custom solutions tailored to your specific needs.
-
-**My Expertise Includes:**
-
-- **Windows Development:** Building desktop applications using C# and WPF for a seamless Windows experience.
-
-Let's discuss your desktop application project and explore the possibilities together.
-		  `,
-        },
-        {
-            title: "Other",
-            content: `
-**Open to New Challenges**
-
-If your project doesn't fall neatly into the categories above, don't hesitate to reach out. I'm always eager to learn new technologies and tackle exciting challenges.
-
-**Some areas I'm interested in exploring include:**
-
-- Embedded Systems Development
-- Machine Learning
-- Game Development
-- IoT 
-
-Let's discuss your unique requirements and find a solution that works for you.
-		  `,
-        },
-    ];
-
-    return (
-        <section
-            className="w-full animate-slide-up"
-            id="hire-me"
-            aria-labelledby="hire-me-heading"
-        >
-            <h2
-                id="hire-me-heading"
-                className="text-3xl md:text-4xl font-bold uppercase mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
-            >
-        Hire Me
-            </h2>
-            <Tabs>
-                {tabs.map((tab, index) => (
-                    <Tab title={tab.title} key={index}>
-                        <article className="flex flex-col items-start gap-6 max-w-4xl">
-                            <RenderMarkdown content={tab.content} />
-
-                            {/* Interested? Contact me! */}
-                            <div className="mt-8 p-6 glass rounded-xl border border-purple-500/30">
-                                <h3 className="text-xl font-bold mb-4 text-purple-200">
-                  Interested in working together?
-                                </h3>
-                                <ContactMeButton />
-                            </div>
-                        </article>
-                    </Tab>
-                ))}
-            </Tabs>
         </section>
     );
 }

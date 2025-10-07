@@ -5,24 +5,24 @@ import { Metadata, Viewport } from "next";
 export const metadata: Metadata = {
     metadataBase: new URL("https://emilkrebs.dev"),
     title: {
-        default: "Emil Krebs - Full-Stack Software Engineer",
+        default: "Emil Krebs - Software Engineer at TypeFox GmbH",
         template: "%s | Emil Krebs",
     },
     description:
-    "Passionate full-stack software engineer from Kiel, Germany, specializing in TypeScript, React, Next.js, Android development, and open-source contributions. Available for freelance projects and full-time opportunities.",
+    "Software engineer at TypeFox GmbH from Kiel, Germany, specializing in language engineering, developer tools, TypeScript, and open-source contributions.",
     keywords: [
         "Emil Krebs",
-        "Full-Stack Developer",
         "Software Engineer",
+        "TypeFox GmbH",
+        "Language Engineering",
+        "Developer Tools",
         "TypeScript",
+        "VS Code Extensions",
+        "Language Server Protocol",
         "React",
         "Next.js",
-        "Android Development",
-        "Kotlin",
         "Web Development",
-        "Mobile Development",
         "Open Source",
-        "Freelance Developer",
         "Germany",
         "Kiel",
     ],
@@ -49,24 +49,24 @@ export const metadata: Metadata = {
         type: "website",
         locale: "en_US",
         url: "https://emilkrebs.dev",
-        title: "Emil Krebs - Full-Stack Software Engineer",
+        title: "Emil Krebs - Software Engineer at TypeFox GmbH",
         description:
-      "Passionate full-stack software engineer from Kiel, Germany, specializing in TypeScript, React, Next.js, Android development, and open-source contributions.",
-        siteName: "Emil Krebs Portfolio",
+      "Software engineer at TypeFox GmbH from Kiel, Germany, specializing in language engineering, developer tools, and open-source contributions.",
+        siteName: "Emil Krebs",
         images: [
             {
                 url: "/opengraph_image.webp",
                 width: 1200,
                 height: 630,
-                alt: "Emil Krebs - Full-Stack Software Engineer Portfolio",
+                alt: "Emil Krebs - Software Engineer at TypeFox GmbH",
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "Emil Krebs - Full-Stack Software Engineer",
+        title: "Emil Krebs - Software Engineer at TypeFox GmbH",
         description:
-      "Passionate full-stack software engineer from Kiel, Germany, specializing in TypeScript, React, Next.js, Android development, and open-source contributions.",
+      "Software engineer at TypeFox GmbH from Kiel, Germany, specializing in language engineering, developer tools, and open-source contributions.",
         images: ["/opengraph_image.webp"],
     },
     icons: {
