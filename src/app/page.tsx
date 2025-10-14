@@ -74,9 +74,9 @@ function generateWebsiteJsonLd() {
 }
 
 const STATUS = {
-    hidden: false,
+    hidden: true,
     message: "Working at TypeFox GmbH",
-    tooltip: "Full-time Software Engineer",
+    tooltip: "Software Engineer",
     variant: "success" as const,
 };
 
