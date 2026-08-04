@@ -18,7 +18,7 @@ import type { LangiumDocument } from 'langium';
 
 import { createLanguageServer, type LanguageServer } from './dsl';
 import { registerBiohackingTokens } from './tokenizer';
-import { SAMPLES } from './samples';
+import { SAMPLES, type Sample } from './samples';
 
 self.MonacoEnvironment = {
   getWorker: () => new EditorWorker(),
@@ -105,7 +105,7 @@ function buildShell(activeIndex: number, fileName: string): void {
     <section class="plate">
       <div class="caption mono">
         <span>      <span class="token"></span><span id="editor-caption">Editor · ${fileName}</span></span>
-        <span>Analyze: cmd/ctrl+enter</span>
+        <span>Analyzes automatically as you type · cmd/ctrl+click to jump to a definition</span>
       </div>
       <div id="editor-host"></div>
     </section>
@@ -158,7 +158,7 @@ function renderDiagnostics(diags: Diagnostic[], missingImports: string[]): void 
       <div class="diag-row">
         <span class="sev ${severityClass(d.severity ?? 3)}"></span>
         <span class="where mono">${d.range.start.line + 1}:${d.range.start.character + 1}</span>
-        <span class="msg">${escapeHtml(d.message)}</span>
+        <span class="msg">${escapeHtml(String(d.message))}</span>
       </div>
     `);
   }
@@ -251,7 +251,7 @@ async function main(): Promise<void> {
         LANGUAGE_ID,
         diags.map((d) => ({
           severity: toMonacoSeverity(d.severity ?? 3),
-          message: d.message,
+          message: String(d.message),
           startLineNumber: d.range.start.line + 1,
           startColumn: d.range.start.character + 1,
           endLineNumber: d.range.end.line + 1,
@@ -290,7 +290,7 @@ async function main(): Promise<void> {
     provideCompletionItems: async (m, position) => {
       if (!latest) return { suggestions: [] };
       const items = await lang.completion(latest, position.lineNumber - 1, position.column - 1);
-      const suggestions: monaco.languages.CompletionItem[] = (items ?? []).map((it) => {
+      const suggestions: monaco.languages.CompletionItem[] = ((items ?? []) as unknown[]).map((it) => {
         const item = it as {
           label: string;
           kind?: number;
@@ -305,7 +305,7 @@ async function main(): Promise<void> {
           label: item.label,
           kind: lspKindToMonaco(item.kind),
           detail: item.detail,
-          documentation: documentation ? new monaco.MarkdownString(documentation) : undefined,
+          documentation: documentation ? { value: documentation } : undefined,
           insertText: item.insertText ?? item.label,
           filterText: item.filterText ?? item.label,
           range: { startLineNumber: position.lineNumber, startColumn: position.column, endLineNumber: position.lineNumber, endColumn: position.column },
@@ -328,8 +328,67 @@ async function main(): Promise<void> {
         return { value: v ?? '' };
       });
       return {
-        contents: mapped.map((c) => new monaco.MarkdownString(c.value)),
+        contents: mapped.map((c) => ({ value: String(c.value) })),
         range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),
+      };
+    },
+  });
+
+  monaco.languages.registerDefinitionProvider(LANGUAGE_ID, {
+    provideDefinition: async (m, position) => {
+      const isEntry = m.uri.toString() === EDITOR_URI.toString();
+      const doc = isEntry ? latest : lang.document(m.uri.toString());
+      if (!doc) return [];
+      const links = await lang.definition(doc, position.lineNumber - 1, position.column - 1);
+      if (!links || links.length === 0) return [];
+      const locations: monaco.languages.LocationLink[] = [];
+      for (const link of links) {
+        const uri = monaco.Uri.parse(link.targetUri);
+        if (uri.toString() !== EDITOR_URI.toString() && !monaco.editor.getModel(uri)) {
+          const source = lang.source(link.targetUri);
+          if (source === undefined) continue;
+          monaco.editor.createModel(source, LANGUAGE_ID, uri);
+        }
+        locations.push({
+          uri,
+          range: new monaco.Range(
+            link.targetRange.start.line + 1,
+            link.targetRange.start.character + 1,
+            link.targetRange.end.line + 1,
+            link.targetRange.end.character + 1,
+          ),
+          originSelectionRange: new monaco.Range(
+            position.lineNumber,
+            position.column,
+            position.lineNumber,
+            position.column,
+          ),
+        });
+      }
+      return locations;
+    },
+  });
+
+  monaco.languages.registerLinkProvider(LANGUAGE_ID, {
+    provideLinks: async (m, token) => {
+      if (m.uri.toString() !== EDITOR_URI.toString() || !latest) return { links: [] };
+      const links = await lang.links(latest);
+      if (token.isCancellationRequested) return { links: [] };
+      return {
+        links: links.map((l) => ({
+          range: new monaco.Range(
+            l.sourceRange.start.line + 1,
+            l.sourceRange.start.character + 1,
+            l.sourceRange.end.line + 1,
+            l.sourceRange.end.character + 1,
+          ),
+          url: l.crossFile
+            ? 'command:editor.action.peekDefinition'
+            : 'command:editor.action.revealDefinition',
+          tooltip: l.crossFile
+            ? 'cmd/ctrl+click to peek the definition'
+            : 'cmd/ctrl+click to go to the definition',
+        })),
       };
     },
   });
@@ -345,9 +404,6 @@ async function main(): Promise<void> {
       void analyze();
     });
   });
-
-  editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => void analyze());
-  editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyR, () => void analyze());
 
   void analyze();
 }

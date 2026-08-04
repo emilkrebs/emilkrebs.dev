@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 # Vendors the Healthstack DSL into the playground.
 #
-# Copies the browser-safe parts of the biohacking-ide language package into
-# playground/src/lang/ and the sample protocols into playground/src/samples/.
-# The language package is the source of truth; never edit src/lang by hand.
+# The language SERVER is bundled into a single minified artifact
+# (src/lang/vendor/biohacking-language.min.mjs) — the readable implementation
+# never enters this repo. The sample protocols are copied as-is, filtered to
+# the curated supplements-only set.
 #
 # Usage:
 #   BIOHACKING_IDE=/path/to/biohacking-ide ./sync-dsl.sh
 #
-# Excluded: compiler/ (DSL->SQLite compiler, node-only better-sqlite3).
+# Excluded: compiler/ (DSL->SQLite compiler, node-only better-sqlite3);
+# the full std library and non-curated samples stay in the IDE repo.
 set -euo pipefail
 
 BIOHACKING_IDE="${BIOHACKING_IDE:-}"
@@ -33,9 +35,8 @@ fi
 
 mkdir -p "$HERE/src/lang" "$HERE/src/samples"
 
-rsync -a --delete \
-  --exclude compiler \
-  "$DSL_SRC/src/" "$HERE/src/lang/"
+echo "bundling language server (minified artifact)…"
+node "$HERE/scripts/build-lang-bundle.mjs"
 
 # Only the curated, supplements-only samples ship with the public site.
 # The full sample set (peptides, prescription-pharmacology demos) stays in
@@ -54,6 +55,6 @@ echo "rebuilding curated bundled library..."
 node "$HERE/scripts/generate-curated-bundles.mjs"
 
 echo "synced:"
-echo "  $(find "$HERE/src/lang" -name '*.ts' | wc -l | tr -d ' ') TS files in src/lang"
+echo "  $(ls "$HERE/src/lang/vendor" | wc -l | tr -d ' ') vendor artifact in src/lang/vendor"
 echo "  $(ls "$HERE/src/samples" | wc -l | tr -d ' ') samples in src/samples"
-echo "warning: playground/src/lang is generated output - do not edit by hand"
+echo "warning: src/lang/vendor is generated output - do not edit by hand"

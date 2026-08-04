@@ -8,6 +8,13 @@ export const metadata: Metadata = {
     "A specialized IDE for health optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
 };
 
+/**
+ * In development the playground runs from the Vite dev server (hot reload)
+ * and the iframe points there directly. In production this is unset and the
+ * iframe uses the same-origin static build in public/playground.
+ */
+const PLAYGROUND_URL = process.env.NEXT_PUBLIC_PLAYGROUND_URL ?? "";
+
 const HERO_TAGS = [
     "DSL .bio protocols",
     "Timeline planned vs logged",
@@ -267,14 +274,14 @@ export default function HealthstackPage() {
                             Playground · .bio language server, runs in your browser
                         </div>
                         <Link
-                            href="/playground/"
+                            href={`${PLAYGROUND_URL}/playground/`}
                             className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
                         >
                             Open full screen · /playground/
                         </Link>
                     </div>
                     <iframe
-                        src="/playground/?sample=type-system"
+                        src={`${PLAYGROUND_URL}/playground/?sample=type-system`}
                         title=".bio protocol playground"
                         loading="lazy"
                         className="block w-full h-[480px] md:h-[640px] border border-hairline bg-paper"

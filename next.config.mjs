@@ -13,14 +13,6 @@ const nextConfig = {
     compiler: {
         removeConsole: process.env.NODE_ENV === "production",
     },
-    ...(process.env.NODE_ENV === "development"
-        ? {
-              rewrites: () => [
-                  { source: "/playground", destination: "/playground/index.html" },
-                  { source: "/playground/", destination: "/playground/index.html" },
-              ],
-          }
-        : {}),
 };
 
 export default nextConfig;

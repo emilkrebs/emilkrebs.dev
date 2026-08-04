@@ -1,23 +1,21 @@
-export * from './biohacking-module.js';
-export * from './biohacking-validator.js';
-export * from './biohacking-workspace.js';
-export * from './biohacking-semantic-tokens.js';
-export * from './biohacking-documentation-provider.js';
-export * from './typir/biohacking-type-system.js';
-export * from './builtin-library.js';
-export * from './generated/ast.js';
-export * from './generated/grammar.js';
-export * from './generated/module.js';
+/**
+ * Public API over the prebuilt language bundle (src/lang/vendor/).
+ *
+ * The DSL implementation — grammar, validators, type system, IR — is built
+ * from the private biohacking-ide repo into one minified artifact; this
+ * repo commits only that artifact (see scripts/build-lang-bundle.mjs). The
+ * curated supplements-only .bio content in bundled/ stays editable here and
+ * is imported by the artifact at runtime.
+ */
+export {
+  createBiohackingServices,
+  parseBioWithImports,
+  grammarSource,
+} from './vendor/biohacking-language.min.mjs';
 
-export * from './utils/ast-utils.js';
-export * from './utils/import-loader.js';
-export * from './utils/std-lib.js';
-export * from './utils/bundled-content.js';
-export * from './utils/evidence-utils.js';
-export * from './data/interaction-catalog.js';
-
-// ── Compiler IR (browser-safe) ───────────────────────────────────────────────
-export * from './ir/index.js';
-
-// ── AST → IR translator (browser-safe) ──────────────────────────────────────
-export { astToIR, withInteractions } from './translator/ast-to-ir.js';
+export type {
+  BioImportParseResult,
+  BioFileReader,
+  BiohackingServicesLike,
+  BiohackingLspProviders,
+} from './vendor/biohacking-language.min.mjs';

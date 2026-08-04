@@ -1,6 +1,6 @@
 import * as monaco from 'monaco-editor';
 import { createOnigScanner, createOnigString, loadWASM } from 'vscode-oniguruma';
-import { INITIAL, Registry, parseRawGrammar, type IGrammar, type StackElement } from 'vscode-textmate';
+import { INITIAL, Registry, parseRawGrammar, type IGrammar } from 'vscode-textmate';
 import onigWasmUrl from 'vscode-oniguruma/release/onig.wasm?url';
 import { grammarSource } from './grammar-source.js';
 
@@ -36,7 +36,7 @@ class BiohackingTokenizer implements monaco.languages.TokensProvider {
   }
 
   tokenize(line: string, state: monaco.languages.IState): monaco.languages.ILineTokens {
-    const result = this.grammar.tokenizeLine(line, state as StackElement | undefined);
+    const result = this.grammar.tokenizeLine(line, state as Parameters<IGrammar['tokenizeLine']>[1]);
     const tokens: monaco.languages.IToken[] = result.tokens.map(
       (t) => ({
         startIndex: t.startIndex,
