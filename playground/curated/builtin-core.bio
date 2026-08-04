@@ -1,0 +1,167 @@
+// ---------------------------------------------------------------------------
+// builtin/core.bio — the core type library.
+//
+// This file IS the language's data model. Every kind of thing the DSL knows
+// about is declared here rather than hardcoded in the grammar, which is what
+// lets a user write `type nootropic extends substance { ... }` in their own
+// workspace and have it be a first-class citizen.
+//
+// Shipped with the extension, embedded at build time, and always in scope —
+// no file imports it. Editing this file changes the language; there is no
+// grammar regeneration step, no IR interface to update and no SQLite column
+// to add.
+//
+// TRAITS are the one thing users cannot extend. They name behaviour that lives
+// in the host and cannot be expressed as data:
+//   pharmacokinetic — half-life decay, washout windows, dose-vs-max checking
+//   interacting     — the conflict/synergy graph and the known-interaction table
+//   schedulable     — placement on the timeline
+// A type opts in explicitly. Declaring none means structural validation only,
+// which is the correct default for something like a training log.
+// ---------------------------------------------------------------------------
+
+
+// ── Struct types ────────────────────────────────────────────────────────────
+// Anonymous records used as member values. `amount` is the default member, so
+// `dose: 5 mg` is shorthand for `dose { amount: 5 mg }` — both spellings exist
+// in the wild and both must keep working.
+
+type Dose @default_member(amount) {
+    amount?: Measurement
+    min?:    Measurement
+    max?:    Measurement
+}
+
+type Frequency {
+    interval: Measurement
+}
+
+type Schedule {
+    duration: Measurement
+}
+
+
+// ── Interaction ─────────────────────────────────────────────────────────────
+// A named pairing worth its own message, e.g. Zinc + Copper. This replaced a
+// hardcoded TypeScript table that duplicated what @std/interactions.bio already
+// expressed through `conflicts`; the catalog now lives in builtin/interactions.bio
+// and users extend it by declaring their own.
+//
+// Declares NO traits on purpose. An interaction is a statement ABOUT two
+// substances, not a thing that is itself dosed, scheduled or interacted with —
+// giving it `interacting` would feed it into the conflict graph as a participant.
+// No @icon/@color either: unlike every other type here it never becomes a node
+// on the canvas — the translator folds it into the interaction graph instead.
+
+type interaction {
+    a:        String
+    b:        String
+    severity: oneof(critical, high, moderate)
+    message:  Text
+}
+
+
+// ── Substance ───────────────────────────────────────────────────────────────
+
+type substance is pharmacokinetic, interacting @icon("beaker") @color("violet") {
+    half_life?: Measurement
+    max_dose?:  Measurement
+
+    // Open vocabularies, not references: these legitimately mix declared
+    // substances, drug classes ("CYP3A4-Inhibitors"), physiological states
+    // ("Hypoglycemia-Risk") and outcomes ("Healing"). A closed Ref<> would
+    // reject most of the standard library.
+    targets:    [Vocab<pathway>]
+    conflicts:  [Vocab<interaction_term>]
+    synergies:  [Vocab<interaction_term>]
+
+    group?:     Ident
+    tags:       [String]
+    goal?:      Text
+    notes?:     Text @inherit(concat)
+}
+
+
+// ── Intervention ────────────────────────────────────────────────────────────
+
+type intervention is interacting, schedulable @icon("pulse") @color("emerald") {
+    dose?:        Dose
+    frequency?:   Frequency
+    schedule?:    Schedule
+    route?:       Ident
+
+    time_of_day?: oneof(morning, afternoon, evening, night, with_food,
+                        empty_stomach, before_bed, upon_waking,
+                        pre_workout, post_workout)
+
+    tracks:       [Vocab<biomarker>]
+    targets:      [Vocab<pathway>]
+    conflicts:    [Vocab<interaction_term>]
+    synergies:    [Vocab<interaction_term>]
+
+    // Inline substance declarations nested in an intervention body.
+    compounds:    [substance]
+
+    group?:       Ident
+    tags:         [String]
+    goal?:        Text
+    notes?:       Text @inherit(concat)
+}
+
+
+// ── Stack ───────────────────────────────────────────────────────────────────
+
+type stack @icon("layers") @color("amber") {
+    items:  [intervention]
+    group?: Ident
+    tags:   [String]
+    goal?:  Text
+    notes?: Text @inherit(concat)
+}
+
+
+// ── Protocol and Phase ──────────────────────────────────────────────────────
+
+type phase is schedulable @icon("milestone") @color("slate") {
+    duration?: Measurement
+    start?:    String
+    end?:      String
+    goal?:     Text
+    notes?:    Text @inherit(concat)
+    items:     [intervention]
+}
+
+// A protocol is a BLUEPRINT, not a run of one. It deliberately carries no
+// `status` member: active/paused/completed/abandoned describe a particular
+// attempt at following the protocol, and that lifecycle belongs to the timeline,
+// where a run has real start and end dates and one blueprint can be run more
+// than once. Putting status here forced a single file to mean both "the plan"
+// and "how the plan is going", so editing history meant editing the plan.
+
+type protocol is schedulable @icon("git-branch") @color("sky") {
+    version?: String
+    phases:   [phase]
+    tracks:   [Vocab<biomarker>]
+    group?:   Ident
+    tags:     [String]
+    goal?:    Text
+    notes?:   Text @inherit(concat)
+}
+
+
+// ── User ─────────────────────────────────────────────────────────────────────
+// The entity a protocol is FOR — one per workspace directory, matching the
+// timeline's workspace-isolation model (each client/person is a directory).
+// `weight` is the load-bearing member: body-weight-relative doses (`2 g/kg`)
+// resolve against it at hover time, and the validator warns when a per-kg
+// measurement exists but no user weight is in scope. Declares no traits:
+// a user is not dosed, scheduled or interacted with.
+
+type user @icon("person") @color("sky") {
+    weight?: Measurement
+    age?:    Number
+    sex?:    Ident
+    group?:  Ident
+    tags:    [String]
+    notes?:  Text
+}

@@ -1,0 +1,123 @@
+/**
+ * The type system, live.
+ *
+ * The coolest part of the DSL: its data model is written in the DSL itself.
+ * `substance`, `intervention`, `stack`, `protocol` — none of these are
+ * hardcoded in the grammar. They are `type` declarations in builtin/core.bio,
+ * always in scope, and you extend them with the same syntax the language
+ * itself uses.
+ *
+ * This sample shows: struct types, subtype inheritance, trait opt-in,
+ * oneof members, and declarations that use custom types.
+ */
+
+// ── 1. A struct type ────────────────────────────────────────────────────────
+// Plain data shape, no traits. Used as a member on other types below.
+
+type AdministrationWindow {
+    min_hours?: Measurement
+    max_hours?: Measurement
+}
+
+// ── 2. A subtype with extra members ─────────────────────────────────────────
+// `extends substance` inherits half_life, max_dose, targets, conflicts,
+// synergies, group, tags, goal and notes — and adds its own members.
+
+type nootropic extends substance @icon("brain") @color("violet") {
+    mechanism?: oneof(cholinergic, glutamatergic, gabaergic, dopaminergic)
+}
+
+// ── 3. Inheritance chains ───────────────────────────────────────────────────
+// A type can extend a custom type. Everything from `substance` flows through
+// `nootropic` into `racetam`. Declare a type even if you never use it — the
+// type system is part of the protocol, not just the compiler.
+
+type racetam extends nootropic {
+    // racetams share the cholinergic mechanism; nothing extra needed
+}
+
+// ── 4. Custom intervention subtype with a struct member ─────────────────────
+
+type timed_intervention extends intervention @icon("clock") @color("amber") {
+    window?: AdministrationWindow
+}
+
+// ── 5. Opt into traits ──────────────────────────────────────────────────────
+// Traits are the one thing users cannot extend, but any type can declare
+// them: schedulable = timeline placement, interacting = conflict graph,
+// pharmacokinetic = half-life and dose checks.
+
+type mobility_session is schedulable @icon("dumbbell") @color("sky") {
+    duration?: Measurement
+    intensity?: oneof(low, medium, high)
+    tags: [String]
+    goal?: Text
+}
+
+// ── Now use the custom types ────────────────────────────────────────────────
+// Declarations use the type name as their keyword. Subtypes are substitutable:
+// `use substance "Alpha-GPC"` resolves even though Alpha-GPC is a `nootropic`.
+
+nootropic "Alpha-GPC" {
+    half_life: 2 hours
+    mechanism: cholinergic
+    targets: ["Acetylcholine", "Focus"]
+    max_dose: 600 mg
+    notes: "Glycerophosphocholine — a choline source for the acetylcholine pathway."
+}
+
+nootropic "Citicoline" {
+    half_life: 2 hours
+    mechanism: cholinergic
+    targets: ["Acetylcholine", "Focus"]
+    max_dose: 500 mg
+    notes: "Cytidine-diphosphocholine — choline plus a uridine precursor."
+}
+
+timed_intervention "Alpha-GPC Morning" {
+    use substance "Alpha-GPC"
+    group: supplement
+    route: oral
+    dose: 300 mg
+    frequency { interval: 1 day }
+    time_of_day: morning
+    window { min_hours: 2 hours, max_hours: 4 hours }
+    goal: "Choline support for morning focus"
+}
+
+intervention "Citicoline Morning" {
+    use substance "Citicoline"
+    group: supplement
+    route: oral
+    dose: 250 mg
+    frequency { interval: 1 day }
+    time_of_day: morning
+    tags: ["nootropic", "focus"]
+    goal: "Choline support for sustained attention"
+}
+
+stack "Focus Stack" {
+    use intervention "Alpha-GPC Morning"
+    use intervention "Citicoline Morning"
+    tags: ["focus", "nootropic"]
+    goal: "Dual choline coverage for focus"
+}
+
+mobility_session "Morning Mobility" {
+    duration: 15 minutes
+    intensity: low
+    tags: ["movement", "recovery"]
+    goal: "Daily mobility maintenance"
+}
+
+protocol "Focus & Mobility Week" {
+    version: "1.0.0"
+    goal: "Custom types composing with the core protocol structure"
+    tags: ["demo", "type-system"]
+    phase "Focus" {
+        duration: 7 days
+        start: "Monday"
+        goal: "Run the focus stack"
+        use stack "Focus Stack"
+    }
+}

@@ -1,0 +1,76 @@
+/**
+ * The interaction checker, on safe ground.
+ *
+ * Imports the curated supplement library, then builds two stacks: one that
+ * triggers MODERATE warnings from the interaction catalog and the substance
+ * conflict lists, and one that is clean. The diagnostics panel is the real
+ * validator output — nothing here is simulated.
+ */
+import "@std/supplements"
+
+// ── Interventions ────────────────────────────────────────────────────────────
+
+intervention "Zinc Support" {
+    use substance "Zinc Picolinate"
+    group: mineral
+    route: oral
+    dose: 25 mg
+    frequency { interval: 1 day }
+    time_of_day: morning
+    tags: ["mineral", "immune"]
+    goal: "Daily zinc maintenance"
+}
+
+intervention "Copper Balance" {
+    use substance "Copper Bisglycinate"
+    group: mineral
+    route: oral
+    dose: 2 mg
+    frequency { interval: 1 day }
+    time_of_day: evening
+    tags: ["mineral", "copper"]
+    goal: "Copper repletion during zinc cycling"
+}
+
+intervention "Magnesium Evening" {
+    use substance "Magnesium Glycinate"
+    group: mineral
+    route: oral
+    dose: 400 mg
+    frequency { interval: 1 day }
+    time_of_day: before_bed
+    tags: ["mineral", "sleep"]
+    goal: "Sleep support"
+}
+
+intervention "Vitamin D Maintenance" {
+    use substance "Vitamin D3"
+    use substance "Vitamin K2 MK-7"
+    group: vitamin
+    route: oral
+    dose: 2000 IU
+    frequency { interval: 1 day }
+    time_of_day: with_food
+    tags: ["vitamin", "daily"]
+    goal: "Maintain vitamin D status with K2 co-administration"
+}
+
+// ── ⚠ This stack triggers MODERATE warnings ─────────────────────────────────
+// Catalog: zinc ↔ copper competition, magnesium ↔ zinc competition.
+// Conflict lists: Zinc Picolinate ↔ Copper Bisglycinate.
+
+stack "Minerals Stack" {
+    use intervention "Zinc Support"
+    use intervention "Copper Balance"
+    use intervention "Magnesium Evening"
+    goal: "Mineral maintenance — watch the zinc/copper pairing"
+}
+
+// ── ✓ This one is clean ─────────────────────────────────────────────────────
+// No catalog pair and no conflict list fires.
+
+stack "Zinc + Vitamin D" {
+    use intervention "Zinc Support"
+    use intervention "Vitamin D Maintenance"
+    goal: "No interactions expected"
+}

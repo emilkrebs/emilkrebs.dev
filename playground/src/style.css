@@ -1,0 +1,239 @@
+:root {
+  --paper: #f7f5f0;
+  --paper-deep: #ece8df;
+  --ink: #141310;
+  --ink-soft: #6e6a63;
+  --ink-faint: #8a857c;
+  --hairline: rgba(20, 19, 16, 0.14);
+  --signal: #e8450c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--ink);
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+.topbar {
+  border-bottom: 1px solid var(--hairline);
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.topbar a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--hairline);
+  padding-bottom: 0.1em;
+}
+
+.topbar a:hover {
+  color: var(--signal);
+}
+
+.masthead {
+  padding: 3rem 1.25rem 2rem;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.masthead h1 {
+  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  max-width: 22ch;
+}
+
+.masthead h1 .accent {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.masthead p {
+  margin-top: 0.75rem;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.samples {
+  padding: 0 1.25rem 1.25rem;
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.samples button {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  padding: 0.5rem 0.85rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  cursor: pointer;
+}
+
+.samples button:hover {
+  background: var(--paper-deep);
+}
+
+.samples button.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.plate {
+  max-width: 980px;
+  margin: 0 auto 1.25rem;
+  border: 1px solid var(--hairline);
+  background: var(--paper-deep);
+  padding: 0.6rem;
+}
+
+.plate .caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.1rem 0.15rem 0.6rem;
+  color: var(--ink-soft);
+}
+
+.plate .caption .token {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--signal);
+  margin-right: 0.45rem;
+  vertical-align: middle;
+}
+
+#editor-host {
+  height: 520px;
+  border: 1px solid var(--hairline);
+  background: var(--paper);
+}
+
+@media (max-width: 640px) {
+  #editor-host {
+    height: 400px;
+  }
+}
+
+.diag-summary {
+  padding: 0.15rem 0.6rem 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.diag-summary .count {
+  color: var(--ink-soft);
+}
+
+.diag-summary .count.error {
+  color: var(--signal);
+}
+
+#diag-list {
+  border-top: 1px solid var(--hairline);
+}
+
+.diag-row {
+  display: grid;
+  grid-template-columns: 14px 92px 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--paper);
+}
+
+.diag-row:last-child {
+  border-bottom: none;
+}
+
+.diag-row .sev {
+  width: 8px;
+  height: 8px;
+  align-self: center;
+  justify-self: center;
+}
+
+.diag-row .sev.error {
+  background: var(--signal);
+}
+
+.diag-row .sev.warning {
+  background: var(--ink);
+}
+
+.diag-row .sev.info,
+.diag-row .sev.hint {
+  background: var(--ink-soft);
+}
+
+.diag-row .where {
+  color: var(--ink-soft);
+}
+
+.diag-row .msg {
+  color: var(--ink);
+  line-height: 1.5;
+}
+
+.empty {
+  padding: 1.25rem 0.6rem;
+  background: var(--paper);
+  color: var(--ink-soft);
+}
+
+.statusline {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.25rem 3rem;
+}
+
+.statusline .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--signal);
+  margin-right: 0.45rem;
+  vertical-align: middle;
+}
+
+footer {
+  border-top: 1px solid var(--hairline);
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--ink-soft);
+}

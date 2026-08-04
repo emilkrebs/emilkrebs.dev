@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Emil Krebs portrait placeholder</title>
+  <desc id="desc">Placeholder for the real portrait photograph of Emil Krebs, a duotone bust silhouette on paper with a hairline frame.</desc>
+  <rect width="1080" height="1080" fill="#f7f5f0"/>
+  <rect x="16" y="16" width="1048" height="1048" fill="none" stroke="rgba(20,19,16,0.14)" stroke-width="4"/>
+  <circle cx="540" cy="400" r="180" fill="#141310" opacity="0.1"/>
+  <path d="M540 640 c-160 0 -260 110 -260 250 v70 h520 v-70 c0 -140 -100 -250 -260 -250 z" fill="#141310" opacity="0.1"/>
+  <rect x="36" y="36" width="24" height="24" fill="#e8450c"/>
+  <text x="540" y="948" text-anchor="middle" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="40" letter-spacing="14" fill="#141310" font-weight="500">PORTRAIT PLACEHOLDER</text>
+</svg>

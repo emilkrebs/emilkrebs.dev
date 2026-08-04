@@ -1,0 +1,263 @@
+/**
+ * Basic Supplement Stack
+ *
+ * A foundational daily supplement protocol covering the most common
+ * deficiencies and optimisation targets.
+ *
+ * Who it's for: Anyone wanting a solid baseline — no exotic compounds,
+ * no medical supervision required for most people.
+ *
+ * Expected effects:
+ *   - Improved sleep quality (Magnesium, Melatonin)
+ *   - Better immune function and bone density (Vitamin D3 + K2)
+ *   - Reduced inflammation and cardiovascular support (Omega-3)
+ *   - Cognition and stress resilience (L-Theanine, Ashwagandha)
+ *   - Energy and strength (Creatine)
+ *
+ * How to adapt:
+ *   - Get blood work first: check Vitamin D, B12, Ferritin, Zinc before starting.
+ *   - Adjust Vitamin D dose based on your 25-OH-D result.
+ *   - If you're sensitive to stimulants, skip Creatine in the evening.
+ *   - Remove Melatonin if you sleep well without it.
+ */
+
+// ---------------------------------------------------------------------------
+// Substance definitions (pharmacological templates)
+// ---------------------------------------------------------------------------
+
+substance "Vitamin D3" {
+    half_life: 15 days
+    targets: ["Immune-Function", "Calcium-Absorption", "Mood", "Testosterone"]
+    synergies: ["Vitamin K2", "Magnesium", "Omega-3"]
+    max_dose: 10000 IU
+}
+
+substance "Vitamin K2 MK-7" {
+    half_life: 72 hours
+    targets: ["Calcium-Metabolism", "Arterial-Health", "Bone-Density"]
+    synergies: ["Vitamin D3", "Calcium"]
+}
+
+substance "Magnesium Glycinate" {
+    half_life: 24 hours
+    targets: ["GABA", "Sleep-Quality", "Muscle-Relaxation", "Cortisol"]
+    conflicts: ["High-Dose-Zinc"]
+    synergies: ["Vitamin D3", "L-Theanine"]
+    max_dose: 800 mg
+}
+
+substance "Omega-3 EPA DHA" {
+    half_life: 2 days
+    targets: ["Inflammation", "Cardiovascular", "Brain-DHA", "Triglycerides"]
+    synergies: ["Vitamin D3", "Curcumin"]
+}
+
+substance "Creatine Monohydrate" {
+    targets: ["ATP-Resynthesis", "Muscle-Strength", "Cognition", "HPA-Axis"]
+    max_dose: 10 g
+}
+
+substance "L-Theanine" {
+    half_life: 2 hours
+    targets: ["Alpha-Waves", "GABA", "Relaxation", "Focus"]
+    synergies: ["Caffeine", "Magnesium"]
+    max_dose: 400 mg
+}
+
+substance "Ashwagandha KSM-66" {
+    half_life: 8 hours
+    targets: ["Cortisol", "Testosterone", "Thyroid", "Stress-HPA"]
+    synergies: ["Magnesium"]
+    max_dose: 600 mg
+}
+
+substance "Melatonin" {
+    half_life: 30 minutes
+    targets: ["Circadian-Rhythm", "Sleep-Onset"]
+    max_dose: 5 mg
+}
+
+// ---------------------------------------------------------------------------
+// Intervention definitions — daily dosing with timing
+// ---------------------------------------------------------------------------
+
+/**
+ * Vitamin D3 — fat-soluble, take with your largest meal.
+ * Dose range varies widely by baseline level — start at 2000 IU
+ * and adjust based on quarterly 25-OH-D blood work targeting 50-80 ng/mL.
+ */
+intervention "Vitamin D3 + K2" {
+    use substance "Vitamin D3"
+    use substance "Vitamin K2 MK-7"
+    group: vitamin
+    route: oral
+    dose: 4000 IU
+    frequency { interval: 1 day }
+    time_of_day: with_food
+    tags: ["vitamin", "daily", "fat-soluble"]
+    goal: "Maintain 25-OH-D between 50-80 ng/mL"
+    tracks: ["25-Hydroxy Vitamin D", "PTH"]
+    notes: "Always co-administer K2 to direct calcium to bones instead of arteries. Recheck blood levels every 3 months while titrating."
+}
+
+/**
+ * Magnesium Glycinate — the best-tolerated form for sleep and anxiety.
+ * Glycinate is chelated, gentle on the gut, and crosses the blood-brain barrier.
+ */
+intervention "Magnesium Glycinate" {
+    use substance "Magnesium Glycinate"
+    group: mineral
+    route: oral
+    dose: 400 mg
+    frequency { interval: 1 day }
+    time_of_day: before_bed
+    tags: ["sleep", "relaxation", "mineral", "daily"]
+    goal: "Improve sleep onset and reduce muscle tension"
+    tracks: "Magnesium RBC"
+    notes: "Take 30-60 min before bed. The glycinate form rarely causes GI upset. Start at 200 mg if you experience loose stools."
+}
+
+/**
+ * Omega-3 — EPA+DHA combined dose. Get at least 1g combined EPA+DHA per day.
+ * Higher EPA (2-3g) is better for anti-inflammatory goals; higher DHA for cognition.
+ */
+intervention "Omega-3 EPA+DHA" {
+    use substance "Omega-3 EPA DHA"
+    group: supplement
+    route: oral
+    dose { min: 1 g, max: 3 g }
+    frequency { interval: 1 day }
+    time_of_day: with_food
+    tags: ["heart-health", "brain", "inflammation", "daily"]
+    goal: "Reduce systemic inflammation and support cardiovascular health"
+    tracks: ["Triglycerides", "hs-CRP"]
+    notes: "Take with food to reduce fish-burp reflux. Refrigerate after opening. Check Omega-3 Index blood test for personalised dosing (target: 8-12%)."
+}
+
+/**
+ * Creatine — loading phase optional; 5g/day steady state works just as well.
+ * Effects on cognition are most noticeable during sleep deprivation.
+ */
+intervention "Creatine Monohydrate" {
+    use substance "Creatine Monohydrate"
+    group: supplement
+    route: oral
+    dose: 5 g
+    frequency { interval: 1 day }
+    time_of_day: morning
+    tags: ["performance", "cognition", "muscle", "daily"]
+    goal: "Support ATP resynthesis, strength, and cognitive reserve"
+    notes: "Timing doesn't matter much — take whenever it's convenient. Slight water retention in the first week is normal."
+}
+
+/**
+ * L-Theanine — pairs well with morning coffee to smooth the caffeine curve.
+ * 2:1 Theanine:Caffeine is the standard synergistic ratio.
+ */
+intervention "L-Theanine" {
+    use substance "L-Theanine"
+    group: supplement
+    route: oral
+    dose: 200 mg
+    frequency { interval: 1 day }
+    time_of_day: morning
+    tags: ["focus", "calm", "nootropic", "daily"]
+    goal: "Smooth caffeine edge and improve sustained focus"
+    notes: "Take with coffee or separately in the morning. Safe to use multiple times daily. Non-habit-forming."
+}
+
+/**
+ * Ashwagandha — adaptogen for cortisol and testosterone support.
+ * KSM-66 is the most studied extract standardised to withanolides.
+ * Cycle recommended: 8 weeks on, 2 weeks off.
+ */
+intervention "Ashwagandha KSM-66" {
+    use substance "Ashwagandha KSM-66"
+    group: supplement
+    route: oral
+    dose: 300 mg
+    frequency { interval: 1 day }
+    time_of_day: evening
+    schedule { duration: 8 weeks }
+    tags: ["adaptogen", "stress", "testosterone", "cortisol"]
+    goal: "Reduce cortisol, improve stress resilience, and support testosterone"
+    tracks: ["Cortisol AM", "Testosterone Total"]
+    notes: "Take with food to improve tolerability. Cycle 8 weeks on / 2 weeks off."
+}
+
+/**
+ * Melatonin — use the lowest effective dose. 0.5 mg is often as effective as 5 mg.
+ * Higher doses can cause next-morning grogginess and disrupt natural secretion.
+ */
+intervention "Melatonin" {
+    use substance "Melatonin"
+    group: supplement
+    route: oral
+    dose: 0.5 mg
+    frequency { interval: 1 day }
+    time_of_day: before_bed
+    tags: ["sleep", "circadian", "daily"]
+    goal: "Support sleep onset in cases of disrupted circadian rhythm"
+    notes: "Less is more. Start at 0.3-0.5 mg taken 30-60 min before target bedtime. Use only as needed, not nightly long-term."
+}
+
+// ---------------------------------------------------------------------------
+// Stacks — convenience groupings for the protocol
+// ---------------------------------------------------------------------------
+
+stack "Morning Stack" {
+    use intervention "Vitamin D3 + K2"
+    use intervention "Omega-3 EPA+DHA"
+    use intervention "Creatine Monohydrate"
+    use intervention "L-Theanine"
+    tags: ["morning", "daily"]
+    goal: "Foundational morning supplementation"
+}
+
+stack "Evening Stack" {
+    use intervention "Magnesium Glycinate"
+    use intervention "Ashwagandha KSM-66"
+    tags: ["evening", "sleep", "recovery"]
+    goal: "Wind-down and recovery support"
+}
+
+stack "Full Basic Stack" {
+    use stack "Morning Stack"
+    use stack "Evening Stack"
+    tags: ["beginner", "foundation"]
+    goal: "Complete foundational supplement protocol"
+}
+
+// ---------------------------------------------------------------------------
+// Protocol — 12-week baseline run
+// ---------------------------------------------------------------------------
+
+protocol "Basic Supplement Baseline" {
+    version: "1.0.0"
+    goal: "Establish a supplementation baseline, confirm tolerability, and get blood work before and after"
+    tags: ["beginner", "foundation", "supplements"]
+    tracks: ["25-Hydroxy Vitamin D", "Magnesium RBC", "Triglycerides", "hs-CRP", "Cortisol AM", "Testosterone Total"]
+    notes: '''Run blood work before starting (week 0) and again at week 12.
+    Biomarkers to test: Vitamin D (25-OH-D), Magnesium RBC, Omega-3 Index,
+    Cortisol AM, Total Testosterone, hs-CRP, Ferritin, B12.
+    Adjust doses based on results. Most people see meaningful Vitamin D
+    and CRP changes within 8-12 weeks.'''
+
+    phase "Initiation" {
+        duration: 2 weeks
+        start: "After baseline blood work completed"
+        end: "All supplements tolerated without side effects"
+        goal: "Introduce supplements gradually and assess tolerability"
+        notes: "Start at half dose for Magnesium and Ashwagandha. Full dose from week 2."
+        use stack "Morning Stack"
+        use intervention "Magnesium Glycinate" { dose: 200 mg }
+    }
+
+    phase "Full Protocol" {
+        duration: 10 weeks
+        start: "Initiation phase complete"
+        end: "12-week blood work completed"
+        goal: "Run at full dose and track biomarker changes"
+        use stack "Full Basic Stack"
+    }
+}

@@ -1,5 +1,5 @@
 import RenderMarkdown from "../components/markdown";
-import LinkButton from "../components/link-button";
+import Link from "next/link";
 
 const markdown = `
 
@@ -35,13 +35,17 @@ The source code for this website is available on [GitHub](https://github.com/emi
 
 export default function PrivacyPolicy() {
     return (
-        <main className="flex flex-col items-center justify-start w-full min-h-screen p-4">
-            <div className="w-full max-w-4xl my-8">
-                <LinkButton href="/">
-          ← Back to Home
-                </LinkButton>
+        <main className="flex min-h-screen w-full flex-col items-center justify-start px-6">
+            <div className="w-full max-w-3xl my-10">
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
+                >
+                    <span className="text-signal" aria-hidden="true">←</span>
+                    Back to home
+                </Link>
             </div>
-            <section className="flex flex-col items-center justify-center w-full max-w-4xl h-full gap-2 p-4 gap-x-4">
+            <section className="w-full max-w-3xl pb-24">
                 <RenderMarkdown content={markdown} />
             </section>
         </main>

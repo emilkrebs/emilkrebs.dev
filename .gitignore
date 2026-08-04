@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/playground/node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
@@ -13,8 +14,18 @@
 /.next/
 /out/
 
+# playground static build output (regenerated from playground/ by the build chain)
+/public/playground
+
 # production
 /build
+
+# ai skills tooling
+# .agents/skills, .github/skills, .github/agents, .github/hooks and
+# skills-lock.json are intentionally tracked: they pin the design skills
+# (taste-skill, impeccable) and carry this repo's project directive.
+# Only generated session state is ignored.
+/.impeccable/
 
 # misc
 .DS_Store
