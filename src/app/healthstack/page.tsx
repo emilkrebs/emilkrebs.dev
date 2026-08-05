@@ -63,7 +63,7 @@ const SECTIONS: FeatureSection[] = [
             { value: "Auto", label: "re-layout" },
             { value: "Git", label: "versionable DSL" },
         ],
-        image: "/pictures/healthstack-protocol.webp",
+        image: null,
         caption: "Dev build - protocol builder",
     },
     {

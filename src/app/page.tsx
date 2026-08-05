@@ -295,22 +295,128 @@ function Hero() {
                         className="absolute -bottom-1.5 -right-1.5 size-3.5 border-b-2 border-r-2 border-ink-soft"
                         aria-hidden="true"
                     />
-                    <div className="duotone-frame relative size-44 md:size-56 border border-hairline">
+                    <div
+                        className="duotone-frame group relative size-44 md:size-56 border border-hairline overflow-hidden"
+                        data-portrait-frame
+                    >
                         <Image
                             src="/pictures/portrait.webp"
-                            alt="Emil Krebs, language engineer in Kiel"
+                            alt="Emil Krebs, language engineer"
                             width={512}
                             height={512}
                             priority
-                            className="size-full object-cover"
+                            className="absolute inset-0 size-full object-cover transition-opacity duration-300 motion-reduce:transition-none group-data-[portrait-mode=field]:opacity-0"
+                        />
+                        <Image
+                            src="/pictures/portrait-field.webp"
+                            alt="Emil Krebs, in the field"
+                            width={512}
+                            height={512}
+                            data-portrait-field
+                            className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-data-[portrait-mode=field]:opacity-100"
                         />
                         <div className="duotone-tint absolute inset-0" />
                         <div className="duotone-lift absolute inset-0" />
                     </div>
                     <figcaption className="mt-3 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                         <span className="size-1 bg-signal" aria-hidden="true" />
-                        Emil Krebs - Kiel
+                        Emil Krebs
                     </figcaption>
+                    <div
+                        className="mt-3 flex items-center gap-3"
+                        role="group"
+                        aria-label="Portrait mode"
+                    >
+                        <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                            Portrait mode
+                        </span>
+                        <div className="flex border border-hairline">
+                            <button
+                                type="button"
+                                data-portrait-mode-btn="formal"
+                                aria-pressed="true"
+                                className="flex items-center gap-2 px-2.5 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink"
+                            >
+                                <span
+                                    className="size-1 bg-signal"
+                                    aria-hidden="true"
+                                    data-portrait-dot
+                                />
+                                Formal
+                            </button>
+                            <button
+                                type="button"
+                                data-portrait-mode-btn="field"
+                                aria-pressed="false"
+                                className="flex items-center gap-2 border-l border-hairline px-2.5 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft"
+                            >
+                                <span
+                                    className="size-1 bg-transparent"
+                                    aria-hidden="true"
+                                    data-portrait-dot
+                                />
+                                Field
+                            </button>
+                        </div>
+                    </div>
+                    <script
+                        dangerouslySetInnerHTML={{
+                            __html: `(function () {
+  var frame = document.querySelector("[data-portrait-frame]");
+  if (!frame) return;
+  var buttons = Array.prototype.slice.call(
+    document.querySelectorAll("[data-portrait-mode-btn]")
+  );
+  var fieldImg = frame.querySelector("[data-portrait-field]");
+  var fieldBroken = false;
+  var pinned = null;
+  if (fieldImg) {
+    fieldImg.addEventListener("error", function () {
+      fieldBroken = true;
+      fieldImg.style.display = "none";
+      var fb = document.querySelector('[data-portrait-mode-btn="field"]');
+      if (fb) {
+        fb.setAttribute("disabled", "disabled");
+        fb.classList.add("opacity-40");
+      }
+      frame.removeAttribute("data-portrait-mode");
+    });
+  }
+  function setMode(mode) {
+    if (mode === "field" && fieldBroken) return;
+    frame.setAttribute("data-portrait-mode", mode);
+    buttons.forEach(function (b) {
+      var on = b.getAttribute("data-portrait-mode-btn") === mode;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.classList.toggle("text-ink", on);
+      b.classList.toggle("text-ink-soft", !on);
+      var dot = b.querySelector("[data-portrait-dot]");
+      if (dot) {
+        dot.classList.toggle("bg-signal", on);
+        dot.classList.toggle("bg-transparent", !on);
+      }
+    });
+  }
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var mode = b.getAttribute("data-portrait-mode-btn");
+      if (pinned === mode) {
+        pinned = null;
+      } else {
+        pinned = mode;
+      }
+      setMode(pinned || "formal");
+    });
+  });
+  frame.addEventListener("mouseenter", function () {
+    if (!pinned) setMode("field");
+  });
+  frame.addEventListener("mouseleave", function () {
+    if (!pinned) setMode("formal");
+  });
+})();`,
+                        }}
+                    />
                 </figure>
             </div>
 
