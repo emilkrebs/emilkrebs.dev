@@ -105,7 +105,6 @@ function buildShell(activeIndex: number, fileName: string): void {
     <section class="plate">
       <div class="caption mono">
         <span>      <span class="token"></span><span id="editor-caption">Editor · ${fileName}</span></span>
-        <span>Analyzes automatically as you type · cmd/ctrl+click to jump to a definition</span>
       </div>
       <div id="editor-host"></div>
     </section>

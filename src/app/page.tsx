@@ -139,8 +139,8 @@ const PROJECTS: Project[] = [
       "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
         href: "https://vailnote.com/",
         tags: ["TypeScript", "Fresh", "Deno", "MongoDB"],
-        image: "/pictures/vailnote-plate.svg",
-        imageCaption: "Screenshot pending - VailNote",
+        image: "/pictures/vailnote.webp",
+        imageCaption: "Live - vailnote.com",
     },
     {
         name: "WatchLock",
@@ -148,8 +148,8 @@ const PROJECTS: Project[] = [
       "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
         href: "https://github.com/emilkrebs/WatchLock",
         tags: ["Kotlin", "Android", "WearOS"],
-        image: "/pictures/watchlock-plate.svg",
-        imageCaption: "Screenshot pending - WatchLock",
+        image: "/pictures/watchlock.webp",
+        imageCaption: "Live - github.com/emilkrebs/WatchLock",
     },
     {
         name: "BIPoC Climate Justice Conference",
@@ -157,8 +157,8 @@ const PROJECTS: Project[] = [
       "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
         href: "https://bipoclimatejusticenetwork.org/",
         tags: ["Next.js", "TypeScript", "Localization"],
-        image: "/pictures/bipoc-climate-justice-plate.svg",
-        imageCaption: "Screenshot pending - bipoclimatejusticenetwork.org",
+        image: "/pictures/bipoc.webp",
+        imageCaption: "Live - bipoclimatejusticenetwork.org",
     },
     {
         name: "Langium Showcase",
@@ -176,8 +176,8 @@ const PROJECTS: Project[] = [
       "A Yeoman generator that scaffolds Discord bots in several languages.",
         href: "https://github.com/emilkrebs/Generator-Discord",
         tags: ["Node.js", "TypeScript", "Yeoman"],
-        image: "/pictures/generator-discord-plate.svg",
-        imageCaption: "Screenshot pending - Generator-Discord",
+        image: "/pictures/generator-discord.webp",
+        imageCaption: "Live - github.com/emilkrebs/Generator-Discord",
     },
     {
         name: "This site",
@@ -185,8 +185,8 @@ const PROJECTS: Project[] = [
       "Static export. No server, no database — typeset per the spec you are reading.",
         href: "/",
         tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-        image: "/pictures/this-site-plate.svg",
-        imageCaption: "You are here - this site",
+        image: "/pictures/this-site.webp",
+        imageCaption: "Live - emilkrebs.dev",
     },
 ];
 
