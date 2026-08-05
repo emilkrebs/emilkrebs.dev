@@ -32,7 +32,7 @@ monaco.editor.defineTheme('specsheet', {
   inherit: false,
   rules: [
     { token: '', foreground: '141310', background: 'F7F5F0' },
-    { token: 'comment', foreground: '8A857C', fontStyle: 'italic' },
+    { token: 'comment', foreground: '5F5B55', fontStyle: 'italic' },
     { token: 'keyword', foreground: 'E8450C' },
     { token: 'constant', foreground: 'E8450C' },
     { token: 'number', foreground: '141310' },
@@ -45,7 +45,7 @@ monaco.editor.defineTheme('specsheet', {
   colors: {
     'editor.background': '#F7F5F0',
     'editor.foreground': '#141310',
-    'editorLineNumber.foreground': '#6E6A63',
+    'editorLineNumber.foreground': '#5F5B55',
     'editorLineNumber.activeForeground': '#141310',
     'editorCursor.foreground': '#E8450C',
     'editor.selectionBackground': '#E4DED2',
@@ -93,9 +93,8 @@ function buildShell(activeIndex: number, fileName: string): void {
       <p>
         This page runs the real Healthstack language server in your browser.
         Parsing, validation, completions and hover documentation all execute
-        locally — your data never leaves your machine. A curated, supplements-only
-        reference library ships with the page — the full clinical catalog does
-        not.
+        locally. Your data never leaves your machine. A curated, supplements-only
+        reference library ships with the page; the full clinical catalog does not.
         <a href="/healthstack/">What is Healthstack?</a>
       </p>
     </header>
@@ -104,7 +103,7 @@ function buildShell(activeIndex: number, fileName: string): void {
     </nav>
     <section class="plate">
       <div class="caption mono">
-        <span>      <span class="token"></span><span id="editor-caption">Editor · ${fileName}</span></span>
+        <span><span class="token"></span><span id="editor-caption">Editor · ${fileName}</span></span>
       </div>
       <div id="editor-host"></div>
     </section>

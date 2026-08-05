@@ -21,7 +21,6 @@ Hansastraße 70,
 24118 Kiel
 
 
-\
 E-Mail: [${EMAIL_ADDRESS}](mailto:${EMAIL_ADDRESS})
 
 Phone: ${PHONE_NUMBER}

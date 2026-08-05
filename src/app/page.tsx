@@ -182,7 +182,7 @@ const PROJECTS: Project[] = [
     {
         name: "This site",
         description:
-      "Static export. No server, no database — typeset per the spec you are reading.",
+      "Static export. No server, no database. Typeset per the spec you are reading.",
         href: "/",
         tags: ["Next.js", "TypeScript", "Tailwind CSS"],
         image: "/pictures/this-site.webp",
@@ -208,7 +208,7 @@ function TokenMark({ count = 16 }: { count?: number }) {
 
 function Nav() {
     return (
-        <nav className="sticky top-0 z-50 bg-paper border-b border-hairline">
+        <nav aria-label="Primary" className="sticky top-0 z-50 bg-paper border-b border-hairline">
             <div className="mx-auto flex items-center justify-between max-w-[1120px] px-6 h-16">
                 <a
                     href="#top"
@@ -221,7 +221,7 @@ function Nav() {
                         <a
                             key={item.href}
                             href={item.href}
-                            className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
+                            className="py-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
                         >
                             {item.label}
                         </a>
@@ -275,7 +275,7 @@ function Hero() {
                     </div>
                 </div>
 
-                <figure className="shrink-0 relative">
+                <figure className="shrink-0 relative w-fit">
                     <span
                         className="absolute -top-1.5 -left-1.5 size-3.5 border-t-2 border-l-2 border-ink-soft"
                         aria-hidden="true"
@@ -327,7 +327,7 @@ function SectionHeading({ id, children }: { id?: string; children: string }) {
     return (
         <h2
             id={id}
-            className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft mb-10"
+            className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] mb-10"
         >
             {children}
         </h2>
@@ -411,7 +411,7 @@ function Work() {
 
 function ProjectCard({ project }: { project: Project }) {
     return (
-        <article className="bg-paper-deep border border-hairline flex flex-col group">
+        <article className="bg-paper-deep border border-hairline flex flex-col group hover:border-ink transition-colors duration-150">
             {project.preview && (
                 <div className="relative">
                     <div className="relative aspect-[16/10] border-b border-hairline overflow-hidden bg-paper">
@@ -449,6 +449,8 @@ function ProjectCard({ project }: { project: Project }) {
     frame.referrerPolicy = "no-referrer";
     frame.className = "size-full border-0";
     cover.replaceWith(frame);
+    frame.tabIndex = -1;
+    frame.focus();
   });
 })();`,
                                     }}
@@ -487,12 +489,14 @@ function ProjectCard({ project }: { project: Project }) {
             )}
             <div className="p-8 md:p-10 flex flex-col flex-1">
                 <div className="flex items-start justify-between gap-4">
-                    <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
+                    <h3
+                        className={`${project.flagship ? "text-3xl md:text-4xl" : "text-2xl md:text-3xl"} font-semibold tracking-tight`}
+                    >
                         {project.name}
                     </h3>
                     {project.status && (
                         <span className="inline-flex items-center gap-2 border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap">
-                            <span className="size-1 bg-signal" aria-hidden="true" />
+                            <span className="size-1.5 bg-signal" aria-hidden="true" />
                             {project.status}
                         </span>
                     )}

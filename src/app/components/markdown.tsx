@@ -28,15 +28,20 @@ export default function RenderMarkdown(props: MarkdownProps) {
                             {...props}
                         />
                     ),
-                    a: ({ node, ...props }) => (
-                        <Link
-                            target="_blank"
-                            passHref
-                            className="text-ink underline underline-offset-4 decoration-signal hover:text-signal transition-colors duration-150"
-                            href={props.href || ""}
-                            {...props}
-                        />
-                    ),
+                    a: ({ node, ...props }) => {
+                        const href = props.href || "";
+                        const external = href.startsWith("http");
+                        return (
+                            <Link
+                                passHref
+                                className="text-ink underline underline-offset-4 decoration-signal hover:text-signal transition-colors duration-150"
+                                href={href}
+                                {...props}
+                                target={external ? "_blank" : undefined}
+                                rel={external ? "noopener noreferrer" : undefined}
+                            />
+                        );
+                    },
                     p: ({ node, ...props }) => (
                         <p className="mb-4 leading-relaxed" {...props} />
                     ),

@@ -124,7 +124,7 @@ function SectionHeading({ children }: { children: string }) {
 function StatusLabel({ children }: { children: string }) {
     return (
         <span className="inline-flex items-center gap-2 border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap">
-            <span className="size-1 bg-signal" aria-hidden="true" />
+            <span className="size-1.5 bg-signal" aria-hidden="true" />
             {children}
         </span>
     );
@@ -158,6 +158,7 @@ function Shot({ src, alt, caption }: { src: string; alt: string; caption: string
 }
 
 function StatTable({ stats }: { stats: { value: string; label: string }[] }) {
+    const fill = (6 - (stats.length % 6)) % 6;
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-hairline border border-hairline">
             {stats.map((stat) => (
@@ -169,6 +170,13 @@ function StatTable({ stats }: { stats: { value: string; label: string }[] }) {
                         {stat.label}
                     </div>
                 </div>
+            ))}
+            {Array.from({ length: fill }).map((_, i) => (
+                <div
+                    key={`fill-${i}`}
+                    aria-hidden="true"
+                    className="bg-paper-deep p-4"
+                />
             ))}
         </div>
     );
@@ -251,7 +259,7 @@ export default function HealthstackPage() {
                 <div className="flex items-start gap-3 border border-hairline px-6 py-4">
                     <span className="mt-1.5 size-1 bg-signal shrink-0" aria-hidden="true" />
                     <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-relaxed">
-                        Not medical advice — a curated, supplements-only reference.
+                        Not medical advice: a curated, supplements-only reference.
                         Nothing here is a prescription medication, peptide, hormone, or
                         research chemical, and no dose is a recommendation.
                     </p>
@@ -265,7 +273,7 @@ export default function HealthstackPage() {
             <section className="mx-auto max-w-[1120px] px-6 py-16 md:py-20 border-t border-hairline">
                 <SectionHeading>The DSL</SectionHeading>
                 <p className="text-base md:text-lg leading-relaxed max-w-[62ch] mb-10">
-                    Protocols are data, not prose — and the language&apos;s type
+                    Protocols are data, not prose, and the language&apos;s type
                     system is written in the language itself:{" "}
                     <code className="font-mono text-sm">substance</code>,{" "}
                     <code className="font-mono text-sm">intervention</code>,{" "}
@@ -314,7 +322,7 @@ export default function HealthstackPage() {
                         Everything on this page is the dev build: it runs, the
                         DSL compiles, the diagnostics fire. Expect rough edges,
                         no data guarantees, and no product promises. The
-                        screenshots are real, taken from the app as it works
+                        screenshot is real, taken from the app as it works
                         today. A public preview is not hosted yet; when it is,
                         it will appear here.
                     </p>

@@ -25,8 +25,9 @@
 # skills-lock.json are intentionally tracked: they pin the design skills
 # (taste-skill, impeccable) and carry this repo's project directive.
 # Only generated session state is ignored.
-/.impeccable/
-
+.impeccable
+.agents/skills
+.codex
 # misc
 .DS_Store
 *.pem

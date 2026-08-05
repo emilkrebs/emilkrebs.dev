@@ -14,8 +14,7 @@ export function Footer() {
     return (
         <footer className="w-full mt-auto">
             <div className="mx-auto w-full max-w-[1120px] px-6 py-16 border-t border-hairline">
-                <TokenMark />
-                <div className="mt-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
                         <p>Emil Krebs - Kiel, Germany</p>
                     </div>
@@ -24,7 +23,7 @@ export function Footer() {
                             href={GITHUB_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150"
+                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150 py-1"
                         >
                             GitHub <span className="text-signal" aria-hidden="true">→</span>
                         </a>
@@ -32,22 +31,25 @@ export function Footer() {
                             href={LINKEDIN_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150"
+                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150 py-1"
                         >
                             LinkedIn <span className="text-signal" aria-hidden="true">→</span>
                         </a>
                         <a
                             href={`mailto:${EMAIL_ADDRESS}`}
-                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150"
+                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150 py-1"
                         >
                             Email <span className="text-signal" aria-hidden="true">→</span>
                         </a>
                     </div>
                     <div className="flex gap-6 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                        <a href="/imprint" className="hover:text-ink transition-colors duration-150">
+                        <a href="/healthstack" className="hover:text-ink transition-colors duration-150 py-1">
+                            Healthstack
+                        </a>
+                        <a href="/imprint" className="hover:text-ink transition-colors duration-150 py-1">
                             Imprint
                         </a>
-                        <a href="/privacy" className="hover:text-ink transition-colors duration-150">
+                        <a href="/privacy" className="hover:text-ink transition-colors duration-150 py-1">
                             Privacy
                         </a>
                     </div>
@@ -55,6 +57,7 @@ export function Footer() {
                 <p className="mt-12 text-xs text-ink-soft">
                     © {new Date().getFullYear()} Emil Krebs. All rights reserved.
                 </p>
+                <div className="mt-10"><TokenMark /></div>
             </div>
         </footer>
     );
