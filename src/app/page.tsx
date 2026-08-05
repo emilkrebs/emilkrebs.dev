@@ -177,15 +177,6 @@ const PROJECTS: Project[] = [
         consent: true,
     },
     {
-        name: "Generator-Discord",
-        description:
-            "A Yeoman generator that scaffolds Discord bots in several languages.",
-        href: "https://github.com/emilkrebs/Generator-Discord",
-        tags: ["Node.js", "TypeScript", "Yeoman"],
-        image: "/pictures/generator-discord.webp",
-        imageCaption: "Live - github.com/emilkrebs/Generator-Discord",
-    },
-    {
         name: "This site",
         description:
             "Static export. No server, no database. Typeset per the spec you are reading.",
@@ -540,7 +531,14 @@ function Projects() {
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {PROJECTS.map((project, index) => (
-                    <div key={project.name} className={index % 3 === 0 ? "md:col-span-2" : ""}>
+                    <div
+                        key={project.name}
+                        className={
+                            index % 3 === 0 || index === PROJECTS.length - 1
+                                ? "md:col-span-2"
+                                : ""
+                        }
+                    >
                         <ProjectCard project={project} />
                     </div>
                 ))}

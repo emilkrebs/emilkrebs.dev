@@ -43,7 +43,7 @@ Static-exported site built with Next.js 15, TypeScript, and Tailwind CSS v4, dep
 ## Evidence on Hand
 
 - Full public source of the incumbent site in this repository (src/app): About, Technologies, Projects sections, resume.pdf, imprint and privacy pages, favicon and OpenGraph assets.
-- Real project list with working links: WatchLock (Android/WearOS), VailNote (encrypted note sharing), Langium Showcase, BIPoC Climate Justice Conference site, Generator-Discord.
+- Real project list with working links: WatchLock (Android/WearOS), VailNote (encrypted note sharing), Langium Showcase, BIPoC Climate Justice Conference site.
 - Real performance evidence: PageSpeed results referenced in README.md.
 - Analytics: SimpleAnalytics script tag in the root layout.
 
