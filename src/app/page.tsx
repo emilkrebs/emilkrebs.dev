@@ -51,9 +51,9 @@ function generateWebsiteJsonLd() {
     return {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Emil Krebs - Language Engineer in Kiel",
+        "name": "Emil Krebs - Software engineer in Kiel",
         "description":
-            "Personal website of Emil Krebs, a language engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack.",
+            "Personal website of Emil Krebs, a Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack.",
         "url": "https://emilkrebs.dev",
         "author": {
             "@type": "Person",
@@ -74,15 +74,16 @@ const NAV = [
 ];
 
 const STRENGTHS = [
-    {
-        title: "Language engineering",
-        proof:
-            "Language servers, the LSP, and Langium DSLs at TypeFox, plus a purpose-built lifestyle language inside Healthstack.",
-    },
+
     {
         title: "Developer tooling",
         proof:
             "VS Code extensions, Theia-based IDEs, and generators that save other developers real time.",
+    },
+    {
+        title: "Language engineering",
+        proof:
+            "Language servers, the LSP, and Langium DSLs at TypeFox, plus a purpose-built lifestyle language inside Healthstack.",
     },
     {
         title: "Security & privacy",
@@ -249,7 +250,7 @@ function Hero() {
                         Emil Krebs
                     </h1>
                     <p className="mt-8 text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                        Language engineer at TypeFox. Kiel, Germany.
+                        Software engineer at TypeFox. Kiel, Germany.
                     </p>
                     <div className="mt-10 flex flex-wrap items-center gap-6">
                         <a
@@ -302,7 +303,7 @@ function Hero() {
                     <div className="duotone-frame relative size-44 md:size-56 border border-ink-soft/50 overflow-hidden">
                         <Image
                             src="/pictures/portrait.webp"
-                            alt="Emil Krebs, language engineer"
+                            alt="Emil Krebs, Software engineer"
                             width={512}
                             height={512}
                             priority
@@ -407,7 +408,7 @@ function Work() {
                     />
                 </h3>
                 <p className="mt-4 text-base md:text-lg leading-relaxed max-w-[60ch]">
-                    Software Engineer on language engineering: language servers,
+                    Software Engineer on Software engineering: language servers,
                     the LSP, and the tooling that lets editors understand code.
                     This is the craft the rest of this page proves.
                 </p>

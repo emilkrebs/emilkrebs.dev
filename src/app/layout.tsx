@@ -32,16 +32,16 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
     metadataBase: new URL("https://emilkrebs.dev"),
     title: {
-        default: "Emil Krebs - Language Engineer in Kiel",
+        default: "Emil Krebs - Software engineer in Kiel",
         template: "%s | Emil Krebs",
     },
     description:
-    "Language engineer at TypeFox in Kiel, Germany. I build the tools that read, understand, and transform code: language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
+    "Software engineer at TypeFox in Kiel, Germany. I build the tools that read, understand, and transform code: language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
     keywords: [
         "Emil Krebs",
-        "Language Engineer",
+        "Software engineer",
         "TypeFox GmbH",
-        "Language Engineering",
+        "Software engineering",
         "Language Server Protocol",
         "Langium",
         "Developer Tools",
@@ -75,24 +75,24 @@ export const metadata: Metadata = {
         type: "website",
         locale: "en_US",
         url: "https://emilkrebs.dev",
-        title: "Emil Krebs - Language Engineer in Kiel",
+        title: "Emil Krebs - Software engineer in Kiel",
         description:
-      "Language engineer at TypeFox in Kiel, Germany. I build the tools that read, understand, and transform code: language servers, DSLs, and products like Prami and Healthstack.",
+      "Software engineer at TypeFox in Kiel, Germany. I build the tools that read, understand, and transform code: language servers, DSLs, and products like Prami and Healthstack.",
         siteName: "Emil Krebs",
         images: [
             {
                 url: "/opengraph_image.webp",
                 width: 1200,
                 height: 630,
-                alt: "Emil Krebs - Language Engineer in Kiel",
+                alt: "Emil Krebs - Software engineer in Kiel",
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "Emil Krebs - Language Engineer in Kiel",
+        title: "Emil Krebs - Software engineer in Kiel",
         description:
-      "Language engineer at TypeFox in Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack.",
+      "Software engineer at TypeFox in Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack.",
         images: ["/opengraph_image.webp"],
     },
     icons: {

@@ -12,11 +12,11 @@ Recruiters and engineers at developer-tools companies, open-source maintainers, 
 
 ## Product Purpose
 
-Make Emil's identity legible in one committed statement: he is a language engineer who builds the tools that build software (LSP, Langium, DSLs), he takes privacy seriously (VailNote, WatchLock), and he ships his work open source. Success is a visitor leaving with one idea - "this is the language-engineering, open-source, security-minded builder" - rather than a generic "full-stack developer" impression.
+Make Emil's identity legible in one committed statement: he is a Software engineer who builds the tools that build software (LSP, Langium, DSLs), he takes privacy seriously (VailNote, WatchLock), and he ships his work open source. Success is a visitor leaving with one idea - "this is the language-engineering, open-source, security-minded builder" - rather than a generic "full-stack developer" impression.
 
 ## Positioning
 
-Most developer portfolios claim broad full-stack competence. This site claims the narrower, more defensible lane: language engineering (language servers, DSLs, code tooling) plus real products built on that craft - Prami, a spaced-repetition learning app in public preview, and Healthstack, a specialized IDE for health optimization with its own purpose-built DSL. Around them sit a consistent security and privacy streak (VailNote zero-knowledge encryption, WatchLock) and open-source citizenship (Langium showcase, BIPoC Climate Justice conference site). The position no neighboring portfolio can truthfully copy: "builds the tools that read, understand, and transform code - language servers, IDEs, DSLs - and ships real products open source."
+Most developer portfolios claim broad full-stack competence. This site claims the narrower, more defensible lane: Software engineering (language servers, DSLs, code tooling) plus real products built on that craft - Prami, a spaced-repetition learning app in public preview, and Healthstack, a specialized IDE for health optimization with its own purpose-built DSL. Around them sit a consistent security and privacy streak (VailNote zero-knowledge encryption, WatchLock) and open-source citizenship (Langium showcase, BIPoC Climate Justice conference site). The position no neighboring portfolio can truthfully copy: "builds the tools that read, understand, and transform code - language servers, IDEs, DSLs - and ships real products open source."
 
 ## Operating Context
 
@@ -34,7 +34,7 @@ Static-exported site built with Next.js 15, TypeScript, and Tailwind CSS v4, dep
 
 ## Brand Commitments
 
-- Name: Emil Krebs. Domain: emilkrebs.dev. Home: Kiel, Germany. Employer: TypeFox GmbH (language engineering, LSP, Langium).
+- Name: Emil Krebs. Domain: emilkrebs.dev. Home: Kiel, Germany. Employer: TypeFox GmbH (Software engineering, LSP, Langium).
 - Voice: dry, direct, factual, no hype, no emoji, no exclamation marks. Northern-German, engineering-first.
 - The cooking status, binding: the hero carries a mono line "Cooking: <real, current projects>" that mirrors Emil's GitHub status (currently "Cooking..."). It is content, not decoration: it lists only projects that are genuinely being worked on, and it is removed - never faked - when nothing qualifies.
 - Anti-references, binding: AI-purple gradients, glassmorphism, pulsing status dots, floating profile picture, tech-icon walls, emoji CTAs, "Hi there!" greetings, three-equal-card rows, generic template hero.
@@ -49,7 +49,7 @@ Static-exported site built with Next.js 15, TypeScript, and Tailwind CSS v4, dep
 
 ## Product Principles
 
-1. One idea per page: language engineering, open source, security - nothing else.
+1. One idea per page: Software engineering, open source, security - nothing else.
 2. Proof over claims: every strength statement points at one concrete artifact.
 3. Speed is part of the identity: static export, no framework runtime, measurable performance.
 4. No hype: sober, factual, dry; the tone itself is the brand.
