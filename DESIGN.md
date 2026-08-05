@@ -113,9 +113,10 @@ The emotional register is northern, dry, and confident: a Kiel harbor ferry time
 - **Ink** `#141310` - all text, all primary buttons. Near-black with a warm cast, never pure black.
 - **Ink-soft** `#5f5b55` - labels, metadata, secondary text. AA on both paper and paper-deep (4.4:1 at the previous value was one step too soft; this is the smallest visible nudge that clears 4.5:1).
 - **Signal** `#e8450c` - the only accent in the system. International orange. Used for: the token marks, the arrow after links, the hover state of the primary button. One accent, everywhere, nowhere else.
+- **Signal-accent** `#22c55e` - the gimmick green: the single locked exception to the one-accent rule, used only by the hero face-reticle and the Thinking chip border, so the portrait reads as a tracked subject. Never on text, never outside the hero.
 - **Hairline** `rgba(20,19,16,0.14)` - 1px borders that separate spec sections and card edges.
 
-Rules: exactly one accent. No gradients anywhere, no shadows, no translucent overlays. Text is ink on paper at WCAG AA contrast or better; signal is reserved for marks and hover, never for large text. All rules hold in both color schemes.
+Rules: exactly one accent in the system; signal-accent is the one locked exception (hero reticle and chip border only). No gradients anywhere, no shadows, no translucent overlays. Text is ink on paper at WCAG AA contrast or better; signal is reserved for marks and hover, never for large text. All rules hold in both color schemes.
 
 ### Dark variant
 
@@ -126,6 +127,7 @@ The same document at night. The visitor's `prefers-color-scheme` decides; there 
 - **Ink** `#f7f5f0` - the light paper becomes the night ink: warm off-white, never pure white.
 - **Ink-soft** `#9b968c` - labels and metadata; AA on paper and on paper-deep.
 - **Signal** `#e8450c` - unchanged. One accent in both schemes; 4.7:1 on night paper.
+- **Signal-accent** `#22c55e` - unchanged at night; the reticle keeps its hue on night paper.
 - **Hairline** `rgba(247,245,240,0.14)` - the same 1px line, inverted cast.
 
 Rules: no gradients, no shadows, no blur, no rounding in dark either; the page stays flat in both schemes. The duotone portrait inverts its blends (image screen instead of multiply, lift multiply instead of screen) so the plate prints paper-and-ink at night as it does by day. Product screenshots, live previews, and the playground stay full color in both schemes: evidence is not recolored. Primary buttons invert with the tokens (light ink ground, night paper text), keeping the ink-to-signal hover in both schemes.
@@ -148,7 +150,7 @@ Single page, one column at desktop width capped at 1120px, generous vertical rhy
 
 Section order: nav, hero, Field, What I do, Work, Projects, Colophon footer. Each section is separated by lg to xl whitespace, not by cards or background changes; the paper stays continuous and the hairline only appears where the spec needs it.
 
-- **Hero:** name at display size on one or two lines, one body-size line under it (the position: "Software engineer at TypeFox, Kiel, Germany"), a status chip pinned to the portrait's top-right corner carrying the mono line "Cooking: Prami, Healthstack", which mirrors Emil's GitHub status and always lists the real, current projects, then the two plain link CTAs. Fits the initial viewport. No scroll cue, no status dot, no decorative strip. The cooking line is content, not ornament: when nothing is being cooked, the status chip is removed, never faked.
+- **Hero:** name at display size on one or two lines, one body-size line under it (the position: "Software engineer at TypeFox, Kiel, Germany"), then the three plain link CTAs (GitHub, LinkedIn, Email). Beside them, the portrait plate carries the site's one gimmick: a status chip pinned to the plate's top-right corner carrying the mono line "Thinking..." (paper ground, ink-soft mono text, signal-accent hairline border) and, over the face, the green face-reticle (specified under photo-plate). The chip line is content, not ornament, and always honest: the portrait is always thinking; it is never replaced by a fake status dot. Fits the initial viewport. No scroll cue, no decorative strip.
 - **What I do:** four full-width rows, each with a headline on the left and one sentence of proof on the right. Plain labels, no numeric prefixes.
 - **Projects:** two flagship cards lead (Prami, Healthstack), full-width or 8-col each, the largest type and the only cards allowed to carry a status-label (Prami: "PREVIEW", Healthstack: "PREVIEW"). Each flagship card opens with a 16:10 product plate (see product-plate) above the name. Prami's card previews the live app; Healthstack's card opens its own page (`/healthstack`, see Pages) because it is not publicly hosted yet. Below them, the secondary projects (VailNote, WatchLock, BIPoC Climate Justice site, Langium Showcase, this site) in the asymmetric grid: 12 columns, cards alternate wide (8 col) and narrow (4 col) on desktop, stacking on mobile. Cards are paper-deep blocks with a hairline border, never rows with top and bottom borders. Secondary cards carry a plate too: a live preview (real iframe of the running product, full color) when the site permits framing, otherwise the labeled placeholder plate. The plate sits above the name on every project card, so every project card opens the same way.
 - **Colophon:** a small mono line: name, Kiel, the link list, and the copyright. The token-mark row ends the page.
@@ -178,7 +180,7 @@ All corners are 0px, everywhere. Cards, buttons, tags, the token marks: square. 
 - **tag:** paper background, ink-soft label text, 0px corners, hairline border, 4px 8px padding. Mono, uppercase, no `#` prefix, no pill shape. Stack tags on project cards only.
 - **project-card:** paper-deep block, hairline border, 0px corners, md padding. Contains: project name (headline), one sentence (body), stack tags, arrow link. Hover: hairline becomes ink; no scale, no glow.
 - **token-mark:** a 6px signal square, repeated at even spacing in one row of up to 16, used as a closing mark under the hero and in the colophon. It is the only decoration on the page; it is a simple geometric mark, never animated, never assembled into a logo.
-- **photo-plate:** the real, unretouched portrait of Emil, rendered in duotone (paper and ink only, signal allowed as the midtone) so it stays inside the palette lock. The portrait is the only image on the site that gets color treatment; it is an identity object, and identity is printed, not shown. Placed in the hero as a small identification plate: 0px corners, hairline border, four corner crop marks (ink-soft L marks, like print registration ticks, sitting just outside the frame). The photo is a document object, not a decorated avatar: no rounding, no glow, no background bleed. One plate in the hero; a second documentary photo is allowed in the Field section only if it arrives duotone and hairline-framed.
+- **photo-plate:** the real, unretouched portrait of Emil, rendered in duotone (paper and ink only, signal allowed as the midtone) so it stays inside the palette lock. The portrait is the only image on the site that gets color treatment; it is an identity object, and identity is printed, not shown. Placed in the hero as a small identification plate: 0px corners, hairline border, four corner crop marks (ink-soft L marks, like print registration ticks, sitting just outside the frame). The photo is a document object, not a decorated avatar: no rounding, no glow, no background bleed. One plate in the hero; a second documentary photo is allowed in the Field section only if it arrives duotone and hairline-framed. The plate carries the site's single gimmick, the face-reticle: a green hairline box (signal-accent at 70% opacity, fading to 5% on hover) centered on the face, the kind of box a face-detection demo draws around a tracked subject. Inside the reticle the duotone blend deepens (tint and lift); outside it, the plate stays flat grayscale. On hover the whole plate reveals natural color and the reticle border fades to near-invisible: the scan releases. The reticle is decorative (aria-hidden), static, and locked to this plate: it appears nowhere else, and no other element may use signal-accent.
   - **Image required (pending):** one portrait, casual but professional (the same register as Emil's WhatsApp profile picture): head-and-shoulders, centered, looking at camera, natural daylight, neutral or softly blurred background, no studio flash, no busy backdrop. Minimum 1200px on the long side, 1:1 or 4:3, WebP or JPEG. Duotone is applied at build, so background color is irrelevant.
   - **Placeholder until supplied:** the real asset now ships as `public/pictures/portrait.webp` (512x512 WebP, duotone at build). Swap the asset, never change the component.
 - **product-plate:** a real screenshot of a product, shown exactly as it is: full color, 16:10, hairline border, 0px corners, mono caption under the plate naming the live origin ("Live - vailnote.com") or the honest pending state ("Screenshot pending"). Placed at the top of the project card, above the name. No duotone, no filter, no overlays on product imagery: a screenshot is evidence, and evidence is not recolored. The plate frame and caption are what make it part of the document. Never rounded, never floating, never a mockup built from divs.
@@ -191,7 +193,7 @@ All corners are 0px, everywhere. Cards, buttons, tags, the token marks: square. 
 
 Do:
 
-- Keep paper, ink, and one signal accent. No other colors appear.
+- Keep paper, ink, and one signal accent. Signal-accent appears only as the hero face-reticle and the Thinking chip border; nowhere else.
 - Use mono labels for metadata only, and uppercase them with normal tracking.
 - Use the italic serif accent once per section at most.
 - Let whitespace carry the hierarchy; the layout is the design.
@@ -213,4 +215,4 @@ Don't:
 
 ## Motion
 
-One rule: the page does not move on load. The only transitions are the two defined hover states (button ink to signal, card hairline to ink), instant or a single 150ms ease-out. `prefers-reduced-motion` is honored trivially because there is nothing to reduce.
+One rule: the page does not move on load. The only transitions are the defined hover states (button ink to signal, card hairline to ink, the reticle border fading from 70% to 5%), instant or a single short ease-out, plus the portrait's slow duotone reveal (600ms) in the hero. `prefers-reduced-motion` is honored trivially because there is nothing to reduce.
