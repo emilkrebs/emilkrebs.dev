@@ -59,6 +59,9 @@ monaco.editor.defineTheme('specsheet', {
     'editorSuggestWidget.selectedBackground': '#ECE8DF',
     'editorHoverWidget.background': '#F7F5F0',
     'editorHoverWidget.border': '#B5B0A7',
+    'editorError.foreground': '#E8450C',
+    'editorWarning.foreground': '#5F5B55',
+    'editorInfo.foreground': '#5F5B55',
   },
 });
 
@@ -83,6 +86,9 @@ function resolveInitialSample(): { sample: Sample; index: number } {
 
 function buildShell(activeIndex: number, fileName: string): void {
   const app = document.getElementById('app')!;
+  if (window.self !== window.top) {
+    document.body.classList.add('embed');
+  }
   app.innerHTML = `
     <div class="topbar mono">
       <a href="/">Emil Krebs · home</a>
@@ -98,8 +104,15 @@ function buildShell(activeIndex: number, fileName: string): void {
         <a href="/healthstack/">What is Healthstack?</a>
       </p>
     </header>
+    <div id="switch-confirm" class="confirm-bar mono" hidden>
+      <span class="token"></span><span class="confirm-msg"></span>
+      <button type="button" id="confirm-keep">Keep editing</button>
+      <button type="button" id="confirm-discard">Discard and switch</button>
+    </div>
     <nav class="samples mono" aria-label="Sample protocols">
-      ${SAMPLES.map((s, i) => `<button type="button" data-sample="${i}"${i === activeIndex ? ' class="active"' : ''}>${s.label}</button>`).join('')}
+      ${SAMPLES.map(
+        (s, i) => `<button type="button" data-sample="${i}" class="${i === activeIndex ? 'active' : ''}" aria-pressed="${i === activeIndex}">${s.label}</button>`,
+      ).join('')}
     </nav>
     <section class="plate">
       <div class="caption mono">
@@ -109,25 +122,42 @@ function buildShell(activeIndex: number, fileName: string): void {
     </section>
     <section class="plate">
       <div class="caption mono">
-        <span><span class="token"></span>Diagnostics · real validator output</span>
-        <span id="diag-counts"></span>
+        <span><span class="token"></span>Diagnostics · validator output</span>
+        <span id="diag-counts" aria-live="polite"></span>
       </div>
-      <div class="diag-summary mono" id="diag-summary"></div>
       <div id="diag-list"></div>
     </section>
-    <p class="statusline mono">
+    <p class="statusline mono" aria-live="polite">
       <span class="dot"></span><span id="status">Language server starting…</span>
     </p>
+    <section class="plate reference">
+      <div class="caption mono">
+        <span><span class="token"></span>Syntax at a glance</span>
+      </div>
+      <div class="ref-row">
+        <code>type nootropic extends substance { … }</code>
+        <span class="gloss">Declare a type; subtypes inherit their members</span>
+      </div>
+      <div class="ref-row">
+        <code>nootropic "Alpha-GPC" { max_dose: 600 mg }</code>
+        <span class="gloss">Declare with a custom type; units are typed</span>
+      </div>
+      <div class="ref-row">
+        <code>stack "Focus Stack" { use intervention "…" }</code>
+        <span class="gloss">Group interventions into a stack</span>
+      </div>
+      <div class="ref-row">
+        <code>protocol "Focus &amp; Mobility Week" { … }</code>
+        <span class="gloss">Compose a protocol from phases</span>
+      </div>
+      <div class="ref-row">
+        <code>import "@std/supplements"</code>
+        <span class="gloss">Import the curated library; the checker flags conflicts</span>
+      </div>
+    </section>
     <footer class="mono">Emil Krebs · 2026 · protocols as code, biology as data</footer>
   `;
 }
-
-const SEVERITY_LABEL: Record<number, string> = {
-  1: 'error',
-  2: 'warning',
-  3: 'info',
-  4: 'hint',
-};
 
 function severityClass(severity: number): string {
   if (severity <= 1) return 'error';
@@ -137,24 +167,21 @@ function severityClass(severity: number): string {
 
 function renderDiagnostics(diags: Diagnostic[], missingImports: string[]): void {
   const counts = document.getElementById('diag-counts')!;
-  const summary = document.getElementById('diag-summary')!;
   const list = document.getElementById('diag-list')!;
 
   const errors = diags.filter((d) => d.severity === 1).length;
   const warnings = diags.filter((d) => d.severity === 2).length;
   const rest = diags.length - errors - warnings;
-  counts.textContent = `${errors} errors · ${warnings} warnings · ${rest} notes`;
-
-  const summaryParts: string[] = [];
-  if (errors > 0) summaryParts.push(`<span class="count error">${errors} error${errors === 1 ? '' : 's'}</span>`);
-  if (warnings > 0) summaryParts.push(`<span class="count">${warnings} warning${warnings === 1 ? '' : 's'}</span>`);
-  summary.innerHTML = summaryParts.join(' ');
+  const countsText = `${errors} errors · ${warnings} warnings · ${rest} notes`;
+  if (counts.textContent !== countsText) counts.textContent = countsText;
 
   const rows: string[] = [];
   for (const d of diags) {
+    const sev = severityClass(d.severity ?? 3);
+    const label = sev === 'error' ? 'Error.' : sev === 'warning' ? 'Warning.' : 'Note.';
     rows.push(`
       <div class="diag-row">
-        <span class="sev ${severityClass(d.severity ?? 3)}"></span>
+        <span class="sev ${sev}"><span class="sr-only">${label}</span></span>
         <span class="where mono">${d.range.start.line + 1}:${d.range.start.character + 1}</span>
         <span class="msg">${escapeHtml(String(d.message))}</span>
       </div>
@@ -163,7 +190,7 @@ function renderDiagnostics(diags: Diagnostic[], missingImports: string[]): void 
   for (const imp of missingImports) {
     rows.push(`
       <div class="diag-row">
-        <span class="sev warning"></span>
+        <span class="sev warning"><span class="sr-only">Warning.</span></span>
         <span class="where mono">import</span>
         <span class="msg">Unresolved import · ${escapeHtml(imp)} (relative imports resolve against the browser bundle; use @std/…)</span>
       </div>
@@ -174,6 +201,16 @@ function renderDiagnostics(diags: Diagnostic[], missingImports: string[]): void 
   } else {
     list.innerHTML = rows.join('');
   }
+}
+
+function renderCrash(message: string): void {
+  const list = document.getElementById('diag-list')!;
+  list.innerHTML = `
+    <div class="diag-row">
+      <span class="sev error"><span class="sr-only">Error.</span></span>
+      <span class="where mono">server</span>
+      <span class="msg">Analysis failed · ${escapeHtml(message)}</span>
+    </div>`;
 }
 
 function escapeHtml(s: string): string {
@@ -211,7 +248,17 @@ async function main(): Promise<void> {
       { open: '(', close: ')' },
     ],
   });
-  await registerBiohackingTokens();
+  try {
+    await registerBiohackingTokens();
+  } catch (err) {
+    console.error('tokenizer failed:', err);
+    const msg = err instanceof Error ? err.message : 'unknown error';
+    document.getElementById('status')!.textContent = 'Language engine failed to load';
+    renderCrash(`could not start the language engine · ${msg}`);
+    const host = document.getElementById('editor-host')!;
+    host.innerHTML = `<div class="empty mono">Editor unavailable · reload the page to retry</div>`;
+    return;
+  }
 
   const model = monaco.editor.createModel(initial.sample.content, LANGUAGE_ID, EDITOR_URI);
   const editor = monaco.editor.create(document.getElementById('editor-host')!, {
@@ -263,16 +310,9 @@ async function main(): Promise<void> {
     } catch (err) {
       if (mySeq !== seq) return;
       console.error('analyze failed:', err);
-      monaco.editor.setModelMarkers(model, LANGUAGE_ID, [
-        {
-          severity: monaco.MarkerSeverity.Error,
-          message: String(err instanceof Error ? err.message : err),
-          startLineNumber: 1,
-          startColumn: 1,
-          endLineNumber: 1,
-          endColumn: 1,
-        },
-      ]);
+      const msg = err instanceof Error ? err.message : String(err);
+      monaco.editor.setModelMarkers(model, LANGUAGE_ID, []);
+      renderCrash(msg);
       status.textContent = 'Analysis failed';
     }
   }
@@ -392,15 +432,66 @@ async function main(): Promise<void> {
   });
 
   const sampleButtons = document.querySelectorAll<HTMLButtonElement>('[data-sample]');
+  let pristine = initial.sample.content;
+  let activeSample = initial.index;
+  let pendingIdx: number | null = null;
+
+  const confirmBar = document.getElementById('switch-confirm')!;
+  const confirmMsg = confirmBar.querySelector<HTMLElement>('.confirm-msg')!;
+  const confirmKeep = document.getElementById('confirm-keep')!;
+  const confirmDiscard = document.getElementById('confirm-discard')!;
+
+  function syncSampleState(idx: number): void {
+    activeSample = idx;
+    pristine = SAMPLES[idx].content;
+    document.getElementById('editor-caption')!.textContent = `Editor · ${SAMPLES[idx].file}`;
+    sampleButtons.forEach((b, i) => {
+      const on = i === idx;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    history.replaceState(null, '', `?sample=${SAMPLES[idx].file}`);
+  }
+
+  function hideConfirm(): void {
+    pendingIdx = null;
+    confirmBar.hidden = true;
+  }
+
+  function showConfirm(idx: number): void {
+    pendingIdx = idx;
+    confirmMsg.textContent = `Unsaved edits · switching to ${SAMPLES[idx].label} discards them`;
+    confirmBar.hidden = false;
+  }
+
+  function switchSample(idx: number): void {
+    if (idx === activeSample) return;
+    editor.executeEdits('sample-switch', [
+      {
+        range: model.getFullModelRange(),
+        text: SAMPLES[idx].content,
+        forceMoveMarkers: true,
+      },
+    ]);
+    editor.setPosition({ lineNumber: 1, column: 1 });
+    syncSampleState(idx);
+    hideConfirm();
+  }
+
   sampleButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const idx = Number(btn.dataset.sample);
-      sampleButtons.forEach((b) => b.classList.toggle('active', b === btn));
-      document.getElementById('editor-caption')!.textContent = `Editor · ${SAMPLES[idx].file}`;
-      model.setValue(SAMPLES[idx].content);
-      editor.setPosition({ lineNumber: 1, column: 1 });
-      void analyze();
+      if (idx === activeSample) return;
+      if (model.getValue() !== pristine) {
+        showConfirm(idx);
+      } else {
+        switchSample(idx);
+      }
     });
+  });
+  confirmKeep.addEventListener('click', hideConfirm);
+  confirmDiscard.addEventListener('click', () => {
+    if (pendingIdx !== null) switchSample(pendingIdx);
   });
 
   void analyze();

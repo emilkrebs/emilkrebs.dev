@@ -110,12 +110,84 @@ a {
   border-color: var(--ink);
 }
 
+button:focus-visible,
+a:focus-visible {
+  outline: 1px solid var(--signal);
+  outline-offset: 2px;
+}
+
 .plate {
   max-width: 980px;
   margin: 0 auto 1.25rem;
   border: 1px solid var(--hairline);
   background: var(--paper-deep);
   padding: 0.6rem;
+}
+
+.confirm-bar {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1.25rem 0.75rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.confirm-bar[hidden] {
+  display: none;
+}
+
+.confirm-bar .token {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--signal);
+  flex-shrink: 0;
+}
+
+.confirm-bar .confirm-msg {
+  flex: 1 1 auto;
+  color: var(--ink);
+}
+
+.confirm-bar button {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  padding: 0.5rem 0.85rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  cursor: pointer;
+}
+
+.confirm-bar button:hover {
+  background: var(--paper-deep);
+}
+
+.confirm-bar #confirm-discard {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.confirm-bar #confirm-discard:hover {
+  background: var(--signal);
+  border-color: var(--signal);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .plate .caption {
@@ -148,19 +220,71 @@ a {
   }
 }
 
-.diag-summary {
-  padding: 0.15rem 0.6rem 0.75rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
+.ref-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  align-items: baseline;
+  padding: 0.55rem 0.6rem;
+  border-top: 1px solid var(--hairline);
+  background: var(--paper);
 }
 
-.diag-summary .count {
+.ref-row code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.ref-row .gloss {
+  font-size: 0.875rem;
+  line-height: 1.5;
   color: var(--ink-soft);
+  text-align: right;
+  max-width: 34ch;
 }
 
-.diag-summary .count.error {
-  color: var(--signal);
+@media (max-width: 640px) {
+  .ref-row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .ref-row .gloss {
+    text-align: left;
+  }
+}
+
+body.embed .topbar,
+body.embed .masthead,
+body.embed .reference,
+body.embed footer {
+  display: none;
+}
+
+body.embed .samples {
+  padding-top: 0.6rem;
+}
+
+body.embed #editor-host {
+  height: 280px;
+}
+
+body.embed .plate {
+  margin-bottom: 0.75rem;
+}
+
+body.embed .statusline {
+  padding: 0.25rem 1.25rem 1rem;
+}
+
+@media (max-width: 640px) {
+  body.embed #editor-host {
+    height: 220px;
+  }
 }
 
 #diag-list {
@@ -196,8 +320,7 @@ a {
   background: var(--ink);
 }
 
-.diag-row .sev.info,
-.diag-row .sev.hint {
+.diag-row .sev.info {
   background: var(--ink-soft);
 }
 

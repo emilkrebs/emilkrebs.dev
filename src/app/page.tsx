@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { PlaceholderPlate } from "./components/placeholder-plate";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "./lib/constants";
 
 function generatePersonJsonLd() {
@@ -102,6 +103,7 @@ interface Project {
   flagship?: boolean;
   image?: string;
   imageCaption?: string;
+  placeholder?: string;
   preview?: string;
   previewCaption?: string;
   consent?: boolean;
@@ -116,7 +118,7 @@ const FLAGSHIP_PROJECTS: Project[] = [
         status: "Preview",
         tags: ["Next.js", "PWA", "TypeScript"],
         flagship: true,
-        image: "/pictures/prami-plate.svg",
+        placeholder: "Prami",
         imageCaption: "Screenshot pending - Prami",
     },
     {
@@ -471,16 +473,20 @@ function ProjectCard({ project }: { project: Project }) {
                     </p>
                 </div>
             )}
-            {project.image && !project.preview && (
+            {!project.preview && (project.image || project.placeholder) && (
                 <div className="relative">
                     <div className="relative aspect-[16/10] border-b border-hairline overflow-hidden bg-paper">
-                        <Image
-                            src={project.image}
-                            alt={`${project.name} screenshot`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover object-top"
-                        />
+                        {project.image ? (
+                            <Image
+                                src={project.image}
+                                alt={`${project.name} screenshot`}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className="object-cover object-top"
+                            />
+                        ) : (
+                            <PlaceholderPlate label={project.placeholder ?? ""} />
+                        )}
                     </div>
                     <p className="px-8 pt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
                         {project.imageCaption}
