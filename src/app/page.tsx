@@ -204,7 +204,7 @@ function TokenMark({ count = 16 }: { count?: number }) {
 function Nav() {
     return (
         <nav aria-label="Primary" className="sticky top-0 z-50 bg-paper border-b border-hairline">
-            <div className="mx-auto flex items-center justify-between max-w-[1120px] px-6 h-16">
+            <div className="mx-auto flex items-center justify-between max-w-280 px-6 h-16">
                 <a
                     href="#top"
                     className="font-semibold tracking-tight text-lg"
@@ -231,10 +231,10 @@ function Hero() {
     return (
         <section
             id="top"
-            className="mx-auto max-w-[1120px] px-6 pt-16 md:pt-24 pb-16 md:pb-20"
+            className="mx-auto max-w-280 px-6 pt-16 md:pt-24 pb-16 md:pb-20"
         >
             <div className="flex flex-col-reverse md:flex-row md:items-start justify-between gap-12 md:gap-20">
-                <div className="max-w-[640px]">
+                <div className="max-w-160">
                     <h1 className="font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(3rem,8vw,6.5rem)]">
                         Emil Krebs
                     </h1>
@@ -300,17 +300,17 @@ function Hero() {
                         />
 
                         <div className="absolute inset-0" aria-hidden="true" />
-                        <div className="absolute left-1/2 top-[40%] h-32 w-24 -translate-x-1/2 -translate-y-1/2 border border-signal/70" aria-hidden="true">
+                        <div className="absolute left-1/2 top-[36%] h-28 w-24 -translate-x-1/2 -translate-y-1/2 border border-signal-accent/70 hover:border-signal-accent/5 transition-colors" aria-hidden="true">
                             <div className="duotone-tint absolute inset-0" />
                             <div className="duotone-lift absolute inset-0" />
                         </div>
                     </div>
                     <div
-                        className="absolute -top-2.5 -right-2.5 z-20 bg-paper border border-signal/60 px-2.5 py-1.5"
+                        className="absolute -top-2.5 -right-2.5 z-20 bg-paper border border-signal-accent/60 px-2.5 py-1.5"
                         role="status"
                     >
                         <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
-                            <span className="block text-ink-soft">Cooking...</span>
+                            <span className="block text-ink-soft">Thinking...</span>
                         </p>
                     </div>
                 </figure>
@@ -338,7 +338,7 @@ function Field() {
     return (
         <section
             id="field"
-            className="mx-auto max-w-[1120px] px-6 py-16 md:py-24 border-t border-hairline"
+            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
         >
             <SectionHeading>Field</SectionHeading>
             <p className="text-xl md:text-2xl leading-relaxed max-w-[64ch]">
@@ -354,7 +354,7 @@ function Field() {
 
 function WhatIDo() {
     return (
-        <section className="mx-auto max-w-[1120px] px-6 py-16 md:py-24 border-t border-hairline">
+        <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
             <SectionHeading>What I do</SectionHeading>
             <div className="flex flex-col gap-20 md:gap-24">
                 {STRENGTHS.map((strength) => (
@@ -381,7 +381,7 @@ function Work() {
     return (
         <section
             id="work"
-            className="mx-auto max-w-[1120px] px-6 py-16 md:py-24 border-t border-hairline"
+            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
         >
             <SectionHeading>Work</SectionHeading>
             <div className="bg-paper-deep border border-hairline p-8 md:p-12">
@@ -420,7 +420,7 @@ function ProjectCard({ project }: { project: Project }) {
         <article className="bg-paper-deep border border-hairline flex flex-col group hover:border-ink transition-colors duration-150">
             {project.preview && (
                 <div className="relative">
-                    <div className="relative aspect-[16/10] border-b border-hairline overflow-hidden bg-paper">
+                    <div className="relative aspect-16/10 border-b border-hairline overflow-hidden bg-paper">
                         {project.consent ? (
                             <PreviewConsent
                                 id={`consent-${project.name.toLowerCase().replace(/\s+/g, "-")}`}
@@ -445,7 +445,7 @@ function ProjectCard({ project }: { project: Project }) {
             )}
             {!project.preview && (project.image || project.placeholder) && (
                 <div className="relative">
-                    <div className="relative aspect-[16/10] border-b border-hairline overflow-hidden bg-paper">
+                    <div className="relative aspect-16/10 border-b border-hairline overflow-hidden bg-paper">
                         {project.image ? (
                             <Image
                                 src={project.image}
@@ -520,7 +520,7 @@ function Projects() {
     return (
         <section
             id="projects"
-            className="mx-auto max-w-[1120px] px-6 py-16 md:py-24 border-t border-hairline"
+            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
         >
             <SectionHeading>Projects</SectionHeading>
 

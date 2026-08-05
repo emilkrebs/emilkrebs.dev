@@ -36,7 +36,7 @@ We reserve the right to update this privacy policy at any time. We will notify y
 
 ## Contact
 
-If you have any questions about this privacy policy, please get in touch with me at [emil.krebs@outlook.de](mailto:emil.krebs@outlook.de).
+If you have any questions about this privacy policy, please get in touch with me at [hello@emilkrebs.dev](mailto:hello@emilkrebs.dev).
 
 The source code for this website is available on [GitHub](https://github.com/emilkrebs/emilkrebs.dev).
 `;

@@ -187,7 +187,7 @@ interface ShotProps {
 function Shot({ src, alt, caption, placeholder }: ShotProps) {
     return (
         <figure>
-            <div className="relative aspect-[16/10] border border-hairline overflow-hidden bg-paper">
+            <div className="relative aspect-16/10 border border-hairline overflow-hidden bg-paper">
                 {src ? (
                     <Image
                         src={src}
@@ -238,7 +238,7 @@ function FeatureSection({ section }: { section: FeatureSection }) {
     const accent = parts.length > 1 && parts[1].length > 0 ? parts[1] : undefined;
     const after = parts.length > 2 ? parts.slice(2).join("*") : "";
     return (
-        <section className="mx-auto max-w-[1120px] px-6 py-16 md:py-20 border-t border-hairline">
+        <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
             <SectionHeading>{section.heading}</SectionHeading>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                 <div className="md:col-span-5 flex flex-col">
@@ -274,7 +274,7 @@ function FeatureSection({ section }: { section: FeatureSection }) {
 export default function HealthstackPage() {
     return (
         <main id="main" className="flex-1">
-            <div className="mx-auto max-w-[1120px] px-6 pt-10 pb-16">
+            <div className="mx-auto max-w-280 px-6 pt-10 pb-16">
                 <Link
                     href="/"
                     className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
@@ -284,7 +284,7 @@ export default function HealthstackPage() {
                 </Link>
             </div>
 
-            <section className="mx-auto max-w-[1120px] px-6 pt-4 md:pt-8 pb-16 md:pb-20">
+            <section className="mx-auto max-w-280 px-6 pt-4 md:pt-8 pb-16 md:pb-20">
                 <div className="flex items-start justify-between gap-4 flex-wrap">
                     <h1 className="font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(2rem,4.5vw,3.25rem)] max-w-[16ch]">
                         Protocols as code. Biology as data. AI as your cortex.
@@ -305,7 +305,7 @@ export default function HealthstackPage() {
                     <Shot
                         src="/pictures/healthstack-dashboard.webp"
                         alt="Biomarker dashboard in the Healthstack dev build"
-                        caption="Dev build - biomarker dashboard"
+                        caption="Thumbnail - Healthstack dev build"
                         placeholder={null}
                     />
                 </div>
@@ -315,7 +315,7 @@ export default function HealthstackPage() {
                 <FeatureSection key={section.heading} section={section} />
             ))}
 
-            <section className="mx-auto max-w-[1120px] px-6 py-16 md:py-20 border-t border-hairline">
+            <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
                 <SectionHeading>The DSL</SectionHeading>
                 <p className="text-base md:text-lg leading-relaxed max-w-[62ch] mb-10">
                     Protocols are data, not prose, and the language&apos;s type
@@ -336,7 +336,7 @@ export default function HealthstackPage() {
                     <div className="flex flex-wrap items-center justify-between gap-2 pb-6">
                         <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
                             <span
-                                className="bg-signal w-[6px] h-[6px] shrink-0"
+                                className="bg-signal w-1.5 h-1.5 shrink-0"
                                 aria-hidden="true"
                             />
                             Playground · .bio language server, runs in your browser
@@ -355,10 +355,10 @@ export default function HealthstackPage() {
                             src={`${PLAYGROUND_URL}/playground/?sample=type-system`}
                             title=".bio protocol playground"
                             loading="lazy"
-                            className="block w-full h-[480px] md:h-[640px] border border-hairline bg-paper"
+                            className="block w-full h-120 md:h-160 border border-hairline bg-paper"
                         />
                     ) : (
-                        <div className="flex h-[480px] md:h-[640px] flex-col items-center justify-center gap-4 border border-hairline bg-paper px-6 text-center">
+                        <div className="flex h-120 md:h-160 flex-col items-center justify-center gap-4 border border-hairline bg-paper px-6 text-center">
                             <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                                 Playground not bundled with this build
                             </p>
@@ -372,7 +372,7 @@ export default function HealthstackPage() {
                 </div>
             </section>
 
-            <section className="mx-auto max-w-[1120px] px-6 py-16 md:py-24 border-t border-hairline">
+            <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
                 <SectionHeading>Status</SectionHeading>
                 <div className="bg-paper-deep border border-hairline p-8 md:p-10">
                     <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">

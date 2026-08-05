@@ -10,6 +10,8 @@
     --color-ink: #141310;
     --color-ink-soft: #5f5b55;
     --color-signal: #e8450c;
+    /* green */
+    --color-signal-accent: #22c55e;
     --color-hairline: rgba(20, 19, 16, 0.14);
 }
 

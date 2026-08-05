@@ -13,7 +13,7 @@ function TokenMark({ count = 12 }: { count?: number }) {
 export function Footer() {
     return (
         <footer className="w-full mt-auto">
-            <div className="mx-auto w-full max-w-[1120px] px-6 py-16 border-t border-hairline">
+            <div className="mx-auto w-full max-w-280 px-6 py-16 border-t border-hairline">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
                         <p>Emil Krebs - Kiel, Germany</p>
