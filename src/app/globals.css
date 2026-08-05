@@ -64,6 +64,7 @@ body {
     filter: grayscale(100%) contrast(1.12);
     mix-blend-mode: multiply;
     opacity: 0.95;
+    transition: opacity 300ms, filter 600ms ease;
 }
 
 .duotone-frame .duotone-tint {
@@ -71,6 +72,7 @@ body {
     mix-blend-mode: multiply;
     opacity: 0.35;
     pointer-events: none;
+    transition: opacity 600ms ease;
 }
 
 .duotone-frame .duotone-lift {
@@ -78,6 +80,7 @@ body {
     mix-blend-mode: screen;
     opacity: 0.18;
     pointer-events: none;
+    transition: opacity 600ms ease;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -93,5 +96,22 @@ body {
     .duotone-frame .duotone-lift {
         mix-blend-mode: multiply;
         opacity: 0.28;
+    }
+}
+
+.duotone-frame:hover img {
+    filter: none;
+}
+
+.duotone-frame:hover .duotone-tint,
+.duotone-frame:hover .duotone-lift {
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .duotone-frame img,
+    .duotone-frame .duotone-tint,
+    .duotone-frame .duotone-lift {
+        transition: none;
     }
 }

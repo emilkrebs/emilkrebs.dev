@@ -18,11 +18,6 @@ export function Footer() {
                 <div className="mt-10 flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
                         <p>Emil Krebs - Kiel, Germany</p>
-                        <p>
-                            Typeset in Schibsted Grotesk, IBM Plex Mono, and
-                            Instrument Serif
-                        </p>
-                        <p>Static export on GitHub Pages. No framework at runtime.</p>
                     </div>
                     <div className="flex flex-col gap-2 text-sm">
                         <a

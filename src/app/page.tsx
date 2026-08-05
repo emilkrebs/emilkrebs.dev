@@ -246,9 +246,6 @@ function Hero() {
                     <p className="mt-8 text-lg md:text-xl leading-relaxed max-w-[46ch]">
                         Language engineer at TypeFox. Kiel, Germany.
                     </p>
-                    <p className="mt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                        Cooking: <span className="text-ink">Prami, Healthstack</span>
-                    </p>
                     <div className="mt-10 flex flex-wrap items-center gap-6">
                         <a
                             href={GITHUB_URL}
@@ -305,7 +302,7 @@ function Hero() {
                             width={512}
                             height={512}
                             priority
-                            className="absolute inset-0 size-full object-cover transition-opacity duration-300 motion-reduce:transition-none group-data-[portrait-mode=field]:opacity-0"
+                            className="absolute inset-0 size-full object-cover group-data-[portrait-mode=field]:opacity-0"
                         />
                         <Image
                             src="/pictures/portrait-field.webp"
@@ -313,15 +310,21 @@ function Hero() {
                             width={512}
                             height={512}
                             data-portrait-field
-                            className="absolute inset-0 size-full object-cover opacity-0 transition-opacity duration-300 motion-reduce:transition-none group-data-[portrait-mode=field]:opacity-100"
+                            className="absolute inset-0 size-full object-cover opacity-0 group-data-[portrait-mode=field]:opacity-100"
                         />
                         <div className="duotone-tint absolute inset-0" />
                         <div className="duotone-lift absolute inset-0" />
+                        <div className="duotone-thought absolute top-2 right-2 z-10 bg-paper border border-hairline px-2 py-1.5">
+                            <span
+                                className="absolute -left-[3px] top-1/2 -translate-y-1/2 size-1.5 bg-paper border-l border-b border-hairline -rotate-45"
+                                aria-hidden="true"
+                            />
+                            <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
+                                <span className="block text-ink-soft">Cooking:</span>
+                                <span className="block text-ink">Prami, Healthstack</span>
+                            </p>
+                        </div>
                     </div>
-                    <figcaption className="mt-3 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                        <span className="size-1 bg-signal" aria-hidden="true" />
-                        Emil Krebs
-                    </figcaption>
                     <div
                         className="mt-3 flex items-center gap-3"
                         role="group"
