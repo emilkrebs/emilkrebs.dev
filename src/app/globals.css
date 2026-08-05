@@ -118,6 +118,8 @@ body {
 
 /* TypeFox logo asset is a white wordmark — invert to ink on the light card */
 .typefox-logo {
+    width: 200px;
+    height: auto;
     filter: brightness(0);
 }
 

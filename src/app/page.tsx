@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { PlaceholderPlate } from "./components/placeholder-plate";
 import { PreviewConsent } from "./components/preview-consent";
+import { ExternalNotice } from "./components/external-notice";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "./lib/constants";
 
 function generatePersonJsonLd() {
@@ -105,6 +106,7 @@ interface Project {
     preview?: string;
     previewCaption?: string;
     consent?: boolean;
+    notice?: boolean;
 }
 
 const FLAGSHIP_PROJECTS: Project[] = [
@@ -118,6 +120,7 @@ const FLAGSHIP_PROJECTS: Project[] = [
         flagship: true,
         image: "/pictures/prami.webp",
         imageCaption: "In testing - Prami",
+        notice: true,
     },
     {
         name: "Healthstack",
@@ -490,15 +493,19 @@ function ProjectCard({ project }: { project: Project }) {
                 </div>
                 <div className="mt-8">
                     {project.href ? (
-                        <a
-                            href={project.href}
-                            target={project.href.startsWith("http") ? "_blank" : undefined}
-                            rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                            className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
-                        >
-                            Open
-                            <span className="text-signal" aria-hidden="true">→</span>
-                        </a>
+                        project.notice ? (
+                            <ExternalNotice href={project.href} title={project.name} />
+                        ) : (
+                            <a
+                                href={project.href}
+                                target={project.href.startsWith("http") ? "_blank" : undefined}
+                                rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                                className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
+                            >
+                                Open
+                                <span className="text-signal" aria-hidden="true">→</span>
+                            </a>
+                        )
                     ) : (
                         <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                             Private
