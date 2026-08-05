@@ -6,6 +6,9 @@ export const metadata: Metadata = {
     title: "Healthstack",
     description:
     "A specialized IDE for health optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
+    alternates: {
+        canonical: "/healthstack/",
+    },
 };
 
 /**
@@ -120,7 +123,8 @@ function SectionHeading({ children }: { children: string }) {
 
 function StatusLabel({ children }: { children: string }) {
     return (
-        <span className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-signal whitespace-nowrap">
+        <span className="inline-flex items-center gap-2 border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap">
+            <span className="size-1 bg-signal" aria-hidden="true" />
             {children}
         </span>
     );
@@ -207,7 +211,7 @@ function FeatureSection({ section }: { section: FeatureSection }) {
 
 export default function HealthstackPage() {
     return (
-        <main className="flex-1">
+        <main id="main" className="flex-1">
             <div className="mx-auto max-w-[1120px] px-6 pt-10 pb-16">
                 <Link
                     href="/"
@@ -243,6 +247,17 @@ export default function HealthstackPage() {
                 </div>
             </section>
 
+            <section className="mx-auto max-w-[1120px] px-6 pb-4">
+                <div className="flex items-start gap-3 border border-hairline px-6 py-4">
+                    <span className="mt-1.5 size-1 bg-signal shrink-0" aria-hidden="true" />
+                    <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-relaxed">
+                        Not medical advice — a curated, supplements-only reference.
+                        Nothing here is a prescription medication, peptide, hormone, or
+                        research chemical, and no dose is a recommendation.
+                    </p>
+                </div>
+            </section>
+
             {SECTIONS.map((section) => (
                 <FeatureSection key={section.heading} section={section} />
             ))}
@@ -250,7 +265,7 @@ export default function HealthstackPage() {
             <section className="mx-auto max-w-[1120px] px-6 py-16 md:py-20 border-t border-hairline">
                 <SectionHeading>The DSL</SectionHeading>
                 <p className="text-base md:text-lg leading-relaxed max-w-[62ch] mb-10">
-                    Protocols are data, not prose — and the language's type
+                    Protocols are data, not prose — and the language&apos;s type
                     system is written in the language itself:{" "}
                     <code className="font-mono text-sm">substance</code>,{" "}
                     <code className="font-mono text-sm">intervention</code>,{" "}
@@ -259,8 +274,8 @@ export default function HealthstackPage() {
                     user-extendable <code className="font-mono text-sm">type</code>{" "}
                     declarations in <code className="font-mono text-sm">.bio</code>,
                     not hardcoded in the grammar. The editor below runs the real
-                    language server in this tab. Nothing leaves your browser.
-                    It opens with a sample that defines its own types, then
+                    language server in this tab. Your data never leaves your
+                    machine. It opens with a sample that defines its own types, then
                     extends them; the other samples cover a curated
                     supplement library and the live interaction checker.
                 </p>

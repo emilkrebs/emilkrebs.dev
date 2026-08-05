@@ -6,7 +6,7 @@ function generatePersonJsonLd() {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Emil Krebs",
-        "jobTitle": "Software Engineer",
+        "jobTitle": "Language Engineer",
         "description":
       "Language engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
         "url": "https://emilkrebs.dev",
@@ -117,7 +117,7 @@ const FLAGSHIP_PROJECTS: Project[] = [
         tags: ["Next.js", "PWA", "TypeScript"],
         flagship: true,
         image: "/pictures/prami-plate.svg",
-        imageCaption: "Prami - preview build",
+        imageCaption: "Screenshot pending - Prami",
     },
     {
         name: "Healthstack",
@@ -182,7 +182,7 @@ const PROJECTS: Project[] = [
     {
         name: "This site",
         description:
-      "Static export, no framework at runtime, typeset per the spec you are reading.",
+      "Static export. No server, no database — typeset per the spec you are reading.",
         href: "/",
         tags: ["Next.js", "TypeScript", "Tailwind CSS"],
         image: "/pictures/this-site-plate.svg",
@@ -489,7 +489,8 @@ function ProjectCard({ project }: { project: Project }) {
                         {project.name}
                     </h3>
                     {project.status && (
-                        <span className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-signal whitespace-nowrap">
+                        <span className="inline-flex items-center gap-2 border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap">
+                            <span className="size-1 bg-signal" aria-hidden="true" />
                             {project.status}
                         </span>
                     )}
@@ -559,7 +560,7 @@ export default async function Page() {
     const websiteJsonLd = generateWebsiteJsonLd();
 
     return (
-        <main>
+        <main id="main">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

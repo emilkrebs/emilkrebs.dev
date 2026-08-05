@@ -8,6 +8,13 @@ colors:
   ink-soft: "#6e6a63"
   signal: "#e8450c"
   hairline: "rgba(20, 19, 16, 0.14)"
+colors-dark:
+  paper: "#141310"
+  paper-deep: "#1c1915"
+  ink: "#f7f5f0"
+  ink-soft: "#9b968c"
+  signal: "#e8450c"
+  hairline: "rgba(247, 245, 240, 0.14)"
 typography:
   display:
     fontFamily: "Schibsted Grotesk, sans-serif"
@@ -101,14 +108,27 @@ The emotional register is northern, dry, and confident: a Kiel harbor ferry time
 
 ## Colors
 
-- **Paper** `#f7f5f0` - the page surface. Warm off-white, never pure white, never dark.
+- **Paper** `#f7f5f0` - the page surface. Warm off-white, never pure white. The light scheme is the reference; the dark variant below inverts paper and ink.
 - **Paper-deep** `#ece8df` - card and block surfaces that need to sit one step below paper.
 - **Ink** `#141310` - all text, all primary buttons. Near-black with a warm cast, never pure black.
-- **Ink-soft** `#6e6a63` - labels, metadata, secondary text.
+- **Ink-soft** `#5f5b55` - labels, metadata, secondary text. AA on both paper and paper-deep (4.4:1 at the previous value was one step too soft; this is the smallest visible nudge that clears 4.5:1).
 - **Signal** `#e8450c` - the only accent in the system. International orange. Used for: the token marks, the arrow after links, the hover state of the primary button. One accent, everywhere, nowhere else.
 - **Hairline** `rgba(20,19,16,0.14)` - 1px borders that separate spec sections and card edges.
 
-Rules: exactly one accent. No gradients anywhere, no shadows, no translucent overlays. Text is ink on paper at WCAG AA contrast or better; signal is reserved for marks and hover, never for large text.
+Rules: exactly one accent. No gradients anywhere, no shadows, no translucent overlays. Text is ink on paper at WCAG AA contrast or better; signal is reserved for marks and hover, never for large text. All rules hold in both color schemes.
+
+### Dark variant
+
+The same document at night. The visitor's `prefers-color-scheme` decides; there is no toggle, and no section ever inverts on its own. Tokens swap, the grammar does not: layout, type roles, hairlines, plates, captions, and the zero-radius rule are identical in both schemes.
+
+- **Paper** `#141310` - the light ink becomes the night paper: warm near-black, never pure black.
+- **Paper-deep** `#1c1915` - card and plate surfaces, one warm step above paper.
+- **Ink** `#f7f5f0` - the light paper becomes the night ink: warm off-white, never pure white.
+- **Ink-soft** `#9b968c` - labels and metadata; AA on paper and on paper-deep.
+- **Signal** `#e8450c` - unchanged. One accent in both schemes; 4.7:1 on night paper.
+- **Hairline** `rgba(247,245,240,0.14)` - the same 1px line, inverted cast.
+
+Rules: no gradients, no shadows, no blur, no rounding in dark either; the page stays flat in both schemes. The duotone portrait inverts its blends (image screen instead of multiply, lift multiply instead of screen) so the plate prints paper-and-ink at night as it does by day. Product screenshots, live previews, and the playground stay full color in both schemes: evidence is not recolored. Primary buttons invert with the tokens (light ink ground, night paper text), keeping the ink-to-signal hover in both schemes.
 
 ## Typography
 
@@ -140,8 +160,8 @@ Responsive: mobile is the same document at one column, hero at 3rem minimum. Nav
 The site is one page plus the subpages it needs; nothing else gets a page without a reason.
 
 - **Imprint / Privacy:** markdown-rendered legal pages. Mono back link ("← Back to home") on top, max-width 3xl, light markdown styles (ink text, signal underline links, mono code chips).
-- **/healthstack (product page):** the only product page, and the one page that carries real product imagery. Same document grammar as the homepage: max 1120px, hairline section separators, mono section headings, one status-label ("PREVIEW - DEV BUILD") beside the hero claim. Built on the product's own messaging (the Healthstack deck): a hero claim with tag row and the biomarker dashboard plate, then one section per capability (Timeline, Protocol builder, Biomarker tracker, Trends, AI agents), each a headline with one serif italic accent, a proof sentence, a spec-style stat table (hairline cells, mono values and labels), and a full-color screenshot plate below. Screenshots are the real dev build, taken from the app; they arrive letterboxed into 16:10 (the source shots are more panoramic; the bars are paper-deep so the full shot survives) and render full color, unfiltered. The DSL section carries the live editor: the playground embedded same-origin (see /playground below) opened on `basic-supplements.bio` — the language is shown running, not quoted, and there is no static excerpt block. The Status section states build state plainly: screenshots are real, a public preview is not hosted yet, no roadmaps, no dates, no promises. The Healthstack card on the homepage opens this page until a public preview exists; when one does, the card may grow a live first-party preview and the page's Status section names it.
-- **/playground (DSL playground):** a separate Vite static app that builds into `public/playground/` and ships with the site through the root build chain (`build:playground` runs before the Next export). Served same-origin and embedded on /healthstack as a first-party direct-load iframe, lazy-loaded, full color, no consent gate: the language server, the validator, the std library and the interaction catalog run entirely in the visitor's browser, and nothing leaves it. The embed opens on `?sample=basic-supplements`; the standalone page defaults to the drug-interaction example. DSL sources are vendored from the biohacking-ide language package via `playground/sync-dsl.sh`; `playground/src/lang` and `playground/src/samples` are generated output, never edited by hand, re-synced with `npm --prefix playground run sync-dsl`.
+- **/healthstack (product page):** the only product page, and the one page that carries real product imagery. Same document grammar as the homepage: max 1120px, hairline section separators, mono section headings, one status-label ("PREVIEW - DEV BUILD") beside the hero claim. Built on the product's own messaging (the Healthstack deck): a hero claim with tag row and the biomarker dashboard plate, then one section per capability (Timeline, Protocol builder, Biomarker tracker, Trends, AI agents), each a headline with one serif italic accent, a proof sentence, a spec-style stat table (hairline cells, mono values and labels), and a full-color screenshot plate below. Screenshots are the real dev build, taken from the app; they arrive letterboxed into 16:10 (the source shots are more panoramic; the bars are paper-deep so the full shot survives) and render full color, unfiltered. The DSL section carries the live editor: the playground embedded same-origin (see /playground below) opened on `type-system.bio` — the language is shown running, not quoted, and there is no static excerpt block. The Status section states build state plainly: screenshots are real, a public preview is not hosted yet, no roadmaps, no dates, no promises. The Healthstack card on the homepage opens this page until a public preview exists; when one does, the card may grow a live first-party preview and the page's Status section names it.
+- **/playground (DSL playground):** a separate Vite static app that builds into `public/playground/` and ships with the site through the root build chain (`build:playground` runs before the Next export). Served same-origin and embedded on /healthstack as a first-party direct-load iframe, lazy-loaded, full color, no consent gate: the language server, the validator, the curated library and the interaction catalog run entirely in the visitor's browser, and no data leaves it (the grammar engine ships with the page). The embed opens on `?sample=type-system`; the standalone page defaults to the same sample, with `basic-supplements`, `sleep-optimization` and `interaction-check` one click away. DSL sources are vendored from the biohacking-ide language package via `playground/sync-dsl.sh`; `playground/src/lang` and `playground/src/samples` are generated output, never edited by hand, re-synced with `npm --prefix playground run sync-dsl`.
 
 ## Elevation & Depth
 
@@ -165,7 +185,7 @@ All corners are 0px, everywhere. Cards, buttons, tags, the token marks: square. 
   - **Live preview (secondary cards):** instead of a screenshot, a card may carry a real iframe of the running product, 16:10, hairline border, mono caption naming the origin ("Live - langium.org/showcase/minilogo"). Lazy-loaded, `referrerPolicy="no-referrer"`. Live previews are full color, no duotone, no filter: the product shown as it is. Point the frame at the most impressive page of the product, not the landing menu. Only for sites verified to permit framing (no `X-Frame-Options` / `frame-ancestors` blocking, checked by header). If a site blocks framing, it gets the placeholder plate instead; the frame never lies, and never shows a blocked page.
   - **Consent-gated previews:** when a third-party preview loads a site with its own scripts, the card requires consent: the plate shows a mono notice ("The preview loads a third-party site with its own scripts") and a Load preview button (button-primary); the iframe is created only on click, with a tiny vanilla script, no React hydration, no framework at runtime. Mark the card `consent: true` in the data; when in doubt about a third-party embed, gate it. First-party previews (Emil's own products) load directly, lazy and full color; their captions state the build honestly. Until a product is publicly hosted, it does not get a preview: it gets a placeholder plate or its own page.
   - **Placeholder until supplied:** the real assets ship as labeled SVG plates, `public/pictures/*-plate.svg`, each marked "SCREENSHOT PENDING" (the this-site plate reads "YOU ARE HERE"), so the frame never lies. Swap the assets for real screenshots when available; never change the component.
-- **status-label:** a mono uppercase text label with a hairline border and signal text, used only for real semantic states: "PREVIEW" on the Prami and Healthstack flagship cards. If a state is not real, there is no label. At most one per project card, never in the hero.
+- **status-label:** a mono uppercase text label in ink with a hairline border and one 6px signal token mark before the text, used only for real semantic states: "PREVIEW" on the Prami and Healthstack flagship cards. If a state is not real, there is no label. At most one per project card, never in the hero. (Ink text keeps the label at 17:1; signal stays reserved for marks and hover.)
 
 ## Do's and Don'ts
 

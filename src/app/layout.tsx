@@ -97,17 +97,20 @@ export const metadata: Metadata = {
     },
     icons: {
         icon: "/favicon.svg",
-        shortcut: "/favicon.ico",
-        apple: "/favicon.svg",
+        apple: "/apple-touch-icon.png",
     },
-    verification: {
-        google: "verification_token_here", // Add your Google Search Console verification
+    alternates: {
+        canonical: "/",
     },
+    verification: {},
 };
 
 export const viewport: Viewport = {
-    themeColor: "#f7f5f0",
-    colorScheme: "light",
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#f7f5f0" },
+        { media: "(prefers-color-scheme: dark)", color: "#141310" },
+    ],
+    colorScheme: "light dark",
     initialScale: 1,
     width: "device-width",
 };
@@ -124,9 +127,14 @@ export default function RootLayout({
         >
             <head>
                 <meta charSet="UTF-8" />
-                <link rel="canonical" href="https://emilkrebs.dev" />
             </head>
             <body className="overflow-x-hidden min-h-screen flex flex-col">
+                <a
+                    href="#main"
+                    className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-paper focus:px-4 focus:py-2 font-mono text-xs uppercase tracking-[0.08em]"
+                >
+                    Skip to content
+                </a>
                 <div
                     dangerouslySetInnerHTML={{
                         __html:

@@ -1,5 +1,13 @@
 import RenderMarkdown from "../components/markdown";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy",
+    alternates: {
+        canonical: "/privacy/",
+    },
+};
 
 const markdown = `
 
@@ -11,7 +19,7 @@ To get critical information about the behavior of our visitors, this website use
 
 ## What information do we collect?
 
-Simple Analytics gives insight about visitors only in general, but not about individuals per say, as it does not track visitors and does not store any personal identifiable information. 
+Simple Analytics gives insight about visitors only in general, but not about individuals per se, as it does not track visitors and does not store any personal identifiable information. 
 [Go to their documentation](https://docs.simpleanalytics.com/what-we-collect) to find out what Simple Analytics collects (and most importantly what they don't).
 
 ## Cookies
@@ -35,7 +43,7 @@ The source code for this website is available on [GitHub](https://github.com/emi
 
 export default function PrivacyPolicy() {
     return (
-        <main className="flex min-h-screen w-full flex-col items-center justify-start px-6">
+        <main id="main" className="flex min-h-screen w-full flex-col items-center justify-start px-6">
             <div className="w-full max-w-3xl my-10">
                 <Link
                     href="/"

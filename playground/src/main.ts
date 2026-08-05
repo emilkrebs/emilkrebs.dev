@@ -93,7 +93,7 @@ function buildShell(activeIndex: number, fileName: string): void {
       <p>
         This page runs the real Healthstack language server in your browser.
         Parsing, validation, completions and hover documentation all execute
-        locally, and nothing leaves this tab. A curated, supplements-only
+        locally — your data never leaves your machine. A curated, supplements-only
         reference library ships with the page — the full clinical catalog does
         not.
         <a href="/healthstack/">What is Healthstack?</a>

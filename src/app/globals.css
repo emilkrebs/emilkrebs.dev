@@ -8,13 +8,29 @@
     --color-paper: #f7f5f0;
     --color-paper-deep: #ece8df;
     --color-ink: #141310;
-    --color-ink-soft: #6e6a63;
+    --color-ink-soft: #5f5b55;
     --color-signal: #e8450c;
     --color-hairline: rgba(20, 19, 16, 0.14);
 }
 
 html {
     scroll-behavior: smooth;
+    color-scheme: light dark;
+}
+
+/* sections anchor below the sticky nav */
+section[id] {
+    scroll-margin-top: 4.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-paper: #141310;
+        --color-paper-deep: #1c1915;
+        --color-ink: #f7f5f0;
+        --color-ink-soft: #9b968c;
+        --color-hairline: rgba(247, 245, 240, 0.14);
+    }
 }
 
 body {
@@ -62,4 +78,20 @@ body {
     mix-blend-mode: screen;
     opacity: 0.18;
     pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .duotone-frame img {
+        mix-blend-mode: screen;
+    }
+
+    .duotone-frame .duotone-tint {
+        mix-blend-mode: screen;
+        opacity: 0.22;
+    }
+
+    .duotone-frame .duotone-lift {
+        mix-blend-mode: multiply;
+        opacity: 0.28;
+    }
 }
