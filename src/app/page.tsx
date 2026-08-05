@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { PlaceholderPlate } from "./components/placeholder-plate";
+import { PreviewConsent } from "./components/preview-consent";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "./lib/constants";
 
 function generatePersonJsonLd() {
@@ -418,46 +419,11 @@ function ProjectCard({ project }: { project: Project }) {
                 <div className="relative">
                     <div className="relative aspect-[16/10] border-b border-hairline overflow-hidden bg-paper">
                         {project.consent ? (
-                            <>
-                                <div
-                                    id={`consent-${project.name.toLowerCase().replace(/\s+/g, "-")}`}
-                                    className="absolute inset-0 flex flex-col items-center justify-center gap-6 px-8 text-center"
-                                >
-                                    <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
-                                        The preview loads a third-party site with
-                                        its own scripts.
-                                    </p>
-                                    <button
-                                        type="button"
-                                        data-load-preview
-                                        data-src={project.preview}
-                                        data-title={`${project.name} preview`}
-                                        className="bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.08em] text-paper hover:bg-signal transition-colors duration-150"
-                                    >
-                                        Load preview
-                                    </button>
-                                </div>
-                                <script
-                                    dangerouslySetInnerHTML={{
-                                        __html: `(function () {
-  var cover = document.getElementById(${JSON.stringify(`consent-${project.name.toLowerCase().replace(/\s+/g, "-")}`)});
-  var btn = cover && cover.querySelector("[data-load-preview]");
-  if (!btn) return;
-  btn.addEventListener("click", function () {
-    var frame = document.createElement("iframe");
-    frame.src = btn.getAttribute("data-src");
-    frame.title = btn.getAttribute("data-title") || "Live preview";
-    frame.loading = "lazy";
-    frame.referrerPolicy = "no-referrer";
-    frame.className = "size-full border-0";
-    cover.replaceWith(frame);
-    frame.tabIndex = -1;
-    frame.focus();
-  });
-})();`,
-                                    }}
-                                />
-                            </>
+                            <PreviewConsent
+                                id={`consent-${project.name.toLowerCase().replace(/\s+/g, "-")}`}
+                                src={project.preview}
+                                title={`${project.name} preview`}
+                            />
                         ) : (
                             <iframe
                                 src={project.preview}
