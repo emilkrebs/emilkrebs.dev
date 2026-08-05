@@ -8,9 +8,9 @@ function generatePersonJsonLd() {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Emil Krebs",
-        "jobTitle": "Language Engineer",
+        "jobTitle": "Software Engineer",
         "description":
-      "Language engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
+            "Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
         "url": "https://emilkrebs.dev",
         "image": "https://emilkrebs.dev/pictures/portrait.webp",
         "sameAs": [
@@ -28,7 +28,7 @@ function generatePersonJsonLd() {
             "url": "https://typefox.io",
         },
         "knowsAbout": [
-            "Language Engineering",
+            "Software Engineering",
             "Language Server Protocol",
             "Langium",
             "Theia",
@@ -41,7 +41,8 @@ function generatePersonJsonLd() {
         ],
         "alumniOf": {
             "@type": "Organization",
-            "name": "Software Engineering",
+            "name": "Kiel University",
+            "sameAs": "https://www.uni-kiel.de/en/"
         },
     };
 }
@@ -52,7 +53,7 @@ function generateWebsiteJsonLd() {
         "@type": "WebSite",
         "name": "Emil Krebs - Language Engineer in Kiel",
         "description":
-      "Personal website of Emil Krebs, a language engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack.",
+            "Personal website of Emil Krebs, a language engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack.",
         "url": "https://emilkrebs.dev",
         "author": {
             "@type": "Person",
@@ -76,56 +77,56 @@ const STRENGTHS = [
     {
         title: "Language engineering",
         proof:
-      "Language servers, the LSP, and Langium DSLs at TypeFox, plus a purpose-built .bio language inside Healthstack.",
+            "Language servers, the LSP, and Langium DSLs at TypeFox, plus a purpose-built lifestyle language inside Healthstack.",
     },
     {
         title: "Developer tooling",
         proof:
-      "VS Code extensions, Theia-based IDEs, and generators that save other developers real time.",
+            "VS Code extensions, Theia-based IDEs, and generators that save other developers real time.",
     },
     {
         title: "Security & privacy",
         proof:
-      "Zero-knowledge encryption in VailNote, WearOS locking in WatchLock, no telemetry by default.",
+            "Zero-knowledge encryption in VailNote, WearOS locking in WatchLock, no telemetry by default.",
     },
     {
         title: "Open source",
         proof:
-      "The Langium showcase, Theia, the fresh ecosystem, and the BIPoC Climate Justice conference site.",
+            "The Langium showcase, Theia, the fresh ecosystem, and the BIPoC Climate Justice conference site.",
     },
 ];
 
 interface Project {
-  name: string;
-  description: string;
-  href?: string;
-  status?: string;
-  tags: string[];
-  flagship?: boolean;
-  image?: string;
-  imageCaption?: string;
-  placeholder?: string;
-  preview?: string;
-  previewCaption?: string;
-  consent?: boolean;
+    name: string;
+    description: string;
+    href?: string;
+    status?: string;
+    tags: string[];
+    flagship?: boolean;
+    image?: string;
+    imageCaption?: string;
+    placeholder?: string;
+    preview?: string;
+    previewCaption?: string;
+    consent?: boolean;
 }
 
 const FLAGSHIP_PROJECTS: Project[] = [
     {
         name: "Prami",
         description:
-      "Active recall and spaced repetition, engineered so the review schedule fades into the background.",
+            "Active recall and spaced repetition, engineered so the review schedule fades into the background.",
         href: "https://prami.app",
         status: "Preview",
         tags: ["Next.js", "PWA", "TypeScript"],
         flagship: true,
-        placeholder: "Prami",
+        image: "/pictures/prami.webp",
         imageCaption: "Screenshot pending - Prami",
     },
     {
         name: "Healthstack",
         description:
-      "A specialized IDE for health optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
+            "A specialized IDE for health optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
         href: "/healthstack",
         status: "Preview",
         tags: ["Theia", "Langium", "TypeScript", "Electron"],
@@ -139,7 +140,7 @@ const PROJECTS: Project[] = [
     {
         name: "VailNote",
         description:
-      "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
+            "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
         href: "https://vailnote.com/",
         tags: ["TypeScript", "Fresh", "Deno", "MongoDB"],
         image: "/pictures/vailnote.webp",
@@ -148,7 +149,7 @@ const PROJECTS: Project[] = [
     {
         name: "WatchLock",
         description:
-      "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
+            "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
         href: "https://github.com/emilkrebs/WatchLock",
         tags: ["Kotlin", "Android", "WearOS"],
         image: "/pictures/watchlock.webp",
@@ -157,7 +158,7 @@ const PROJECTS: Project[] = [
     {
         name: "BIPoC Climate Justice Conference",
         description:
-      "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
+            "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
         href: "https://bipoclimatejusticenetwork.org/",
         tags: ["Next.js", "TypeScript", "Localization"],
         image: "/pictures/bipoc.webp",
@@ -166,7 +167,7 @@ const PROJECTS: Project[] = [
     {
         name: "Langium Showcase",
         description:
-      "DSL showcases built with Langium: state machines, arithmetic, MiniLogo, and domain models.",
+            "DSL showcases built with Langium: state machines, arithmetic, MiniLogo, and domain models.",
         href: "https://langium.org/showcase/",
         tags: ["Langium", "TypeScript", "DSLs"],
         preview: "https://langium.org/showcase/minilogo/",
@@ -176,7 +177,7 @@ const PROJECTS: Project[] = [
     {
         name: "Generator-Discord",
         description:
-      "A Yeoman generator that scaffolds Discord bots in several languages.",
+            "A Yeoman generator that scaffolds Discord bots in several languages.",
         href: "https://github.com/emilkrebs/Generator-Discord",
         tags: ["Node.js", "TypeScript", "Yeoman"],
         image: "/pictures/generator-discord.webp",
@@ -185,7 +186,7 @@ const PROJECTS: Project[] = [
     {
         name: "This site",
         description:
-      "Static export. No server, no database. Typeset per the spec you are reading.",
+            "Static export. No server, no database. Typeset per the spec you are reading.",
         href: "/",
         tags: ["Next.js", "TypeScript", "Tailwind CSS"],
         image: "/pictures/this-site.webp",
@@ -279,23 +280,25 @@ function Hero() {
                 </div>
 
                 <figure className="shrink-0 relative w-fit">
-                    <span
-                        className="absolute -top-1.5 -left-1.5 size-3.5 border-t-2 border-l-2 border-ink-soft"
-                        aria-hidden="true"
-                    />
-                    <span
-                        className="absolute -top-1.5 -right-1.5 size-3.5 border-t-2 border-r-2 border-ink-soft"
-                        aria-hidden="true"
-                    />
-                    <span
-                        className="absolute -bottom-1.5 -left-1.5 size-3.5 border-b-2 border-l-2 border-ink-soft"
-                        aria-hidden="true"
-                    />
-                    <span
-                        className="absolute -bottom-1.5 -right-1.5 size-3.5 border-b-2 border-r-2 border-ink-soft"
-                        aria-hidden="true"
-                    />
-                    <div className="duotone-frame relative size-44 md:size-56 border border-hairline overflow-hidden">
+                    <span className="absolute inset-0 border border-signal opacity-70" aria-hidden="true">
+                        <span
+                            className="absolute -top-1.5 -left-1.5 size-3.5 border-t-2 border-l-2 border-signal"
+                            aria-hidden="true"
+                        />
+                        <span
+                            className="absolute -top-1.5 -right-1.5 size-3.5 border-t-2 border-r-2 border-signal"
+                            aria-hidden="true"
+                        />
+                        <span
+                            className="absolute -bottom-1.5 -left-1.5 size-3.5 border-b-2 border-l-2 border-signal"
+                            aria-hidden="true"
+                        />
+                        <span
+                            className="absolute -bottom-1.5 -right-1.5 size-3.5 border-b-2 border-r-2 border-signal"
+                            aria-hidden="true"
+                        />
+                    </span>
+                    <div className="duotone-frame relative size-44 md:size-56 border border-ink-soft/50 overflow-hidden">
                         <Image
                             src="/pictures/portrait.webp"
                             alt="Emil Krebs, language engineer"
@@ -304,16 +307,21 @@ function Hero() {
                             priority
                             className="absolute inset-0 size-full object-cover"
                         />
-                        <div className="duotone-tint absolute inset-0" />
-                        <div className="duotone-lift absolute inset-0" />
+                      
+                        <div className="absolute inset-0" aria-hidden="true" />
+                        <div className="absolute left-1/2 top-[40%] h-32 w-24 -translate-x-1/2 -translate-y-1/2 border border-signal/70" aria-hidden="true">
+                            <div className="duotone-tint absolute inset-0" />
+                            <div className="duotone-lift absolute inset-0" />
+                        </div>
                     </div>
                     <div
-                        className="absolute -top-2.5 -right-2.5 z-20 bg-paper border border-hairline px-2.5 py-1.5"
+                        className="absolute -top-2.5 -right-2.5 z-20 bg-paper border border-signal/60 px-2.5 py-1.5"
                         role="status"
                     >
                         <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
-                            <span className="block text-ink-soft">Cooking:</span>
-                            <span className="block text-ink">Prami, Healthstack</span>
+                            <span className="flex items-center gap-1.5 text-ink-soft">
+                               Cooking...
+                            </span>
                         </p>
                     </div>
                 </figure>
@@ -346,11 +354,10 @@ function Field() {
             <SectionHeading>Field</SectionHeading>
             <p className="text-xl md:text-2xl leading-relaxed max-w-[64ch]">
                 I build the tools that read, understand, and transform code. At
-                TypeFox that means language servers, the LSP, and Langium. On my
-                own time it means products: a spaced-repetition app, a health
-                IDE with its own language, and a note tool that respects
-                privacy. Everything I build ships{" "}
-                <em className="font-serif italic">open source</em>.
+                <i className="mx-1">TypeFox</i> that means custom domain-specific tools like IDEs. On my
+                free time it means products: a spaced-repetition app, a lifestyle
+                IDE powered by its own language & native AI, and a note tool built for
+                privacy. I contribute to various open source projects.
             </p>
         </section>
     );
@@ -390,7 +397,13 @@ function Work() {
             <SectionHeading>Work</SectionHeading>
             <div className="bg-paper-deep border border-hairline p-8 md:p-12">
                 <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
-                    TypeFox GmbH
+                    {/* TypeFox GmbH */}
+                    <Image
+                        src="https://www.typefox.io/assets/Logo_white_long.svg"
+                        alt="TypeFox GmbH"
+                        width={200}
+                        height={50}
+                    />
                 </h3>
                 <p className="mt-4 text-base md:text-lg leading-relaxed max-w-[60ch]">
                     Software Engineer on language engineering: language servers,
