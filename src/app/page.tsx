@@ -172,6 +172,7 @@ const PROJECTS: Project[] = [
         tags: ["Langium", "TypeScript", "DSLs"],
         preview: "https://langium.org/showcase/minilogo/",
         previewCaption: "Live - langium.org/showcase/minilogo",
+        placeholder: "/pictures/langium-placeholder.png",
         consent: true,
     },
     {
@@ -436,6 +437,7 @@ function ProjectCard({ project }: { project: Project }) {
                                 id={`consent-${project.name.toLowerCase().replace(/\s+/g, "-")}`}
                                 src={project.preview}
                                 title={`${project.name} preview`}
+                                placeholder={project.placeholder}
                             />
                         ) : (
                             <iframe
