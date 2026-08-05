@@ -115,3 +115,14 @@ body {
         transition: none;
     }
 }
+
+/* TypeFox logo asset is a white wordmark — invert to ink on the light card */
+.typefox-logo {
+    filter: brightness(0);
+}
+
+@media (prefers-color-scheme: dark) {
+    .typefox-logo {
+        filter: none;
+    }
+}

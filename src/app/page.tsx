@@ -78,12 +78,7 @@ const STRENGTHS = [
     {
         title: "Developer tooling",
         proof:
-            "VS Code extensions, Theia-based IDEs, and generators that save other developers real time.",
-    },
-    {
-        title: "Language engineering",
-        proof:
-            "Language servers, the LSP, and Langium DSLs at TypeFox, plus a purpose-built lifestyle language inside Healthstack.",
+            "Language servers, the LSP, Langium DSLs, Theia-based IDEs, and generators — the domain-specific tools that let editors understand code.",
     },
     {
         title: "Security & privacy",
@@ -93,7 +88,7 @@ const STRENGTHS = [
     {
         title: "Open source",
         proof:
-            "The Langium showcase, Theia, the fresh ecosystem, and the BIPoC Climate Justice conference site.",
+            "The Langium showcase, Theia, the Fresh ecosystem, and the BIPoC Climate Justice conference site.",
     },
 ];
 
@@ -312,9 +307,8 @@ function Hero() {
                         role="status"
                     >
                         <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
-                            <span className="flex items-center gap-1.5 text-ink-soft">
-                               Cooking...
-                            </span>
+                            <span className="block text-ink-soft">Cooking:</span>
+                            <span className="block text-ink">Prami, Healthstack</span>
                         </p>
                     </div>
                 </figure>
@@ -347,7 +341,7 @@ function Field() {
             <SectionHeading>Field</SectionHeading>
             <p className="text-xl md:text-2xl leading-relaxed max-w-[64ch]">
                 I build the tools that read, understand, and transform code. At
-                <i className="mx-1">TypeFox</i> that means custom domain-specific tools like IDEs. On my
+                <i className="mx-1">TypeFox</i> that means custom domain-specific tools like IDEs. In my
                 free time it means products: a spaced-repetition app, a lifestyle
                 IDE powered by its own language & native AI, and a note tool built for
                 privacy. I contribute to various open source projects.
@@ -396,10 +390,11 @@ function Work() {
                         alt="TypeFox GmbH"
                         width={200}
                         height={50}
+                        className="typefox-logo"
                     />
                 </h3>
                 <p className="mt-4 text-base md:text-lg leading-relaxed max-w-[60ch]">
-                    Software Engineer on Software engineering: language servers,
+                    Software Engineer: language servers,
                     the LSP, and the tooling that lets editors understand code.
                     This is the craft the rest of this page proves.
                 </p>

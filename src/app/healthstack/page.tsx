@@ -104,7 +104,7 @@ const SECTIONS: FeatureSection[] = [
     },
     {
         heading: "Biomarker tracker",
-        title: "Every lab value - in range, or out.",
+        title: "Every lab value — in range, or out.",
         proof:
       "Each value sits against its reference range with a status: optimal, good, or out. Sparklines show the trend, and units convert as you paste, mg/dL to mmol/L and back.",
         stats: [
