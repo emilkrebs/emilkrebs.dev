@@ -117,7 +117,7 @@ const FLAGSHIP_PROJECTS: Project[] = [
         tags: ["Next.js", "PWA", "TypeScript"],
         flagship: true,
         image: "/pictures/prami.webp",
-        imageCaption: "Screenshot pending - Prami",
+        imageCaption: "In testing - Prami",
     },
     {
         name: "Healthstack",
