@@ -20,14 +20,14 @@
 # production
 /build
 
-# ai skills tooling
-# .agents/skills, .github/skills, .github/agents, .github/hooks and
-# skills-lock.json are intentionally tracked: they pin the design skills
-# (taste-skill, impeccable) and carry this repo's project directive.
-# Only generated session state is ignored.
+# ai skills tooling (local only, not published)
 .impeccable
 .agents/skills
+.github/skills
+.github/agents
+.github/hooks
 .codex
+skills-lock.json
 # misc
 .DS_Store
 *.pem
