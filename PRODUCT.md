@@ -16,7 +16,7 @@ Make Emil's identity legible in one committed statement: he is a Software engine
 
 ## Positioning
 
-Most developer portfolios claim broad full-stack competence. This site claims the narrower, more defensible lane: Software engineering (language servers, DSLs, code tooling) plus real products built on that craft - Prami, a spaced-repetition learning app in public preview, and Healthstack, a specialized IDE for health optimization with its own purpose-built DSL. Around them sit a consistent security and privacy streak (VailNote zero-knowledge encryption, WatchLock) and open-source citizenship (Langium showcase, BIPoC Climate Justice conference site). The position no neighboring portfolio can truthfully copy: "builds the tools that read, understand, and transform code - language servers, IDEs, DSLs - and ships real products open source."
+Most developer portfolios claim broad full-stack competence. This site claims the narrower, more defensible lane: Software engineering (language servers, DSLs, code tooling) plus real products built on that craft - Prami, a spaced-repetition learning app in public preview, and Healthstack, a specialized IDE for lifestyle optimization with its own purpose-built DSL. Around them sit a consistent security and privacy streak (VailNote zero-knowledge encryption, WatchLock) and open-source citizenship (Langium showcase, BIPoC Climate Justice conference site). The position no neighboring portfolio can truthfully copy: "builds the tools that read, understand, and transform code - language servers, IDEs, DSLs - and ships real products open source."
 
 ## Operating Context
 

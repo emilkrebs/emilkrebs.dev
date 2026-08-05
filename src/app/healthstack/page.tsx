@@ -8,7 +8,7 @@ import { PlaceholderPlate } from "../components/placeholder-plate";
 export const metadata: Metadata = {
     title: "Healthstack",
     description:
-    "A specialized IDE for health optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
+    "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
     alternates: {
         canonical: "/healthstack/",
     },
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
         url: "https://emilkrebs.dev/healthstack/",
         title: "Healthstack | Emil Krebs",
         description:
-      "A specialized IDE for health optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
+      "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
         siteName: "Emil Krebs",
         images: [
             {
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Healthstack | Emil Krebs",
         description:
-      "A specialized IDE for health optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
+      "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
         images: ["/pictures/healthstack-dashboard.webp"],
     },
 };
@@ -292,7 +292,7 @@ export default function HealthstackPage() {
                     <StatusLabel>Preview - dev build</StatusLabel>
                 </div>
                 <p className="mt-6 max-w-[62ch] text-base md:text-lg leading-relaxed">
-                    A specialized IDE for health optimization on Eclipse Theia:
+                    A specialized IDE for lifestyle optimization on Eclipse Theia:
                     biomarker tracking, unit conversion, and a purpose-built DSL
                     for intervention protocols.
                 </p>
@@ -308,23 +308,6 @@ export default function HealthstackPage() {
                         caption="Dev build - biomarker dashboard"
                         placeholder={null}
                     />
-                </div>
-            </section>
-
-            <section className="mx-auto max-w-[1120px] px-6 pb-4">
-                <div className="flex items-start gap-3 border border-hairline px-6 py-4">
-                    <span className="mt-1.5 size-1.5 bg-signal shrink-0" aria-hidden="true" />
-                    <div className="flex flex-col gap-1.5">
-                        <p className="text-base leading-snug">
-                            Not medical advice: a curated, supplements-only
-                            reference.
-                        </p>
-                        <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-relaxed">
-                            Nothing here is a prescription medication, peptide,
-                            hormone, or research chemical, and no dose is a
-                            recommendation.
-                        </p>
-                    </div>
                 </div>
             </section>
 

@@ -125,13 +125,13 @@ const FLAGSHIP_PROJECTS: Project[] = [
     {
         name: "Healthstack",
         description:
-            "A specialized IDE for health optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
+            "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
         href: "/healthstack",
-        status: "Preview",
+        status: "Concept",
         tags: ["Theia", "Langium", "TypeScript", "Electron"],
         flagship: true,
         image: "/pictures/healthstack-dashboard.webp",
-        imageCaption: "Dev build - biomarker dashboard",
+        imageCaption: "Concept Page",
     },
 ];
 
@@ -298,7 +298,7 @@ function Hero() {
                             priority
                             className="absolute inset-0 size-full object-cover"
                         />
-                      
+
                         <div className="absolute inset-0" aria-hidden="true" />
                         <div className="absolute left-1/2 top-[40%] h-32 w-24 -translate-x-1/2 -translate-y-1/2 border border-signal/70" aria-hidden="true">
                             <div className="duotone-tint absolute inset-0" />
@@ -310,8 +310,7 @@ function Hero() {
                         role="status"
                     >
                         <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
-                            <span className="block text-ink-soft">Cooking:</span>
-                            <span className="block text-ink">Prami, Healthstack</span>
+                            <span className="block text-ink-soft">Cooking...</span>
                         </p>
                     </div>
                 </figure>
