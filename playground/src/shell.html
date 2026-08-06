@@ -1,0 +1,65 @@
+<div class="topbar mono">
+  <a href="/">Emil Krebs · home</a>
+  <span>Healthstack · .bio protocol language</span>
+</div>
+<header class="masthead">
+  <h1>The .bio language, <span class="accent">live</span>.</h1>
+  <p>
+    This page runs the real Healthstack DSL language server in your browser.
+    Parsing, validation, completions and hover documentation all execute
+    locally. Your data never leaves your machine
+    <a href="/healthstack/">What is Healthstack?</a>
+    <p class="mono">
+     Nothing here is medical advice. This page is for preview only.
+    </p>
+  </p>
+</header>
+<div id="switch-confirm" class="confirm-bar mono" hidden>
+  <span class="token"></span><span class="confirm-msg"></span>
+  <button type="button" id="confirm-keep">Keep editing</button>
+  <button type="button" id="confirm-discard">Discard and switch</button>
+</div>
+<nav class="samples mono" aria-label="Sample protocols">
+  {{SAMPLE_BUTTONS}}
+</nav>
+<section class="plate">
+  <div class="caption mono">
+    <span><span class="token"></span><span id="editor-caption">Editor · {{FILE_NAME}}</span></span>
+    
+    <span aria-live="polite" id="status">Language server starting…</span>
+  </div>
+  <div id="editor-host"></div>
+</section>
+<section class="plate">
+  <div class="caption mono">
+    <span><span class="token"></span>Diagnostics · validator output</span>
+    <span id="diag-counts" aria-live="polite"></span>
+  </div>
+  <div id="diag-list"></div>
+</section>
+<section class="plate reference">
+  <div class="caption mono">
+    <span><span class="token"></span>Syntax at a glance</span>
+  </div>
+  <div class="ref-row">
+    <code>type nootropic extends substance { … }</code>
+    <span class="gloss">Declare a type; subtypes inherit their members</span>
+  </div>
+  <div class="ref-row">
+    <code>nootropic "Alpha-GPC" { max_dose: 600 mg }</code>
+    <span class="gloss">Declare with a custom type; units are typed</span>
+  </div>
+  <div class="ref-row">
+    <code>stack "Focus Stack" { use intervention "…" }</code>
+    <span class="gloss">Group interventions into a stack</span>
+  </div>
+  <div class="ref-row">
+    <code>protocol "Focus &amp; Mobility Week" { … }</code>
+    <span class="gloss">Compose a protocol from phases</span>
+  </div>
+  <div class="ref-row">
+    <code>import "@std/supplements"</code>
+    <span class="gloss">Import the curated library; the checker flags conflicts</span>
+  </div>
+</section>
+<footer class="mono">Emil Krebs · 2026 · protocols as code, biology as data</footer>

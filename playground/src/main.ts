@@ -5,6 +5,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '@fontsource/instrument-serif/400-italic.css';
 import './style.css';
+import shellTemplate from './shell.html?raw';
 
 import * as monaco from 'monaco-editor';
 import EditorWorker from './editor-worker.js?worker';
@@ -89,74 +90,12 @@ function buildShell(activeIndex: number, fileName: string): void {
   if (window.self !== window.top) {
     document.body.classList.add('embed');
   }
-  app.innerHTML = `
-    <div class="topbar mono">
-      <a href="/">Emil Krebs · home</a>
-      <span>Healthstack · .bio protocol language</span>
-    </div>
-    <header class="masthead">
-      <h1>The .bio language, <span class="accent">live</span>.</h1>
-      <p>
-        This page runs the real Healthstack language server in your browser.
-        Parsing, validation, completions and hover documentation all execute
-        locally. Your data never leaves your machine. A curated, supplements-only
-        reference library ships with the page; the full clinical catalog does not.
-        <a href="/healthstack/">What is Healthstack?</a>
-      </p>
-    </header>
-    <div id="switch-confirm" class="confirm-bar mono" hidden>
-      <span class="token"></span><span class="confirm-msg"></span>
-      <button type="button" id="confirm-keep">Keep editing</button>
-      <button type="button" id="confirm-discard">Discard and switch</button>
-    </div>
-    <nav class="samples mono" aria-label="Sample protocols">
-      ${SAMPLES.map(
-        (s, i) => `<button type="button" data-sample="${i}" class="${i === activeIndex ? 'active' : ''}" aria-pressed="${i === activeIndex}">${s.label}</button>`,
-      ).join('')}
-    </nav>
-    <section class="plate">
-      <div class="caption mono">
-        <span><span class="token"></span><span id="editor-caption">Editor · ${fileName}</span></span>
-      </div>
-      <div id="editor-host"></div>
-    </section>
-    <section class="plate">
-      <div class="caption mono">
-        <span><span class="token"></span>Diagnostics · validator output</span>
-        <span id="diag-counts" aria-live="polite"></span>
-      </div>
-      <div id="diag-list"></div>
-    </section>
-    <p class="statusline mono" aria-live="polite">
-      <span class="dot"></span><span id="status">Language server starting…</span>
-    </p>
-    <section class="plate reference">
-      <div class="caption mono">
-        <span><span class="token"></span>Syntax at a glance</span>
-      </div>
-      <div class="ref-row">
-        <code>type nootropic extends substance { … }</code>
-        <span class="gloss">Declare a type; subtypes inherit their members</span>
-      </div>
-      <div class="ref-row">
-        <code>nootropic "Alpha-GPC" { max_dose: 600 mg }</code>
-        <span class="gloss">Declare with a custom type; units are typed</span>
-      </div>
-      <div class="ref-row">
-        <code>stack "Focus Stack" { use intervention "…" }</code>
-        <span class="gloss">Group interventions into a stack</span>
-      </div>
-      <div class="ref-row">
-        <code>protocol "Focus &amp; Mobility Week" { … }</code>
-        <span class="gloss">Compose a protocol from phases</span>
-      </div>
-      <div class="ref-row">
-        <code>import "@std/supplements"</code>
-        <span class="gloss">Import the curated library; the checker flags conflicts</span>
-      </div>
-    </section>
-    <footer class="mono">Emil Krebs · 2026 · protocols as code, biology as data</footer>
-  `;
+  const sampleButtons = SAMPLES.map(
+    (s, i) => `<button type="button" data-sample="${i}" class="${i === activeIndex ? 'active' : ''}" aria-pressed="${i === activeIndex}">${s.label}</button>`,
+  ).join('');
+  app.innerHTML = shellTemplate
+    .replace('{{SAMPLE_BUTTONS}}', sampleButtons)
+    .replace('{{FILE_NAME}}', fileName);
 }
 
 function severityClass(severity: number): string {
@@ -282,10 +221,14 @@ async function main(): Promise<void> {
   let seq = 0;
   const status = document.getElementById('status')!;
 
+  function setStatus(message: string): void {
+    status.textContent = message;
+  }
+
   async function analyze(): Promise<void> {
     const mySeq = ++seq;
     const text = model.getValue();
-    status.textContent = 'Analyzing…';
+    setStatus('Analyzing…');
     try {
       const result = await lang.parse(text);
       if (mySeq !== seq) return;
@@ -304,16 +247,16 @@ async function main(): Promise<void> {
         })),
       );
       renderDiagnostics(diags, result.missingImports);
-      status.textContent = result.missingImports.length > 0
+      setStatus(result.missingImports.length > 0
         ? `Analyzed · ${result.missingImports.length} unresolved import${result.missingImports.length === 1 ? '' : 's'}`
-        : 'Language server live · everything runs in this tab';
+        : 'Language server live · everything runs in this tab');
     } catch (err) {
       if (mySeq !== seq) return;
       console.error('analyze failed:', err);
       const msg = err instanceof Error ? err.message : String(err);
       monaco.editor.setModelMarkers(model, LANGUAGE_ID, []);
       renderCrash(msg);
-      status.textContent = 'Analysis failed';
+      setStatus('Analysis failed');
     }
   }
 

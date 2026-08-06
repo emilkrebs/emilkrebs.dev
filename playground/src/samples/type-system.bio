@@ -58,6 +58,10 @@ type mobility_session is schedulable @icon("dumbbell") @color("sky") {
 // Declarations use the type name as their keyword. Subtypes are substitutable:
 // `use substance "Alpha-GPC"` resolves even though Alpha-GPC is a `nootropic`.
 
+racetam "Pramiracetam" {
+    notes: "A racetam nootropic, the one Prami is named after. "
+}
+
 nootropic "Alpha-GPC" {
     half_life: 2 hours
     mechanism: cholinergic
@@ -99,6 +103,9 @@ intervention "Citicoline Morning" {
 stack "Focus Stack" {
     use intervention "Alpha-GPC Morning"
     use intervention "Citicoline Morning"
+      use substance "Pramiracetam" {
+        notes: "Just learn with Prami instead :)" // override this property for this stack
+    }
     tags: ["focus", "nootropic"]
     goal: "Dual choline coverage for focus"
 }

@@ -167,11 +167,3 @@ substance "Omega-3 EPA DHA" {
     max_dose: 3 g
     notes: "Combined EPA+DHA dose. Check the Omega-3 Index for personalised dosing (target 8-12%)."
 }
-
-// ===========================================================================
-// THE NAMESAKE (gimmick entry — not part of the curated reference)
-// ===========================================================================
-
-substance "Pramiracetam" {
-    notes: "The racetam the app is named after. Not curated, not a supplement, not medical advice — this entry is a wink. No dose, no claims."
-}
