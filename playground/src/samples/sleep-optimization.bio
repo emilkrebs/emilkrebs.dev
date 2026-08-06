@@ -1,0 +1,201 @@
+/**
+ * Sleep Optimization Protocol
+ *
+ * A structured 8-week protocol to reduce sleep onset latency and improve
+ * sleep quality using evidence-based supplements and timing strategies.
+ *
+ * Who it's for: Anyone experiencing difficulty falling asleep, light sleep,
+ * or disrupted circadian rhythm from shift work / travel / blue light exposure.
+ *
+ * Expected effects:
+ *   - Reduced sleep onset latency (target: < 10 minutes)
+ *   - Deeper NREM/SWS sleep stages
+ *   - Lower cortisol at bedtime
+ *   - More consistent sleep/wake timing
+ *
+ * How to adapt:
+ *   - Chronotypes: Owls should shift all timing 90-120 min later.
+ *   - If Magnesium causes GI upset: switch to Magnesium Threonate 200mg.
+ *   - If you wake at 3am: consider Phosphatidylserine 200mg before bed for
+ *     cortisol rebound issues.
+ *   - Do not combine with alcohol — it eliminates REM sleep entirely.
+ *
+ * ⚠ The Melatonin dose here (0.5 mg) is intentionally low. Higher doses
+ *   cause grogginess and suppress your own melatonin production over time.
+ */
+
+// ---------------------------------------------------------------------------
+// Substance definitions
+// ---------------------------------------------------------------------------
+
+substance "Magnesium Glycinate" {
+    half_life: 24 hours
+    targets: ["GABA", "Sleep-Quality", "Muscle-Relaxation", "Cortisol-Lowering"]
+    synergies: ["L-Theanine", "Apigenin"]
+    max_dose: 800 mg
+}
+
+substance "L-Theanine" {
+    half_life: 2 hours
+    targets: ["Alpha-Waves", "GABA", "Relaxation", "Sleep-Quality"]
+    synergies: ["Magnesium", "Apigenin"]
+    max_dose: 400 mg
+}
+
+substance "Apigenin" {
+    half_life: 12 hours
+    targets: ["GABA-A-Receptor", "Sleep-Latency", "Anxiety"]
+    synergies: ["L-Theanine", "Magnesium"]
+    max_dose: 100 mg
+}
+
+substance "Melatonin" {
+    half_life: 30 minutes
+    targets: ["Circadian-Rhythm", "Sleep-Onset", "MT1-MT2-Receptors"]
+    max_dose: 5 mg
+}
+
+substance "Ashwagandha KSM-66" {
+    half_life: 8 hours
+    targets: ["Cortisol", "HPA-Axis", "Stress-Response"]
+    synergies: ["Magnesium"]
+    max_dose: 600 mg
+}
+
+// ---------------------------------------------------------------------------
+// Interventions — all timed for evening/bedtime
+// ---------------------------------------------------------------------------
+
+/**
+ * Magnesium Glycinate — GABA co-factor; key for sleep quality.
+ * Taken 30-60 min before target bedtime.
+ */
+intervention "Magnesium Glycinate" {
+    use substance "Magnesium Glycinate"
+    group: mineral
+    route: oral
+    dose: 400 mg
+    frequency { interval: 1 day }
+    time_of_day: before_bed
+    tags: ["sleep", "mineral", "GABA"]
+    goal: "Deepen sleep stages and ease tension before bed"
+    tracks: "Magnesium RBC"
+    notes: "Take 30-60 min before bed. Start at 200 mg if bowel-sensitive."
+}
+
+/**
+ * L-Theanine — relaxation without sedation. Raises alpha wave activity.
+ */
+intervention "L-Theanine Evening" {
+    use substance "L-Theanine"
+    group: supplement
+    route: oral
+    dose: 200 mg
+    frequency { interval: 1 day }
+    time_of_day: before_bed
+    tags: ["sleep", "relaxation", "nootropic"]
+    goal: "Promote calm wakefulness → sleep transition"
+    notes: "Pairs synergistically with Magnesium and Apigenin. Non-sedating on its own."
+}
+
+/**
+ * Apigenin — chamomile-derived GABA-A partial agonist.
+ * The Huberman Sleep Cocktail includes 50 mg; scale up to 100 mg if needed.
+ */
+intervention "Apigenin" {
+    use substance "Apigenin"
+    group: supplement
+    route: oral
+    dose: 50 mg
+    frequency { interval: 1 day }
+    time_of_day: before_bed
+    tags: ["sleep", "GABA", "anxiolytic"]
+    goal: "Reduce sleep onset latency via GABA-A partial agonism"
+    notes: "50 mg is the standard dose. Can increase to 100 mg if no effect after 2 weeks. Avoid if pregnant."
+}
+
+/**
+ * Melatonin — use sparingly and at the lowest effective dose.
+ * 0.5 mg 30 min before target bedtime outperforms 5 mg for most people.
+ */
+intervention "Melatonin Low-Dose" {
+    use substance "Melatonin"
+    group: supplement
+    route: oral
+    dose: 0.5 mg
+    frequency { interval: 1 day }
+    time_of_day: before_bed
+    tags: ["sleep", "circadian"]
+    goal: "Advance sleep phase and reduce onset latency"
+    notes: '''Take exactly 30 min before intended sleep time.
+    Low-dose (0.3-0.5 mg) is as effective as high-dose without morning grogginess.
+    Do not use nightly indefinitely — take breaks to preserve endogenous production.'''
+}
+
+/**
+ * Ashwagandha — reduces bedtime cortisol. Cycle 8 weeks on, 2 off.
+ */
+intervention "Ashwagandha Evening" {
+    use substance "Ashwagandha KSM-66"
+    group: supplement
+    route: oral
+    dose: 300 mg
+    frequency { interval: 1 day }
+    time_of_day: evening
+    schedule { duration: 8 weeks }
+    tags: ["adaptogen", "cortisol", "sleep"]
+    goal: "Lower evening cortisol and HPA axis activation at bedtime"
+    tracks: "Cortisol AM"
+    notes: "Evening dosing is better for sleep. Cycle: 8 weeks on, 2 weeks off."
+}
+
+// ---------------------------------------------------------------------------
+// Sleep Cocktail stack (core combination)
+// ---------------------------------------------------------------------------
+
+stack "Sleep Cocktail" {
+    use intervention "Magnesium Glycinate"
+    use intervention "L-Theanine Evening"
+    use intervention "Apigenin"
+    tags: ["sleep", "evening", "core"]
+    goal: "Core sleep enhancement combination"
+}
+
+stack "Full Sleep Stack" {
+    use stack "Sleep Cocktail"
+    use intervention "Melatonin Low-Dose"
+    use intervention "Ashwagandha Evening"
+    tags: ["sleep", "evening", "complete"]
+    goal: "Complete sleep optimization stack"
+}
+
+// ---------------------------------------------------------------------------
+// 8-week protocol
+// ---------------------------------------------------------------------------
+
+protocol "Sleep Optimization" {
+    version: "1.0.0"
+    goal: "Reduce sleep onset latency to under 10 minutes and improve sleep quality within 8 weeks"
+    tags: ["sleep", "circadian", "recovery"]
+    tracks: ["Cortisol AM", "Melatonin Serum"]
+    notes: '''Combine with sleep hygiene: blackout curtains, 65°F room, no screens 1h before bed.
+    Track sleep onset with a sleep tracker or manual log before starting.
+    Target outcome: < 10 min sleep onset for at least 10 of 14 days by end of Phase 2.'''
+
+    phase "Foundation" {
+        duration: 2 weeks
+        start: "Sleep tracking baseline established (minimum 7 nights)"
+        end: "Sleep Cocktail tolerated without daytime grogginess"
+        goal: "Establish supplement tolerance and baseline sleep metrics"
+        notes: "Start with Sleep Cocktail only. Add Melatonin in week 2 if onset > 20 min."
+        use stack "Sleep Cocktail"
+    }
+
+    phase "Optimisation" {
+        duration: 6 weeks
+        start: "Foundation phase complete"
+        end: "Sleep onset < 10 min for 10 of 14 consecutive nights"
+        goal: "Drive sleep onset latency below 10 minutes consistently"
+        use stack "Full Sleep Stack"
+    }
+}

@@ -1,5 +1,13 @@
 import RenderMarkdown from "../components/markdown";
-import LinkButton from "../components/link-button";
+import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy",
+    alternates: {
+        canonical: "/privacy/",
+    },
+};
 
 const markdown = `
 
@@ -11,7 +19,7 @@ To get critical information about the behavior of our visitors, this website use
 
 ## What information do we collect?
 
-Simple Analytics gives insight about visitors only in general, but not about individuals per say, as it does not track visitors and does not store any personal identifiable information. 
+Simple Analytics gives insight about visitors only in general, but not about individuals per se, as it does not track visitors and does not store any personal identifiable information. 
 [Go to their documentation](https://docs.simpleanalytics.com/what-we-collect) to find out what Simple Analytics collects (and most importantly what they don't).
 
 ## Cookies
@@ -28,20 +36,24 @@ We reserve the right to update this privacy policy at any time. We will notify y
 
 ## Contact
 
-If you have any questions about this privacy policy, please get in touch with me at [emil.krebs@outlook.de](mailto:emil.krebs@outlook.de).
+If you have any questions about this privacy policy, please get in touch with me at [hello@emilkrebs.dev](mailto:hello@emilkrebs.dev).
 
 The source code for this website is available on [GitHub](https://github.com/emilkrebs/emilkrebs.dev).
 `;
 
 export default function PrivacyPolicy() {
     return (
-        <main className="flex flex-col items-center justify-start w-full min-h-screen p-4">
-            <div className="w-full max-w-4xl my-8">
-                <LinkButton href="/">
-          ← Back to Home
-                </LinkButton>
+        <main id="main" className="flex min-h-screen w-full flex-col items-center justify-start px-6">
+            <div className="w-full max-w-3xl my-10">
+                <Link
+                    href="/"
+                    className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
+                >
+                    <span className="text-signal" aria-hidden="true">←</span>
+                    Back to home
+                </Link>
             </div>
-            <section className="flex flex-col items-center justify-center w-full max-w-4xl h-full gap-2 p-4 gap-x-4">
+            <section className="w-full max-w-3xl pb-24">
                 <RenderMarkdown content={markdown} />
             </section>
         </main>

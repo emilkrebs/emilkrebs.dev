@@ -1,12 +1,9 @@
 import Image from "next/image";
-import LinkButton from "./components/link-button";
-import Technologies from "./components/technologies";
-import Projects from "./components/projects";
-import { GITHUB_URL, LINKEDIN_URL } from "./lib/constants";
-import PageNotification from "./components/notification";
+import { PlaceholderPlate } from "./components/placeholder-plate";
+import { PreviewConsent } from "./components/preview-consent";
+import { ExternalNotice } from "./components/external-notice";
+import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "./lib/constants";
 
-
-// Generate structured data for the person/developer
 function generatePersonJsonLd() {
     return {
         "@context": "https://schema.org",
@@ -14,9 +11,9 @@ function generatePersonJsonLd() {
         "name": "Emil Krebs",
         "jobTitle": "Software Engineer",
         "description":
-      "Software engineer at TypeFox GmbH from Kiel, Germany, specializing in language engineering, developer tools, and open-source contributions.",
+            "Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
         "url": "https://emilkrebs.dev",
-        "image": "https://emilkrebs.dev/pictures/main.webp",
+        "image": "https://emilkrebs.dev/pictures/portrait.webp",
         "sameAs": [
             "https://github.com/emilkrebs",
             "https://linkedin.com/in/emilkrebs",
@@ -32,23 +29,21 @@ function generatePersonJsonLd() {
             "url": "https://typefox.io",
         },
         "knowsAbout": [
-            "TypeScript",
-            "JavaScript",
-            "Language Engineering",
-            "VS Code Extensions",
+            "Software Engineering",
             "Language Server Protocol",
-            "React",
-            "Next.js",
-            "Node.js",
-            "Python",
-            "Kotlin",
-            "Web Development",
+            "Langium",
+            "Theia",
             "Developer Tools",
+            "TypeScript",
+            "Kotlin",
             "Open Source",
+            "Spaced Repetition",
+            "Health Optimization",
         ],
         "alumniOf": {
             "@type": "Organization",
-            "name": "Software Engineering",
+            "name": "Kiel University",
+            "sameAs": "https://www.uni-kiel.de/en/"
         },
     };
 }
@@ -57,9 +52,9 @@ function generateWebsiteJsonLd() {
     return {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Emil Krebs - Software Engineer",
+        "name": "Emil Krebs - Software engineer in Kiel",
         "description":
-      "Personal website of Emil Krebs, a software engineer at TypeFox GmbH from Kiel, Germany, specializing in language engineering, developer tools, and open-source projects.",
+            "Personal website of Emil Krebs, a Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack.",
         "url": "https://emilkrebs.dev",
         "author": {
             "@type": "Person",
@@ -73,20 +68,492 @@ function generateWebsiteJsonLd() {
     };
 }
 
-const STATUS = {
-    hidden: true,
-    message: "Working at TypeFox GmbH",
-    tooltip: "Software Engineer",
-    variant: "success" as const,
-};
+const NAV = [
+    { href: "#field", label: "Field" },
+    { href: "#work", label: "Work" },
+    { href: "#projects", label: "Projects" },
+];
+
+const STRENGTHS = [
+
+    {
+        title: "Developer tooling",
+        proof:
+            "Language servers, the LSP, Langium DSLs, Theia-based IDEs, and generators — the domain-specific tools that let editors understand code.",
+    },
+    {
+        title: "Security & privacy",
+        proof:
+            "Zero-knowledge encryption in VailNote, WearOS locking in WatchLock, no telemetry by default.",
+    },
+    {
+        title: "Open source",
+        proof:
+            "The Langium showcase, Theia, the Fresh ecosystem, and the BIPoC Climate Justice conference site.",
+    },
+];
+
+interface Project {
+    name: string;
+    description: string;
+    href?: string;
+    status?: string;
+    tags: string[];
+    flagship?: boolean;
+    image?: string;
+    imageCaption?: string;
+    placeholder?: string;
+    preview?: string;
+    previewCaption?: string;
+    consent?: boolean;
+    notice?: boolean;
+}
+
+const FLAGSHIP_PROJECTS: Project[] = [
+    {
+        name: "Prami",
+        description:
+            "Active recall and spaced repetition, engineered so the review schedule fades into the background.",
+        href: "https://prami.app",
+        status: "Preview",
+        tags: ["Next.js", "PWA", "TypeScript"],
+        flagship: true,
+        image: "/pictures/prami.webp",
+        imageCaption: "In testing - Prami",
+        notice: true,
+    },
+    {
+        name: "Healthstack",
+        description:
+            "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
+        href: "/healthstack",
+        status: "Concept",
+        tags: ["Theia", "Langium", "TypeScript", "Electron"],
+        flagship: true,
+        image: "/pictures/healthstack-dashboard.webp",
+        imageCaption: "Concept Page",
+    },
+];
+
+const PROJECTS: Project[] = [
+    {
+        name: "VailNote",
+        description:
+            "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
+        href: "https://vailnote.com/",
+        tags: ["TypeScript", "Fresh", "Deno", "MongoDB"],
+        image: "/pictures/vailnote.webp",
+        imageCaption: "Live - vailnote.com",
+    },
+    {
+        name: "WatchLock",
+        description:
+            "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
+        href: "https://github.com/emilkrebs/WatchLock",
+        tags: ["Kotlin", "Android", "WearOS"],
+        image: "/pictures/watchlock.webp",
+        imageCaption: "Live - github.com/emilkrebs/WatchLock",
+    },
+    {
+        name: "BIPoC Climate Justice Conference",
+        description:
+            "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
+        href: "https://bipoclimatejusticenetwork.org/",
+        tags: ["Next.js", "TypeScript", "Localization"],
+        image: "/pictures/bipoc.webp",
+        imageCaption: "Live - bipoclimatejusticenetwork.org",
+    },
+    {
+        name: "Langium Showcase",
+        description:
+            "DSL showcases built with Langium: state machines, arithmetic, MiniLogo, and domain models.",
+        href: "https://langium.org/showcase/",
+        tags: ["Langium", "TypeScript", "DSLs"],
+        preview: "https://langium.org/showcase/minilogo/",
+        previewCaption: "Live - langium.org/showcase/minilogo",
+        placeholder: "/pictures/langium-placeholder.png",
+        consent: true,
+    },
+    {
+        name: "This site",
+        description:
+            "Static export. No server, no database. Typeset per the spec you are reading.",
+        href: "/",
+        tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+        image: "/pictures/this-site.webp",
+        imageCaption: "Live - emilkrebs.dev",
+    },
+];
+
+function TokenMark({ count = 16 }: { count?: number }) {
+    return (
+        <div
+            className="flex gap-2.5"
+            aria-hidden="true"
+        >
+            {Array.from({ length: count }).map((_, i) => (
+                <span
+                    key={i}
+                    className="size-1.5 bg-signal"
+                />
+            ))}
+        </div>
+    );
+}
+
+function Nav() {
+    return (
+        <nav aria-label="Primary" className="sticky top-0 z-50 bg-paper border-b border-hairline">
+            <div className="mx-auto flex items-center justify-between max-w-280 px-6 h-16">
+                <a
+                    href="#top"
+                    className="font-semibold tracking-tight text-lg"
+                >
+                    emil<span className="text-signal">.</span>krebs
+                </a>
+                <div className="flex items-center gap-8">
+                    {NAV.map((item) => (
+                        <a
+                            key={item.href}
+                            href={item.href}
+                            className="py-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
+                        >
+                            {item.label}
+                        </a>
+                    ))}
+                </div>
+            </div>
+        </nav>
+    );
+}
+
+function Hero() {
+    return (
+        <section
+            id="top"
+            className="mx-auto max-w-280 px-6 pt-16 md:pt-24 pb-16 md:pb-20"
+        >
+            <div className="flex flex-col-reverse md:flex-row md:items-start justify-between gap-12 md:gap-20">
+                <div className="max-w-160">
+                    <h1 className="font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(3rem,8vw,6.5rem)]">
+                        Emil Krebs
+                    </h1>
+                    <p className="mt-8 text-lg md:text-xl leading-relaxed max-w-[46ch]">
+                        Software engineer at TypeFox. Kiel, Germany.
+                    </p>
+                    <div className="mt-10 flex flex-wrap items-center gap-6">
+                        <a
+                            href={GITHUB_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                        >
+                            GitHub
+                            <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
+                        <a
+                            href={LINKEDIN_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                        >
+                            LinkedIn
+                            <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
+                        <a
+                            href={`mailto:${EMAIL_ADDRESS}`}
+                            className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                        >
+                            Email
+                            <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
+                    </div>
+                </div>
+
+                <figure className="shrink-0 relative w-fit">
+                    <span className="absolute inset-0 border border-signal opacity-70" aria-hidden="true">
+                        <span
+                            className="absolute -top-1.5 -left-1.5 size-3.5 border-t-2 border-l-2 border-signal"
+                            aria-hidden="true"
+                        />
+                        <span
+                            className="absolute -top-1.5 -right-1.5 size-3.5 border-t-2 border-r-2 border-signal"
+                            aria-hidden="true"
+                        />
+                        <span
+                            className="absolute -bottom-1.5 -left-1.5 size-3.5 border-b-2 border-l-2 border-signal"
+                            aria-hidden="true"
+                        />
+                        <span
+                            className="absolute -bottom-1.5 -right-1.5 size-3.5 border-b-2 border-r-2 border-signal"
+                            aria-hidden="true"
+                        />
+                    </span>
+                    <div className="duotone-frame relative size-44 md:size-56 border border-ink-soft/50 overflow-hidden">
+                        <Image
+                            src="/pictures/portrait.webp"
+                            alt="Emil Krebs, Software engineer"
+                            width={512}
+                            height={512}
+                            priority
+                            className="absolute inset-0 size-full object-cover"
+                        />
+
+                        <div className="absolute inset-0" aria-hidden="true" />
+                        <div className="absolute left-1/2 top-[36%] h-28 w-24 -translate-x-1/2 -translate-y-1/2 border border-signal-accent/70 hover:border-signal-accent/5 transition-colors" aria-hidden="true">
+                            <div className="duotone-tint absolute inset-0" />
+                            <div className="duotone-lift absolute inset-0" />
+                        </div>
+                    </div>
+                    <div
+                        className="absolute -top-2.5 -right-2.5 z-20 bg-paper border border-signal-accent/60 px-2.5 py-1.5"
+                        role="status"
+                    >
+                        <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
+                            <span className="block text-ink-soft">Thinking...</span>
+                        </p>
+                    </div>
+                </figure>
+            </div>
+
+            <div className="mt-16 md:mt-20">
+                <TokenMark />
+            </div>
+        </section>
+    );
+}
+
+function SectionHeading({ id, children }: { id?: string; children: string }) {
+    return (
+        <h2
+            id={id}
+            className="text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] mb-10"
+        >
+            {children}
+        </h2>
+    );
+}
+
+function Field() {
+    return (
+        <section
+            id="field"
+            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
+        >
+            <SectionHeading>Field</SectionHeading>
+            <p className="text-xl md:text-2xl leading-relaxed max-w-[64ch]">
+                I build the tools that read, understand, and transform code. At
+                <i className="mx-1">TypeFox</i> that means custom domain-specific tools like IDEs. In my
+                free time it means products: a spaced-repetition app, a lifestyle
+                IDE powered by its own language & native AI, and a note tool built for
+                privacy. I contribute to various open source projects.
+            </p>
+        </section>
+    );
+}
+
+function WhatIDo() {
+    return (
+        <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
+            <SectionHeading>What I do</SectionHeading>
+            <div className="flex flex-col gap-20 md:gap-24">
+                {STRENGTHS.map((strength) => (
+                    <div
+                        key={strength.title}
+                        className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8"
+                    >
+                        <h3 className="md:col-span-4 text-2xl md:text-3xl font-semibold tracking-tight flex items-start gap-3">
+                            <span className="mt-3 size-1.5 bg-signal shrink-0" aria-hidden="true" />
+                            {strength.title}
+                        </h3>
+                        <p className="md:col-span-8 text-base md:text-lg leading-relaxed text-ink/85 max-w-[52ch]">
+                            {strength.proof}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+}
+
+function Work() {
+    const tags = ["TypeScript", "LSP", "Langium", "Theia", "Node.js"];
+    return (
+        <section
+            id="work"
+            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
+        >
+            <SectionHeading>Work</SectionHeading>
+            <div className="bg-paper-deep border border-hairline p-8 md:p-12">
+                <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
+                    {/* TypeFox GmbH */}
+                    <Image
+                        src="https://www.typefox.io/assets/Logo_white_long.svg"
+                        alt="TypeFox GmbH"
+                        width={200}
+                        height={50}
+                        className="typefox-logo"
+                    />
+                </h3>
+                <p className="mt-4 text-base md:text-lg leading-relaxed max-w-[60ch]">
+                    Software Engineer: language servers,
+                    the LSP, and the tooling that lets editors understand code.
+                    This is the craft the rest of this page proves.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                    {tags.map((tag) => (
+                        <span
+                            key={tag}
+                            className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+function ProjectCard({ project }: { project: Project }) {
+    return (
+        <article className="bg-paper-deep border border-hairline flex flex-col group hover:border-ink transition-colors duration-150">
+            {project.preview && (
+                <div className="relative">
+                    <div className="relative aspect-16/10 border-b border-hairline overflow-hidden bg-paper">
+                        {project.consent ? (
+                            <PreviewConsent
+                                id={`consent-${project.name.toLowerCase().replace(/\s+/g, "-")}`}
+                                src={project.preview}
+                                title={`${project.name} preview`}
+                                placeholder={project.placeholder}
+                            />
+                        ) : (
+                            <iframe
+                                src={project.preview}
+                                title={`${project.name} preview`}
+                                loading="lazy"
+                                referrerPolicy="no-referrer"
+                                className="size-full border-0"
+                            />
+                        )}
+                    </div>
+                    <p className="px-8 pt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
+                        {project.previewCaption}
+                    </p>
+                </div>
+            )}
+            {!project.preview && (project.image || project.placeholder) && (
+                <div className="relative">
+                    <div className="relative aspect-16/10 border-b border-hairline overflow-hidden bg-paper">
+                        {project.image ? (
+                            <Image
+                                src={project.image}
+                                alt={`${project.name} screenshot`}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className="object-cover object-top"
+                            />
+                        ) : (
+                            <PlaceholderPlate label={project.placeholder ?? ""} />
+                        )}
+                    </div>
+                    <p className="px-8 pt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
+                        {project.imageCaption}
+                    </p>
+                </div>
+            )}
+            <div className="p-8 md:p-10 flex flex-col flex-1">
+                <div className="flex items-start justify-between gap-4">
+                    <h3
+                        className={`${project.flagship ? "text-3xl md:text-4xl" : "text-2xl md:text-3xl"} font-semibold tracking-tight`}
+                    >
+                        {project.name}
+                    </h3>
+                    {project.status && (
+                        <span className="inline-flex items-center gap-2 border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap">
+                            <span className="size-1.5 bg-signal" aria-hidden="true" />
+                            {project.status}
+                        </span>
+                    )}
+                </div>
+                <p className="mt-4 text-base leading-relaxed text-ink/85 flex-1 max-w-[62ch]">
+                    {project.description}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                        <span
+                            key={tag}
+                            className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+                <div className="mt-8">
+                    {project.href ? (
+                        project.notice ? (
+                            <ExternalNotice href={project.href} title={project.name} />
+                        ) : (
+                            <a
+                                href={project.href}
+                                target={project.href.startsWith("http") ? "_blank" : undefined}
+                                rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                                className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
+                            >
+                                Open
+                                <span className="text-signal" aria-hidden="true">→</span>
+                            </a>
+                        )
+                    ) : (
+                        <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                            Private
+                        </span>
+                    )}
+                </div>
+            </div>
+        </article>
+    );
+}
+
+function Projects() {
+    return (
+        <section
+            id="projects"
+            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
+        >
+            <SectionHeading>Projects</SectionHeading>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {FLAGSHIP_PROJECTS.map((project) => (
+                    <ProjectCard key={project.name} project={project} />
+                ))}
+            </div>
+
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                {PROJECTS.map((project, index) => (
+                    <div
+                        key={project.name}
+                        className={
+                            index % 3 === 0 || index === PROJECTS.length - 1
+                                ? "md:col-span-2"
+                                : ""
+                        }
+                    >
+                        <ProjectCard project={project} />
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+}
 
 export default async function Page() {
     const personJsonLd = generatePersonJsonLd();
     const websiteJsonLd = generateWebsiteJsonLd();
 
     return (
-        <main className="flex min-h-screen w-full flex-col items-center justify-start">
-            {/* Structured Data */}
+        <main id="main">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
@@ -95,236 +562,12 @@ export default async function Page() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
             />
-
-            <PageNotification>
-                <div className="flex flex-col items-start justify-center gap-3 w-full sm:w-96 px-4 py-6 sm:px-6 sm:py-8 md:p-8">
-                    <h2 className="text-lg sm:text-xl font-bold flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                        <span>📢 Looking for testers</span>
-                        <span className="text-xs sm:text-sm bg-red-500 text-white px-2 py-1 rounded-full">
-              Limited
-                        </span>
-                    </h2>
-                    <div className="text-sm leading-relaxed w-full">
-            Requirements to participate:
-
-                        <ul className="list-disc list-inside text-sm mt-2 space-y-1">
-                            <li>
-                Android phone with Android 11.0 or higher
-                            </li>
-                            <li>
-                WearOS smartwatch with WearOS 3.0 or higher
-                            </li>
-                        </ul>
-
-                        <details className="w-full mt-3">
-                            <summary className="cursor-pointer hover:text-purple-300 transition-colors">
-                More Info
-                            </summary>
-                            <p className="text-sm mt-2 leading-relaxed">
-                WatchLock is a WearOS app for personal security that allows you
-                to unlock your phone with your smartwatch. Never leave your
-                phone unlocked for bad people.<br />
-                            </p>
-                        </details>
-                    </div>
-
-                    <LinkButton
-                        href="https://groups.google.com/g/watchlock"
-                        target="_blank"
-                        className="w-full sm:w-auto"
-                    >
-                        <span className="text-sm sm:text-base">Join Now! 🚀💪</span>
-                    </LinkButton>
-                </div>
-            </PageNotification>
-
-            <div className="flex flex-col items-center justify-center w-full gap-12 sm:gap-16 pt-8 sm:pt-12 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8 overflow-x-hidden">
-                {/* Header */}
-                <Header />
-
-                <div className="flex flex-col items-center justify-center gap-16 sm:gap-20 w-full max-w-7xl">
-                    <About />
-
-                    <Technologies />
-
-                    <Projects />
-
-                </div>
-            </div>
+            <Nav />
+            <Hero />
+            <Field />
+            <WhatIDo />
+            <Work />
+            <Projects />
         </main>
-    );
-}
-
-function Header() {
-    const getStatusColor = (variant: string) => {
-        switch (variant) {
-        case "success":
-            return "bg-green-500";
-        case "info":
-            return "bg-blue-500";
-        case "error":
-            return "bg-red-500";
-        default:
-            return "bg-blue-500";
-        }
-    };
-
-    const statusColorClass = getStatusColor(STATUS.variant);
-    return (
-        <header className="flex flex-col justify-center items-center gap-6 sm:gap-8 w-full max-w-2xl mx-auto text-center animate-fade-in px-4">
-            <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-blue-400 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-500">
-                </div>
-                <div className="relative">
-                    <Image
-                        className="relative rounded-3xl w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-cover shadow-2xl border-2 border-white/20"
-                        src="/pictures/main.webp"
-                        alt="Emil Krebs - Full-Stack Software Engineer from Kiel, Germany"
-                        placeholder="blur"
-                        blurDataURL="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMzQgMTM0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHhtbG5zOnNlcmlmPSJodHRwOi8vd3d3LnNlcmlmLmNvbS8iIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MjsiPjxyZWN0IGlkPSJBcnRib2FyZDEiIHg9IjAiIHk9IjAiIHdpZHRoPSIxMzMuMzMzIiBoZWlnaHQ9IjEzMy4zMzMiIHN0eWxlPSJmaWxsOiM4ODNlY2U7Ii8+PGcgaWQ9IkFydGJvYXJkMTEiIHNlcmlmOmlkPSJBcnRib2FyZDEiPjxnIHRyYW5zZm9ybT0ibWF0cml4KDQuNTM3OTIsMCwwLDQuNTM3OTIsLTE2LjMwMDEsLTcuMTQ1MDcpIj48dGV4dCB4PSI1LjA4NnB4IiB5PSIyMi4wNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vbnRzZXJyYXQtQm9sZCcsICdNb250c2VycmF0Jztmb250LXdlaWdodDo3MDA7Zm9udC1zaXplOjE2LjUyN3B4O2ZpbGw6I2ZmZjsiPkU8L3RleHQ+PGcgdHJhbnNmb3JtPSJtYXRyaXgoMTYuNTI3NCwwLDAsMTYuNTI3NCwyOC42MDQ0LDIyLjA1MDEpIj48L2c+PHRleHQgeD0iMTYuMTc2cHgiIHk9IjIyLjA1cHgiIHN0eWxlPSJmb250LWZhbWlseTonTW9udHNlcnJhdC1FeHRyYUJvbGRJdGFsaWMnLCAnTW9udHNlcnJhdCc7Zm9udC13ZWlnaHQ6ODAwO2ZvbnQtc3R5bGU6aXRhbGljO2ZvbnQtc2l6ZToxNi41MjdweDtmaWxsOiNmZmY7Ij5LPC90ZXh0PjwvZz48L2c+PC9zdmc+"
-                        width={192}
-                        height={192}
-                        sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
-                        priority
-                    />
-
-                    {/* Status Indicator */}
-                    {!STATUS.hidden && (
-                        <div className="absolute -bottom-1 -right-1 sm:bottom-0 sm:right-0 group/status cursor-pointer">
-                            {/* Status Dot */}
-                            <div className="relative">
-                                <div
-                                    className={`w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${statusColorClass} rounded-full border-2 border-white shadow-lg animate-pulse`}
-                                >
-                                </div>
-                                <div
-                                    className={`absolute inset-0 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 ${statusColorClass} rounded-full animate-ping opacity-75`}
-                                >
-                                </div>
-                            </div>
-
-                            {/* Tooltip */}
-                            <div className="absolute bottom-full right-0 mb-3 opacity-0 group-hover/status:opacity-100 transition-all duration-300 transform translate-y-2 group-hover/status:translate-y-0 pointer-events-none z-10">
-                                <div className="bg-gray-900/95 backdrop-blur-sm text-white text-xs sm:text-sm px-3 py-2 rounded-lg shadow-xl border border-white/10 whitespace-nowrap min-w-max">
-                                    <div className="flex items-center gap-2">
-                                        <div
-                                            className={`w-2 h-2 ${statusColorClass} rounded-full animate-pulse`}
-                                        >
-                                        </div>
-                                        <span className="font-medium">{STATUS.message}</span>
-                                    </div>
-                                    <div className="text-gray-300 text-xs mt-1">
-                                        {STATUS.tooltip}
-                                    </div>
-                                </div>
-                                {/* Tooltip Arrow */}
-                                <div className="absolute top-full right-3 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900/95">
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            </div>
-
-            <div className="flex flex-col items-center justify-center gap-4 sm:gap-6 w-full">
-                <div className="space-y-1 sm:space-y-2">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold uppercase bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent leading-tight">
-            Emil Krebs
-                    </h1>
-                    <h2 className="text-base sm:text-lg md:text-xl font-light text-gray-300 max-w-md px-4">
-            Software Engineer at TypeFox GmbH • Kiel, Germany
-                    </h2>
-                </div>
-
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-2 w-full sm:w-auto">
-                    <LinkButton
-                        className="min-w-[120px] sm:min-w-[140px] w-full sm:w-auto"
-                        href={LINKEDIN_URL}
-                        target="_blank"
-                        icon="/icons/linkedin.svg"
-                        iconAlt="Open LinkedIn"
-                        iconSize={20}
-                    >
-                        <span className="text-sm sm:text-base">LinkedIn</span>
-                    </LinkButton>
-
-                    <LinkButton
-                        className="min-w-[120px] sm:min-w-[140px] w-full sm:w-auto"
-                        href={GITHUB_URL}
-                        target="_blank"
-                        icon="/icons/github.svg"
-                        iconAlt="Open GitHub"
-                        iconSize={20}
-                    >
-                        <span className="text-sm sm:text-base">GitHub</span>
-                    </LinkButton>
-                </div>
-
-                {/* Scroll indicator */}
-                <div className="flex flex-col items-center mt-12 animate-bounce">
-                    <div className="w-1 h-12 bg-gradient-to-b from-purple-400 to-transparent rounded-full">
-                    </div>
-                    <svg
-                        className="w-6 h-6 text-purple-300 mt-2"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-                        />
-                    </svg>
-                </div>
-            </div>
-        </header>
-    );
-}
-
-function About() {
-    return (
-        <section
-            className="w-full animate-slide-up"
-            id="about"
-            aria-labelledby="about-heading"
-        >
-            <h2
-                id="about-heading"
-                className="text-3xl md:text-4xl font-bold uppercase mb-8 text-center bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent"
-            >
-        About
-            </h2>
-
-            <article className="card-modern rounded-2xl p-8 md:p-12 shadow-2xl transition-all duration-300 hover:shadow-purple-500/20">
-                <div className="max-w-4xl mx-auto">
-                    <p className="text-lg md:text-xl leading-relaxed text-gray-100 mb-8 text-center">
-            Hi there! 👋
-                        <br className="mb-4" />
-            I&apos;m a passionate software engineer from Kiel, Germany, currently working at TypeFox GmbH.
-            I love learning new technologies, building innovative solutions, and contributing to the open-source community.
-                        <br className="mb-4" />
-                        <span className="text-gradient bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-semibold">
-              Let&apos;s connect and share ideas!
-                        </span>
-                    </p>
-
-                    <div className="flex justify-center">
-                        {/* Download Resume Button */}
-                        <LinkButton
-                            href="/resume.pdf"
-                            download
-                            icon="/icons/download.svg"
-                            iconAlt="Download Icon"
-                            iconSize={24}
-                            aria-label="Download Emil Krebs Resume PDF"
-                        >
-                            <span className="text-lg font-medium">Download Resume</span>
-                        </LinkButton>
-                    </div>
-                </div>
-            </article>
-        </section>
     );
 }

@@ -1,61 +1,63 @@
-import Link from "next/link";
-import { EMAIL_ADDRESS } from "../lib/constants";
-import LinkButton from "./link-button";
+import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
 
-export function ContactMeButton() {
+function TokenMark({ count = 12 }: { count?: number }) {
     return (
-        <LinkButton
-            className="group"
-            href={`mailto:${EMAIL_ADDRESS}`}
-            icon="/icons/email.svg"
-            iconAlt="Contact"
-            iconSize={18}
-        >
-            <span className="font-medium">Contact Me</span>
-        </LinkButton>
+        <div className="flex gap-2.5" aria-hidden="true">
+            {Array.from({ length: count }).map((_, i) => (
+                <span key={i} className="size-1.5 bg-signal" />
+            ))}
+        </div>
     );
 }
 
 export function Footer() {
     return (
-        <footer className="w-full mt-auto bg-gradient-to-t from-slate-900 to-slate-800 border-t border-purple-500/20">
-            <div className="flex justify-center w-full px-4 sm:px-6 lg:px-8 py-12">
-                <div className="flex flex-col sm:flex-row items-center justify-between w-full max-w-7xl gap-y-6">
-                    {/* Left side - Links */}
-                    <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-                        <Link
-                            className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:scale-105 relative group"
-                            href="/imprint"
-                        >
-                            <span className="relative z-10">Imprint</span>
-                            <div className="absolute inset-0 bg-purple-500/20 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 -z-10">
-                            </div>
-                        </Link>
-                        <Link
-                            className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:scale-105 relative group"
-                            href="/privacy"
-                        >
-                            <span className="relative z-10">Privacy Policy</span>
-                            <div className="absolute inset-0 bg-purple-500/20 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 -z-10">
-                            </div>
-                        </Link>
+        <footer className="w-full mt-auto">
+            <div className="mx-auto w-full max-w-280 px-6 py-16 border-t border-hairline">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+                    <div className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
+                        <p>Emil Krebs - Kiel, Germany</p>
                     </div>
-
-                    {/* Center - Contact Button */}
-                    <div className="flex-shrink-0">
-                        <ContactMeButton />
+                    <div className="flex flex-col gap-2 text-sm">
+                        <a
+                            href={GITHUB_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150 py-1"
+                        >
+                            GitHub <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
+                        <a
+                            href={LINKEDIN_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150 py-1"
+                        >
+                            LinkedIn <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
+                        <a
+                            href={`mailto:${EMAIL_ADDRESS}`}
+                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150 py-1"
+                        >
+                            Email <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
                     </div>
-
-                    {/* Right side - Copyright */}
-                    <div className="text-center sm:text-right">
-                        <p className="text-gray-400 text-sm">
-                            © 2025 Emil Krebs
-                        </p>
-                        <p className="text-gray-500 text-xs mt-1">
-                            Built with Next.js & Tailwind CSS
-                        </p>
+                    <div className="flex gap-6 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                        <a href="/healthstack" className="hover:text-ink transition-colors duration-150 py-1">
+                            Healthstack
+                        </a>
+                        <a href="/imprint" className="hover:text-ink transition-colors duration-150 py-1">
+                            Imprint
+                        </a>
+                        <a href="/privacy" className="hover:text-ink transition-colors duration-150 py-1">
+                            Privacy
+                        </a>
                     </div>
                 </div>
+                <p className="mt-12 text-xs text-ink-soft">
+                    © {new Date().getFullYear()} Emil Krebs. All rights reserved.
+                </p>
+                <div className="mt-10"><TokenMark /></div>
             </div>
         </footer>
     );

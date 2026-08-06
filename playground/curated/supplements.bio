@@ -1,0 +1,177 @@
+/**
+ * @std/supplements.bio — Curated supplement reference (public playground build)
+ *
+ * A hand-audited, supplements-only substance library. This is a deliberately
+ * limited stand-in for the full Healthstack std library: nothing here is a
+ * prescription medication, peptide, hormone or research chemical, and no
+ * dosing protocol in this file is a recommendation.
+ *
+ * NON-AUTHORITATIVE: verify all values yourself before acting on them — this
+ * is a reference starting point, not medical advice.
+ */
+
+// ===========================================================================
+// VITAMINS
+// ===========================================================================
+
+substance "Vitamin D3" {
+    half_life: 15 days
+    targets: ["Immune-Function", "Calcium-Absorption", "Bone-Mineral-Density"]
+    conflicts: ["Hypercalcemia"]
+    synergies: ["Vitamin K2 MK-7", "Magnesium Glycinate", "Calcium Citrate"]
+    max_dose: 4000 IU
+    notes: "Fat-soluble secosteroid. Test 25-OH-D before dosing; K2 co-administration directs calcium to bone rather than arteries at higher doses."
+}
+
+substance "Vitamin K2 MK-7" {
+    half_life: 72 hours
+    targets: ["Calcium-Metabolism", "Arterial-Health", "Bone-Mineral-Density"]
+    synergies: ["Vitamin D3", "Calcium Citrate"]
+    max_dose: 200 mcg
+    notes: "Menatetrenone (MK-7) form. Co-factor for proteins that move calcium out of soft tissue and into bone."
+}
+
+substance "Vitamin C Ascorbic Acid" {
+    targets: ["Antioxidant", "Collagen-Cofactor", "Iron-Absorption"]
+    synergies: ["Iron Bisglycinate"]
+    max_dose: 2000 mg
+    notes: "Water-soluble antioxidant and enzyme cofactor for collagen synthesis. Enhances non-heme iron absorption."
+}
+
+substance "Vitamin B6 P5P" {
+    half_life: 20 days
+    targets: ["Neurotransmitter-Synthesis", "Homocysteine", "Mood"]
+    synergies: ["Magnesium Glycinate", "Glycine"]
+    max_dose: 100 mg
+    notes: "Pyridoxal-5-phosphate, the active coenzyme form. Co-factor for neurotransmitter and amino-acid metabolism."
+}
+
+substance "Vitamin B12 Methylcobalamin" {
+    targets: ["Vitamin-B12", "Homocysteine", "Energy"]
+    synergies: ["Vitamin B6 P5P"]
+    max_dose: 1000 mcg
+    notes: "One of the two active coenzyme forms of B12; serves cytosolic methionine synthase."
+}
+
+// ===========================================================================
+// MINERALS
+// ===========================================================================
+
+substance "Magnesium Glycinate" {
+    half_life: 24 hours
+    targets: ["GABA", "Sleep-Quality", "Muscle-Relaxation"]
+    conflicts: ["High-Dose-Zinc"]
+    synergies: ["Vitamin D3", "L-Theanine", "Apigenin", "Vitamin B6 P5P"]
+    max_dose: 800 mg
+    notes: "Chelated form, gentle on the gut. Start at 200 mg if bowel-sensitive."
+}
+
+substance "Zinc Picolinate" {
+    half_life: 24 hours
+    targets: ["Immune-Function", "Testosterone", "Skin-Health"]
+    conflicts: ["Copper Bisglycinate"]
+    synergies: ["Magnesium Glycinate", "Vitamin B6 P5P"]
+    max_dose: 40 mg
+    notes: "Sustained high-dose zinc competes with copper absorption — track copper on long cycles."
+}
+
+substance "Copper Bisglycinate" {
+    targets: ["Copper-Homeostasis", "Immune-Function"]
+    conflicts: ["Zinc Picolinate"]
+    max_dose: 10 mg
+    notes: "Elemental copper; competes with zinc for absorption. Relevant when long-term zinc is supplemented."
+}
+
+substance "Iron Bisglycinate" {
+    targets: ["Ferritin", "Hemoglobin", "Energy"]
+    conflicts: ["Calcium Citrate", "Caffeine"]
+    synergies: ["Vitamin C Ascorbic Acid"]
+    max_dose: 50 mg
+    notes: "Chelated iron, well tolerated. Alternate-day dosing exploits the hepcidin response curve; separate from calcium, coffee and tea."
+}
+
+substance "Calcium Citrate" {
+    targets: ["Calcium", "Bone-Mineral-Density"]
+    conflicts: ["Iron Bisglycinate"]
+    synergies: ["Vitamin D3", "Vitamin K2 MK-7"]
+    max_dose: 2500 mg
+    notes: "Absorbed independent of stomach acid. Inhibits non-heme iron absorption — space 2+ hours apart."
+}
+
+// ===========================================================================
+// AMINO ACIDS & NOOTROPICS
+// ===========================================================================
+
+substance "Glycine" {
+    targets: ["Sleep-Quality", "Collagen", "Neurotransmitter-Synthesis"]
+    synergies: ["Magnesium Glycinate"]
+    max_dose: 5 g
+    notes: "Simple amino acid; collagen substrate and inhibitory neurotransmitter support."
+}
+
+substance "L-Theanine" {
+    half_life: 2 hours
+    targets: ["Alpha-Waves", "Relaxation", "Focus"]
+    synergies: ["Caffeine", "Magnesium Glycinate", "Apigenin"]
+    max_dose: 400 mg
+    notes: "Tea-derived amino acid. Smooths the caffeine curve at a 2:1 caffeine:theanine ratio."
+}
+
+substance "Creatine Monohydrate" {
+    targets: ["ATP-Resynthesis", "Muscle-Strength", "Cognition"]
+    max_dose: 10 g
+    notes: "Most studied sports supplement. 5 g/day steady state; slight water retention in the first week is normal."
+}
+
+substance "Caffeine" {
+    half_life: 5 hours
+    targets: ["Alertness", "Focus", "Adenosine-Antagonism"]
+    conflicts: ["Melatonin"]
+    synergies: ["L-Theanine"]
+    max_dose: 400 mg
+    notes: "Adenosine receptor antagonist. Half-life varies with genetics; evening intake interferes with sleep."
+}
+
+substance "Apigenin" {
+    half_life: 12 hours
+    targets: ["GABA-A-Receptor", "Sleep-Latency"]
+    synergies: ["L-Theanine", "Magnesium Glycinate"]
+    max_dose: 100 mg
+    notes: "Chamomile-derived flavone, mild GABA-A modulator."
+}
+
+substance "Ashwagandha KSM-66" {
+    half_life: 8 hours
+    targets: ["Cortisol", "Stress-HPA"]
+    synergies: ["Magnesium Glycinate"]
+    max_dose: 600 mg
+    notes: "Standardised withanolide extract. Cycle 8 weeks on / 2 weeks off."
+}
+
+substance "Melatonin" {
+    half_life: 30 minutes
+    targets: ["Circadian-Rhythm", "Sleep-Onset"]
+    conflicts: ["Caffeine"]
+    max_dose: 5 mg
+    notes: "Lowest effective dose wins: 0.3-0.5 mg is often as effective as 5 mg without next-morning grogginess."
+}
+
+// ===========================================================================
+// FATTY ACIDS
+// ===========================================================================
+
+substance "Omega-3 EPA DHA" {
+    half_life: 2 days
+    targets: ["Triglycerides", "Inflammation", "Brain-DHA"]
+    synergies: ["Vitamin D3"]
+    max_dose: 3 g
+    notes: "Combined EPA+DHA dose. Check the Omega-3 Index for personalised dosing (target 8-12%)."
+}
+
+// ===========================================================================
+// THE NAMESAKE (gimmick entry — not part of the curated reference)
+// ===========================================================================
+
+substance "Pramiracetam" {
+    notes: "The racetam the app is named after. Not curated, not a supplement, not medical advice — this entry is a wink. No dose, no claims."
+}

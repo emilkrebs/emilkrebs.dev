@@ -1,175 +1,132 @@
-@tailwind utilities;
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
-:root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 139, 69, 19;
-  --background-end-rgb: 15, 23, 42;
-  --card-bg: rgba(147, 51, 234, 0.1);
-  --card-border: rgba(147, 51, 234, 0.3);
-  --accent-purple: 147, 51, 234;
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+@theme {
+    --font-sans: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+    --font-serif: var(--font-instrument-serif), Georgia, serif;
+
+    --color-paper: #f7f5f0;
+    --color-paper-deep: #ece8df;
+    --color-ink: #141310;
+    --color-ink-soft: #5f5b55;
+    --color-signal: #e8450c;
+    /* green */
+    --color-signal-accent: #22c55e;
+    --color-hairline: rgba(20, 19, 16, 0.14);
+}
+
+html {
+    scroll-behavior: smooth;
+    color-scheme: light dark;
+}
+
+/* sections anchor below the sticky nav */
+section[id] {
+    scroll-margin-top: 4.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-paper: #141310;
+        --color-paper-deep: #1c1915;
+        --color-ink: #f7f5f0;
+        --color-ink-soft: #9b968c;
+        --color-hairline: rgba(247, 245, 240, 0.14);
+    }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background:
-    radial-gradient(
-      ellipse at top,
-      rgba(147, 51, 234, 0.3) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-    ellipse at bottom,
-    rgba(59, 130, 246, 0.3) 0%,
-    transparent 50%
-  ),
-    linear-gradient(
-    135deg,
-    rgb(15, 23, 42) 0%,
-    rgb(30, 41, 59) 50%,
-    rgb(15, 23, 42) 100%
-  );
-  background-attachment: fixed;
-  font-family: "Montserrat", sans-serif;
-  min-height: 100vh;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-  }
-
-  .card-modern {
-    background: linear-gradient(
-      135deg,
-      rgba(147, 51, 234, 0.1) 0%,
-      rgba(59, 130, 246, 0.1) 100%
-    );
-    border: 1px solid rgba(147, 51, 234, 0.2);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
-  }
-}
-
-.filter-white {
-  filter: invert(1);
-}
-
-/* Add this to your global CSS file */
-@keyframes shine {
-  0% {
-    background-position: 500%;
-  }
-
-  100% {
-    background-position: -500%;
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.shine-effect {
-  position: relative;
-  color: transparent;
-  background: linear-gradient(
-    90deg,
-    theme("colors.yellow.500") 0%,
-    theme("colors.orange.500") 50%,
-    theme("colors.yellow.500") 100%
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  animation: shine 14s linear infinite;
-  background-size: 200% 100%;
-}
-
-/* Smooth scrolling and modern behaviors */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    135deg,
-    rgba(147, 51, 234, 0.8),
-    rgba(59, 130, 246, 0.8)
-  );
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(147, 51, 234, 1),
-    rgba(59, 130, 246, 1)
-  );
-}
-
-/* Focus states for accessibility */
-*:focus {
-  outline: 2px solid rgba(147, 51, 234, 0.5);
-  outline-offset: 2px;
-}
-
-/* Selection styling */
 ::selection {
-  background: rgba(147, 51, 234, 0.3);
-  color: white;
+    background-color: var(--color-signal);
+    color: var(--color-paper);
+}
+
+*:focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+.duotone-frame {
+    background-color: var(--color-paper-deep);
+}
+
+.duotone-frame img {
+    filter: grayscale(100%) contrast(1.12);
+    mix-blend-mode: multiply;
+    opacity: 0.95;
+    transition: opacity 300ms, filter 600ms ease;
+}
+
+.duotone-frame .duotone-tint {
+    background-color: var(--color-signal);
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+    pointer-events: none;
+    transition: opacity 600ms ease;
+}
+
+.duotone-frame .duotone-lift {
+    background-color: var(--color-paper);
+    mix-blend-mode: screen;
+    opacity: 0.18;
+    pointer-events: none;
+    transition: opacity 600ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+    .duotone-frame img {
+        mix-blend-mode: screen;
+    }
+
+    .duotone-frame .duotone-tint {
+        mix-blend-mode: screen;
+        opacity: 0.22;
+    }
+
+    .duotone-frame .duotone-lift {
+        mix-blend-mode: multiply;
+        opacity: 0.28;
+    }
+}
+
+.duotone-frame:hover img {
+    filter: none;
+}
+
+.duotone-frame:hover .duotone-tint,
+.duotone-frame:hover .duotone-lift {
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .duotone-frame img,
+    .duotone-frame .duotone-tint,
+    .duotone-frame .duotone-lift {
+        transition: none;
+    }
+}
+
+/* TypeFox logo asset is a white wordmark — invert to ink on the light card */
+.typefox-logo {
+    width: 200px;
+    height: auto;
+    filter: brightness(0);
+}
+
+@media (prefers-color-scheme: dark) {
+    .typefox-logo {
+        filter: none;
+    }
 }

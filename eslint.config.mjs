@@ -1,36 +1,35 @@
 import { defineConfig, globalIgnores } from "eslint/config";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all,
-});
+import pluginNext from "@next/eslint-plugin-next";
+import pluginReactHooks from "eslint-plugin-react-hooks";
+import tseslint from "typescript-eslint";
+import prettier from "eslint-config-prettier/flat";
 
 export default defineConfig([
-    globalIgnores(["node_modules", ".next", "out", "public"]),
+    globalIgnores(["node_modules", ".next", "out", "public", "playground", ".github", ".agents"]),
+    ...tseslint.configs.recommended,
     {
-        extends: compat.extends("next/core-web-vitals", "prettier"),
-
+        plugins: {
+            "react-hooks": pluginReactHooks,
+            "@next/next": pluginNext,
+        },
+        rules: {
+            ...pluginReactHooks.configs.recommended.rules,
+            ...pluginNext.configs.recommended.rules,
+            ...pluginNext.configs["core-web-vitals"].rules,
+        },
+    },
+    prettier,
+    {
         settings: {
-            react: {
-                version: "detect",
-            },
-
             next: {
                 rootDir: "./src",
             },
         },
-
         rules: {
             indent: ["error", 4],
             "linebreak-style": "off",
             quotes: ["error", "double"],
             semi: ["error", "always"],
         },
-    }]);
+    },
+]);

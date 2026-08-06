@@ -6,7 +6,7 @@ const nextConfig = {
     assetPrefix: "/",
     allowedDevOrigins: ["localhost:3000"],
     images: {
-        domains: ["github.com"],
+        remotePatterns: [{ protocol: "https", hostname: "github.com" }],
         unoptimized: true,
     },
     trailingSlash: true,

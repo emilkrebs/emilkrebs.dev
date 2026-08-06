@@ -1,0 +1,60 @@
+// ---------------------------------------------------------------------------
+// builtin/interactions.bio — curated supplement interaction catalog
+//
+// Named `interaction` declarations typed by builtin/core.bio. The validator
+// matches pairs case-insensitively in either order and raises a diagnostic
+// when both names appear in the same stack.
+//
+// This is the public-playground catalog: supplement↔supplement pairs only.
+// The full clinical catalog (prescription drug classes, peptides, hormones)
+// lives in the Healthstack IDE repo and is not shipped here.
+//
+// SEVERITY drives the diagnostic: `critical` is an error, `high` and
+// `moderate` are warnings.
+//
+// NON-AUTHORITATIVE: verify all values yourself before acting on them — this
+// is a starting point, not medical advice.
+// ---------------------------------------------------------------------------
+
+// =========================================================================
+// MINERAL COMPETITION
+// =========================================================================
+
+interaction "Zinc Picolinate + Copper Bisglycinate" {
+    a: "Zinc Picolinate"
+    b: "Copper Bisglycinate"
+    severity: moderate
+    message: "MODERATE: sustained high-dose zinc competes with copper absorption and can deplete copper over months. Space doses apart and monitor copper on long cycles."
+}
+
+interaction "Magnesium Glycinate + Zinc Picolinate" {
+    a: "Magnesium Glycinate"
+    b: "Zinc Picolinate"
+    severity: moderate
+    message: "MODERATE: large doses of magnesium and zinc compete for absorption at the same transporter. Space them apart."
+}
+
+interaction "Calcium Citrate + Iron Bisglycinate" {
+    a: "Calcium Citrate"
+    b: "Iron Bisglycinate"
+    severity: moderate
+    message: "MODERATE: calcium inhibits non-heme iron absorption. Space 2+ hours apart when actively repleting iron."
+}
+
+// =========================================================================
+// ABSORPTION & TIMING
+// =========================================================================
+
+interaction "Iron Bisglycinate + Caffeine" {
+    a: "Iron Bisglycinate"
+    b: "Caffeine"
+    severity: moderate
+    message: "MODERATE: coffee and tea polyphenols reduce iron absorption. Space 2+ hours apart."
+}
+
+interaction "Caffeine + Melatonin" {
+    a: "Caffeine"
+    b: "Melatonin"
+    severity: moderate
+    message: "MODERATE: evening caffeine interferes with sleep onset and the circadian timing signal. Avoid caffeine late in the day."
+}
