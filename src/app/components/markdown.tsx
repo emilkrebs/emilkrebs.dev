@@ -10,25 +10,25 @@ export default function RenderMarkdown(props: MarkdownProps) {
         <div className="max-w-none">
             <Markdown
                 components={{
-                    h1: ({ node, ...props }) => (
+                    h1: ({ ...props }) => (
                         <h1
                             className="text-3xl font-bold mb-8 mt-6 tracking-tight"
                             {...props}
                         />
                     ),
-                    h2: ({ node, ...props }) => (
+                    h2: ({ ...props }) => (
                         <h2
                             className="text-2xl font-semibold mb-3 mt-10 tracking-tight"
                             {...props}
                         />
                     ),
-                    h3: ({ node, ...props }) => (
+                    h3: ({ ...props }) => (
                         <h3
                             className="text-xl font-semibold mb-3 mt-8 tracking-tight"
                             {...props}
                         />
                     ),
-                    a: ({ node, ...props }) => {
+                    a: ({ ...props }) => {
                         const href = props.href || "";
                         const external = href.startsWith("http");
                         return (
@@ -42,37 +42,37 @@ export default function RenderMarkdown(props: MarkdownProps) {
                             />
                         );
                     },
-                    p: ({ node, ...props }) => (
+                    p: ({ ...props }) => (
                         <p className="mb-4 leading-relaxed" {...props} />
                     ),
-                    ul: ({ node, ...props }) => (
+                    ul: ({ ...props }) => (
                         <ul
                             className="pl-6 mb-4 list-disc space-y-1"
                             {...props}
                         />
                     ),
-                    ol: ({ node, ...props }) => (
+                    ol: ({ ...props }) => (
                         <ol
                             className="pl-6 mb-4 list-decimal space-y-1"
                             {...props}
                         />
                     ),
-                    li: ({ node, ...props }) => (
+                    li: ({ ...props }) => (
                         <li className="leading-relaxed" {...props} />
                     ),
-                    hr: ({ node, ...props }) => (
+                    hr: ({ ...props }) => (
                         <hr {...props} className="my-6 border-hairline" />
                     ),
-                    sup: ({ node, ...props }) => (
+                    sup: ({ ...props }) => (
                         <sup {...props} className="font-bold px-1 text-signal" />
                     ),
-                    strong: ({ node, ...props }) => (
+                    strong: ({ ...props }) => (
                         <strong {...props} className="font-bold" />
                     ),
-                    em: ({ node, ...props }) => (
+                    em: ({ ...props }) => (
                         <em {...props} className="font-serif italic" />
                     ),
-                    code: ({ node, ...props }) => (
+                    code: ({ ...props }) => (
                         <code
                             {...props}
                             className="bg-paper-deep font-mono text-sm px-1.5 py-0.5"
