@@ -9,8 +9,15 @@ import shellTemplate from './shell.html?raw';
 
 import * as monaco from 'monaco-editor';
 import EditorWorker from './editor-worker.js?worker';
-import LspWorker from './lsp-worker.ts?worker';
-import { LanguageClientWrapper, type LanguageClientConfig } from 'monaco-languageclient/lcwrapper';
+import type { Diagnostic } from 'vscode-languageserver';
+import type { LangiumDocument } from 'langium';
+
+
+
+
+
+
+import { createLanguageServer, type LanguageServer } from './dsl';
 import { registerBiohackingTokens } from './tokenizer';
 import { SAMPLES, type Sample } from './samples';
 
@@ -59,6 +66,12 @@ monaco.editor.defineTheme('specsheet', {
   },
 });
 
+function el(html: string): HTMLElement {
+  const t = document.createElement('template');
+  t.innerHTML = html.trim();
+  return t.content.firstElementChild as HTMLElement;
+}
+
 function resolveInitialSample(): { sample: Sample; index: number } {
   const requested = new URLSearchParams(window.location.search).get('sample');
   if (requested) {
@@ -85,13 +98,57 @@ function buildShell(activeIndex: number, fileName: string): void {
     .replace('{{FILE_NAME}}', fileName);
 }
 
+function severityClass(severity: number): string {
+  if (severity <= 1) return 'error';
+  if (severity === 2) return 'warning';
+  return 'info';
+}
+
+function renderDiagnostics(diags: Diagnostic[], missingImports: string[]): void {
+  const counts = document.getElementById('diag-counts')!;
+  const list = document.getElementById('diag-list')!;
+
+  const errors = diags.filter((d) => d.severity === 1).length;
+  const warnings = diags.filter((d) => d.severity === 2).length;
+  const rest = diags.length - errors - warnings;
+  const countsText = `${errors} errors · ${warnings} warnings · ${rest} notes`;
+  if (counts.textContent !== countsText) counts.textContent = countsText;
+
+  const rows: string[] = [];
+  for (const d of diags) {
+    const sev = severityClass(d.severity ?? 3);
+    const label = sev === 'error' ? 'Error.' : sev === 'warning' ? 'Warning.' : 'Note.';
+    rows.push(`
+      <div class="diag-row">
+        <span class="sev ${sev}"><span class="sr-only">${label}</span></span>
+        <span class="where mono">${d.range.start.line + 1}:${d.range.start.character + 1}</span>
+        <span class="msg">${escapeHtml(String(d.message))}</span>
+      </div>
+    `);
+  }
+  for (const imp of missingImports) {
+    rows.push(`
+      <div class="diag-row">
+        <span class="sev warning"><span class="sr-only">Warning.</span></span>
+        <span class="where mono">import</span>
+        <span class="msg">Unresolved import · ${escapeHtml(imp)} (relative imports resolve against the browser bundle; use @std/…)</span>
+      </div>
+    `);
+  }
+  if (rows.length === 0) {
+    list.innerHTML = `<div class="empty mono">No diagnostics · all checks passed</div>`;
+  } else {
+    list.innerHTML = rows.join('');
+  }
+}
+
 function renderCrash(message: string): void {
   const list = document.getElementById('diag-list')!;
   list.innerHTML = `
     <div class="diag-row">
       <span class="sev error"><span class="sr-only">Error.</span></span>
       <span class="where mono">server</span>
-      <span class="msg">Language server failed · ${escapeHtml(message)}</span>
+      <span class="msg">Analysis failed · ${escapeHtml(message)}</span>
     </div>`;
 }
 
@@ -99,38 +156,15 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-function severityClass(severity: monaco.MarkerSeverity): string {
-  if (severity === monaco.MarkerSeverity.Error) return 'error';
-  if (severity === monaco.MarkerSeverity.Warning) return 'warning';
-  return 'info';
+function toMonacoSeverity(severity: number): monaco.MarkerSeverity {
+  if (severity <= 1) return monaco.MarkerSeverity.Error;
+  if (severity === 2) return monaco.MarkerSeverity.Warning;
+  if (severity === 3) return monaco.MarkerSeverity.Info;
+  return monaco.MarkerSeverity.Hint;
 }
 
-function renderMarkers(model: monaco.editor.ITextModel): void {
-  const counts = document.getElementById('diag-counts')!;
-  const list = document.getElementById('diag-list')!;
-  const markers = monaco.editor.getModelMarkers({ resource: model.uri });
-
-  const errors = markers.filter((m) => m.severity === monaco.MarkerSeverity.Error).length;
-  const warnings = markers.filter((m) => m.severity === monaco.MarkerSeverity.Warning).length;
-  const rest = markers.length - errors - warnings;
-  counts.textContent = `${errors} errors · ${warnings} warnings · ${rest} notes`;
-
-  if (markers.length === 0) {
-    list.innerHTML = '<div class="empty mono">No diagnostics · all checks passed</div>';
-    return;
-  }
-
-  list.innerHTML = markers.map((m) => {
-    const sev = severityClass(m.severity);
-    const label = sev === 'error' ? 'Error.' : sev === 'warning' ? 'Warning.' : 'Note.';
-    return `
-      <div class="diag-row">
-        <span class="sev ${sev}"><span class="sr-only">${label}</span></span>
-        <span class="where mono">${m.startLineNumber}:${m.startColumn}</span>
-        <span class="msg">${escapeHtml(m.message)}</span>
-      </div>
-    `;
-  }).join('');
+function lspKindToMonaco(kind: number | undefined): monaco.languages.CompletionItemKind {
+  return (kind ?? 0) as monaco.languages.CompletionItemKind;
 }
 
 async function main(): Promise<void> {
@@ -153,15 +187,15 @@ async function main(): Promise<void> {
       { open: '(', close: ')' },
     ],
   });
-
   try {
     await registerBiohackingTokens();
   } catch (err) {
+    console.error('tokenizer failed:', err);
     const msg = err instanceof Error ? err.message : 'unknown error';
     document.getElementById('status')!.textContent = 'Language engine failed to load';
-    renderCrash(msg);
+    renderCrash(`could not start the language engine · ${msg}`);
     const host = document.getElementById('editor-host')!;
-    host.innerHTML = '<div class="empty mono">Editor unavailable · reload the page to retry</div>';
+    host.innerHTML = `<div class="empty mono">Editor unavailable · reload the page to retry</div>`;
     return;
   }
 
@@ -182,37 +216,163 @@ async function main(): Promise<void> {
     padding: { top: 14, bottom: 14 },
   });
 
+  const lang: LanguageServer = createLanguageServer();
+  let latest: LangiumDocument | null = null;
+  let seq = 0;
   const status = document.getElementById('status')!;
-  const lspWorker = new LspWorker();
-  const languageClientConfig: LanguageClientConfig = {
-    languageId: LANGUAGE_ID,
-    connection: {
-      options: {
-        $type: 'WorkerDirect',
-        worker: lspWorker,
-      },
-    },
-    clientOptions: {
-      documentSelector: [LANGUAGE_ID],
-    },
-  };
-  const client = new LanguageClientWrapper(languageClientConfig);
 
-  try {
-    await client.start();
-    status.textContent = 'Language server live · running in a worker';
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    status.textContent = 'Language server failed';
-    renderCrash(msg);
+  function setStatus(message: string): void {
+    status.textContent = message;
   }
 
-  monaco.editor.onDidChangeMarkers((uris) => {
-    if (uris.some((uri) => uri.toString() === model.uri.toString())) {
-      renderMarkers(model);
+  async function analyze(): Promise<void> {
+    const mySeq = ++seq;
+    const text = model.getValue();
+    setStatus('Analyzing…');
+    try {
+      const result = await lang.parse(text);
+      if (mySeq !== seq) return;
+      latest = result.entryDocument;
+      const diags = result.entryDocument.diagnostics ?? [];
+      monaco.editor.setModelMarkers(
+        model,
+        LANGUAGE_ID,
+        diags.map((d) => ({
+          severity: toMonacoSeverity(d.severity ?? 3),
+          message: String(d.message),
+          startLineNumber: d.range.start.line + 1,
+          startColumn: d.range.start.character + 1,
+          endLineNumber: d.range.end.line + 1,
+          endColumn: d.range.end.character + 1,
+        })),
+      );
+      renderDiagnostics(diags, result.missingImports);
+      setStatus(result.missingImports.length > 0
+        ? `Analyzed · ${result.missingImports.length} unresolved import${result.missingImports.length === 1 ? '' : 's'}`
+        : 'Language server live · everything runs in this tab');
+    } catch (err) {
+      if (mySeq !== seq) return;
+      console.error('analyze failed:', err);
+      const msg = err instanceof Error ? err.message : String(err);
+      monaco.editor.setModelMarkers(model, LANGUAGE_ID, []);
+      renderCrash(msg);
+      setStatus('Analysis failed');
     }
+  }
+
+  let timer: number | undefined;
+  model.onDidChangeContent(() => {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(analyze, 350);
   });
-  renderMarkers(model);
+
+  monaco.languages.registerCompletionItemProvider(LANGUAGE_ID, {
+    triggerCharacters: ['.'],
+    provideCompletionItems: async (m, position) => {
+      if (!latest) return { suggestions: [] };
+      const items = await lang.completion(latest, position.lineNumber - 1, position.column - 1);
+      const suggestions: monaco.languages.CompletionItem[] = ((items ?? []) as unknown[]).map((it) => {
+        const item = it as {
+          label: string;
+          kind?: number;
+          detail?: string;
+          documentation?: { value?: string } | string;
+          insertText?: string;
+          filterText?: string;
+        };
+        const doc = item.documentation;
+        const documentation = typeof doc === 'string' ? doc : doc?.value ?? '';
+        return {
+          label: item.label,
+          kind: lspKindToMonaco(item.kind),
+          detail: item.detail,
+          documentation: documentation ? { value: documentation } : undefined,
+          insertText: item.insertText ?? item.label,
+          filterText: item.filterText ?? item.label,
+          range: { startLineNumber: position.lineNumber, startColumn: position.column, endLineNumber: position.lineNumber, endColumn: position.column },
+        };
+      });
+      return { suggestions };
+    },
+  });
+
+  monaco.languages.registerHoverProvider(LANGUAGE_ID, {
+    provideHover: async (m, position) => {
+      if (!latest) return null;
+      const hover = await lang.hover(latest, position.lineNumber - 1, position.column - 1);
+      if (!hover) return null;
+      const contents = (hover as { contents: unknown }).contents;
+      const list = Array.isArray(contents) ? contents : [contents];
+      const mapped = list.map((c) => {
+        if (typeof c === 'string') return { value: c };
+        const v = (c as { value?: string }).value;
+        return { value: v ?? '' };
+      });
+      return {
+        contents: mapped.map((c) => ({ value: String(c.value) })),
+        range: new monaco.Range(position.lineNumber, position.column, position.lineNumber, position.column),
+      };
+    },
+  });
+
+  monaco.languages.registerDefinitionProvider(LANGUAGE_ID, {
+    provideDefinition: async (m, position) => {
+      const isEntry = m.uri.toString() === EDITOR_URI.toString();
+      const doc = isEntry ? latest : lang.document(m.uri.toString());
+      if (!doc) return [];
+      const links = await lang.definition(doc, position.lineNumber - 1, position.column - 1);
+      if (!links || links.length === 0) return [];
+      const locations: monaco.languages.LocationLink[] = [];
+      for (const link of links) {
+        const uri = monaco.Uri.parse(link.targetUri);
+        if (uri.toString() !== EDITOR_URI.toString() && !monaco.editor.getModel(uri)) {
+          const source = lang.source(link.targetUri);
+          if (source === undefined) continue;
+          monaco.editor.createModel(source, LANGUAGE_ID, uri);
+        }
+        locations.push({
+          uri,
+          range: new monaco.Range(
+            link.targetRange.start.line + 1,
+            link.targetRange.start.character + 1,
+            link.targetRange.end.line + 1,
+            link.targetRange.end.character + 1,
+          ),
+          originSelectionRange: new monaco.Range(
+            position.lineNumber,
+            position.column,
+            position.lineNumber,
+            position.column,
+          ),
+        });
+      }
+      return locations;
+    },
+  });
+
+  monaco.languages.registerLinkProvider(LANGUAGE_ID, {
+    provideLinks: async (m, token) => {
+      if (m.uri.toString() !== EDITOR_URI.toString() || !latest) return { links: [] };
+      const links = await lang.links(latest);
+      if (token.isCancellationRequested) return { links: [] };
+      return {
+        links: links.map((l) => ({
+          range: new monaco.Range(
+            l.sourceRange.start.line + 1,
+            l.sourceRange.start.character + 1,
+            l.sourceRange.end.line + 1,
+            l.sourceRange.end.character + 1,
+          ),
+          url: l.crossFile
+            ? 'command:editor.action.peekDefinition'
+            : 'command:editor.action.revealDefinition',
+          tooltip: l.crossFile
+            ? 'cmd/ctrl+click to peek the definition'
+            : 'cmd/ctrl+click to go to the definition',
+        })),
+      };
+    },
+  });
 
   const sampleButtons = document.querySelectorAll<HTMLButtonElement>('[data-sample]');
   let pristine = initial.sample.content;
@@ -272,15 +432,12 @@ async function main(): Promise<void> {
       }
     });
   });
-
   confirmKeep.addEventListener('click', hideConfirm);
   confirmDiscard.addEventListener('click', () => {
     if (pendingIdx !== null) switchSample(pendingIdx);
   });
 
-  window.addEventListener('beforeunload', () => {
-    void client.dispose(true);
-  });
+  void analyze();
 }
 
 void main();
