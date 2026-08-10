@@ -1,4 +1,4 @@
-# My Story into Software Engineering
+# My Story
 
 <Lead>A personal narrative on code, developer tooling, and building software.</Lead>
 
@@ -6,16 +6,10 @@ I always wanted to invent something new, solve problems and build cool stuff.
 
 <TokenMark />
 
-<Facts>
-    <Fact value="10" label="Age at first computer" />
-    <Fact value="15" label="Age at first internship" />
-    <Fact value="1.5 yrs" label="Minijob at TypeFox" />
-    <Fact value="2" label="Subjects, one bachelor" />
-</Facts>
-
 <Contents
     items={[
         { href: "#first-machine", period: "Age 10 - The beginning", title: "First machine, first lines of code" },
+        { href: "#java", period: "Early teens", title: "Java, Minecraft plugins, and Discord bots" },
         { href: "#first-clients", period: "Teenage years", title: "First clients, first courses, first stage" },
         { href: "#internship", period: "Age 15", title: "The internship at TypeFox" },
         { href: "#minijob", period: "1.5 years at TypeFox", title: "Minijob: frontend architecture and language engineering" },
@@ -42,6 +36,50 @@ I always wanted to invent something new, solve problems and build cool stuff.
         <TagRow label="Tools" items="Scratch, Python, Unity, C#, HTML, CSS" />
     </Era>
 
+    <Era id="java" period="Early teens" title="Java, Minecraft plugins, and Discord bots">
+        Between first scripts and first clients came the era of building *for no reason at all*.
+
+        Minecraft server plugins taught me Java — the hard way: config files, stack traces, decompiled jars,
+        and a server restarting a hundred times a day. My friends were my first users, and their complaints
+        were my first bug reports.
+
+        Around the same time came Discord bots — some useful, most of them pointless, all of them fun. The
+        point was never the bot itself, but that I could build something in the evening and my friends would
+        use it the same night.
+
+        <TagRow label="Tools" items="Java, Minecraft plugins, Discord bots" />
+
+        Some of those early experiments are still on GitHub — and the icons on these cards are my
+        own designs, drawn by hand in an era before AI design tools.
+
+        <ShowcaseGrid compact>
+            <Showcase
+                name="EnderchestCommand"
+                description="Simple Spigot plugin to open your enderchest — or someone else's — with /ec."
+                href="https://github.com/emilkrebs/EnderchestCommand"
+                tags="Java, Spigot"
+                compact
+                image="/pictures/enderchestcommand.webp"
+            />
+            <Showcase
+                name="Sound-Bot"
+                description="A Discord bot that plays sounds or music in a voice channel — indefinitely."
+                href="https://github.com/emilkrebs/Sound-Bot"
+                tags="TypeScript, Discord"
+                compact
+                image="/pictures/sound-bot-icon.svg"
+            />
+            <Showcase
+                name="Nitrado-Bot"
+                description="A Discord bot to control your Nitrado gameserver."
+                href="https://github.com/emilkrebs/Nitrado-Bot"
+                tags="TypeScript, Discord"
+                compact
+                image="/pictures/nitrado-bot-icon.webp"
+            />
+        </ShowcaseGrid>
+    </Era>
+
     <Era id="first-clients" period="Teenage years" title="First clients, first courses, first stage">
         Step by step I began to actually understand how things work, and I had my first couple of
         professional paid consulting tasks, helping friends and acquaintances with simple frontend
@@ -53,17 +91,6 @@ I always wanted to invent something new, solve problems and build cool stuff.
         and holding my *first pitches and speeches*.
 
         <TagRow label="OpenCampus courses" items="Game Development, JavaScript, Marketing, Startups" />
-
-        <ShowcaseGrid>
-            <Showcase
-                name="VailNote"
-                description="Encrypted note sharing with zero-knowledge encryption and self-destructing notes."
-                href="https://vailnote.com/"
-                tags="TypeScript, Fresh, Deno, MongoDB"
-                image="/pictures/vailnote.webp"
-                caption="Live - vailnote.com"
-            />
-        </ShowcaseGrid>
     </Era>
 
     <Era id="internship" period="Age 15" title="The internship at TypeFox">
@@ -75,8 +102,10 @@ I always wanted to invent something new, solve problems and build cool stuff.
             <Showcase
                 name="SimpleUI-DSL"
                 description="A domain-specific language for describing user interfaces, built with a former colleague during the internship."
-                tags="DSL, Language engineering"
-                placeholder="SimpleUI-DSL"
+                href="https://github.com/TypeFox/langium-ui-framework"
+                tags="Langium, TypeScript, DSL"
+                image="/pictures/simpleui-icon.webp"
+                caption="Live - github.com/TypeFox/langium-ui-framework"
             />
         </ShowcaseGrid>
     </Era>
@@ -84,7 +113,7 @@ I always wanted to invent something new, solve problems and build cool stuff.
     <Era id="minijob" period="1.5 years at TypeFox" title="Minijob: frontend architecture and language engineering">
         Soon after, I applied for and landed a "Minijob" role at TypeFox, which I worked for 1.5
         years, doing mostly frontend architecture and *language engineering*. Alongside the job I
-        kept building personal projects, two of which are still online today.
+        kept building personal projects, three of which are still online today.
 
         <ShowcaseGrid>
             <Showcase
@@ -104,6 +133,15 @@ I always wanted to invent something new, solve problems and build cool stuff.
                 placeholder="/pictures/langium-placeholder.png"
                 caption="Live - langium.org/showcase/minilogo"
             />
+            <Showcase
+                name="Generator-Discord"
+                description="Create a basic Discord bot, supporting many programming languages."
+                href="https://github.com/emilkrebs/Generator-Discord"
+                tags="TypeScript, Discord"
+                image="/pictures/generator-discord-icon.svg"
+                caption="Live - github.com/emilkrebs/Generator-Discord"
+                compact
+            />
         </ShowcaseGrid>
     </Era>
 
@@ -111,6 +149,9 @@ I always wanted to invent something new, solve problems and build cool stuff.
         School came to an end along with the final exams, and I mostly did a little freelancing
         here and there, using the expertise I had gained over the last couple of years. Two
         projects from that time are still running today.
+
+        VailNote was born in the same transition — development began in my final school year,
+        it went public about a year later, and it is still in active development today.
 
         Then came a short break from all professionalism, spending most of my time with *friends
         and nature*.
@@ -125,10 +166,20 @@ I always wanted to invent something new, solve problems and build cool stuff.
                 caption="Live - bipoclimatejusticenetwork.org"
             />
             <Showcase
+                name="VailNote"
+                description="Encrypted note sharing with zero-knowledge encryption and self-destructing notes."
+                href="https://vailnote.com/"
+                status="Active"
+                tags="TypeScript, Fresh, Deno, MongoDB"
+                image="/pictures/vailnote.webp"
+                caption="Live - vailnote.com"
+            />
+            <Showcase
                 name="This site"
                 description="Static export. No server, no database. Typeset per the spec you are reading."
                 href="/"
                 internal
+                status="Active"
                 tags="Next.js, TypeScript, Tailwind CSS"
                 image="/pictures/this-site.webp"
                 caption="Live - emilkrebs.dev"
@@ -142,7 +193,7 @@ I always wanted to invent something new, solve problems and build cool stuff.
         and complex projects. All of this while studying full-time for my Bachelor in Computer
         Science and Sociology.
 
-        The products I am building today are Prami and Healthstack.
+        The products I am building today are Prami, Healthstack, and VailNote.
 
         <ShowcaseGrid>
             <Showcase
