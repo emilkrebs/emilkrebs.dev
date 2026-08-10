@@ -46,7 +46,7 @@ function Contents({ items }: { items: ContentsItem[] }) {
             <div className="flex items-center justify-between gap-6 px-8 py-4 border-b border-hairline">
                 <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">Contents</p>
                 <div className="hidden md:flex gap-2.5" aria-hidden="true">
-                    {Array.from({ length: 7 }).map((_, i) => (
+                    {Array.from({ length: 8 }).map((_, i) => (
                         <span key={i} className="size-1.5 bg-signal" />
                     ))}
                 </div>

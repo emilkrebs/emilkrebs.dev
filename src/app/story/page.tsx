@@ -22,7 +22,7 @@ export default function StoryPage() {
     return (
         <main id="main" className="flex min-h-screen w-full flex-col items-center justify-start px-6">
             {/*
-THESIS: The story of a person told as a printed specification: title block, a table of contents, then seven era sections on a timeline rail, each era's claims proven by the product plates it produced. Refuses the blog-post timeline of date-prefixed paragraphs and the resume of job bullets.
+THESIS: The story of a person told as a printed specification: title block, a table of contents, then eight era sections on a timeline rail, each era's claims proven by the product plates it produced. Refuses the blog-post timeline of date-prefixed paragraphs and the resume of job bullets.
 OWN-WORLD: paper #f7f5f0, ink #141310, ink-soft #5f5b55, signal #e8450c, hairline grammar, Schibsted Grotesk headline scale, IBM Plex Mono labels for all metadata, one Instrument Serif italic accent phrase per era, 6px square signal token marks, 0px corners everywhere, full-color product plates with mono captions naming the live origin. COMPACT PLATES: small square stamp plates without captions, three-across grid, for relic-era groupings — the origin is the Open link itself.
 STORY: The visitor reads the spec sheet of a life: what Emil was at ten, what he built through school, and what he is building now, with every claim pinned to a real artifact and a real link.
 FIRST VIEWPORT: mono back link, the page title at display-adjacent scale, one mono lead line, the thesis sentence, a token mark row, and the Contents block; the timeline begins below the fold.
