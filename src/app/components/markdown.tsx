@@ -34,7 +34,7 @@ export default function RenderMarkdown(props: MarkdownProps) {
                         return (
                             <Link
                                 passHref
-                                className="text-ink underline underline-offset-4 decoration-signal hover:text-signal transition-colors duration-150"
+                                className="text-ink hover:text-signal transition-colors duration-150"
                                 href={href}
                                 {...props}
                                 target={external ? "_blank" : undefined}
