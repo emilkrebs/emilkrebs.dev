@@ -129,7 +129,7 @@ function Showcase({
                                 sizes="(max-width: 768px) 100vw, 50vw"
                                 className={
                                     image.endsWith(".svg")
-                                        ? "object-contain"
+                                        ? "object-contain p-4 sm:p-6"
                                         : "object-cover object-top"
                                 }
                             />
@@ -287,7 +287,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             const external = (href ?? "").startsWith("http");
             return (
                 <Link
-                    className="text-ink underline underline-offset-4 decoration-signal hover:text-signal transition-colors duration-150"
+                    className="text-ink hover:text-signal transition-colors duration-150"
                     href={href ?? ""}
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
