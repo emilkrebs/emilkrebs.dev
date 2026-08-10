@@ -127,7 +127,11 @@ function Showcase({
                                 alt={`${name} screenshot`}
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                className="object-cover object-top"
+                                className={
+                                    image.endsWith(".svg")
+                                        ? "object-contain"
+                                        : "object-cover object-top"
+                                }
                             />
                         ) : (
                             <PlaceholderPlate label={name} />
