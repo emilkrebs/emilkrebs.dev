@@ -1,0 +1,174 @@
+# My Story into Software Engineering
+
+<Lead>A personal narrative on code, developer tooling, and building software.</Lead>
+
+I always wanted to invent something new, solve problems and build cool stuff.
+
+<TokenMark />
+
+<Facts>
+    <Fact value="10" label="Age at first computer" />
+    <Fact value="15" label="Age at first internship" />
+    <Fact value="1.5 yrs" label="Minijob at TypeFox" />
+    <Fact value="2" label="Subjects, one bachelor" />
+</Facts>
+
+<Contents
+    items={[
+        { href: "#first-machine", period: "Age 10 - The beginning", title: "First machine, first lines of code" },
+        { href: "#first-clients", period: "Teenage years", title: "First clients, first courses, first stage" },
+        { href: "#internship", period: "Age 15", title: "The internship at TypeFox" },
+        { href: "#minijob", period: "1.5 years at TypeFox", title: "Minijob: frontend architecture and language engineering" },
+        { href: "#freelancing", period: "After school", title: "Freelancing and a reset" },
+        { href: "#today", period: "Winter 2025/26 - Today", title: "Full role, full-time studies" },
+    ]}
+/>
+
+<Timeline>
+    <Era id="first-machine" period="Age 10 - The beginning" title="First machine, first lines of code">
+        At age 10 I got my first computer, and with it a book about the visual programming language
+        Scratch. That was my first touch point with software engineering.
+
+        After building some things in it, it annoyed me that I could not run these games
+        standalone. That itch spiked my interest in *real software development*. My first text
+        based programming language was Python. It taught me all the fundamentals and gave me a
+        basic introduction into this new world.
+
+        Soon I explored the ecosystem more and more, but I wanted to make games, which got me into
+        Unity and C#. I soon realized C# was too complex for me, so I learned it by creating basic
+        desktop applications. In parallel I got invested into web development and created my first
+        frontend, without really understanding what I actually did.
+
+        <TagRow label="Tools" items="Scratch, Python, Unity, C#, HTML, CSS" />
+    </Era>
+
+    <Era id="first-clients" period="Teenage years" title="First clients, first courses, first stage">
+        Step by step I began to actually understand how things work, and I had my first couple of
+        professional paid consulting tasks, helping friends and acquaintances with simple frontend
+        support.
+
+        I had my first university experience, doing courses at OpenCampus about Game Development,
+        JavaScript, Marketing and Startups, along with gaining official certificates and my first
+        ECTS points. I also became invested into the startup scene, visiting events like Waterkant
+        and holding my *first pitches and speeches*.
+
+        <TagRow label="OpenCampus courses" items="Game Development, JavaScript, Marketing, Startups" />
+
+        <ShowcaseGrid>
+            <Showcase
+                name="VailNote"
+                description="Encrypted note sharing with zero-knowledge encryption and self-destructing notes."
+                href="https://vailnote.com/"
+                tags="TypeScript, Fresh, Deno, MongoDB"
+                image="/pictures/vailnote.webp"
+                caption="Live - vailnote.com"
+            />
+        </ShowcaseGrid>
+    </Era>
+
+    <Era id="internship" period="Age 15" title="The internship at TypeFox">
+        My actual career really lifted off with my first student internship at TypeFox. Here I
+        learned the fundamentals of *enterprise-level engineering* and version control, and created
+        the SimpleUI-DSL together with a former colleague.
+
+        <ShowcaseGrid>
+            <Showcase
+                name="SimpleUI-DSL"
+                description="A domain-specific language for describing user interfaces, built with a former colleague during the internship."
+                tags="DSL, Language engineering"
+                placeholder="SimpleUI-DSL"
+            />
+        </ShowcaseGrid>
+    </Era>
+
+    <Era id="minijob" period="1.5 years at TypeFox" title="Minijob: frontend architecture and language engineering">
+        Soon after, I applied for and landed a "Minijob" role at TypeFox, which I worked for 1.5
+        years, doing mostly frontend architecture and *language engineering*. Alongside the job I
+        kept building personal projects, two of which are still online today.
+
+        <ShowcaseGrid>
+            <Showcase
+                name="WatchLock"
+                description="Lock your phone with your smartwatch. WearOS and Android, built for personal security."
+                href="https://github.com/emilkrebs/WatchLock"
+                tags="Kotlin, Android, WearOS"
+                image="/pictures/watchlock.webp"
+                caption="Live - github.com/emilkrebs/WatchLock"
+            />
+            <Showcase
+                name="Langium Showcase"
+                description="DSL showcases built with Langium: state machines, arithmetic, MiniLogo, and domain models."
+                href="https://langium.org/showcase/"
+                tags="Langium, TypeScript, DSLs"
+                preview="https://langium.org/showcase/minilogo/"
+                placeholder="/pictures/langium-placeholder.png"
+                caption="Live - langium.org/showcase/minilogo"
+            />
+        </ShowcaseGrid>
+    </Era>
+
+    <Era id="freelancing" period="After school" title="Freelancing and a reset">
+        School came to an end along with the final exams, and I mostly did a little freelancing
+        here and there, using the expertise I had gained over the last couple of years. Two
+        projects from that time are still running today.
+
+        Then came a short break from all professionalism, spending most of my time with *friends
+        and nature*.
+
+        <ShowcaseGrid>
+            <Showcase
+                name="BIPoC Climate Justice Conference"
+                description="The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven."
+                href="https://bipoclimatejusticenetwork.org/"
+                tags="Next.js, TypeScript, Localization"
+                image="/pictures/bipoc.webp"
+                caption="Live - bipoclimatejusticenetwork.org"
+            />
+            <Showcase
+                name="This site"
+                description="Static export. No server, no database. Typeset per the spec you are reading."
+                href="/"
+                internal
+                tags="Next.js, TypeScript, Tailwind CSS"
+                image="/pictures/this-site.webp"
+                caption="Live - emilkrebs.dev"
+            />
+        </ShowcaseGrid>
+    </Era>
+
+    <Era id="today" period="Winter 2025/26 - Today" title="Full role, full-time studies">
+        At the start of my first semester, Winter Semester 2025/26, I got back to work and started
+        at TypeFox again, this time in a full professional role, working with clients, large teams
+        and complex projects. All of this while studying full-time for my Bachelor in Computer
+        Science and Sociology.
+
+        The products I am building today are Prami and Healthstack.
+
+        <ShowcaseGrid>
+            <Showcase
+                name="Prami"
+                description="Active recall and spaced repetition, engineered so the review schedule fades into the background."
+                href="https://prami.app"
+                notice
+                status="Preview"
+                tags="Next.js, PWA, TypeScript"
+                image="/pictures/prami.webp"
+                caption="In testing - Prami"
+            />
+            <Showcase
+                name="Healthstack"
+                description="A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols."
+                href="/healthstack"
+                internal
+                status="Concept"
+                tags="Theia, Langium, TypeScript, Electron"
+                image="/pictures/healthstack-dashboard.webp"
+                caption="Concept Page"
+            />
+        </ShowcaseGrid>
+    </Era>
+</Timeline>
+
+<PullQuote>
+    The way I like to learn has shaped my path: *learning by doing*. Doing stuff is fundamental.
+</PullQuote>
