@@ -17,6 +17,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.8,
         },
         {
+            url: "https://emilkrebs.dev/story",
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.7,
+        },
+        {
             url: "https://emilkrebs.dev/imprint",
             lastModified: new Date(),
             changeFrequency: "yearly",
