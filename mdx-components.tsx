@@ -1,4 +1,5 @@
 import type { MDXComponents } from "mdx/types";
+import { Children, isValidElement } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ExternalNotice } from "./src/app/components/external-notice";
@@ -26,11 +27,25 @@ function Era({ id, period, title, children }: EraProps) {
 }
 
 function Timeline({ children }: { children: React.ReactNode }) {
+    const eras = Children.toArray(children).filter(
+        (child): child is React.ReactElement<EraProps> =>
+            isValidElement(child) && child.type === Era
+    );
+
     return (
-        <div className="relative mt-20 md:mt-24">
-            {children}
-            <span className="absolute left-[4px] top-0 bottom-0 w-px bg-hairline" aria-hidden="true" />
-        </div>
+        <>
+            <Contents
+                items={eras.map((era) => ({
+                    href: `#${era.props.id}`,
+                    period: era.props.period,
+                    title: era.props.title,
+                }))}
+            />
+            <div className="relative mt-20 md:mt-24">
+                {children}
+                <span className="absolute left-[4px] top-0 bottom-0 w-px bg-hairline" aria-hidden="true" />
+            </div>
+        </>
     );
 }
 
