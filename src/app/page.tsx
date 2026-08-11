@@ -69,7 +69,7 @@ function generateWebsiteJsonLd() {
 }
 
 const NAV = [
-    { href: "#field", label: "Field" },
+    { href: "/story", label: "Story" },
     { href: "#work", label: "Work" },
     { href: "#projects", label: "Projects" },
 ];
@@ -204,14 +204,14 @@ function TokenMark({ count = 16 }: { count?: number }) {
 function Nav() {
     return (
         <nav aria-label="Primary" className="sticky top-0 z-50 bg-paper border-b border-hairline">
-            <div className="mx-auto flex items-center justify-between max-w-280 px-6 h-16">
+            <div className="mx-auto flex items-center justify-between max-w-280 px-4 md:px-6 h-16">
                 <a
                     href="#top"
                     className="font-semibold tracking-tight text-lg"
                 >
                     emil<span className="text-signal">.</span>krebs
                 </a>
-                <div className="flex items-center gap-8">
+                <div className="flex items-center gap-4 md:gap-8">
                     {NAV.map((item) => (
                         <a
                             key={item.href}
