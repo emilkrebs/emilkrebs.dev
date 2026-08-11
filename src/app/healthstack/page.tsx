@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { existsSync } from "fs";
 import { join } from "path";
 import { PlaceholderPlate } from "../components/placeholder-plate";
+import BackHeader from "../components/back-header";
 
 export const metadata: Metadata = {
     title: "Healthstack",
@@ -274,17 +275,9 @@ function FeatureSection({ section }: { section: FeatureSection }) {
 export default function HealthstackPage() {
     return (
         <main id="main" className="flex-1">
-            <div className="mx-auto max-w-280 px-6 pt-10 pb-16">
-                <Link
-                    href="/"
-                    className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
-                >
-                    <span className="text-signal" aria-hidden="true">←</span>
-                    Back to home
-                </Link>
-            </div>
+            <BackHeader />
 
-            <section className="mx-auto max-w-280 px-6 pt-4 md:pt-8 pb-16 md:pb-20">
+            <section className="mx-auto max-w-280 px-6 pt-10 md:pt-16 pb-16 md:pb-20">
                 <div className="flex items-start justify-between gap-4 flex-wrap">
                     <h1 className="font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(2rem,4.5vw,3.25rem)] max-w-[16ch]">
                         Protocols as code. Biology as data. AI as your cortex.

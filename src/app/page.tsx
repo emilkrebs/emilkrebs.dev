@@ -388,7 +388,7 @@ function Work() {
                 <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
                     {/* TypeFox GmbH */}
                     <Image
-                        src="https://www.typefox.io/assets/Logo_white_long.svg"
+                        src="/pictures/typefox-logo.svg"
                         alt="TypeFox GmbH"
                         width={200}
                         height={50}
