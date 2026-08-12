@@ -390,8 +390,8 @@ function Work() {
                     <Image
                         src="/pictures/typefox-logo.svg"
                         alt="TypeFox GmbH"
-                        width={200}
-                        height={50}
+                        width={11813}
+                        height={2600}
                         className="typefox-logo"
                     />
                 </h3>

@@ -2,7 +2,7 @@
 
 <Lead>A personal narrative on code, developer tooling, and building software.</Lead>
 
-I always wanted to invent something new, solve problems and build cool stuff.
+I always wanted to invent something new, solve problems and build cool stuff. Many projects have never been published, some made it here.
 
 <TokenMark />
 
@@ -54,12 +54,12 @@ I always wanted to invent something new, solve problems and build cool stuff.
                 image="/pictures/playerprefs-icon.webp"
             />
             <Showcase
-                name="EnderchestCommand"
-                description="Simple Spigot plugin to open your enderchest — or someone else's — with /ec."
-                href="https://github.com/emilkrebs/EnderchestCommand"
-                tags="Java, Spigot"
+                name="Sound-Bot"
+                description="A Discord bot that plays sounds or music in a voice channel — indefinitely."
+                href="https://github.com/emilkrebs/Sound-Bot"
+                tags="TypeScript, Discord"
+                image="/pictures/sound-bot-icon.svg"
                 compact
-                image="/pictures/enderchestcommand.webp"
             />
             <Showcase
                 name="EasyMoneySystem"
@@ -87,23 +87,24 @@ I always wanted to invent something new, solve problems and build cool stuff.
 
         <TagRow label="OpenCampus courses" items="Game Development, JavaScript, Marketing, Startups" />
 
-
+    <ShowcaseGrid compact>
             <Showcase
-                name="Sound-Bot"
-                description="A Discord bot that plays sounds or music in a voice channel — indefinitely."
-                href="https://github.com/emilkrebs/Sound-Bot"
-                tags="TypeScript, Discord"
+                name="Fresco-Kiel Website"
+                description="The official website for Fresco-Kiel — currently closed."
+                href="https://fresco-kiel.de"
+                tags="Static Website, HTML, CSS"
+                image="/pictures/fresco-kiel.webp"
                 compact
-                image="/pictures/sound-bot-icon.svg"
             />
             <Showcase
                 name="Nitrado-Bot"
                 description="A Discord bot to control your Nitrado gameserver."
                 href="https://github.com/emilkrebs/Nitrado-Bot"
                 tags="TypeScript, Discord"
-                compact
                 image="/pictures/nitrado-bot-icon.webp"
+                compact
             />
+        </ShowcaseGrid>
     </Era>
 
     <Era id="internship" period="Age 15 - Initial Commit" title="The internship at TypeFox">
@@ -228,6 +229,20 @@ I always wanted to invent something new, solve problems and build cool stuff.
                 image="/pictures/healthstack-dashboard.webp"
                 caption="Concept Page"
             />
+        </ShowcaseGrid>
+
+        {/* Customer projects under NDA are shown as confidential placeholders. */}
+        <ShowcaseGrid compact>
+            {[0, 1, 2].map((el) => (
+                <Showcase
+                    key={el}
+                    name="Customer Project"
+                    description="Confidential projects under NDA, not shown here."
+                    confidential
+                    tags="Under NDA"
+                    compact
+                />
+            ))}
         </ShowcaseGrid>
     </Era>
 </Timeline>
