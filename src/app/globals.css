@@ -122,6 +122,7 @@ body {
 .typefox-logo {
     width: 200px;
     height: auto;
+    max-width: 100%;
     filter: brightness(0);
 }
 
