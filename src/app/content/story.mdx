@@ -90,11 +90,10 @@ I always wanted to invent something new, solve problems and build cool stuff. Ma
     <ShowcaseGrid compact>
             <Showcase
                 name="Fresco-Kiel Website"
-                description="The official website for Fresco-Kiel."
+                description="The official website for Fresco-Kiel — currently closed."
                 href="https://fresco-kiel.de"
                 tags="Static Website, HTML, CSS"
                 image="/pictures/fresco-kiel.webp"
-                caption="Live - fresco-kiel.de (currently closed)"
                 compact
             />
             <Showcase
@@ -230,23 +229,21 @@ I always wanted to invent something new, solve problems and build cool stuff. Ma
                 image="/pictures/healthstack-dashboard.webp"
                 caption="Concept Page"
             />
-       
         </ShowcaseGrid>
-            {/* Showcase Confidential for all customer projects */}
-         <ShowcaseGrid compact>
-            {[0, 1, 2].map(el=>(
+
+        {/* Customer projects under NDA are shown as confidential placeholders. */}
+        <ShowcaseGrid compact>
+            {[0, 1, 2].map((el) => (
                 <Showcase
                     key={el}
                     name="Customer Project"
                     description="Confidential projects under NDA, not shown here."
                     confidential
                     tags="Under NDA"
-                    image="/pictures/confidential.svg"
-                    caption="Confidential"
                     compact
                 />
             ))}
-    </ShowcaseGrid>
+        </ShowcaseGrid>
     </Era>
 </Timeline>
 

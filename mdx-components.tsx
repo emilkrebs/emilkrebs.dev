@@ -131,9 +131,9 @@ function Showcase({
     return (
         <article
             className={`relative overflow-hidden bg-paper-deep border flex flex-col group transition-colors duration-150 ${isConfidential
-                    ? "border-ink/35 border-dashed hover:border-ink/70"
-                    : "border-hairline hover:border-ink"
-                }`}
+                ? "border-ink/35 border-dashed hover:border-ink/70"
+                : "border-hairline hover:border-ink"
+            }`}
         >
             {isConfidential && (
                 <div
@@ -146,12 +146,12 @@ function Showcase({
                     }}
                 />
             )}
-            {(preview || image || placeholder) && (
+            {(preview || image || placeholder || isConfidential) && (
                 <div className="relative">
                     <div
                         className={`relative ${compact ? "aspect-square" : "aspect-16/10"
-                            } border-b overflow-hidden ${isConfidential ? "border-dashed border-ink/30 bg-paper-deep" : "border-hairline bg-paper"
-                            }`}
+                        } border-b overflow-hidden ${isConfidential ? "border-dashed border-ink/30 bg-paper-deep" : "border-hairline bg-paper"
+                        }`}
                         style={{ aspectRatio: compact ? "1 / 1" : "16 / 10" }}
                     >
                         {isConfidential ? (
@@ -186,7 +186,7 @@ function Showcase({
                     {!compact && caption && (
                         <p
                             className={`px-8 pt-3 font-mono text-xs uppercase tracking-[0.08em] ${isConfidential ? "text-ink-soft" : "text-ink/75"
-                                }`}
+                            }`}
                         >
                             {caption}
                         </p>
@@ -197,16 +197,16 @@ function Showcase({
                 <div className="flex items-start justify-between gap-4">
                     <h3
                         className={`${compact ? "text-lg md:text-xl" : "text-2xl md:text-3xl"
-                            } font-semibold tracking-tight`}
+                        } font-semibold tracking-tight`}
                     >
                         {name}
                     </h3>
                     {status && (
                         <span
                             className={`inline-flex items-center gap-2 border px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap ${isConfidential
-                                    ? "border-ink/40 border-dashed bg-paper text-ink"
-                                    : "border-hairline"
-                                }`}
+                                ? "border-ink/40 border-dashed bg-paper text-ink"
+                                : "border-hairline"
+                            }`}
                         >
                             <span className="size-1.5 bg-signal" aria-hidden="true" />
                             {status}
@@ -215,7 +215,7 @@ function Showcase({
                 </div>
                 <p
                     className={`mt-3 ${compact ? "text-sm leading-relaxed" : "mt-4 text-base leading-relaxed"
-                        } text-ink/85 flex-1 max-w-[62ch]`}
+                    } text-ink/85 flex-1 max-w-[62ch]`}
                 >
                     {description}
                 </p>
@@ -225,10 +225,10 @@ function Showcase({
                             <span
                                 key={tag}
                                 className={`border px-2 py-1 font-mono ${compact ? "text-[10px]" : "text-xs"
-                                    } uppercase tracking-[0.08em] ${isConfidential
-                                        ? "border-ink/35 border-dashed bg-paper/70 text-ink"
-                                        : "border-hairline bg-paper text-ink-soft"
-                                    }`}
+                                } uppercase tracking-[0.08em] ${isConfidential
+                                    ? "border-ink/35 border-dashed bg-paper/70 text-ink"
+                                    : "border-hairline bg-paper text-ink-soft"
+                                }`}
                             >
                                 {tag}
                             </span>
@@ -265,7 +265,7 @@ function ShowcaseGrid({ children, compact }: { children: React.ReactNode; compac
     return (
         <div
             className={`mt-10 grid grid-cols-1 ${compact ? "md:grid-cols-3 gap-4" : "md:grid-cols-2 gap-6"
-                }`}
+            }`}
         >
             {children}
         </div>
