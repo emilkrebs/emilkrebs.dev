@@ -2,6 +2,7 @@ import Image from "next/image";
 import { PlaceholderPlate } from "./placeholder-plate";
 import { PreviewConsent } from "./preview-consent";
 import { ExternalNotice } from "./external-notice";
+import { LocaleSwitcher } from "./locale-switcher";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
 import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/copy";
 
@@ -180,13 +181,14 @@ function Nav({ t }: { t: LandingCopy }) {
                             {item.label}
                         </a>
                     ))}
-                    <a
-                        href={t.switcher.href}
-                        aria-label={t.switcher.aria}
-                        className="py-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
-                    >
-                        {t.switcher.label}
-                    </a>
+                    {t.switcher && (
+                        <LocaleSwitcher
+                            href={t.switcher.href}
+                            label={t.switcher.label}
+                            aria={t.switcher.aria}
+                            pref={t.switcher.pref}
+                        />
+                    )}
                 </div>
             </div>
         </nav>

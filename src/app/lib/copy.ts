@@ -86,6 +86,13 @@ export interface NavItem {
     label: string;
 }
 
+export interface LocaleSwitcherCopy {
+    href: string;
+    label: string;
+    aria: string;
+    pref: "en" | "zh";
+}
+
 export interface ProjectCopy {
     id: string;
     name: string;
@@ -98,7 +105,7 @@ export interface ProjectCopy {
 export interface LandingCopy {
     navAria: string;
     nav: NavItem[];
-    switcher: { href: string; label: string; aria: string };
+    switcher?: LocaleSwitcherCopy;
     heroTagline: string;
     ctas: { github: string; linkedin: string; email: string };
     portraitAlt: string;
@@ -133,7 +140,6 @@ export const copy: Record<Locale, LandingCopy> = {
             { href: "#work", label: "Work" },
             { href: "#projects", label: "Projects" },
         ],
-        switcher: { href: "/zh/", label: "中文", aria: "切换到中文" },
         heroTagline: "Software engineer at TypeFox. Kiel, Germany.",
         ctas: { github: "GitHub", linkedin: "LinkedIn", email: "Email" },
         portraitAlt: "Emil Krebs, Software engineer",
@@ -241,7 +247,7 @@ export const copy: Record<Locale, LandingCopy> = {
             { href: "#work", label: "工作" },
             { href: "#projects", label: "项目" },
         ],
-        switcher: { href: "/", label: "EN", aria: "Switch to English" },
+        switcher: { href: "/", label: "EN", aria: "Switch to English", pref: "en" },
         heroTagline: "TypeFox 软件工程师。德国基尔。",
         ctas: { github: "GitHub", linkedin: "LinkedIn", email: "邮件" },
         portraitAlt: "Emil Krebs，软件工程师",

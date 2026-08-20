@@ -131,6 +131,12 @@ export default function RootLayout({
         >
             <head>
                 <meta charSet="UTF-8" />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html:
+              "(function(){try{var p=(navigator.languages&&navigator.languages.length)?navigator.languages[0]:navigator.language;var zh=(p||'').toLowerCase().indexOf('zh')===0;var pref=null;try{pref=localStorage.getItem('locale-pref')}catch(e){}if(zh&&pref!=='en'&&(location.pathname==='/'||location.pathname===''))location.replace('/zh/')}catch(e){}})();",
+                    }}
+                />
             </head>
             <body className="overflow-x-hidden min-h-screen flex flex-col">
                 <a
@@ -142,7 +148,7 @@ export default function RootLayout({
                 <div
                     dangerouslySetInnerHTML={{
                         __html:
-              "<!--\nTHESIS: Emil builds the tools that build software. A personal site set as a language specification: warm paper, black ink, one signal accent, sharp corners, flat, no motion; one gimmick: the hero portrait wears a green face-reticle and a Thinking chip.\nOWN-WORLD: paper #f7f5f0, ink #141310, signal #e8450c, signal-accent #22c55e (hero reticle and chip border only), 1px hairlines, Schibsted Grotesk display, IBM Plex Mono labels, one Instrument Serif italic accent phrase per section, 6px square token marks, duotone ID plate portrait with face-reticle, 0px corners everywhere.\nSTORY: The visitor reads a dry spec sheet of a person: who he is, what he is thinking, the four strengths with proof, the shipped products (Prami in preview, Healthstack, the rest), and how to reach him.\nFIRST VIEWPORT: sticky nav (wordmark, mono links, hairline bottom), name at display size, position line, three plain CTAs, duotone ID plate portrait right with a green face-reticle over the face and a Thinking status chip at its top-right corner, token mark row. No scroll cue, no status dot.\nFORM: single page, one column, max 1120px, xl section rhythm; flagship project cards lead the project list, asymmetric grid below.\nFINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.\nLOCALE: English at / is the default and fallback; the landing nav carries a small mono switcher to the zh-CN variant of the landing at /zh/.\n-->",
+              "<!--\nTHESIS: Emil builds the tools that build software. A personal site set as a language specification: warm paper, black ink, one signal accent, sharp corners, flat, no motion; one gimmick: the hero portrait wears a green face-reticle and a Thinking chip.\nOWN-WORLD: paper #f7f5f0, ink #141310, signal #e8450c, signal-accent #22c55e (hero reticle and chip border only), 1px hairlines, Schibsted Grotesk display, IBM Plex Mono labels, one Instrument Serif italic accent phrase per section, 6px square token marks, duotone ID plate portrait with face-reticle, 0px corners everywhere.\nSTORY: The visitor reads a dry spec sheet of a person: who he is, what he is thinking, the four strengths with proof, the shipped products (Prami in preview, Healthstack, the rest), and how to reach him.\nFIRST VIEWPORT: sticky nav (wordmark, mono links, hairline bottom), name at display size, position line, three plain CTAs, duotone ID plate portrait right with a green face-reticle over the face and a Thinking status chip at its top-right corner, token mark row. No scroll cue, no status dot.\nFORM: single page, one column, max 1120px, xl section rhythm; flagship project cards lead the project list, asymmetric grid below.\nFINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.\nLOCALE: English at / is the default and fallback. A zh-* primary browser language on the landing route auto-redirects to /zh/ (client-side, before first paint; a locale-pref in localStorage set by the switcher overrides it). The language switcher is rendered only on /zh/ as a bordered nav tag; the English page carries none. Only the landing is localized; subpages remain English and are never redirected.\n-->",
                     }}
                 />
                 <script
