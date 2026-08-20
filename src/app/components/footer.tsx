@@ -1,4 +1,5 @@
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
+import { footerCopy, type Locale } from "../lib/copy";
 
 function TokenMark({ count = 12 }: { count?: number }) {
     return (
@@ -10,13 +11,14 @@ function TokenMark({ count = 12 }: { count?: number }) {
     );
 }
 
-export function Footer() {
+export function Footer({ locale = "en" }: { locale?: Locale }) {
+    const t = footerCopy[locale];
     return (
         <footer className="w-full mt-auto">
             <div className="mx-auto w-full max-w-280 px-6 py-16 border-t border-hairline">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
-                        <p>Emil Krebs - Kiel, Germany</p>
+                        <p>{t.location}</p>
                     </div>
                     <div className="flex flex-col gap-2 text-sm">
                         <a
@@ -58,7 +60,7 @@ export function Footer() {
                     </div>
                 </div>
                 <p className="mt-12 text-xs text-ink-soft">
-                    © {new Date().getFullYear()} Emil Krebs. All rights reserved.
+                    © {new Date().getFullYear()} {t.copyright}
                 </p>
                 <div className="mt-10"><TokenMark /></div>
             </div>

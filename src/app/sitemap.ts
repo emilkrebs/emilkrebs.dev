@@ -11,6 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1,
         },
         {
+            url: "https://emilkrebs.dev/zh/",
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.9,
+        },
+        {
             url: "https://emilkrebs.dev/healthstack",
             lastModified: new Date(),
             changeFrequency: "monthly",

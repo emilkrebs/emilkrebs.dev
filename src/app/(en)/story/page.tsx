@@ -1,6 +1,6 @@
-import StoryContent from "../content/story.mdx";
+import StoryContent from "../../content/story.mdx";
 import { Metadata } from "next";
-import BackHeader from "../components/back-header";
+import BackHeader from "../../components/back-header";
 
 export const metadata: Metadata = {
     title: "My Story",

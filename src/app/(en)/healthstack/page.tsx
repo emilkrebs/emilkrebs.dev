@@ -3,8 +3,8 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { existsSync } from "fs";
 import { join } from "path";
-import { PlaceholderPlate } from "../components/placeholder-plate";
-import BackHeader from "../components/back-header";
+import { PlaceholderPlate } from "../../components/placeholder-plate";
+import BackHeader from "../../components/back-header";
 
 export const metadata: Metadata = {
     title: "Healthstack",

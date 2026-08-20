@@ -1,10 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import {
+    externalNoticeCopy,
+    type ExternalNoticeCopy,
+} from "../lib/copy";
 
 interface ExternalNoticeProps {
     href: string;
     title: string;
+    copy?: ExternalNoticeCopy;
 }
 
 /**
@@ -12,7 +17,7 @@ interface ExternalNoticeProps {
  * Renders the same link a plain anchor would, but intercepts the click
  * and asks for acknowledgement before redirecting.
  */
-export function ExternalNotice({ href, title }: ExternalNoticeProps) {
+export function ExternalNotice({ href, title, copy = externalNoticeCopy.en }: ExternalNoticeProps) {
     const [open, setOpen] = useState(false);
     const dialogRef = useRef<HTMLDivElement>(null);
     const returnFocusRef = useRef<HTMLButtonElement>(null);
@@ -45,7 +50,7 @@ export function ExternalNotice({ href, title }: ExternalNoticeProps) {
                 onClick={() => setOpen(true)}
                 className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
             >
-                Open
+                {copy.open}
                 <span className="text-signal" aria-hidden="true">→</span>
             </button>
 
@@ -58,7 +63,7 @@ export function ExternalNotice({ href, title }: ExternalNoticeProps) {
                 >
                     <button
                         type="button"
-                        aria-label="Close notice"
+                        aria-label={copy.closeNoticeAria}
                         onClick={() => setOpen(false)}
                         className="absolute inset-0 bg-ink/60 backdrop-blur-sm"
                     />
@@ -72,33 +77,27 @@ export function ExternalNotice({ href, title }: ExternalNoticeProps) {
                                 id="external-notice-title"
                                 className="font-mono text-xs uppercase tracking-[0.08em] text-signal"
                             >
-                                Testing notice
+                                {copy.heading}
                             </h2>
                             <button
                                 type="button"
                                 onClick={() => setOpen(false)}
                                 className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
                             >
-                                Close
+                                {copy.close}
                             </button>
                         </div>
 
                         <h3 className="mt-4 text-2xl md:text-3xl font-semibold tracking-tight">
-                            {title} is a prototype
+                            {copy.prototype[0]}{title}{copy.prototype[1]}
                         </h3>
 
                         <div className="mt-4 space-y-3 text-base leading-relaxed text-ink/85">
                             <p>
-                                {title} is in active testing, not a finished
-                                product. Features break, data can be lost, and
-                                the app will change without notice.
+                                {copy.testing[0]}{title}{copy.testing[1]}
                             </p>
                             <p>
-                                By proceeding you acknowledge that you are using{" "}
-                                {title} at your own risk. It is provided without
-                                warranty of any kind, and the author accepts no
-                                liability for anything that happens while you
-                                use it.
+                                {copy.risk[0]}{title}{copy.risk[1]}
                             </p>
                         </div>
 
@@ -109,7 +108,7 @@ export function ExternalNotice({ href, title }: ExternalNoticeProps) {
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center gap-2 bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.08em] text-paper hover:bg-signal transition-colors duration-150"
                             >
-                                Accept and continue
+                                {copy.accept}
                                 <span aria-hidden="true">→</span>
                             </a>
                             <button
@@ -117,7 +116,7 @@ export function ExternalNotice({ href, title }: ExternalNoticeProps) {
                                 onClick={() => setOpen(false)}
                                 className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
                             >
-                                Back
+                                {copy.back}
                             </button>
                         </div>
                     </div>
