@@ -81,7 +81,7 @@ export const metadata: Metadata = {
         siteName: "Emil Krebs",
         images: [
             {
-                url: "/opengraph-image.webp",
+                url: "/opengraph_image.webp",
                 width: 1200,
                 height: 630,
                 alt: "Emil Krebs - 基尔的软件工程师",
@@ -93,7 +93,7 @@ export const metadata: Metadata = {
         title: "Emil Krebs - 基尔的软件工程师",
         description:
       "德国基尔 TypeFox 的软件工程师，构建语言服务器、DSL，以及 Prami 和 Healthstack 等产品。",
-        images: ["/opengraph-image.webp"],
+        images: ["/opengraph_image.webp"],
     },
     icons: {
         icon: "/favicon.svg",
@@ -104,6 +104,7 @@ export const metadata: Metadata = {
         languages: {
             en: "/",
             zh: "/zh/",
+            "x-default": "/",
         },
     },
     verification: {},

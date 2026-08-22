@@ -149,8 +149,7 @@ function Showcase({
             {(preview || image || placeholder || isConfidential) && (
                 <div className="relative">
                     <div
-                        className={`relative ${compact ? "aspect-square" : "aspect-16/10"
-                        } border-b overflow-hidden ${isConfidential ? "border-dashed border-ink/30 bg-paper-deep" : "border-hairline bg-paper"
+                        className={`relative border-b overflow-hidden ${isConfidential ? "border-dashed border-ink/30 bg-paper-deep" : "border-hairline bg-paper"
                         }`}
                         style={{ aspectRatio: compact ? "1 / 1" : "16 / 10" }}
                     >

@@ -98,6 +98,7 @@ export interface ProjectCopy {
     name: string;
     description: string;
     status?: string;
+    href?: string;
     imageCaption?: string;
     previewCaption?: string;
 }
@@ -247,7 +248,7 @@ export const copy: Record<Locale, LandingCopy> = {
             { href: "#work", label: "工作" },
             { href: "#projects", label: "项目" },
         ],
-        switcher: { href: "/", label: "EN", aria: "Switch to English", pref: "en" },
+        switcher: { href: "/", label: "EN", aria: "切换到英文版", pref: "en" },
         heroTagline: "TypeFox 软件工程师。德国基尔。",
         ctas: { github: "GitHub", linkedin: "LinkedIn", email: "邮件" },
         portraitAlt: "Emil Krebs，软件工程师",
@@ -334,6 +335,7 @@ export const copy: Record<Locale, LandingCopy> = {
                 name: "本站",
                 description:
                     "静态导出。无服务器，无数据库。按你正在阅读的这份规范排版。",
+                href: "/zh/",
                 imageCaption: "在线 - emilkrebs.dev",
             },
         ],
