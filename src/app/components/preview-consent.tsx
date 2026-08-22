@@ -2,12 +2,17 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import {
+    previewConsentCopy,
+    type PreviewConsentCopy,
+} from "../lib/copy";
 
 interface PreviewConsentProps {
     id: string;
     src: string;
     title: string;
     placeholder?: string;
+    copy?: PreviewConsentCopy;
 }
 
 /**
@@ -16,7 +21,7 @@ interface PreviewConsentProps {
  * iframe: a script tag inside a server-rendered tree never runs, so the
  * click handler lives here as React state instead.
  */
-export function PreviewConsent({ id, src, title, placeholder }: PreviewConsentProps) {
+export function PreviewConsent({ id, src, title, placeholder, copy = previewConsentCopy.en }: PreviewConsentProps) {
     const [loaded, setLoaded] = useState(false);
     const [fadeIn, setFadeIn] = useState(false);
     const [gone, setGone] = useState(false);
@@ -58,14 +63,14 @@ export function PreviewConsent({ id, src, title, placeholder }: PreviewConsentPr
                     )}
                     <div className="relative flex flex-col items-center justify-center gap-6">
                         <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
-                            The preview loads a third-party site with its own scripts.
+                            {copy.notice}
                         </p>
                         <button
                             type="button"
                             onClick={() => setLoaded(true)}
                             className="bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.08em] text-paper hover:bg-signal transition-colors duration-150"
                         >
-                            Load preview
+                            {copy.load}
                         </button>
                     </div>
                 </div>

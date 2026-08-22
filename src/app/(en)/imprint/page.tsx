@@ -1,9 +1,9 @@
-import RenderMarkdown from "../components/markdown";
+import RenderMarkdown from "../../components/markdown";
 import { Metadata } from "next";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { EMAIL_ADDRESS, PHONE_NUMBER } from "../lib/constants";
-import BackHeader from "../components/back-header";
+import { EMAIL_ADDRESS, PHONE_NUMBER } from "../../lib/constants";
+import BackHeader from "../../components/back-header";
 
 export const metadata: Metadata = {
     title: "Imprint",

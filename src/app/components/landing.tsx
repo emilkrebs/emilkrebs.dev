@@ -1,17 +1,18 @@
 import Image from "next/image";
-import { PlaceholderPlate } from "./components/placeholder-plate";
-import { PreviewConsent } from "./components/preview-consent";
-import { ExternalNotice } from "./components/external-notice";
-import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "./lib/constants";
+import { PlaceholderPlate } from "./placeholder-plate";
+import { PreviewConsent } from "./preview-consent";
+import { ExternalNotice } from "./external-notice";
+import { LocaleSwitcher } from "./locale-switcher";
+import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
+import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/copy";
 
-function generatePersonJsonLd() {
+function generatePersonJsonLd(locale: Locale) {
     return {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Emil Krebs",
         "jobTitle": "Software Engineer",
-        "description":
-            "Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
+        "description": copy[locale].jsonLd.personDescription,
         "url": "https://emilkrebs.dev",
         "image": "https://emilkrebs.dev/pictures/portrait.webp",
         "sameAs": [
@@ -48,19 +49,18 @@ function generatePersonJsonLd() {
     };
 }
 
-function generateWebsiteJsonLd() {
+function generateWebsiteJsonLd(locale: Locale) {
     return {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Emil Krebs - Software engineer in Kiel",
-        "description":
-            "Personal website of Emil Krebs, a Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack.",
+        "name": copy[locale].jsonLd.websiteName,
+        "description": copy[locale].jsonLd.websiteDescription,
         "url": "https://emilkrebs.dev",
         "author": {
             "@type": "Person",
             "name": "Emil Krebs",
         },
-        "inLanguage": "en-US",
+        "inLanguage": locale === "zh" ? "zh-CN" : "en-US",
         "copyrightHolder": {
             "@type": "Person",
             "name": "Emil Krebs",
@@ -68,122 +68,82 @@ function generateWebsiteJsonLd() {
     };
 }
 
-const NAV = [
-    { href: "/story", label: "Story" },
-    { href: "#work", label: "Work" },
-    { href: "#projects", label: "Projects" },
-];
-
-const STRENGTHS = [
-
-    {
-        title: "Developer tooling",
-        proof:
-            "Language servers, the LSP, Langium DSLs, Theia-based IDEs, and generators — the domain-specific tools that let editors understand code.",
-    },
-    {
-        title: "Security & privacy",
-        proof:
-            "Zero-knowledge encryption in VailNote, WearOS locking in WatchLock, no telemetry by default.",
-    },
-    {
-        title: "Open source",
-        proof:
-            "The Langium showcase, Theia, the Fresh ecosystem, and the BIPoC Climate Justice conference site.",
-    },
-];
-
-interface Project {
-    name: string;
-    description: string;
+interface ProjectBase {
+    id: string;
     href?: string;
-    status?: string;
     tags: string[];
     flagship?: boolean;
     image?: string;
-    imageCaption?: string;
     placeholder?: string;
     preview?: string;
-    previewCaption?: string;
     consent?: boolean;
     notice?: boolean;
 }
 
-const FLAGSHIP_PROJECTS: Project[] = [
+type Project = ProjectBase & ProjectCopy;
+
+const FLAGSHIP_BASE: ProjectBase[] = [
     {
-        name: "Prami",
-        description:
-            "Active recall and spaced repetition, engineered so the review schedule fades into the background.",
+        id: "prami",
         href: "https://prami.app",
-        status: "Preview",
         tags: ["Next.js", "PWA", "TypeScript"],
         flagship: true,
         image: "/pictures/prami.webp",
-        imageCaption: "In testing - Prami",
         notice: true,
     },
     {
-        name: "Healthstack",
-        description:
-            "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
+        id: "healthstack",
         href: "/healthstack",
-        status: "Concept",
         tags: ["Theia", "Langium", "TypeScript", "Electron"],
         flagship: true,
         image: "/pictures/healthstack-dashboard.webp",
-        imageCaption: "Concept Page",
     },
 ];
 
-const PROJECTS: Project[] = [
+const PROJECT_BASE: ProjectBase[] = [
     {
-        name: "VailNote",
-        description:
-            "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
+        id: "vailnote",
         href: "https://vailnote.com/",
         tags: ["TypeScript", "Fresh", "Deno", "MongoDB"],
         image: "/pictures/vailnote.webp",
-        imageCaption: "Live - vailnote.com",
     },
     {
-        name: "WatchLock",
-        description:
-            "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
+        id: "watchlock",
         href: "https://github.com/emilkrebs/WatchLock",
         tags: ["Kotlin", "Android", "WearOS"],
         image: "/pictures/watchlock.webp",
-        imageCaption: "Live - github.com/emilkrebs/WatchLock",
     },
     {
-        name: "BIPoC Climate Justice Conference",
-        description:
-            "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
+        id: "bipoc",
         href: "https://bipoclimatejusticenetwork.org/",
         tags: ["Next.js", "TypeScript", "Localization"],
         image: "/pictures/bipoc.webp",
-        imageCaption: "Live - bipoclimatejusticenetwork.org",
     },
     {
-        name: "Langium Showcase",
-        description:
-            "DSL showcases built with Langium: state machines, arithmetic, MiniLogo, and domain models.",
+        id: "langium-showcase",
         href: "https://langium.org/showcase/",
         tags: ["Langium", "TypeScript", "DSLs"],
         preview: "https://langium.org/showcase/minilogo/",
-        previewCaption: "Live - langium.org/showcase/minilogo",
         placeholder: "/pictures/langium-placeholder.png",
         consent: true,
     },
     {
-        name: "This site",
-        description:
-            "Static export. No server, no database. Typeset per the spec you are reading.",
+        id: "this-site",
         href: "/",
         tags: ["Next.js", "TypeScript", "Tailwind CSS"],
         image: "/pictures/this-site.webp",
-        imageCaption: "Live - emilkrebs.dev",
     },
 ];
+
+function mergeProjects(base: ProjectBase[], copies: ProjectCopy[]): Project[] {
+    return base.map((project) => {
+        const projectCopy = copies.find((c) => c.id === project.id);
+        if (!projectCopy) {
+            throw new Error(`Missing landing copy for project "${project.id}"`);
+        }
+        return { ...project, ...projectCopy };
+    });
+}
 
 function TokenMark({ count = 16 }: { count?: number }) {
     return (
@@ -201,9 +161,9 @@ function TokenMark({ count = 16 }: { count?: number }) {
     );
 }
 
-function Nav() {
+function Nav({ t }: { t: LandingCopy }) {
     return (
-        <nav aria-label="Primary" className="sticky top-0 z-50 bg-paper border-b border-hairline">
+        <nav aria-label={t.navAria} className="sticky top-0 z-50 bg-paper border-b border-hairline">
             <div className="mx-auto flex items-center justify-between max-w-280 px-4 md:px-6 h-16">
                 <a
                     href="#top"
@@ -212,7 +172,7 @@ function Nav() {
                     emil<span className="text-signal">.</span>krebs
                 </a>
                 <div className="flex items-center gap-4 md:gap-8">
-                    {NAV.map((item) => (
+                    {t.nav.map((item) => (
                         <a
                             key={item.href}
                             href={item.href}
@@ -221,13 +181,21 @@ function Nav() {
                             {item.label}
                         </a>
                     ))}
+                    {t.switcher && (
+                        <LocaleSwitcher
+                            href={t.switcher.href}
+                            label={t.switcher.label}
+                            aria={t.switcher.aria}
+                            pref={t.switcher.pref}
+                        />
+                    )}
                 </div>
             </div>
         </nav>
     );
 }
 
-function Hero() {
+function Hero({ t }: { t: LandingCopy }) {
     return (
         <section
             id="top"
@@ -239,7 +207,7 @@ function Hero() {
                         Emil Krebs
                     </h1>
                     <p className="mt-8 text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                        Software engineer at TypeFox. Kiel, Germany.
+                        {t.heroTagline}
                     </p>
                     <div className="mt-10 flex flex-wrap items-center gap-6">
                         <a
@@ -248,7 +216,7 @@ function Hero() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
                         >
-                            GitHub
+                            {t.ctas.github}
                             <span className="text-signal" aria-hidden="true">→</span>
                         </a>
                         <a
@@ -257,14 +225,14 @@ function Hero() {
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
                         >
-                            LinkedIn
+                            {t.ctas.linkedin}
                             <span className="text-signal" aria-hidden="true">→</span>
                         </a>
                         <a
                             href={`mailto:${EMAIL_ADDRESS}`}
                             className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
                         >
-                            Email
+                            {t.ctas.email}
                             <span className="text-signal" aria-hidden="true">→</span>
                         </a>
                     </div>
@@ -292,7 +260,7 @@ function Hero() {
                     <div className="duotone-frame relative size-44 md:size-56 border border-ink-soft/50 overflow-hidden">
                         <Image
                             src="/pictures/portrait.webp"
-                            alt="Emil Krebs, Software engineer"
+                            alt={t.portraitAlt}
                             width={512}
                             height={512}
                             priority
@@ -310,7 +278,7 @@ function Hero() {
                         role="status"
                     >
                         <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
-                            <span className="block text-ink-soft">Thinking...</span>
+                            <span className="block text-ink-soft">{t.thinking}</span>
                         </p>
                     </div>
                 </figure>
@@ -334,30 +302,28 @@ function SectionHeading({ id, children }: { id?: string; children: string }) {
     );
 }
 
-function Field() {
+function Field({ t }: { t: LandingCopy }) {
     return (
         <section
             id="field"
             className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
         >
-            <SectionHeading>Field</SectionHeading>
+            <SectionHeading>{t.fieldHeading}</SectionHeading>
             <p className="text-xl md:text-2xl leading-relaxed max-w-[64ch]">
-                I build the tools that read, understand, and transform code. At
-                <i className="mx-1">TypeFox</i> that means custom domain-specific tools like IDEs. In my
-                free time it means products: a spaced-repetition app, a lifestyle
-                IDE powered by its own language & native AI, and a note tool built for
-                privacy. I contribute to various open source projects.
+                {t.fieldLead[0]}
+                <i className="mx-1">TypeFox</i>
+                {t.fieldLead[1]}
             </p>
         </section>
     );
 }
 
-function WhatIDo() {
+function WhatIDo({ t }: { t: LandingCopy }) {
     return (
         <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
-            <SectionHeading>What I do</SectionHeading>
+            <SectionHeading>{t.strengthsHeading}</SectionHeading>
             <div className="flex flex-col gap-20 md:gap-24">
-                {STRENGTHS.map((strength) => (
+                {t.strengths.map((strength) => (
                     <div
                         key={strength.title}
                         className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8"
@@ -376,14 +342,14 @@ function WhatIDo() {
     );
 }
 
-function Work() {
+function Work({ t }: { t: LandingCopy }) {
     const tags = ["TypeScript", "LSP", "Langium", "Theia", "Node.js"];
     return (
         <section
             id="work"
             className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
         >
-            <SectionHeading>Work</SectionHeading>
+            <SectionHeading>{t.workHeading}</SectionHeading>
             <div className="bg-paper-deep border border-hairline p-8 md:p-12">
                 <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
                     {/* TypeFox GmbH */}
@@ -396,9 +362,7 @@ function Work() {
                     />
                 </h3>
                 <p className="mt-4 text-base md:text-lg leading-relaxed max-w-[60ch]">
-                    Software Engineer: language servers,
-                    the LSP, and the tooling that lets editors understand code.
-                    This is the craft the rest of this page proves.
+                    {t.workBlurb}
                 </p>
                 <div className="mt-6 flex flex-wrap gap-2">
                     {tags.map((tag) => (
@@ -415,7 +379,7 @@ function Work() {
     );
 }
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, t }: { project: Project; t: LandingCopy }) {
     return (
         <article className="bg-paper-deep border border-hairline flex flex-col group hover:border-ink transition-colors duration-150">
             {project.preview && (
@@ -423,15 +387,16 @@ function ProjectCard({ project }: { project: Project }) {
                     <div className="relative aspect-16/10 border-b border-hairline overflow-hidden bg-paper">
                         {project.consent ? (
                             <PreviewConsent
-                                id={`consent-${project.name.toLowerCase().replace(/\s+/g, "-")}`}
+                                id={`consent-${project.id}`}
                                 src={project.preview}
-                                title={`${project.name} preview`}
+                                title={`${project.name}${t.previewTitleSuffix}`}
                                 placeholder={project.placeholder}
+                                copy={t.consent}
                             />
                         ) : (
                             <iframe
                                 src={project.preview}
-                                title={`${project.name} preview`}
+                                title={`${project.name}${t.previewTitleSuffix}`}
                                 loading="lazy"
                                 referrerPolicy="no-referrer"
                                 className="size-full border-0"
@@ -449,7 +414,7 @@ function ProjectCard({ project }: { project: Project }) {
                         {project.image ? (
                             <Image
                                 src={project.image}
-                                alt={`${project.name} screenshot`}
+                                alt={`${project.name}${t.screenshotAltSuffix}`}
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
                                 className="object-cover object-top"
@@ -493,7 +458,11 @@ function ProjectCard({ project }: { project: Project }) {
                 <div className="mt-8">
                     {project.href ? (
                         project.notice ? (
-                            <ExternalNotice href={project.href} title={project.name} />
+                            <ExternalNotice
+                                href={project.href}
+                                title={project.name}
+                                copy={t.externalNotice}
+                            />
                         ) : (
                             <a
                                 href={project.href}
@@ -501,13 +470,13 @@ function ProjectCard({ project }: { project: Project }) {
                                 rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
                                 className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
                             >
-                                Open
+                                {t.open}
                                 <span className="text-signal" aria-hidden="true">→</span>
                             </a>
                         )
                     ) : (
                         <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                            Private
+                            {t.privateLabel}
                         </span>
                     )}
                 </div>
@@ -516,31 +485,33 @@ function ProjectCard({ project }: { project: Project }) {
     );
 }
 
-function Projects() {
+function Projects({ t }: { t: LandingCopy }) {
+    const flagships = mergeProjects(FLAGSHIP_BASE, t.flagships);
+    const projects = mergeProjects(PROJECT_BASE, t.projects);
     return (
         <section
             id="projects"
             className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
         >
-            <SectionHeading>Projects</SectionHeading>
+            <SectionHeading>{t.projectsHeading}</SectionHeading>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {FLAGSHIP_PROJECTS.map((project) => (
-                    <ProjectCard key={project.name} project={project} />
+                {flagships.map((project) => (
+                    <ProjectCard key={project.id} project={project} t={t} />
                 ))}
             </div>
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {PROJECTS.map((project, index) => (
+                {projects.map((project, index) => (
                     <div
-                        key={project.name}
+                        key={project.id}
                         className={
-                            index % 3 === 0 || index === PROJECTS.length - 1
+                            index % 3 === 0 || index === projects.length - 1
                                 ? "md:col-span-2"
                                 : ""
                         }
                     >
-                        <ProjectCard project={project} />
+                        <ProjectCard project={project} t={t} />
                     </div>
                 ))}
             </div>
@@ -548,9 +519,10 @@ function Projects() {
     );
 }
 
-export default async function Page() {
-    const personJsonLd = generatePersonJsonLd();
-    const websiteJsonLd = generateWebsiteJsonLd();
+export function Landing({ locale }: { locale: Locale }) {
+    const t = copy[locale];
+    const personJsonLd = generatePersonJsonLd(locale);
+    const websiteJsonLd = generateWebsiteJsonLd(locale);
 
     return (
         <main id="main">
@@ -562,12 +534,12 @@ export default async function Page() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
             />
-            <Nav />
-            <Hero />
-            <Field />
-            <WhatIDo />
-            <Work />
-            <Projects />
+            <Nav t={t} />
+            <Hero t={t} />
+            <Field t={t} />
+            <WhatIDo t={t} />
+            <Work t={t} />
+            <Projects t={t} />
         </main>
     );
 }

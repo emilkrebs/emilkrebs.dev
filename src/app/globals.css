@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-    --font-sans: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif;
-    --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
-    --font-serif: var(--font-instrument-serif), Georgia, serif;
+    --font-sans: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+    --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", monospace;
+    --font-serif: var(--font-instrument-serif), Georgia, "Songti SC", "Noto Serif CJK SC", serif;
 
     --color-paper: #f7f5f0;
     --color-paper-deep: #ece8df;
@@ -38,7 +38,7 @@ section[id] {
 body {
     background-color: var(--color-paper);
     color: var(--color-ink);
-    font-family: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-schibsted-grotesk), ui-sans-serif, system-ui, "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
