@@ -140,12 +140,6 @@ export default function RootLayout({
                 >
                     跳到主要内容
                 </a>
-                <div
-                    dangerouslySetInnerHTML={{
-                        __html:
-              "<!--\nTHESIS: Emil builds the tools that build software. A personal site set as a language specification: warm paper, black ink, one signal accent, sharp corners, flat, no motion; one gimmick: the hero portrait wears a green face-reticle and a Thinking chip.\nOWN-WORLD: paper #f7f5f0, ink #141310, signal #e8450c, signal-accent #22c55e (hero reticle and chip border only), 1px hairlines, Schibsted Grotesk display, IBM Plex Mono labels, one Instrument Serif italic accent phrase per section, 6px square token marks, duotone ID plate portrait with face-reticle, 0px corners everywhere.\nSTORY: The visitor reads a dry spec sheet of a person: who he is, what he is thinking, the four strengths with proof, the shipped products (Prami in preview, Healthstack, the rest), and how to reach him.\nFIRST VIEWPORT: sticky nav (wordmark, mono links, hairline bottom), name at display size, position line, three plain CTAs, duotone ID plate portrait right with a green face-reticle over the face and a Thinking status chip at its top-right corner, token mark row. No scroll cue, no status dot.\nFORM: single page, one column, max 1120px, xl section rhythm; flagship project cards lead the project list, asymmetric grid below.\nFINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.\nZH: zh-CN variant of the landing page at /zh/; English at / stays the default and fallback, and only the landing is localized while the subpages remain English. Chinese keeps the same type roles and tokens, set in system CJK fallbacks (PingFang SC, Hiragino Sans GB, Noto Sans CJK SC, Microsoft YaHei); the Thinking chip reads 思考中..., captions and status labels are translated, origins and product names stay verbatim. Visitors with a zh-* primary browser language landing on / are auto-redirected here (client-side; locale-pref in localStorage overrides). The bordered EN tag in the nav is the only switcher; it returns to the English page.\n-->",
-                    }}
-                />
                 <script
                     async
                     defer

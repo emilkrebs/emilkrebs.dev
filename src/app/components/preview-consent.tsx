@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import {
     previewConsentCopy,
     type PreviewConsentCopy,
-} from "../lib/copy";
+} from "../lib/i18n";
 
 interface PreviewConsentProps {
     id: string;

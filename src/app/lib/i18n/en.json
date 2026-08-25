@@ -1,0 +1,117 @@
+{
+    "navAria": "Primary",
+    "nav": [
+        { "href": "/story", "label": "Story" },
+        { "href": "#work", "label": "Work" },
+        { "href": "#projects", "label": "Projects" }
+    ],
+    "heroTagline": "Software engineer at TypeFox. Kiel, Germany.",
+    "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "Email" },
+    "portraitAlt": "Emil Krebs, Software engineer",
+    "thinking": "Thinking...",
+    "fieldHeading": "Field",
+    "fieldLead": [
+        "I build the tools that read, understand, and transform code. At",
+        " that means custom domain-specific tools like IDEs. In my free time it means products: a spaced-repetition app, a lifestyle IDE powered by its own language & native AI, and a note tool built for privacy. I contribute to various open source projects."
+    ],
+    "strengthsHeading": "What I do",
+    "strengths": [
+        {
+            "title": "Developer tooling",
+            "proof": "Language servers, the LSP, Langium DSLs, Theia-based IDEs, and generators — the domain-specific tools that let editors understand code."
+        },
+        {
+            "title": "Security & privacy",
+            "proof": "Zero-knowledge encryption in VailNote, WearOS locking in WatchLock, no telemetry by default."
+        },
+        {
+            "title": "Open source",
+            "proof": "The Langium showcase, Theia, the Fresh ecosystem, and the BIPoC Climate Justice conference site."
+        }
+    ],
+    "workHeading": "Work",
+    "workBlurb": "Software Engineer: language servers, the LSP, and the tooling that lets editors understand code. This is the craft the rest of this page proves.",
+    "projectsHeading": "Projects",
+    "open": "Open",
+    "privateLabel": "Private",
+    "previewTitleSuffix": " preview",
+    "screenshotAltSuffix": " screenshot",
+    "flagships": [
+        {
+            "id": "prami",
+            "name": "Prami",
+            "description": "Active recall and spaced repetition, engineered so the review schedule fades into the background.",
+            "status": "Preview",
+            "imageCaption": "In testing - Prami"
+        },
+        {
+            "id": "healthstack",
+            "name": "Healthstack",
+            "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
+            "status": "Concept",
+            "imageCaption": "Concept Page"
+        }
+    ],
+    "projects": [
+        {
+            "id": "vailnote",
+            "name": "VailNote",
+            "description": "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
+            "imageCaption": "Live - vailnote.com"
+        },
+        {
+            "id": "watchlock",
+            "name": "WatchLock",
+            "description": "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
+            "imageCaption": "Live - github.com/emilkrebs/WatchLock"
+        },
+        {
+            "id": "bipoc",
+            "name": "BIPoC Climate Justice Conference",
+            "description": "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
+            "imageCaption": "Live - bipoclimatejusticenetwork.org"
+        },
+        {
+            "id": "langium-showcase",
+            "name": "Langium Showcase",
+            "description": "DSL showcases built with Langium: state machines, arithmetic, MiniLogo, and domain models.",
+            "previewCaption": "Live - langium.org/showcase/minilogo"
+        },
+        {
+            "id": "this-site",
+            "name": "This site",
+            "description": "Static export. No server, no database. Typeset per the spec you are reading.",
+            "imageCaption": "Live - emilkrebs.dev"
+        }
+    ],
+    "consent": {
+        "notice": "The preview loads a third-party site with its own scripts.",
+        "load": "Load preview"
+    },
+    "externalNotice": {
+        "open": "Open",
+        "closeNoticeAria": "Close notice",
+        "heading": "Testing notice",
+        "close": "Close",
+        "prototype": ["", " is a prototype"],
+        "testing": [
+            "",
+            " is in active testing, not a finished product. Features break, data can be lost, and the app will change without notice."
+        ],
+        "risk": [
+            "By proceeding you acknowledge that you are using ",
+            " at your own risk. It is provided without warranty of any kind, and the author accepts no liability for anything that happens while you use it."
+        ],
+        "accept": "Accept and continue",
+        "back": "Back"
+    },
+    "jsonLd": {
+        "personDescription": "Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
+        "websiteName": "Emil Krebs - Software engineer in Kiel",
+        "websiteDescription": "Personal website of Emil Krebs, a Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack."
+    },
+    "footer": {
+        "location": "Emil Krebs - Kiel, Germany",
+        "copyright": "Emil Krebs. All rights reserved."
+    }
+}
