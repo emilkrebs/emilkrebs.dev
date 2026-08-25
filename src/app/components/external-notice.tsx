@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import {
     externalNoticeCopy,
     type ExternalNoticeCopy,
-} from "../lib/copy";
+} from "../lib/i18n";
 
 interface ExternalNoticeProps {
     href: string;

@@ -1,5 +1,5 @@
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
-import { footerCopy, type Locale } from "../lib/copy";
+import { footerCopy, type Locale } from "../lib/i18n";
 
 function TokenMark({ count = 12 }: { count?: number }) {
     return (

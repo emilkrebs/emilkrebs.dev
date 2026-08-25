@@ -4,7 +4,7 @@ import { PreviewConsent } from "./preview-consent";
 import { ExternalNotice } from "./external-notice";
 import { LocaleSwitcher } from "./locale-switcher";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
-import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/copy";
+import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
 
 function generatePersonJsonLd(locale: Locale) {
     return {
@@ -526,14 +526,8 @@ export function Landing({ locale }: { locale: Locale }) {
 
     return (
         <main id="main">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-            />
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-            />
+            <script type="application/ld+json">{JSON.stringify(personJsonLd)}</script>
+            <script type="application/ld+json">{JSON.stringify(websiteJsonLd)}</script>
             <Nav t={t} />
             <Hero t={t} />
             <Field t={t} />
