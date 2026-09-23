@@ -8,6 +8,8 @@ interface LocaleSwitcherProps {
     locale: "en" | "zh";
     label: string;
     aria: string;
+    /** Hidden unless the locale script flagged the visitor as reading Chinese. */
+    zhReadersOnly?: boolean;
 }
 
 /**
@@ -16,7 +18,7 @@ interface LocaleSwitcherProps {
  * not a nav link. Clicking it records the choice in localStorage, which the
  * locale redirect on `/` honors on later visits.
  */
-export function LocaleSwitcher({ href, hrefLang, locale, label, aria }: LocaleSwitcherProps) {
+export function LocaleSwitcher({ href, hrefLang, locale, label, aria, zhReadersOnly }: LocaleSwitcherProps) {
     return (
         <a
             href={href}
@@ -29,7 +31,7 @@ export function LocaleSwitcher({ href, hrefLang, locale, label, aria }: LocaleSw
                     // storage blocked: the redirect falls back to the browser language
                 }
             }}
-            className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink hover:border-ink transition-colors duration-150"
+            className={`${zhReadersOnly ? "hidden zh-reader:inline " : ""}border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink hover:border-ink transition-colors duration-150`}
         >
             {label}
         </a>

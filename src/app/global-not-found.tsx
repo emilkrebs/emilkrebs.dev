@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function GlobalNotFound() {
     return (
-        <html lang="en" className={fontVariables}>
+        <html lang="en" className={fontVariables} data-scroll-behavior="smooth">
             <body className="min-h-screen flex flex-col bg-paper text-ink antialiased">
                 <main id="main" className="flex-1">
                     <section className="mx-auto max-w-[1120px] px-6 py-24 md:py-32">
