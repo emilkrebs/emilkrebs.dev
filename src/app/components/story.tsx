@@ -316,49 +316,43 @@ interface EventRowProps {
 
 function EventRow({ date, name, place, role, href }: EventRowProps) {
     const external = href ? href.startsWith("http") : false;
-    const layout = "grid grid-cols-1 md:grid-cols-[11rem_1fr_auto] md:items-baseline gap-1 md:gap-6 px-8 py-5";
-    const cells = (
-        <>
-            <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft whitespace-nowrap">
+    return (
+        <li className="relative flex items-baseline gap-x-4 text-sm leading-6">
+            {/* A minor stop on the timeline rail: hollow, smaller than the era mark. */}
+            <span
+                className="absolute top-2 left-[calc(1px_-_2.5rem)] md:left-[calc(1px_-_3.5rem)] size-[7px] border border-ink-soft bg-paper"
+                aria-hidden="true"
+            />
+            <span className="w-24 shrink-0 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                 {date}
             </span>
-            <span className="text-base md:text-lg font-medium text-ink">
-                {name}
-                {href && <span className="text-signal ml-2" aria-hidden="true">→</span>}
+            <span className="flex flex-wrap items-baseline gap-x-4">
+                {href ? (
+                    <a
+                        href={href}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noopener noreferrer" : undefined}
+                        className="text-ink hover:text-signal transition-colors duration-150"
+                    >
+                        {name}
+                    </a>
+                ) : (
+                    <span className="text-ink">{name}</span>
+                )}
+                <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                    {place}
+                    {role && ` · ${role}`}
+                </span>
             </span>
-            <span className="mt-1 md:mt-0 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                {place}
-                {role && <span className="border border-hairline bg-paper px-2 py-1">{role}</span>}
-            </span>
-        </>
-    );
-
-    return (
-        <li className="border-b border-hairline last:border-b-0">
-            {href ? (
-                <a
-                    href={href}
-                    target={external ? "_blank" : undefined}
-                    rel={external ? "noopener noreferrer" : undefined}
-                    className={`${layout} hover:bg-paper-deep transition-colors duration-150`}
-                >
-                    {cells}
-                </a>
-            ) : (
-                <div className={layout}>{cells}</div>
-            )}
         </li>
     );
 }
 
 function EventList({ label, children }: { label: string; children: React.ReactNode }) {
     return (
-        <div className="my-10 border border-hairline">
-            <p className="px-8 py-4 border-b border-hairline font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                {label}
-            </p>
-            <ul>{children}</ul>
-        </div>
+        <ul aria-label={label} className="my-8 space-y-1.5">
+            {children}
+        </ul>
     );
 }
 
