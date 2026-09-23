@@ -1,10 +1,11 @@
 import type { MDXComponents } from "mdx/types";
 import { Children, isValidElement } from "react";
-import Image from "next/image";
-import { ExternalNotice } from "./external-notice";
-import { PlaceholderPlate } from "./placeholder-plate";
-import { PreviewConsent } from "./preview-consent";
-import { copy, storyCopy, type Locale } from "../lib/i18n";
+import { ProjectCard } from "./project-card";
+import { SmartLink } from "./smart-link";
+import { Tag } from "./tag";
+import { TokenMark } from "./token-mark";
+import { storyCopy, type Locale } from "../lib/i18n";
+import { routePath, type RouteKey } from "../lib/routes";
 
 interface EraProps {
     id: string;
@@ -72,11 +73,7 @@ function Contents({ items, locale = "en" }: ContentsProps) {
         <nav aria-label={t.contents} className="mt-20 md:mt-24 border border-hairline">
             <div className="flex items-center justify-between gap-6 px-8 py-4 border-b border-hairline">
                 <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{t.contents}</p>
-                <div className="hidden md:flex gap-2.5" aria-hidden="true">
-                    {Array.from({ length: 8 }).map((_, i) => (
-                        <span key={i} className="size-1.5 bg-signal" />
-                    ))}
-                </div>
+                <TokenMark count={8} className="hidden md:flex" />
             </div>
             <ul>
                 {items.map((item) => (
@@ -103,11 +100,14 @@ function Contents({ items, locale = "en" }: ContentsProps) {
 interface ShowcaseProps {
     name: string;
     description: string;
+    /** External URL. */
     href?: string;
-    internal?: boolean;
+    /** Internal page, linked in the story's locale. */
+    route?: RouteKey;
     notice?: boolean;
     confidential?: boolean;
     status?: string;
+    /** Comma-separated. */
     tags?: string;
     image?: string;
     caption?: string;
@@ -117,162 +117,27 @@ interface ShowcaseProps {
     locale?: Locale;
 }
 
-function Showcase({
-    name,
-    description,
-    href,
-    internal,
-    notice,
-    confidential,
-    status,
-    tags,
-    image,
-    caption,
-    preview,
-    placeholder,
-    compact,
-    locale = "en",
-}: ShowcaseProps) {
-    const t = copy[locale];
-    const external = href ? href.startsWith("http") && !internal : false;
-    const tagsList = tags ? tags.split(",").map((tag) => tag.trim()) : [];
-    const statusLower = status?.toLowerCase();
+/** ProjectCard as written in MDX: comma-separated tags, NDA work flagged by name, status, or tag. */
+function Showcase({ tags, route, href, confidential, compact, locale = "en", ...card }: ShowcaseProps) {
+    const tagList = tags ? tags.split(",").map((tag) => tag.trim()) : [];
     const isConfidential =
         confidential ||
-        statusLower === "confidential" ||
-        tagsList.some((tag) => tag.toLowerCase() === "confidential") ||
-        name.toLowerCase().includes("confidential");
+        card.status?.toLowerCase() === "confidential" ||
+        tagList.some((tag) => tag.toLowerCase() === "confidential") ||
+        card.name.toLowerCase().includes("confidential");
 
     return (
-        <article
-            className={`relative overflow-hidden bg-paper-deep border flex flex-col group transition-colors duration-150 ${isConfidential
-                ? "border-ink/35 border-dashed hover:border-ink/70"
-                : "border-hairline hover:border-ink"
-            }`}
-        >
-            {isConfidential && (
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 opacity-25"
-                    style={{
-                        backgroundImage:
-                            "radial-gradient(circle at 1px 1px, rgba(25, 25, 25, 0.35) 1px, transparent 0)",
-                        backgroundSize: "16px 16px",
-                    }}
-                />
-            )}
-            {(preview || image || placeholder || isConfidential) && (
-                <div className="relative">
-                    <div
-                        className={`relative border-b overflow-hidden ${isConfidential ? "border-dashed border-ink/30 bg-paper-deep" : "border-hairline bg-paper"
-                        }`}
-                        style={{ aspectRatio: compact ? "1 / 1" : "16 / 10" }}
-                    >
-                        {isConfidential ? (
-                            <div className="absolute inset-0 grid place-items-center p-6">
-                                <p className="mt-3 text-sm text-ink/85 text-center">
-                                    {storyCopy[locale].confidentialNotice}
-                                </p>
-                            </div>
-                        ) : preview ? (
-                            <PreviewConsent
-                                id={`story-preview-${name.toLowerCase().replace(/\s+/g, "-")}`}
-                                src={preview}
-                                title={`${name}${t.previewTitleSuffix}`}
-                                placeholder={placeholder}
-                                copy={t.consent}
-                            />
-                        ) : image ? (
-                            <Image
-                                src={image}
-                                alt={`${name}${t.screenshotAltSuffix}`}
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className={
-                                    image.endsWith(".svg")
-                                        ? "object-contain p-4 sm:p-6"
-                                        : "object-cover object-top"
-                                }
-                            />
-                        ) : (
-                            <PlaceholderPlate label={name} />
-                        )}
-                    </div>
-                    {!compact && caption && (
-                        <p
-                            className={`px-8 pt-3 font-mono text-xs uppercase tracking-[0.08em] ${isConfidential ? "text-ink-soft" : "text-ink/75"
-                            }`}
-                        >
-                            {caption}
-                        </p>
-                    )}
-                </div>
-            )}
-            <div className={`${compact ? "p-5 md:p-6" : "p-8 md:p-10"} flex flex-col flex-1`}>
-                <div className="flex items-start justify-between gap-4">
-                    <h3
-                        className={`${compact ? "text-lg md:text-xl" : "text-2xl md:text-3xl"
-                        } font-semibold tracking-tight`}
-                    >
-                        {name}
-                    </h3>
-                    {status && (
-                        <span
-                            className={`inline-flex items-center gap-2 border px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap ${isConfidential
-                                ? "border-ink/40 border-dashed bg-paper text-ink"
-                                : "border-hairline"
-                            }`}
-                        >
-                            <span className="size-1.5 bg-signal" aria-hidden="true" />
-                            {status}
-                        </span>
-                    )}
-                </div>
-                <p
-                    className={`mt-3 ${compact ? "text-sm leading-relaxed" : "mt-4 text-base leading-relaxed"
-                    } text-ink/85 flex-1 max-w-[62ch]`}
-                >
-                    {description}
-                </p>
-                {tagsList.length > 0 && (
-                    <div className={`${compact ? "mt-4" : "mt-6"} flex flex-wrap gap-2`}>
-                        {tagsList.map((tag) => (
-                            <span
-                                key={tag}
-                                className={`border px-2 py-1 font-mono ${compact ? "text-[10px]" : "text-xs"
-                                } uppercase tracking-[0.08em] ${isConfidential
-                                    ? "border-ink/35 border-dashed bg-paper/70 text-ink"
-                                    : "border-hairline bg-paper text-ink-soft"
-                                }`}
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                )}
-                <div className={compact ? "mt-5" : "mt-8"}>
-                    {href ? (
-                        notice ? (
-                            <ExternalNotice href={href} title={name} copy={t.externalNotice} />
-                        ) : (
-                            <a
-                                href={href}
-                                target={external ? "_blank" : undefined}
-                                rel={external ? "noopener noreferrer" : undefined}
-                                className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
-                            >
-                                {t.open}
-                                <span className="text-signal" aria-hidden="true">→</span>
-                            </a>
-                        )
-                    ) : (
-                        <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                            {t.privateLabel}
-                        </span>
-                    )}
-                </div>
-            </div>
-        </article>
+        <ProjectCard
+            {...card}
+            tags={tagList}
+            href={route ? routePath(route, locale) : href}
+            confidential={isConfidential}
+            variant={compact ? "compact" : undefined}
+            // Grid cells in the story column (792px): three compact or two regular per row.
+            sizes={compact ? "(min-width: 768px) 256px, 100vw" : "(min-width: 768px) 384px, 100vw"}
+            filledTags
+            locale={locale}
+        />
     );
 }
 
@@ -295,12 +160,7 @@ function TagRow({ label, items }: { label?: string; items: string }) {
                 <p className="mr-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{label}</p>
             )}
             {tags.map((tag) => (
-                <span
-                    key={tag}
-                    className="border border-hairline bg-paper px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft"
-                >
-                    {tag}
-                </span>
+                <Tag key={tag} filled>{tag}</Tag>
             ))}
         </div>
     );
@@ -315,7 +175,6 @@ interface EventRowProps {
 }
 
 function EventRow({ date, name, place, role, href }: EventRowProps) {
-    const external = href ? href.startsWith("http") : false;
     return (
         <li className="relative flex items-baseline gap-x-4 text-sm leading-6">
             {/* A minor stop on the timeline rail: hollow, smaller than the era mark. */}
@@ -328,14 +187,9 @@ function EventRow({ date, name, place, role, href }: EventRowProps) {
             </span>
             <span className="flex flex-wrap items-baseline gap-x-4">
                 {href ? (
-                    <a
-                        href={href}
-                        target={external ? "_blank" : undefined}
-                        rel={external ? "noopener noreferrer" : undefined}
-                        className="text-ink hover:text-signal transition-colors duration-150"
-                    >
+                    <SmartLink href={href} className="text-ink hover:text-signal transition-colors duration-150">
                         {name}
-                    </a>
+                    </SmartLink>
                 ) : (
                     <span className="text-ink">{name}</span>
                 )}
@@ -361,16 +215,6 @@ function Lead({ children }: { children: React.ReactNode }) {
         <p className="mt-6 mb-10 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
             {children}
         </p>
-    );
-}
-
-function TokenMark({ count = 12 }: { count?: number }) {
-    return (
-        <div className="flex gap-2.5" aria-hidden="true">
-            {Array.from({ length: count }).map((_, i) => (
-                <span key={i} className="size-1.5 bg-signal" />
-            ))}
-        </div>
     );
 }
 

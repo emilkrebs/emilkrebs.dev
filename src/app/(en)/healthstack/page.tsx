@@ -1,43 +1,68 @@
-import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
 import { existsSync } from "fs";
 import { join } from "path";
-import { PlaceholderPlate } from "../../components/placeholder-plate";
+import content from "../../content/healthstack.json";
 import BackHeader from "../../components/back-header";
+import { JsonLd } from "../../components/json-ld";
+import { PlaceholderPlate } from "../../components/placeholder-plate";
+import { StatusLabel, Tag } from "../../components/tag";
+import { pageMetadata } from "../../lib/metadata";
+import { softwareApplicationSchema } from "../../lib/structured-data";
 
-export const metadata: Metadata = {
-    title: "Healthstack",
-    description:
-    "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
-    alternates: {
-        canonical: "/healthstack/",
-    },
-    openGraph: {
-        type: "website",
-        locale: "en_US",
-        url: "https://emilkrebs.dev/healthstack/",
-        title: "Healthstack | Emil Krebs",
-        description:
-      "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
-        siteName: "Emil Krebs",
-        images: [
-            {
-                url: "/pictures/healthstack-dashboard.webp",
-                width: 1280,
-                height: 800,
-                alt: "Biomarker dashboard in the Healthstack dev build",
-            },
-        ],
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Healthstack | Emil Krebs",
-        description:
-      "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
-        images: ["/pictures/healthstack-dashboard.webp"],
-    },
+interface FeatureSection {
+    heading: string;
+    /** `*accent*` renders in the serif italic. */
+    title: string;
+    proof: string;
+    stats: { value: string; label: string }[];
+    /** Screenshot path; until one exists, `placeholder` labels the pending plate. */
+    image?: string;
+    placeholder: string;
+    caption: string;
+}
+
+interface HealthstackContent {
+    meta: { title: string; description: string };
+    hero: {
+        title: string;
+        status: string;
+        lead: string;
+        tags: string[];
+        image: string;
+        imageAlt: string;
+        caption: string;
+    };
+    sections: FeatureSection[];
+    dsl: {
+        /** `` `code` `` renders as inline code. */
+        body: string;
+        heading: string;
+        label: string;
+        openFullScreen: string;
+        iframeTitle: string;
+        fallbackLabel: string;
+        fallbackBody: string;
+    };
+    status: { heading: string; title: string; body: string; tags: string[] };
+}
+
+const page: HealthstackContent = content;
+
+// JPEG copy of the dashboard screenshot: link unfurlers do not reliably render WebP.
+const OG_IMAGE = {
+    url: "/og/healthstack.jpg",
+    width: 1280,
+    height: 800,
+    alt: page.hero.imageAlt,
 };
+
+export const metadata: Metadata = pageMetadata({
+    route: "healthstack",
+    title: page.meta.title,
+    description: page.meta.description,
+    image: OG_IMAGE,
+});
 
 const PLAYGROUND_URL = process.env.NEXT_PUBLIC_PLAYGROUND_URL ?? "";
 
@@ -52,106 +77,18 @@ function playgroundIsBuilt(): boolean {
     return existsSync(join(process.cwd(), "public", "playground", "index.html"));
 }
 
-const HERO_TAGS = [
-    "DSL .bio protocols",
-    "Timeline planned vs logged",
-    "Agents Cortex · Evidence",
-    "Units grammar engine",
-    "Local-first",
-];
-
-interface FeatureSection {
-    heading: string;
-    title: string;
-    proof: string;
-    stats: { value: string; label: string }[];
-    image: string | null;
-    placeholder: string | null;
-    caption: string;
+/** Plain text with `*accent*` in the serif italic and `` `code` `` as inline code. */
+function InlineText({ text }: { text: string }) {
+    return text.split(/(\*[^*]+\*|`[^`]+`)/).map((part, i) => {
+        if (part.length > 2 && part.startsWith("*") && part.endsWith("*")) {
+            return <em key={i} className="font-serif italic font-normal">{part.slice(1, -1)}</em>;
+        }
+        if (part.length > 2 && part.startsWith("`") && part.endsWith("`")) {
+            return <code key={i} className="font-mono text-sm">{part.slice(1, -1)}</code>;
+        }
+        return part;
+    });
 }
-
-const SECTIONS: FeatureSection[] = [
-    {
-        heading: "Timeline",
-        title: "Your entire protocol history on *one axis*.",
-        proof:
-      "Every protocol, dose, and threshold on one axis: planned against actual, with threshold events armed and crossed, dose dots per phase, and the whole history exportable to your calendar.",
-        stats: [
-            { value: "218", label: "events" },
-            { value: "2", label: "layers: planned / actual" },
-            { value: "Armed · crossed", label: "threshold states" },
-            { value: "Dose dots", label: "per phase" },
-            { value: ".ics", label: "export format" },
-        ],
-        image: null,
-        placeholder: "Timeline",
-        caption: "Dev build - timeline",
-    },
-    {
-        heading: "Protocol builder",
-        title: "Compose protocols like a graph, not a spreadsheet.",
-        proof:
-      "Substances are nodes, synergies and conflicts are edges, and tracks reach from protocol to biomarker. The graph auto-relayouts, and because a protocol is text, it versions in git.",
-        stats: [
-            { value: "28", label: "entities" },
-            { value: "Synergy · conflict", label: "edge types" },
-            { value: "Track", label: "edges to biomarkers" },
-            { value: "Auto", label: "re-layout" },
-            { value: "Git", label: "versioning" },
-        ],
-        image: null,
-        placeholder: "Protocol builder",
-        caption: "Dev build - protocol builder",
-    },
-    {
-        heading: "Biomarker tracker",
-        title: "Every lab value — in range, or out.",
-        proof:
-      "Each value sits against its reference range with a status: optimal, good, or out. Sparklines show the trend, and units convert as you paste, mg/dL to mmol/L and back.",
-        stats: [
-            { value: "14", label: "biomarkers" },
-            { value: "198", label: "data points" },
-            { value: "Optimal · good · out", label: "status" },
-            { value: "Sparkline", label: "trends" },
-            { value: "mg/dL ↔ mmol/L", label: "units" },
-        ],
-        image: null,
-        placeholder: "Biomarker tracker",
-        caption: "Dev build - biomarker tracker",
-    },
-    {
-        heading: "Trends",
-        title: "See the curve, not just the number.",
-        proof:
-      "Multiple markers compared on one chart, range bands drawn over time, event markers where protocols started or ended, values normalized across different labs, and an AI hand-off for analysis.",
-        stats: [
-            { value: "Multi-marker", label: "comparison" },
-            { value: "Range bands", label: "over time" },
-            { value: "Event", label: "markers" },
-            { value: "0-100%", label: "normalized" },
-            { value: "AI", label: "analysis hand-off" },
-        ],
-        image: null,
-        placeholder: "Trends",
-        caption: "Dev build - trends",
-    },
-    {
-        heading: "AI agents",
-        title: "Cortex orchestrates *your Healthstack*.",
-        proof:
-      "Agents with roles: Cortex coordinates, Evidence searches PubMed through MCP, BiomarkerAnalyst reads labs, ProtocolPlanner drafts .bio files. Bring your own key, multi-provider.",
-        stats: [
-            { value: "@Cortex", label: "orchestrator" },
-            { value: "@Evidence", label: "MCP · PubMed search" },
-            { value: "@BiomarkerAnalyst", label: "lab readings" },
-            { value: "@ProtocolPlanner", label: ".bio drafts" },
-            { value: "BYO key", label: "multi-provider" },
-        ],
-        image: null,
-        placeholder: "Cortex",
-        caption: "Dev build - Cortex chat",
-    },
-];
 
 function SectionHeading({ children }: { children: string }) {
     return (
@@ -161,28 +98,11 @@ function SectionHeading({ children }: { children: string }) {
     );
 }
 
-function StatusLabel({ children }: { children: string }) {
-    return (
-        <span className="inline-flex items-center gap-2 border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap">
-            <span className="size-1.5 bg-signal" aria-hidden="true" />
-            {children}
-        </span>
-    );
-}
-
-function Tag({ children }: { children: string }) {
-    return (
-        <span className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-            {children}
-        </span>
-    );
-}
-
 interface ShotProps {
-    src: string | null;
+    src?: string;
     alt: string;
     caption: string;
-    placeholder: string | null;
+    placeholder?: string;
 }
 
 function Shot({ src, alt, caption, placeholder }: ShotProps) {
@@ -194,7 +114,8 @@ function Shot({ src, alt, caption, placeholder }: ShotProps) {
                         src={src}
                         alt={alt}
                         fill
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        // Full width of the 1120px container (1072px of content).
+                        sizes="(min-width: 1120px) 1072px, 100vw"
                         className="object-cover object-center"
                     />
                 ) : (
@@ -234,21 +155,13 @@ function StatTable({ stats }: { stats: { value: string; label: string }[] }) {
 }
 
 function FeatureSection({ section }: { section: FeatureSection }) {
-    const parts = section.title.split("*");
-    const before = parts[0] ?? "";
-    const accent = parts.length > 1 && parts[1].length > 0 ? parts[1] : undefined;
-    const after = parts.length > 2 ? parts.slice(2).join("*") : "";
     return (
         <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
             <SectionHeading>{section.heading}</SectionHeading>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                 <div className="md:col-span-5 flex flex-col">
                     <h3 className="text-2xl md:text-3xl font-semibold tracking-tight leading-snug">
-                        {before}
-                        {accent && (
-                            <em className="font-serif italic font-normal">{accent}</em>
-                        )}
-                        {after}
+                        <InlineText text={section.title} />
                     </h3>
                     <p className="mt-4 text-base leading-relaxed text-ink/85">
                         {section.proof}
@@ -259,71 +172,61 @@ function FeatureSection({ section }: { section: FeatureSection }) {
                 </div>
             </div>
             <div className="mt-8">
-                {section.image || section.placeholder ? (
-                    <Shot
-                        src={section.image}
-                        alt={`${section.heading} in the Healthstack dev build`}
-                        caption={section.caption}
-                        placeholder={section.placeholder}
-                    />
-                ) : null}
+                <Shot
+                    src={section.image}
+                    alt={`${section.heading} in the Healthstack dev build`}
+                    caption={section.caption}
+                    placeholder={section.placeholder}
+                />
             </div>
         </section>
     );
 }
 
 export default function HealthstackPage() {
+    const { hero, dsl, status } = page;
+    const playgroundBuilt = playgroundIsBuilt();
     return (
         <main id="main" className="flex-1">
-            <BackHeader />
+            <JsonLd
+                data={softwareApplicationSchema({
+                    route: "healthstack",
+                    locale: "en",
+                    name: page.meta.title,
+                    description: page.meta.description,
+                    image: hero.image,
+                })}
+            />
+            <BackHeader route="healthstack" />
 
             <section className="mx-auto max-w-280 px-6 pt-10 md:pt-16 pb-16 md:pb-20">
                 <div className="flex items-start justify-between gap-4 flex-wrap">
                     <h1 className="font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(2rem,4.5vw,3.25rem)] max-w-[16ch]">
-                        Protocols as code. Biology as data. AI as your cortex.
+                        {hero.title}
                     </h1>
-                    <StatusLabel>Preview - dev build</StatusLabel>
+                    <StatusLabel>{hero.status}</StatusLabel>
                 </div>
                 <p className="mt-6 max-w-[62ch] text-base md:text-lg leading-relaxed">
-                    A specialized IDE for lifestyle optimization on Eclipse Theia:
-                    biomarker tracking, unit conversion, and a purpose-built DSL
-                    for intervention protocols.
+                    {hero.lead}
                 </p>
                 <div className="mt-8 flex flex-wrap gap-2">
-                    {HERO_TAGS.map((tag) => (
+                    {hero.tags.map((tag) => (
                         <Tag key={tag}>{tag}</Tag>
                     ))}
                 </div>
                 <div className="mt-10 md:mt-14">
-                    <Shot
-                        src="/pictures/healthstack-dashboard.webp"
-                        alt="Biomarker dashboard in the Healthstack dev build"
-                        caption="Thumbnail - Healthstack dev build"
-                        placeholder={null}
-                    />
+                    <Shot src={hero.image} alt={hero.imageAlt} caption={hero.caption} />
                 </div>
             </section>
 
-            {SECTIONS.map((section) => (
+            {page.sections.map((section) => (
                 <FeatureSection key={section.heading} section={section} />
             ))}
 
             <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
-                <SectionHeading>The DSL</SectionHeading>
+                <SectionHeading>{dsl.heading}</SectionHeading>
                 <p className="text-base md:text-lg leading-relaxed max-w-[62ch] mb-10">
-                    Protocols are data, not prose, and the language&apos;s type
-                    system is written in the language itself:{" "}
-                    <code className="font-mono text-sm">substance</code>,{" "}
-                    <code className="font-mono text-sm">intervention</code>,{" "}
-                    <code className="font-mono text-sm">stack</code>, and{" "}
-                    <code className="font-mono text-sm">protocol</code> are
-                    user-extendable <code className="font-mono text-sm">type</code>{" "}
-                    declarations in <code className="font-mono text-sm">.bio</code>,
-                    not hardcoded in the grammar. The editor below runs the real
-                    language server in this tab. Your data never leaves your
-                    machine. It opens with a sample that defines its own types, then
-                    extends them; the other samples cover a curated
-                    supplement library and the live interaction checker.
+                    <InlineText text={dsl.body} />
                 </p>
                 <div className="bg-paper-deep border border-hairline p-8 md:p-10">
                     <div className="flex flex-wrap items-center justify-between gap-2 pb-6">
@@ -332,33 +235,32 @@ export default function HealthstackPage() {
                                 className="bg-signal w-1.5 h-1.5 shrink-0"
                                 aria-hidden="true"
                             />
-                            Playground · .bio language server, runs in your browser
+                            {dsl.label}
                         </div>
-                        {playgroundIsBuilt() && (
-                            <Link
+                        {playgroundBuilt && (
+                            // A separate Vite app, not a Next.js route: a plain anchor, no client routing.
+                            <a
                                 href={`${PLAYGROUND_URL}/playground/`}
                                 className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
                             >
-                                Open full screen · /playground/
-                            </Link>
+                                {dsl.openFullScreen}
+                            </a>
                         )}
                     </div>
-                    {playgroundIsBuilt() ? (
+                    {playgroundBuilt ? (
                         <iframe
                             src={`${PLAYGROUND_URL}/playground/?sample=type-system`}
-                            title=".bio protocol playground"
+                            title={dsl.iframeTitle}
                             loading="lazy"
                             className="block w-full h-120 md:h-160 border border-hairline bg-paper"
                         />
                     ) : (
                         <div className="flex h-120 md:h-160 flex-col items-center justify-center gap-4 border border-hairline bg-paper px-6 text-center">
                             <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                                Playground not bundled with this build
+                                {dsl.fallbackLabel}
                             </p>
                             <p className="max-w-[52ch] text-sm leading-relaxed text-ink/85">
-                                The .bio language server is not included here.
-                                Run the full build chain to embed the live
-                                editor on this page.
+                                {dsl.fallbackBody}
                             </p>
                         </div>
                     )}
@@ -366,24 +268,18 @@ export default function HealthstackPage() {
             </section>
 
             <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
-                <SectionHeading>Status</SectionHeading>
+                <SectionHeading>{status.heading}</SectionHeading>
                 <div className="bg-paper-deep border border-hairline p-8 md:p-10">
                     <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
-                        Preview build
+                        {status.title}
                     </h3>
                     <p className="mt-4 text-base leading-relaxed text-ink/85 max-w-[62ch]">
-                        Everything on this page is the dev build: it runs, the
-                        DSL compiles, the diagnostics fire. Expect rough edges,
-                        no data guarantees, and no product promises. The
-                        screenshot is real, taken from the app as it works
-                        today. A public preview is not hosted yet; when it is,
-                        it will appear here.
+                        {status.body}
                     </p>
                     <div className="mt-6 flex flex-wrap gap-2">
-                        <Tag>Theia</Tag>
-                        <Tag>Langium</Tag>
-                        <Tag>TypeScript</Tag>
-                        <Tag>Electron</Tag>
+                        {status.tags.map((tag) => (
+                            <Tag key={tag}>{tag}</Tag>
+                        ))}
                     </div>
                 </div>
             </section>

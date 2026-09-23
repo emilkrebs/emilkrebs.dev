@@ -2,28 +2,31 @@
 
 interface LocaleSwitcherProps {
     href: string;
+    /** BCP 47 tag of the target page. */
+    hrefLang: string;
+    /** The locale the link switches to. */
+    locale: "en" | "zh";
     label: string;
     aria: string;
-    pref: "en" | "zh";
 }
 
 /**
- * The language switcher. Rendered only on the localized pages (currently
- * /zh/), not on the English default. A bordered tag in the nav grammar so it
- * reads as an action, not a nav link. Clicking it records the manual
- * preference in localStorage so the zh-detection redirect on `/` does not
- * bounce the user back after they switched to English on purpose.
+ * The language switcher, rendered on every page that exists in more than
+ * one locale. A bordered tag in the nav grammar so it reads as an action,
+ * not a nav link. Clicking it records the choice in localStorage, which the
+ * locale redirect on `/` honors on later visits.
  */
-export function LocaleSwitcher({ href, label, aria, pref }: LocaleSwitcherProps) {
+export function LocaleSwitcher({ href, hrefLang, locale, label, aria }: LocaleSwitcherProps) {
     return (
         <a
             href={href}
+            hrefLang={hrefLang}
             aria-label={aria}
             onClick={() => {
                 try {
-                    localStorage.setItem("locale-pref", pref);
+                    localStorage.setItem("locale-pref", locale);
                 } catch {
-                    // storage blocked: the redirect script simply keeps running
+                    // storage blocked: the redirect falls back to the browser language
                 }
             }}
             className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink hover:border-ink transition-colors duration-150"

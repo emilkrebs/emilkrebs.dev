@@ -1,11 +1,27 @@
 {
+    "meta": {
+        "title": "Emil Krebs - 基尔的软件工程师",
+        "description": "德国基尔 TypeFox 的软件工程师。我构建读取、理解和转换代码的工具：语言服务器、DSL，以及 Prami 和 Healthstack 等产品。一切以开源发布。",
+        "keywords": [
+            "Emil Krebs",
+            "软件工程师",
+            "TypeFox GmbH",
+            "软件工程",
+            "语言服务器协议",
+            "Langium",
+            "开发者工具",
+            "Theia",
+            "TypeScript",
+            "基尔",
+            "德国",
+            "Prami",
+            "Healthstack"
+        ]
+    },
+    "skipLink": "跳到主要内容",
     "navAria": "主导航",
-    "nav": [
-        { "href": "/zh/story", "label": "故事" },
-        { "href": "#work", "label": "工作" },
-        { "href": "#projects", "label": "项目" }
-    ],
-    "switcher": { "href": "/", "label": "EN", "aria": "切换到英文版", "pref": "en" },
+    "nav": { "story": "故事", "work": "工作", "projects": "项目" },
+    "switcher": { "label": "EN", "aria": "切换到英文版" },
     "heroTagline": "TypeFox 软件工程师。德国基尔。",
     "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "邮件" },
     "portraitAlt": "Emil Krebs，软件工程师",
@@ -43,14 +59,14 @@
             "name": "Prami",
             "description": "主动回忆与间隔重复，复习日程经精心设计，近乎无感。",
             "status": "预览",
-            "imageCaption": "测试中 - Prami"
+            "caption": "测试中 - Prami"
         },
         {
             "id": "healthstack",
             "name": "Healthstack",
             "description": "基于 Eclipse Theia 的生活方式优化专用 IDE：生物标记追踪、单位转换，以及为干预协议量身打造的 DSL。",
             "status": "概念",
-            "imageCaption": "概念页"
+            "caption": "概念页"
         }
     ],
     "projects": [
@@ -58,32 +74,31 @@
             "id": "vailnote",
             "name": "VailNote",
             "description": "加密笔记分享，采用零知识加密与自毁笔记。",
-            "imageCaption": "在线 - vailnote.com"
+            "caption": "在线 - vailnote.com"
         },
         {
             "id": "watchlock",
             "name": "WatchLock",
             "description": "用智能手表锁定手机。支持 WearOS 与 Android，为个人安全而造。",
-            "imageCaption": "在线 - github.com/emilkrebs/WatchLock"
+            "caption": "在线 - github.com/emilkrebs/WatchLock"
         },
         {
             "id": "bipoc",
             "name": "BIPoC Climate Justice Conference",
             "description": "BIPoC Climate Justice Conference 2024 与 2025 的官方网站，支持本地化，完全由 Markdown 驱动。",
-            "imageCaption": "在线 - bipoclimatejusticenetwork.org"
+            "caption": "在线 - bipoclimatejusticenetwork.org"
         },
         {
             "id": "langium-showcase",
             "name": "Langium Showcase",
             "description": "用 Langium 构建的 DSL 示例集：状态机、算术运算、MiniLogo 与领域模型。",
-            "previewCaption": "在线 - langium.org/showcase/minilogo"
+            "caption": "在线 - langium.org/showcase/minilogo"
         },
         {
             "id": "this-site",
             "name": "本站",
             "description": "静态导出。无服务器，无数据库。按你正在阅读的这份规范排版。",
-            "href": "/zh/",
-            "imageCaption": "在线 - emilkrebs.dev"
+            "caption": "在线 - emilkrebs.dev"
         }
     ],
     "consent": {
@@ -108,17 +123,14 @@
         "back": "返回"
     },
     "jsonLd": {
-        "personDescription": "德国基尔 TypeFox GmbH 的软件工程师，构建语言服务器、DSL 以及 Prami、Healthstack 等产品。一切以开源发布。",
-        "websiteName": "Emil Krebs - 基尔的软件工程师",
-        "websiteDescription": "Emil Krebs 的个人网站。德国基尔 TypeFox GmbH 的软件工程师，构建语言服务器、DSL 以及 Prami、Healthstack 等产品。"
+        "personDescription": "德国基尔 TypeFox GmbH 的软件工程师，构建语言服务器、DSL 以及 Prami、Healthstack 等产品。一切以开源发布。"
     },
     "footer": {
         "location": "Emil Krebs - 基尔，德国",
         "copyright": "Emil Krebs。保留所有权利。",
-        "storyHref": "/zh/story"
+        "resume": "简历 (PDF)"
     },
     "backHeader": {
-        "href": "/zh/",
         "label": "返回首页"
     },
     "story": {

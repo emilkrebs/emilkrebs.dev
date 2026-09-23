@@ -2,17 +2,16 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import {
-    previewConsentCopy,
-    type PreviewConsentCopy,
-} from "../lib/i18n";
+import type { PreviewConsentCopy } from "../lib/i18n";
 
 interface PreviewConsentProps {
     id: string;
     src: string;
     title: string;
     placeholder?: string;
-    copy?: PreviewConsentCopy;
+    copy: PreviewConsentCopy;
+    /** The backdrop's rendered width, for srcset selection. */
+    sizes?: string;
 }
 
 /**
@@ -21,7 +20,7 @@ interface PreviewConsentProps {
  * iframe: a script tag inside a server-rendered tree never runs, so the
  * click handler lives here as React state instead.
  */
-export function PreviewConsent({ id, src, title, placeholder, copy = previewConsentCopy.en }: PreviewConsentProps) {
+export function PreviewConsent({ id, src, title, placeholder, copy, sizes = "100vw" }: PreviewConsentProps) {
     const [loaded, setLoaded] = useState(false);
     const [fadeIn, setFadeIn] = useState(false);
     const [gone, setGone] = useState(false);
@@ -56,7 +55,7 @@ export function PreviewConsent({ id, src, title, placeholder, copy = previewCons
                             src={placeholder}
                             alt=""
                             fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
+                            sizes={sizes}
                             aria-hidden="true"
                             className="absolute inset-0 object-cover object-top blur-md scale-105"
                         />

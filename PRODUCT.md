@@ -20,7 +20,7 @@ Most developer portfolios claim broad full-stack competence. This site claims th
 
 ## Operating Context
 
-Static-exported site built with Next.js 15, TypeScript, and Tailwind CSS v4, deployed to GitHub Pages via GitHub Actions. Content is hand-edited source; no CMS. SimpleAnalytics for traffic. Performance is part of the identity: the site must stay a static export with no runtime framework bloat.
+Static-exported site built with Next.js 16, TypeScript, and Tailwind CSS v4, deployed to GitHub Pages (behind Cloudflare) via GitHub Actions. Content is hand-edited source; no CMS. SimpleAnalytics for traffic. Performance is part of the identity: the site must stay a static export. Client JavaScript is the Next.js/React runtime (about 140 KB gzipped per page) plus three small client components; nothing beyond that ships without a reason.
 
 ## Capabilities and Constraints
 
@@ -30,7 +30,7 @@ Static-exported site built with Next.js 15, TypeScript, and Tailwind CSS v4, dep
 - Contact surface: email, GitHub, LinkedIn. Social links stay plain and quiet.
 - WatchLock tester call (Android 11+ / WearOS 3+): currently a loud notification; redesign moves it to a sober row in Projects with a plain link to the tester signup.
 - Resume download (PDF) exists today; keep it available, restyle as a plain link.
-- No dark mode in the redesign: paper/ink is light only, a deliberate commitment. Revisit only if evidence demands it.
+- Dark mode follows the system setting (`prefers-color-scheme`); paper/ink stays the primary, light scheme.
 
 ## Brand Commitments
 
@@ -51,7 +51,7 @@ Static-exported site built with Next.js 15, TypeScript, and Tailwind CSS v4, dep
 
 1. One idea per page: Software engineering, open source, security - nothing else.
 2. Proof over claims: every strength statement points at one concrete artifact.
-3. Speed is part of the identity: static export, no framework runtime, measurable performance.
+3. Speed is part of the identity: static export, minimal client JavaScript, measurable performance.
 4. No hype: sober, factual, dry; the tone itself is the brand.
 5. The site demonstrates the craft: hand-typed code, disciplined typography, a committed visual system with no AI tells.
 

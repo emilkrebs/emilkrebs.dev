@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next";
+import { absoluteUrl } from "./lib/routes";
+
 export const dynamic = "force-static";
 export default function robots(): MetadataRoute.Robots {
     return {
@@ -6,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: "*",
             allow: "/",
         },
-        sitemap: "https://emilkrebs.dev/sitemap.xml",
+        sitemap: absoluteUrl("/sitemap.xml"),
     };
 }

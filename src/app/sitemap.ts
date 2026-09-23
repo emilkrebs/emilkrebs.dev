@@ -1,78 +1,28 @@
 import type { MetadataRoute } from "next";
+import {
+    ROUTES,
+    absoluteUrl,
+    languageAlternates,
+    routeLocales,
+    routePath,
+    type RouteKey,
+} from "./lib/routes";
 
 export const dynamic = "force-static";
 
+/**
+ * Every indexable route in every locale, with absolute hreflang alternates.
+ * No lastmod, priority, or changefreq: Google ignores the latter two, and a
+ * lastmod stamped with the build time on every deploy teaches it to ignore
+ * the first.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-    return [
-        {
-            url: "https://emilkrebs.dev",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 1,
-            alternates: {
-                languages: {
-                    en: "/",
-                    zh: "/zh/",
-                    "x-default": "/",
-                },
-            },
-        },
-        {
-            url: "https://emilkrebs.dev/zh/",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.9,
-            alternates: {
-                languages: {
-                    en: "/",
-                    zh: "/zh/",
-                    "x-default": "/",
-                },
-            },
-        },
-        {
-            url: "https://emilkrebs.dev/healthstack",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.8,
-        },
-        {
-            url: "https://emilkrebs.dev/story",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.7,
-            alternates: {
-                languages: {
-                    en: "/story/",
-                    zh: "/zh/story/",
-                    "x-default": "/story/",
-                },
-            },
-        },
-        {
-            url: "https://emilkrebs.dev/zh/story",
-            lastModified: new Date(),
-            changeFrequency: "monthly",
-            priority: 0.6,
-            alternates: {
-                languages: {
-                    en: "/story/",
-                    zh: "/zh/story/",
-                    "x-default": "/story/",
-                },
-            },
-        },
-        {
-            url: "https://emilkrebs.dev/imprint",
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.3,
-        },
-        {
-            url: "https://emilkrebs.dev/privacy",
-            lastModified: new Date(),
-            changeFrequency: "yearly",
-            priority: 0.3,
-        },
-    ];
+    const routes = (Object.keys(ROUTES) as RouteKey[]).filter((route) => ROUTES[route].index);
+    return routes.flatMap((route) => {
+        const languages = languageAlternates(route);
+        return routeLocales(route).map((locale) => ({
+            url: absoluteUrl(routePath(route, locale)),
+            ...(languages && { alternates: { languages } }),
+        }));
+    });
 }

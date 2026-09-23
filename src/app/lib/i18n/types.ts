@@ -1,15 +1,8 @@
 export type Locale = "en" | "zh";
 
-export interface NavItem {
-    href: string;
-    label: string;
-}
-
 export interface LocaleSwitcherCopy {
-    href: string;
     label: string;
     aria: string;
-    pref: Locale;
 }
 
 export interface PreviewConsentCopy {
@@ -32,11 +25,10 @@ export interface ExternalNoticeCopy {
 export interface FooterCopy {
     location: string;
     copyright: string;
-    storyHref: string;
+    resume: string;
 }
 
 export interface BackHeaderCopy {
-    href: string;
     label: string;
 }
 
@@ -45,20 +37,24 @@ export interface StoryCopy {
     confidentialNotice: string;
 }
 
+export interface MetaCopy {
+    title: string;
+    description: string;
+    keywords: string[];
+}
+
 export interface ProjectCopy {
     id: string;
     name: string;
     description: string;
     status?: string;
-    href?: string;
-    imageCaption?: string;
-    previewCaption?: string;
+    caption?: string;
 }
 
 export interface LandingCopy {
     navAria: string;
-    nav: NavItem[];
-    switcher?: LocaleSwitcherCopy;
+    nav: { story: string; work: string; projects: string };
+    switcher: LocaleSwitcherCopy;
     heroTagline: string;
     ctas: { github: string; linkedin: string; email: string };
     portraitAlt: string;
@@ -80,12 +76,12 @@ export interface LandingCopy {
     externalNotice: ExternalNoticeCopy;
     jsonLd: {
         personDescription: string;
-        websiteName: string;
-        websiteDescription: string;
     };
 }
 
 export interface LocaleBundle extends LandingCopy {
+    meta: MetaCopy;
+    skipLink: string;
     footer: FooterCopy;
     backHeader: BackHeaderCopy;
     story: StoryCopy;
