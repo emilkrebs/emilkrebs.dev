@@ -1,0 +1,108 @@
+{
+    "meta": {
+        "title": "Healthstack",
+        "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build."
+    },
+    "hero": {
+        "title": "Protocols as code. Biology as data. AI as your cortex.",
+        "status": "Preview - dev build",
+        "lead": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
+        "tags": [
+            "DSL .bio protocols",
+            "Timeline planned vs logged",
+            "Agents Cortex · Evidence",
+            "Units grammar engine",
+            "Local-first"
+        ],
+        "image": "/pictures/healthstack-dashboard.webp",
+        "imageAlt": "Biomarker dashboard in the Healthstack dev build",
+        "caption": "Thumbnail - Healthstack dev build"
+    },
+    "sections": [
+        {
+            "heading": "Timeline",
+            "title": "Your entire protocol history on *one axis*.",
+            "proof": "Every protocol, dose, and threshold on one axis: planned against actual, with threshold events armed and crossed, dose dots per phase, and the whole history exportable to your calendar.",
+            "stats": [
+                { "value": "218", "label": "events" },
+                { "value": "2", "label": "layers: planned / actual" },
+                { "value": "Armed · crossed", "label": "threshold states" },
+                { "value": "Dose dots", "label": "per phase" },
+                { "value": ".ics", "label": "export format" }
+            ],
+            "placeholder": "Timeline",
+            "caption": "Dev build - timeline"
+        },
+        {
+            "heading": "Protocol builder",
+            "title": "Compose protocols like a graph, not a spreadsheet.",
+            "proof": "Substances are nodes, synergies and conflicts are edges, and tracks reach from protocol to biomarker. The graph auto-relayouts, and because a protocol is text, it versions in git.",
+            "stats": [
+                { "value": "28", "label": "entities" },
+                { "value": "Synergy · conflict", "label": "edge types" },
+                { "value": "Track", "label": "edges to biomarkers" },
+                { "value": "Auto", "label": "re-layout" },
+                { "value": "Git", "label": "versioning" }
+            ],
+            "placeholder": "Protocol builder",
+            "caption": "Dev build - protocol builder"
+        },
+        {
+            "heading": "Biomarker tracker",
+            "title": "Every lab value — in range, or out.",
+            "proof": "Each value sits against its reference range with a status: optimal, good, or out. Sparklines show the trend, and units convert as you paste, mg/dL to mmol/L and back.",
+            "stats": [
+                { "value": "14", "label": "biomarkers" },
+                { "value": "198", "label": "data points" },
+                { "value": "Optimal · good · out", "label": "status" },
+                { "value": "Sparkline", "label": "trends" },
+                { "value": "mg/dL ↔ mmol/L", "label": "units" }
+            ],
+            "placeholder": "Biomarker tracker",
+            "caption": "Dev build - biomarker tracker"
+        },
+        {
+            "heading": "Trends",
+            "title": "See the curve, not just the number.",
+            "proof": "Multiple markers compared on one chart, range bands drawn over time, event markers where protocols started or ended, values normalized across different labs, and an AI hand-off for analysis.",
+            "stats": [
+                { "value": "Multi-marker", "label": "comparison" },
+                { "value": "Range bands", "label": "over time" },
+                { "value": "Event", "label": "markers" },
+                { "value": "0-100%", "label": "normalized" },
+                { "value": "AI", "label": "analysis hand-off" }
+            ],
+            "placeholder": "Trends",
+            "caption": "Dev build - trends"
+        },
+        {
+            "heading": "AI agents",
+            "title": "Cortex orchestrates *your Healthstack*.",
+            "proof": "Agents with roles: Cortex coordinates, Evidence searches PubMed through MCP, BiomarkerAnalyst reads labs, ProtocolPlanner drafts .bio files. Bring your own key, multi-provider.",
+            "stats": [
+                { "value": "@Cortex", "label": "orchestrator" },
+                { "value": "@Evidence", "label": "MCP · PubMed search" },
+                { "value": "@BiomarkerAnalyst", "label": "lab readings" },
+                { "value": "@ProtocolPlanner", "label": ".bio drafts" },
+                { "value": "BYO key", "label": "multi-provider" }
+            ],
+            "placeholder": "Cortex",
+            "caption": "Dev build - Cortex chat"
+        }
+    ],
+    "dsl": {
+        "heading": "The DSL",
+        "body": "Protocols are data, not prose, and the language's type system is written in the language itself: `substance`, `intervention`, `stack`, and `protocol` are user-extendable `type` declarations in `.bio`, not hardcoded in the grammar. The editor below runs the real language server in this tab. Your data never leaves your machine. It opens with a sample that defines its own types, then extends them; the other samples cover a curated supplement library and the live interaction checker.",
+        "label": "Playground · .bio language server, runs in your browser",
+        "openFullScreen": "Open full screen · /playground/",
+        "iframeTitle": ".bio protocol playground",
+        "fallbackLabel": "Playground not bundled with this build",
+        "fallbackBody": "The .bio language server is not included here. Run the full build chain to embed the live editor on this page."
+    },
+    "status": {
+        "heading": "Status",
+        "title": "Preview build",
+        "body": "Everything on this page is the dev build: it runs, the DSL compiles, the diagnostics fire. Expect rough edges, no data guarantees, and no product promises. The screenshot is real, taken from the app as it works today. A public preview is not hosted yet; when it is, it will appear here.",
+        "tags": ["Theia", "Langium", "TypeScript", "Electron"]
+    }
+}

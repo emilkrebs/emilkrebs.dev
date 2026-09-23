@@ -1,10 +1,27 @@
 {
+    "meta": {
+        "title": "Emil Krebs - Software engineer in Kiel",
+        "description": "Software engineer at TypeFox in Kiel, Germany. I build the tools that read, understand, and transform code: language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
+        "keywords": [
+            "Emil Krebs",
+            "Software engineer",
+            "TypeFox GmbH",
+            "Software engineering",
+            "Language Server Protocol",
+            "Langium",
+            "Developer Tools",
+            "Theia",
+            "TypeScript",
+            "Kiel",
+            "Germany",
+            "Prami",
+            "Healthstack"
+        ]
+    },
+    "skipLink": "Skip to content",
     "navAria": "Primary",
-    "nav": [
-        { "href": "/story", "label": "Story" },
-        { "href": "#work", "label": "Work" },
-        { "href": "#projects", "label": "Projects" }
-    ],
+    "nav": { "story": "Story", "work": "Work", "projects": "Projects" },
+    "switcher": { "label": "中文", "aria": "Switch to the Chinese version" },
     "heroTagline": "Software engineer at TypeFox. Kiel, Germany.",
     "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "Email" },
     "portraitAlt": "Emil Krebs, Software engineer",
@@ -42,14 +59,14 @@
             "name": "Prami",
             "description": "Active recall and spaced repetition, engineered so the review schedule fades into the background.",
             "status": "Preview",
-            "imageCaption": "In testing - Prami"
+            "caption": "In testing - Prami"
         },
         {
             "id": "healthstack",
             "name": "Healthstack",
             "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
             "status": "Concept",
-            "imageCaption": "Concept Page"
+            "caption": "Concept Page"
         }
     ],
     "projects": [
@@ -57,31 +74,31 @@
             "id": "vailnote",
             "name": "VailNote",
             "description": "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
-            "imageCaption": "Live - vailnote.com"
+            "caption": "Live - vailnote.com"
         },
         {
             "id": "watchlock",
             "name": "WatchLock",
             "description": "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
-            "imageCaption": "Live - github.com/emilkrebs/WatchLock"
+            "caption": "Live - github.com/emilkrebs/WatchLock"
         },
         {
             "id": "bipoc",
             "name": "BIPoC Climate Justice Conference",
             "description": "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
-            "imageCaption": "Live - bipoclimatejusticenetwork.org"
+            "caption": "Live - bipoclimatejusticenetwork.org"
         },
         {
             "id": "langium-showcase",
             "name": "Langium Showcase",
             "description": "DSL showcases built with Langium: state machines, arithmetic, MiniLogo, and domain models.",
-            "previewCaption": "Live - langium.org/showcase/minilogo"
+            "caption": "Live - langium.org/showcase/minilogo"
         },
         {
             "id": "this-site",
             "name": "This site",
             "description": "Static export. No server, no database. Typeset per the spec you are reading.",
-            "imageCaption": "Live - emilkrebs.dev"
+            "caption": "Live - emilkrebs.dev"
         }
     ],
     "consent": {
@@ -106,21 +123,21 @@
         "back": "Back"
     },
     "jsonLd": {
-        "personDescription": "Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
-        "websiteName": "Emil Krebs - Software engineer in Kiel",
-        "websiteDescription": "Personal website of Emil Krebs, a Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack."
+        "personDescription": "Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source."
     },
     "footer": {
         "location": "Emil Krebs - Kiel, Germany",
         "copyright": "Emil Krebs. All rights reserved.",
-        "storyHref": "/story"
+        "resume": "Resume (PDF)",
+        "links": { "story": "Story", "healthstack": "Healthstack", "imprint": "Imprint", "privacy": "Privacy" }
     },
     "backHeader": {
-        "href": "/",
         "label": "Back to home"
     },
     "story": {
         "contents": "Contents",
-        "confidentialNotice": "Details hidden due to active NDA restrictions."
+        "confidentialNotice": "Details hidden due to active NDA restrictions.",
+        "events": "Events",
+        "waterkant": { "place": "Kiel", "role": "Attendee" }
     }
 }

@@ -1,5 +1,5 @@
 import type { MDXComponents } from "mdx/types";
-import Link from "next/link";
+import { SmartLink } from "./src/app/components/smart-link";
 import { storyComponents } from "./src/app/components/story";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
@@ -21,19 +21,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         p: ({ children }) => <p className="mb-4 leading-[1.6]">{children}</p>,
         em: ({ children }) => <em className="font-serif italic">{children}</em>,
         strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
-        a: ({ children, href }) => {
-            const external = (href ?? "").startsWith("http");
-            return (
-                <Link
-                    className="text-ink hover:text-signal transition-colors duration-150"
-                    href={href ?? ""}
-                    target={external ? "_blank" : undefined}
-                    rel={external ? "noopener noreferrer" : undefined}
-                >
-                    {children}
-                </Link>
-            );
-        },
+        a: ({ children, href }) => (
+            <SmartLink className="text-ink hover:text-signal transition-colors duration-150" href={href ?? ""}>
+                {children}
+            </SmartLink>
+        ),
         ul: ({ children }) => <ul className="pl-6 mb-4 list-disc space-y-1">{children}</ul>,
         ol: ({ children }) => <ol className="pl-6 mb-4 list-decimal space-y-1">{children}</ol>,
         li: ({ children }) => <li className="leading-relaxed">{children}</li>,

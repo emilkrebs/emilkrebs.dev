@@ -79,13 +79,25 @@ I always wanted to invent something new, solve problems and build cool stuff. Ma
 
         I had my first university experience, doing         courses at [OpenCampus](https://edu.opencampus.sh) about Game Development,
         JavaScript, Marketing and Startups, along with gaining official certificates         and my first [ECTS](https://en.wikipedia.org/wiki/European_Credit_Transfer_and_Accumulation_System) points. I also became invested in the startup scene, visiting events like [Waterkant](https://waterkant.sh)
-        and holding my *first pitches and speeches*.
+        and holding my *first pitches and speeches*. I gave the very first one at 15, at the OpenCampus
+        semester opening. OpenCampus and Waterkant have been among the biggest contributors to my career ever since.
 
         Alongside the code, I was learning to move an audience: 3D Minecraft animations, first in
         [Mine-Imator](https://www.mineimator.com) and later in [Blender](https://www.blender.org), grew my TikTok to
         97,000 followers — an account that still exists today, dormant but mine.
 
         <TagRow label="OpenCampus courses" items="Game Development, JavaScript, Marketing, Startups" />
+
+        <EventList>
+            <EventRow
+                date="Age 15"
+                name="OpenCampus semester opening"
+                place="Kiel"
+                role="Speaker"
+                href="https://opencampus.sh"
+            />
+            <Waterkant date="Jun 2022" />
+        </EventList>
 
         <ShowcaseGrid compact>
             <Showcase
@@ -129,6 +141,11 @@ I always wanted to invent something new, solve problems and build cool stuff. Ma
         years, doing mostly frontend architecture and *language engineering*. Alongside the job I
         kept building personal projects, three of which are still online today.
 
+        <EventList>
+            <Waterkant date="Jun 2023" />
+            <Waterkant date="Jun 2024" />
+        </EventList>
+
         <ShowcaseGrid>
             <Showcase
                 name="WatchLock"
@@ -169,6 +186,10 @@ I always wanted to invent something new, solve problems and build cool stuff. Ma
         Then came a short break from all professionalism; I spent most of my time with *friends
         and nature*.
 
+        <EventList>
+            <Waterkant date="Jun 2025" />
+        </EventList>
+
         <ShowcaseGrid>
             <Showcase
                 name="BIPoC Climate Justice Conference"
@@ -190,8 +211,7 @@ I always wanted to invent something new, solve problems and build cool stuff. Ma
             <Showcase
                 name="This site"
                 description="Static export. No server, no database. Typeset per the spec you are reading."
-                href="/"
-                internal
+                route="home"
                 status="Active"
                 tags="Next.js, TypeScript, Tailwind CSS"
                 image="/pictures/this-site.webp"
@@ -206,7 +226,30 @@ I always wanted to invent something new, solve problems and build cool stuff. Ma
         and complex projects. All of this while studying full-time for my Bachelor in Computer
         Science and Sociology. With the rapid rise of AI, I am exploring the ways of empowering humans, and building better developer tooling.
 
-        The products I am building today are [Prami](https://prami.app), [Healthstack](/healthstack), and [VailNote](https://vailnote.com).
+        I also keep showing up in person: at Waterkant in Kiel, as every year, and in
+        September 2026 in Shanghai, for AGNTCon + MCPCon China and the opening day of the Inclusion Conference
+        on the Bund. Two days of agent protocols, one day of the AI economy, and many conversations in between.
+        MCP takes its cue from the Language Server Protocol, which I work with every day.
+
+        <EventList>
+            <Waterkant date="Jun 2026" />
+            <EventRow
+                date="Sep 2026"
+                name="AGNTCon + MCPCon China"
+                place="Shanghai"
+                role="Attendee"
+                href="https://www.lfopensource.cn/mcp-dev-summit-shanghai/"
+            />
+            <EventRow
+                date="Sep 2026"
+                name="Inclusion Conference on the Bund"
+                place="Shanghai"
+                role="Attendee"
+                href="https://www.inclusionconf.com/en"
+            />
+        </EventList>
+
+        The products I am building today are [Prami](https://prami.app), [Healthstack](/healthstack/), and [VailNote](https://vailnote.com).
 
         <ShowcaseGrid>
             <Showcase
@@ -222,8 +265,7 @@ I always wanted to invent something new, solve problems and build cool stuff. Ma
             <Showcase
                 name="Healthstack"
                 description="A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols."
-                href="/healthstack"
-                internal
+                route="healthstack"
                 status="Concept"
                 tags="Theia, Langium, TypeScript, Electron"
                 image="/pictures/healthstack-dashboard.webp"

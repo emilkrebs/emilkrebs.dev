@@ -63,11 +63,22 @@
     <Era id="first-clients" period="少年时代" title="第一批客户，第一批课程，第一次登台">
         我一步步开始真正理解事物的运作方式，也接到了最初几份有偿的专业咨询工作，为朋友和熟人提供简单的前端支持。
 
-        我第一次体验了大学：在 [OpenCampus](https://edu.opencampus.sh) 修读游戏开发、JavaScript、市场营销和创业课程，拿到了正式证书和我的第一批 [ECTS](https://en.wikipedia.org/wiki/European_Credit_Transfer_and_Accumulation_System) 学分。我也投身创业圈，参加了 [Waterkant](https://waterkant.sh) 等活动，完成了*第一次路演和演讲*。
+        我第一次体验了大学：在 [OpenCampus](https://edu.opencampus.sh) 修读游戏开发、JavaScript、市场营销和创业课程，拿到了正式证书和我的第一批 [ECTS](https://en.wikipedia.org/wiki/European_Credit_Transfer_and_Accumulation_System) 学分。我也投身创业圈，参加了 [Waterkant](https://waterkant.sh) 等活动，完成了*第一次路演和演讲*。我的第一次演讲是在 15 岁，在 OpenCampus 的学期开幕式上。从那以后，OpenCampus 和 Waterkant 一直是推动我职业发展的最重要力量之一。
 
         在代码之外，我也在学习如何打动观众：我制作的 3D Minecraft 动画，先用 [Mine-Imator](https://www.mineimator.com)，后来用 [Blender](https://www.blender.org)，让我的 TikTok 涨到了 9.7 万粉丝。这个账号至今仍在，虽已沉寂，但仍属于我。
 
         <TagRow label="OpenCampus 课程" items="游戏开发, JavaScript, 市场营销, 创业" />
+
+        <EventList>
+            <EventRow
+                date="15岁"
+                name="OpenCampus 学期开幕式"
+                place="基尔"
+                role="演讲者"
+                href="https://opencampus.sh"
+            />
+            <Waterkant date="2022年6月" />
+        </EventList>
 
         <ShowcaseGrid compact>
             <Showcase
@@ -107,6 +118,11 @@
     <Era id="minijob" period="在 TypeFox 的一年半" title="兼职：前端架构与语言工程">
         不久之后，我申请并拿到了 [TypeFox](https://www.typefox.io) 的一份 “Minijob”（德国的一种小额兼职），在那里工作了一年半，主要负责前端架构和*语言工程*。工作之余，我一直在做个人项目，其中三个至今仍在线。
 
+        <EventList>
+            <Waterkant date="2023年6月" />
+            <Waterkant date="2024年6月" />
+        </EventList>
+
         <ShowcaseGrid>
             <Showcase
                 name="WatchLock"
@@ -143,6 +159,10 @@
 
         随后，我暂时放下了一切专业事务，大部分时间都和*朋友与大自然*在一起。
 
+        <EventList>
+            <Waterkant date="2025年6月" />
+        </EventList>
+
         <ShowcaseGrid>
             <Showcase
                 name="BIPoC Climate Justice Conference"
@@ -164,8 +184,7 @@
             <Showcase
                 name="本站"
                 description="静态导出。无服务器，无数据库。按你正在阅读的这份规范排版。"
-                href="/zh/"
-                internal
+                route="home"
                 status="活跃"
                 tags="Next.js, TypeScript, Tailwind CSS"
                 image="/pictures/this-site.webp"
@@ -177,7 +196,27 @@
     <Era id="today" period="2025/26 冬季学期 - 至今" title="正式职位，全日制学业">
         在我的第一个学期，也就是 2025/26 冬季学期开始时，我重返 [TypeFox](https://www.typefox.io)，这次担任正式的专业职位，与客户、大型团队和复杂项目打交道。与此同时，我还在全日制攻读计算机科学与社会学学士学位。随着 AI 的迅速崛起，我正在探索如何让技术赋能于人，并构建更好的开发者工具。
 
-        我目前在做的产品是 [Prami](https://prami.app)、[Healthstack](/healthstack) 和 [VailNote](https://vailnote.com)。
+        我也常到线下活动露面：照例去了基尔的 Waterkant Festival；2026 年 9 月又去了上海，参加 AGNTCon + MCPCon China，以及 Inclusion·外滩大会的开幕日。两天听智能体协议，一天看 AI 新经济，其间是许多交流。MCP 借鉴了语言服务器协议（LSP）的设计，而 LSP 正是我每天打交道的协议。
+
+        <EventList>
+            <Waterkant date="2026年6月" />
+            <EventRow
+                date="2026年9月"
+                name="AGNTCon + MCPCon China"
+                place="上海"
+                role="参会者"
+                href="https://www.lfopensource.cn/mcp-dev-summit-shanghai/"
+            />
+            <EventRow
+                date="2026年9月"
+                name="Inclusion·外滩大会"
+                place="上海"
+                role="参会者"
+                href="https://www.inclusionconf.com/"
+            />
+        </EventList>
+
+        我目前在做的产品是 [Prami](https://prami.app)、[Healthstack](/healthstack/) 和 [VailNote](https://vailnote.com)。
 
         <ShowcaseGrid>
             <Showcase
@@ -193,8 +232,7 @@
             <Showcase
                 name="Healthstack"
                 description="基于 Eclipse Theia 的生活方式优化专用 IDE：生物标记追踪、单位转换，以及为干预协议量身打造的 DSL。"
-                href="/healthstack"
-                internal
+                route="healthstack"
                 status="概念"
                 tags="Theia, Langium, TypeScript, Electron"
                 image="/pictures/healthstack-dashboard.webp"

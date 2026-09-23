@@ -1,10 +1,12 @@
 import type { MDXComponents } from "mdx/types";
 import { Children, isValidElement } from "react";
-import Image from "next/image";
-import { ExternalNotice } from "./external-notice";
-import { PlaceholderPlate } from "./placeholder-plate";
-import { PreviewConsent } from "./preview-consent";
-import { copy, storyCopy, type Locale } from "../lib/i18n";
+import { ProjectCard } from "./project-card";
+import { SmartLink } from "./smart-link";
+import { Tag } from "./tag";
+import { TokenMark } from "./token-mark";
+import { storyCopy, type Locale } from "../lib/i18n";
+import { STORY_CARD_SIZES, STORY_COMPACT_CARD_SIZES } from "../lib/image-sizes";
+import { routePath, type RouteKey } from "../lib/routes";
 
 interface EraProps {
     id: string;
@@ -15,7 +17,11 @@ interface EraProps {
 
 function Era({ id, period, title, children }: EraProps) {
     return (
-        <section id={id} className="relative mt-20 md:mt-24 pl-10 md:pl-14 first:mt-0">
+        // --era-gutter: the indent between the rail and the text; event markers reach back across it.
+        <section
+            id={id}
+            className="relative mt-20 md:mt-24 [--era-gutter:2.5rem] md:[--era-gutter:3.5rem] pl-(--era-gutter) first:mt-0"
+        >
             <span className="absolute left-0 top-1.5 size-2.5 bg-signal" aria-hidden="true" />
             <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{period}</p>
             <h2 className="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.01em]">
@@ -48,8 +54,9 @@ function Timeline({ children, locale = "en" }: TimelineProps) {
                 }))}
             />
             <div className="relative mt-20 md:mt-24">
-                {children}
+                {/* Before the eras, so their markers paint over the rail. */}
                 <span className="absolute left-[4px] top-0 bottom-0 w-px bg-hairline" aria-hidden="true" />
+                {children}
             </div>
         </>
     );
@@ -72,11 +79,7 @@ function Contents({ items, locale = "en" }: ContentsProps) {
         <nav aria-label={t.contents} className="mt-20 md:mt-24 border border-hairline">
             <div className="flex items-center justify-between gap-6 px-8 py-4 border-b border-hairline">
                 <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{t.contents}</p>
-                <div className="hidden md:flex gap-2.5" aria-hidden="true">
-                    {Array.from({ length: 8 }).map((_, i) => (
-                        <span key={i} className="size-1.5 bg-signal" />
-                    ))}
-                </div>
+                <TokenMark count={8} className="max-md:hidden" />
             </div>
             <ul>
                 {items.map((item) => (
@@ -103,11 +106,14 @@ function Contents({ items, locale = "en" }: ContentsProps) {
 interface ShowcaseProps {
     name: string;
     description: string;
+    /** External URL. */
     href?: string;
-    internal?: boolean;
+    /** Internal page, linked in the story's locale. */
+    route?: RouteKey;
     notice?: boolean;
     confidential?: boolean;
     status?: string;
+    /** Comma-separated. */
     tags?: string;
     image?: string;
     caption?: string;
@@ -117,162 +123,26 @@ interface ShowcaseProps {
     locale?: Locale;
 }
 
-function Showcase({
-    name,
-    description,
-    href,
-    internal,
-    notice,
-    confidential,
-    status,
-    tags,
-    image,
-    caption,
-    preview,
-    placeholder,
-    compact,
-    locale = "en",
-}: ShowcaseProps) {
-    const t = copy[locale];
-    const external = href ? href.startsWith("http") && !internal : false;
-    const tagsList = tags ? tags.split(",").map((tag) => tag.trim()) : [];
-    const statusLower = status?.toLowerCase();
+/** ProjectCard as written in MDX: comma-separated tags, NDA work flagged by name, status, or tag. */
+function Showcase({ tags, route, href, confidential, compact, locale = "en", ...card }: ShowcaseProps) {
+    const tagList = tags ? tags.split(",").map((tag) => tag.trim()) : [];
     const isConfidential =
         confidential ||
-        statusLower === "confidential" ||
-        tagsList.some((tag) => tag.toLowerCase() === "confidential") ||
-        name.toLowerCase().includes("confidential");
+        card.status?.toLowerCase() === "confidential" ||
+        tagList.some((tag) => tag.toLowerCase() === "confidential") ||
+        card.name.toLowerCase().includes("confidential");
 
     return (
-        <article
-            className={`relative overflow-hidden bg-paper-deep border flex flex-col group transition-colors duration-150 ${isConfidential
-                ? "border-ink/35 border-dashed hover:border-ink/70"
-                : "border-hairline hover:border-ink"
-            }`}
-        >
-            {isConfidential && (
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 opacity-25"
-                    style={{
-                        backgroundImage:
-                            "radial-gradient(circle at 1px 1px, rgba(25, 25, 25, 0.35) 1px, transparent 0)",
-                        backgroundSize: "16px 16px",
-                    }}
-                />
-            )}
-            {(preview || image || placeholder || isConfidential) && (
-                <div className="relative">
-                    <div
-                        className={`relative border-b overflow-hidden ${isConfidential ? "border-dashed border-ink/30 bg-paper-deep" : "border-hairline bg-paper"
-                        }`}
-                        style={{ aspectRatio: compact ? "1 / 1" : "16 / 10" }}
-                    >
-                        {isConfidential ? (
-                            <div className="absolute inset-0 grid place-items-center p-6">
-                                <p className="mt-3 text-sm text-ink/85 text-center">
-                                    {storyCopy[locale].confidentialNotice}
-                                </p>
-                            </div>
-                        ) : preview ? (
-                            <PreviewConsent
-                                id={`story-preview-${name.toLowerCase().replace(/\s+/g, "-")}`}
-                                src={preview}
-                                title={`${name}${t.previewTitleSuffix}`}
-                                placeholder={placeholder}
-                                copy={t.consent}
-                            />
-                        ) : image ? (
-                            <Image
-                                src={image}
-                                alt={`${name}${t.screenshotAltSuffix}`}
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className={
-                                    image.endsWith(".svg")
-                                        ? "object-contain p-4 sm:p-6"
-                                        : "object-cover object-top"
-                                }
-                            />
-                        ) : (
-                            <PlaceholderPlate label={name} />
-                        )}
-                    </div>
-                    {!compact && caption && (
-                        <p
-                            className={`px-8 pt-3 font-mono text-xs uppercase tracking-[0.08em] ${isConfidential ? "text-ink-soft" : "text-ink/75"
-                            }`}
-                        >
-                            {caption}
-                        </p>
-                    )}
-                </div>
-            )}
-            <div className={`${compact ? "p-5 md:p-6" : "p-8 md:p-10"} flex flex-col flex-1`}>
-                <div className="flex items-start justify-between gap-4">
-                    <h3
-                        className={`${compact ? "text-lg md:text-xl" : "text-2xl md:text-3xl"
-                        } font-semibold tracking-tight`}
-                    >
-                        {name}
-                    </h3>
-                    {status && (
-                        <span
-                            className={`inline-flex items-center gap-2 border px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap ${isConfidential
-                                ? "border-ink/40 border-dashed bg-paper text-ink"
-                                : "border-hairline"
-                            }`}
-                        >
-                            <span className="size-1.5 bg-signal" aria-hidden="true" />
-                            {status}
-                        </span>
-                    )}
-                </div>
-                <p
-                    className={`mt-3 ${compact ? "text-sm leading-relaxed" : "mt-4 text-base leading-relaxed"
-                    } text-ink/85 flex-1 max-w-[62ch]`}
-                >
-                    {description}
-                </p>
-                {tagsList.length > 0 && (
-                    <div className={`${compact ? "mt-4" : "mt-6"} flex flex-wrap gap-2`}>
-                        {tagsList.map((tag) => (
-                            <span
-                                key={tag}
-                                className={`border px-2 py-1 font-mono ${compact ? "text-[10px]" : "text-xs"
-                                } uppercase tracking-[0.08em] ${isConfidential
-                                    ? "border-ink/35 border-dashed bg-paper/70 text-ink"
-                                    : "border-hairline bg-paper text-ink-soft"
-                                }`}
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                )}
-                <div className={compact ? "mt-5" : "mt-8"}>
-                    {href ? (
-                        notice ? (
-                            <ExternalNotice href={href} title={name} copy={t.externalNotice} />
-                        ) : (
-                            <a
-                                href={href}
-                                target={external ? "_blank" : undefined}
-                                rel={external ? "noopener noreferrer" : undefined}
-                                className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
-                            >
-                                {t.open}
-                                <span className="text-signal" aria-hidden="true">→</span>
-                            </a>
-                        )
-                    ) : (
-                        <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                            {t.privateLabel}
-                        </span>
-                    )}
-                </div>
-            </div>
-        </article>
+        <ProjectCard
+            {...card}
+            tags={tagList}
+            href={route ? routePath(route, locale) : href}
+            confidential={isConfidential}
+            variant={compact ? "compact" : undefined}
+            sizes={compact ? STORY_COMPACT_CARD_SIZES : STORY_CARD_SIZES}
+            filledTags
+            locale={locale}
+        />
     );
 }
 
@@ -295,14 +165,69 @@ function TagRow({ label, items }: { label?: string; items: string }) {
                 <p className="mr-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{label}</p>
             )}
             {tags.map((tag) => (
-                <span
-                    key={tag}
-                    className="border border-hairline bg-paper px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft"
-                >
-                    {tag}
-                </span>
+                <Tag key={tag} filled>{tag}</Tag>
             ))}
         </div>
+    );
+}
+
+interface EventRowProps {
+    date: string;
+    name: string;
+    place: string;
+    role?: string;
+    href?: string;
+}
+
+function EventRow({ date, name, place, role, href }: EventRowProps) {
+    return (
+        <li className="relative flex items-baseline gap-x-4 text-sm leading-6">
+            {/*
+              * A minor stop on the timeline rail: hollow, smaller than the era mark.
+              * Centered on the rail (4px + 0.5px) from an EventList placed directly in an Era.
+              */}
+            <span
+                className="absolute top-2 left-[calc(1px_-_var(--era-gutter))] size-[7px] border border-ink-soft bg-paper"
+                aria-hidden="true"
+            />
+            <span className="w-24 shrink-0 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                {date}
+            </span>
+            <span className="flex flex-wrap items-baseline gap-x-4">
+                {href ? (
+                    <SmartLink href={href} className="text-ink hover:text-signal transition-colors duration-150">
+                        {name}
+                    </SmartLink>
+                ) : (
+                    <span className="text-ink">{name}</span>
+                )}
+                <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                    {place}
+                    {role && ` · ${role}`}
+                </span>
+            </span>
+        </li>
+    );
+}
+
+/** Waterkant Festival in Kiel, a yearly stop on the timeline. */
+function Waterkant({ date, locale = "en" }: { date: string; locale?: Locale }) {
+    const t = storyCopy[locale].waterkant;
+    return <EventRow date={date} name="Waterkant Festival" place={t.place} role={t.role} href="https://waterkant.sh" />;
+}
+
+interface EventListProps {
+    /** Accessible name; defaults to the locale's "Events". */
+    label?: string;
+    children: React.ReactNode;
+    locale?: Locale;
+}
+
+function EventList({ label, children, locale = "en" }: EventListProps) {
+    return (
+        <ul aria-label={label ?? storyCopy[locale].events} className="my-8 space-y-1.5">
+            {children}
+        </ul>
     );
 }
 
@@ -314,16 +239,6 @@ function Lead({ children }: { children: React.ReactNode }) {
     );
 }
 
-function TokenMark({ count = 12 }: { count?: number }) {
-    return (
-        <div className="flex gap-2.5" aria-hidden="true">
-            {Array.from({ length: count }).map((_, i) => (
-                <span key={i} className="size-1.5 bg-signal" />
-            ))}
-        </div>
-    );
-}
-
 function PullQuote({ children }: { children: React.ReactNode }) {
     return (
         <blockquote className="mt-20 md:mt-24 border-l border-signal pl-6 md:pl-8 [&>p]:mb-0 [&>p]:max-w-[52ch] [&>p]:text-xl [&>p]:leading-relaxed md:[&>p]:text-2xl">
@@ -332,7 +247,7 @@ function PullQuote({ children }: { children: React.ReactNode }) {
     );
 }
 
-const shared = { Era, ShowcaseGrid, TagRow, Lead, TokenMark, PullQuote };
+const shared = { Era, ShowcaseGrid, TagRow, EventRow, Lead, TokenMark, PullQuote };
 
 /**
  * The /story grammar per locale. English is the default set that
@@ -340,12 +255,14 @@ const shared = { Era, ShowcaseGrid, TagRow, Lead, TokenMark, PullQuote };
  * passes its set as the `components` prop, which MDX merges over it.
  */
 export const storyComponents: Record<Locale, MDXComponents> = {
-    en: { ...shared, Timeline, Contents, Showcase },
+    en: { ...shared, Timeline, Contents, Showcase, EventList, Waterkant },
     zh: {
         ...shared,
         Timeline: (props: TimelineProps) => <Timeline {...props} locale="zh" />,
         Contents: (props: ContentsProps) => <Contents {...props} locale="zh" />,
         Showcase: (props: ShowcaseProps) => <Showcase {...props} locale="zh" />,
+        EventList: (props: EventListProps) => <EventList {...props} locale="zh" />,
+        Waterkant: (props: { date: string }) => <Waterkant {...props} locale="zh" />,
         // CJK has no true italic; the accent stays upright and contrasts by the serif face alone.
         em: ({ children }) => <em className="font-serif not-italic">{children}</em>,
     },

@@ -1,36 +1,21 @@
 import StoryContent from "../../../content/story.zh.mdx";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import BackHeader from "../../../components/back-header";
+import { JsonLd } from "../../../components/json-ld";
 import { storyComponents } from "../../../components/story";
-import { copy } from "../../../lib/i18n";
+import { pageMetadata } from "../../../lib/metadata";
+import { aboutPageSchema } from "../../../lib/structured-data";
 
-export const metadata: Metadata = {
-    title: "我的故事",
-    description: "Emil Krebs 的个人经历、成长背景与软件工程理念。",
-    alternates: {
-        canonical: "/zh/story/",
-        languages: {
-            en: "/story/",
-            zh: "/zh/story/",
-            "x-default": "/story/",
-        },
-    },
-    openGraph: {
-        type: "website",
-        locale: "zh_CN",
-        url: "https://emilkrebs.dev/zh/story/",
-        title: "我的故事 | Emil Krebs",
-        description: "Emil Krebs 的个人经历、成长背景与软件工程理念。",
-        siteName: "Emil Krebs",
-    },
-};
+const title = "我的故事";
+const description = "Emil Krebs 的个人经历、成长背景与软件工程理念。";
 
-const switcher = copy.zh.switcher && { ...copy.zh.switcher, href: "/story" };
+export const metadata: Metadata = pageMetadata({ route: "story", locale: "zh", title, description });
 
 export default function ZhStoryPage() {
     return (
         <main id="main" className="flex min-h-screen w-full flex-col items-center justify-start">
-            <BackHeader maxWidth="4xl" locale="zh" switcher={switcher} />
+            <JsonLd data={aboutPageSchema({ route: "story", locale: "zh", name: title, description })} />
+            <BackHeader route="story" maxWidth="4xl" locale="zh" />
             <section className="w-full max-w-4xl px-6 pt-10 md:pt-16 pb-24">
                 <StoryContent components={storyComponents.zh} />
             </section>

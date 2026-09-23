@@ -1,18 +1,21 @@
 import "./globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { fontVariables } from "./lib/fonts";
 
+/**
+ * The 404 document. The app has two root layouts (en, zh) and therefore no
+ * shared one to wrap a not-found page in, so this file renders the whole
+ * document itself (experimental.globalNotFound in next.config.mjs). Next.js
+ * adds the noindex robots tag to it on its own.
+ */
 export const metadata: Metadata = {
-    title: "Not Found",
-    robots: {
-        index: false,
-        follow: false,
-    },
+    title: "Not Found | Emil Krebs",
 };
 
-export default function NotFound() {
+export default function GlobalNotFound() {
     return (
-        <html lang="en">
+        <html lang="en" className={fontVariables} data-scroll-behavior="smooth">
             <body className="min-h-screen flex flex-col bg-paper text-ink antialiased">
                 <main id="main" className="flex-1">
                     <section className="mx-auto max-w-[1120px] px-6 py-24 md:py-32">

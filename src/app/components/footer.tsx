@@ -1,15 +1,8 @@
-import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
+import Link from "next/link";
+import { TokenMark } from "./token-mark";
+import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../lib/constants";
 import { footerCopy, type Locale } from "../lib/i18n";
-
-function TokenMark({ count = 12 }: { count?: number }) {
-    return (
-        <div className="flex gap-2.5" aria-hidden="true">
-            {Array.from({ length: count }).map((_, i) => (
-                <span key={i} className="size-1.5 bg-signal" />
-            ))}
-        </div>
-    );
-}
+import { routePath } from "../lib/routes";
 
 export function Footer({ locale = "en" }: { locale?: Locale }) {
     const t = footerCopy[locale];
@@ -43,26 +36,33 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                         >
                             Email <span className="text-signal" aria-hidden="true">→</span>
                         </a>
+                        <a
+                            href={RESUME_PATH}
+                            type="application/pdf"
+                            className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150 py-1"
+                        >
+                            {t.resume} <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
                     </div>
                     <div className="flex gap-6 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                        <a href={t.storyHref} className="hover:text-ink transition-colors duration-150 py-1">
-                            Story
-                        </a>
-                        <a href="/healthstack" className="hover:text-ink transition-colors duration-150 py-1">
-                            Healthstack
-                        </a>
-                        <a href="/imprint" className="hover:text-ink transition-colors duration-150 py-1">
-                            Imprint
-                        </a>
-                        <a href="/privacy" className="hover:text-ink transition-colors duration-150 py-1">
-                            Privacy
-                        </a>
+                        <Link href={routePath("story", locale)} className="hover:text-ink transition-colors duration-150 py-1">
+                            {t.links.story}
+                        </Link>
+                        <Link href={routePath("healthstack", locale)} className="hover:text-ink transition-colors duration-150 py-1">
+                            {t.links.healthstack}
+                        </Link>
+                        <Link href={routePath("imprint", locale)} className="hover:text-ink transition-colors duration-150 py-1">
+                            {t.links.imprint}
+                        </Link>
+                        <Link href={routePath("privacy", locale)} className="hover:text-ink transition-colors duration-150 py-1">
+                            {t.links.privacy}
+                        </Link>
                     </div>
                 </div>
                 <p className="mt-12 text-xs text-ink-soft">
                     © {new Date().getFullYear()} {t.copyright}
                 </p>
-                <div className="mt-10"><TokenMark /></div>
+                <TokenMark className="mt-10" />
             </div>
         </footer>
     );

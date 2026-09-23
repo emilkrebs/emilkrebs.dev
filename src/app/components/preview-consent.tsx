@@ -2,26 +2,27 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import {
-    previewConsentCopy,
-    type PreviewConsentCopy,
-} from "../lib/i18n";
+import type { PreviewConsentCopy } from "../lib/i18n";
 
 interface PreviewConsentProps {
     id: string;
     src: string;
     title: string;
     placeholder?: string;
-    copy?: PreviewConsentCopy;
+    copy: PreviewConsentCopy;
+    /** The backdrop's rendered width, for srcset selection. */
+    sizes?: string;
 }
 
 /**
  * The consent gate for third-party live previews. Kept out of the server
  * page because the "Load preview" interaction replaces the gate with an
  * iframe: a script tag inside a server-rendered tree never runs, so the
- * click handler lives here as React state instead.
+ * click handler lives here as React state instead. The iframe is only
+ * mounted after the click, so nothing is requested from the third party
+ * before the visitor agrees.
  */
-export function PreviewConsent({ id, src, title, placeholder, copy = previewConsentCopy.en }: PreviewConsentProps) {
+export function PreviewConsent({ id, src, title, placeholder, copy, sizes = "100vw" }: PreviewConsentProps) {
     const [loaded, setLoaded] = useState(false);
     const [fadeIn, setFadeIn] = useState(false);
     const [gone, setGone] = useState(false);
@@ -34,15 +35,14 @@ export function PreviewConsent({ id, src, title, placeholder, copy = previewCons
 
     return (
         <div id={id} className="relative size-full">
-            <iframe
-                src={src}
-                title={title}
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                tabIndex={-1}
-                aria-hidden={!loaded}
-                className={`size-full border-0 transition-opacity duration-700 ease-out ${fadeIn ? "opacity-100" : "opacity-0"}`}
-            />
+            {loaded && (
+                <iframe
+                    src={src}
+                    title={title}
+                    referrerPolicy="no-referrer"
+                    className={`size-full border-0 transition-opacity duration-700 ease-out ${fadeIn ? "opacity-100" : "opacity-0"}`}
+                />
+            )}
             {!gone && (
                 <div
                     aria-hidden={loaded}
@@ -56,7 +56,7 @@ export function PreviewConsent({ id, src, title, placeholder, copy = previewCons
                             src={placeholder}
                             alt=""
                             fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
+                            sizes={sizes}
                             aria-hidden="true"
                             className="absolute inset-0 object-cover object-top blur-md scale-105"
                         />

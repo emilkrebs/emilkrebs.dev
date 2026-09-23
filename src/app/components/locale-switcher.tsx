@@ -1,34 +1,31 @@
-"use client";
-
 interface LocaleSwitcherProps {
     href: string;
+    /** BCP 47 tag of the target page. */
+    hrefLang: string;
+    /** Visible text, in the target locale. */
     label: string;
+    /** Read by screen readers after the label, in the current page's locale. */
     aria: string;
-    pref: "en" | "zh";
+    /** Hidden unless the locale script flagged the visitor as reading Chinese. */
+    zhReadersOnly?: boolean;
 }
 
 /**
- * The language switcher. Rendered only on the localized pages (currently
- * /zh/), not on the English default. A bordered tag in the nav grammar so it
- * reads as an action, not a nav link. Clicking it records the manual
- * preference in localStorage so the zh-detection redirect on `/` does not
- * bounce the user back after they switched to English on purpose.
+ * The language switcher, rendered on every page that exists in more than
+ * one locale. A bordered tag in the nav grammar so it reads as an action,
+ * not a nav link. A plain link: which locale a visitor lands on is decided
+ * fresh each visit by the browser's language, nothing is remembered.
  */
-export function LocaleSwitcher({ href, label, aria, pref }: LocaleSwitcherProps) {
+export function LocaleSwitcher({ href, hrefLang, label, aria, zhReadersOnly }: LocaleSwitcherProps) {
     return (
         <a
             href={href}
-            aria-label={aria}
-            onClick={() => {
-                try {
-                    localStorage.setItem("locale-pref", pref);
-                } catch {
-                    // storage blocked: the redirect script simply keeps running
-                }
-            }}
-            className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink hover:border-ink transition-colors duration-150"
+            hrefLang={hrefLang}
+            className={`${zhReadersOnly ? "hidden zh-reader:inline " : ""}border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink hover:border-ink transition-colors duration-150`}
         >
-            {label}
+            {/* The visible label starts the accessible name, so voice control can target it by what it shows. */}
+            <span lang={hrefLang}>{label}</span>
+            <span className="sr-only"> {aria}</span>
         </a>
     );
 }

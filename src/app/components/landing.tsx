@@ -1,82 +1,26 @@
 import Image from "next/image";
-import { PlaceholderPlate } from "./placeholder-plate";
-import { PreviewConsent } from "./preview-consent";
-import { ExternalNotice } from "./external-notice";
-import { LocaleSwitcher } from "./locale-switcher";
+import Link from "next/link";
+import { JsonLd } from "./json-ld";
+import { ProjectCard } from "./project-card";
+import { RouteLocaleSwitcher } from "./route-locale-switcher";
+import { Tag } from "./tag";
+import { TokenMark } from "./token-mark";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
 import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
-
-function generatePersonJsonLd(locale: Locale) {
-    return {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Emil Krebs",
-        "jobTitle": "Software Engineer",
-        "description": copy[locale].jsonLd.personDescription,
-        "url": "https://emilkrebs.dev",
-        "image": "https://emilkrebs.dev/pictures/portrait.webp",
-        "sameAs": [
-            "https://github.com/emilkrebs",
-            "https://linkedin.com/in/emilkrebs",
-        ],
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Kiel",
-            "addressCountry": "Germany",
-        },
-        "worksFor": {
-            "@type": "Organization",
-            "name": "TypeFox GmbH",
-            "url": "https://typefox.io",
-        },
-        "knowsAbout": [
-            "Software Engineering",
-            "Language Server Protocol",
-            "Langium",
-            "Theia",
-            "Developer Tools",
-            "TypeScript",
-            "Kotlin",
-            "Open Source",
-            "Spaced Repetition",
-            "Health Optimization",
-        ],
-        "alumniOf": {
-            "@type": "Organization",
-            "name": "Kiel University",
-            "sameAs": "https://www.uni-kiel.de/en/"
-        },
-    };
-}
-
-function generateWebsiteJsonLd(locale: Locale) {
-    return {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": copy[locale].jsonLd.websiteName,
-        "description": copy[locale].jsonLd.websiteDescription,
-        "url": "https://emilkrebs.dev",
-        "author": {
-            "@type": "Person",
-            "name": "Emil Krebs",
-        },
-        "inLanguage": locale === "zh" ? "zh-CN" : "en-US",
-        "copyrightHolder": {
-            "@type": "Person",
-            "name": "Emil Krebs",
-        },
-    };
-}
+import { FULL_WIDTH_SIZES, HALF_WIDTH_SIZES } from "../lib/image-sizes";
+import { routePath, type RouteKey } from "../lib/routes";
+import { profilePageSchema } from "../lib/structured-data";
 
 interface ProjectBase {
     id: string;
+    /** External URL. */
     href?: string;
+    /** Internal page, linked in the current locale. */
+    route?: RouteKey;
     tags: string[];
-    flagship?: boolean;
     image?: string;
     placeholder?: string;
     preview?: string;
-    consent?: boolean;
     notice?: boolean;
 }
 
@@ -87,15 +31,13 @@ const FLAGSHIP_BASE: ProjectBase[] = [
         id: "prami",
         href: "https://prami.app",
         tags: ["Next.js", "PWA", "TypeScript"],
-        flagship: true,
         image: "/pictures/prami.webp",
         notice: true,
     },
     {
         id: "healthstack",
-        href: "/healthstack",
+        route: "healthstack",
         tags: ["Theia", "Langium", "TypeScript", "Electron"],
-        flagship: true,
         image: "/pictures/healthstack-dashboard.webp",
     },
 ];
@@ -125,11 +67,10 @@ const PROJECT_BASE: ProjectBase[] = [
         tags: ["Langium", "TypeScript", "DSLs"],
         preview: "https://langium.org/showcase/minilogo/",
         placeholder: "/pictures/langium-placeholder.png",
-        consent: true,
     },
     {
         id: "this-site",
-        href: "/",
+        route: "home",
         tags: ["Next.js", "TypeScript", "Tailwind CSS"],
         image: "/pictures/this-site.webp",
     },
@@ -145,23 +86,8 @@ function mergeProjects(base: ProjectBase[], copies: ProjectCopy[]): Project[] {
     });
 }
 
-function TokenMark({ count = 16 }: { count?: number }) {
-    return (
-        <div
-            className="flex gap-2.5"
-            aria-hidden="true"
-        >
-            {Array.from({ length: count }).map((_, i) => (
-                <span
-                    key={i}
-                    className="size-1.5 bg-signal"
-                />
-            ))}
-        </div>
-    );
-}
-
-function Nav({ t }: { t: LandingCopy }) {
+function Nav({ t, locale }: { t: LandingCopy; locale: Locale }) {
+    const linkClass = "py-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150";
     return (
         <nav aria-label={t.navAria} className="sticky top-0 z-50 bg-paper border-b border-hairline">
             <div className="mx-auto flex items-center justify-between max-w-280 px-4 md:px-6 h-16">
@@ -172,23 +98,16 @@ function Nav({ t }: { t: LandingCopy }) {
                     emil<span className="text-signal">.</span>krebs
                 </a>
                 <div className="flex items-center gap-4 md:gap-8">
-                    {t.nav.map((item) => (
-                        <a
-                            key={item.href}
-                            href={item.href}
-                            className="py-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
-                        >
-                            {item.label}
-                        </a>
-                    ))}
-                    {t.switcher && (
-                        <LocaleSwitcher
-                            href={t.switcher.href}
-                            label={t.switcher.label}
-                            aria={t.switcher.aria}
-                            pref={t.switcher.pref}
-                        />
-                    )}
+                    <Link href={routePath("story", locale)} className={linkClass}>
+                        {t.nav.story}
+                    </Link>
+                    <a href="#work" className={linkClass}>
+                        {t.nav.work}
+                    </a>
+                    <a href="#projects" className={linkClass}>
+                        {t.nav.projects}
+                    </a>
+                    <RouteLocaleSwitcher route="home" locale={locale} />
                 </div>
             </div>
         </nav>
@@ -261,9 +180,9 @@ function Hero({ t }: { t: LandingCopy }) {
                         <Image
                             src="/pictures/portrait.webp"
                             alt={t.portraitAlt}
-                            width={512}
-                            height={512}
-                            priority
+                            width={224}
+                            height={224}
+                            preload
                             className="absolute inset-0 size-full object-cover"
                         />
 
@@ -284,9 +203,7 @@ function Hero({ t }: { t: LandingCopy }) {
                 </figure>
             </div>
 
-            <div className="mt-16 md:mt-20">
-                <TokenMark />
-            </div>
+            <TokenMark count={16} className="mt-16 md:mt-20" />
         </section>
     );
 }
@@ -358,6 +275,7 @@ function Work({ t }: { t: LandingCopy }) {
                         alt="TypeFox GmbH"
                         width={11813}
                         height={2600}
+                        unoptimized
                         className="typefox-logo"
                     />
                 </h3>
@@ -366,12 +284,7 @@ function Work({ t }: { t: LandingCopy }) {
                 </p>
                 <div className="mt-6 flex flex-wrap gap-2">
                     {tags.map((tag) => (
-                        <span
-                            key={tag}
-                            className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft"
-                        >
-                            {tag}
-                        </span>
+                        <Tag key={tag}>{tag}</Tag>
                     ))}
                 </div>
             </div>
@@ -379,113 +292,34 @@ function Work({ t }: { t: LandingCopy }) {
     );
 }
 
-function ProjectCard({ project, t }: { project: Project; t: LandingCopy }) {
+interface ProjectEntryProps {
+    project: Project;
+    locale: Locale;
+    flagship?: boolean;
+    wide?: boolean;
+}
+
+function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
     return (
-        <article className="bg-paper-deep border border-hairline flex flex-col group hover:border-ink transition-colors duration-150">
-            {project.preview && (
-                <div className="relative">
-                    <div className="relative aspect-16/10 border-b border-hairline overflow-hidden bg-paper">
-                        {project.consent ? (
-                            <PreviewConsent
-                                id={`consent-${project.id}`}
-                                src={project.preview}
-                                title={`${project.name}${t.previewTitleSuffix}`}
-                                placeholder={project.placeholder}
-                                copy={t.consent}
-                            />
-                        ) : (
-                            <iframe
-                                src={project.preview}
-                                title={`${project.name}${t.previewTitleSuffix}`}
-                                loading="lazy"
-                                referrerPolicy="no-referrer"
-                                className="size-full border-0"
-                            />
-                        )}
-                    </div>
-                    <p className="px-8 pt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
-                        {project.previewCaption}
-                    </p>
-                </div>
-            )}
-            {!project.preview && (project.image || project.placeholder) && (
-                <div className="relative">
-                    <div className="relative aspect-16/10 border-b border-hairline overflow-hidden bg-paper">
-                        {project.image ? (
-                            <Image
-                                src={project.image}
-                                alt={`${project.name}${t.screenshotAltSuffix}`}
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className="object-cover object-top"
-                            />
-                        ) : (
-                            <PlaceholderPlate label={project.placeholder ?? ""} />
-                        )}
-                    </div>
-                    <p className="px-8 pt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
-                        {project.imageCaption}
-                    </p>
-                </div>
-            )}
-            <div className="p-8 md:p-10 flex flex-col flex-1">
-                <div className="flex items-start justify-between gap-4">
-                    <h3
-                        className={`${project.flagship ? "text-3xl md:text-4xl" : "text-2xl md:text-3xl"} font-semibold tracking-tight`}
-                    >
-                        {project.name}
-                    </h3>
-                    {project.status && (
-                        <span className="inline-flex items-center gap-2 border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] whitespace-nowrap">
-                            <span className="size-1.5 bg-signal" aria-hidden="true" />
-                            {project.status}
-                        </span>
-                    )}
-                </div>
-                <p className="mt-4 text-base leading-relaxed text-ink/85 flex-1 max-w-[62ch]">
-                    {project.description}
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                        <span
-                            key={tag}
-                            className="border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft"
-                        >
-                            {tag}
-                        </span>
-                    ))}
-                </div>
-                <div className="mt-8">
-                    {project.href ? (
-                        project.notice ? (
-                            <ExternalNotice
-                                href={project.href}
-                                title={project.name}
-                                copy={t.externalNotice}
-                            />
-                        ) : (
-                            <a
-                                href={project.href}
-                                target={project.href.startsWith("http") ? "_blank" : undefined}
-                                rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                                className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
-                            >
-                                {t.open}
-                                <span className="text-signal" aria-hidden="true">→</span>
-                            </a>
-                        )
-                    ) : (
-                        <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                            {t.privateLabel}
-                        </span>
-                    )}
-                </div>
-            </div>
-        </article>
+        <ProjectCard
+            name={project.name}
+            description={project.description}
+            status={project.status}
+            caption={project.caption}
+            tags={project.tags}
+            href={project.route ? routePath(project.route, locale) : project.href}
+            notice={project.notice}
+            image={project.image}
+            preview={project.preview}
+            placeholder={project.placeholder}
+            variant={flagship ? "flagship" : undefined}
+            sizes={wide ? FULL_WIDTH_SIZES : HALF_WIDTH_SIZES}
+            locale={locale}
+        />
     );
 }
 
-function Projects({ t }: { t: LandingCopy }) {
+function Projects({ t, locale }: { t: LandingCopy; locale: Locale }) {
     const flagships = mergeProjects(FLAGSHIP_BASE, t.flagships);
     const projects = mergeProjects(PROJECT_BASE, t.projects);
     return (
@@ -497,23 +331,19 @@ function Projects({ t }: { t: LandingCopy }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {flagships.map((project) => (
-                    <ProjectCard key={project.id} project={project} t={t} />
+                    <ProjectEntry key={project.id} project={project} locale={locale} flagship />
                 ))}
             </div>
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                {projects.map((project, index) => (
-                    <div
-                        key={project.id}
-                        className={
-                            index % 3 === 0 || index === projects.length - 1
-                                ? "md:col-span-2"
-                                : ""
-                        }
-                    >
-                        <ProjectCard project={project} t={t} />
-                    </div>
-                ))}
+                {projects.map((project, index) => {
+                    const wide = index % 3 === 0 || index === projects.length - 1;
+                    return (
+                        <div key={project.id} className={wide ? "md:col-span-2" : ""}>
+                            <ProjectEntry project={project} locale={locale} wide={wide} />
+                        </div>
+                    );
+                })}
             </div>
         </section>
     );
@@ -521,19 +351,16 @@ function Projects({ t }: { t: LandingCopy }) {
 
 export function Landing({ locale }: { locale: Locale }) {
     const t = copy[locale];
-    const personJsonLd = generatePersonJsonLd(locale);
-    const websiteJsonLd = generateWebsiteJsonLd(locale);
 
     return (
         <main id="main">
-            <script type="application/ld+json">{JSON.stringify(personJsonLd)}</script>
-            <script type="application/ld+json">{JSON.stringify(websiteJsonLd)}</script>
-            <Nav t={t} />
+            <JsonLd data={profilePageSchema(locale)} />
+            <Nav t={t} locale={locale} />
             <Hero t={t} />
             <Field t={t} />
             <WhatIDo t={t} />
             <Work t={t} />
-            <Projects t={t} />
+            <Projects t={t} locale={locale} />
         </main>
     );
 }

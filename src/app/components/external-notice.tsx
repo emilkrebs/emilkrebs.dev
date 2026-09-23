@@ -1,15 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import {
-    externalNoticeCopy,
-    type ExternalNoticeCopy,
-} from "../lib/i18n";
+import type { ExternalNoticeCopy } from "../lib/i18n";
 
 interface ExternalNoticeProps {
     href: string;
     title: string;
-    copy?: ExternalNoticeCopy;
+    copy: ExternalNoticeCopy;
 }
 
 /**
@@ -17,7 +14,7 @@ interface ExternalNoticeProps {
  * Renders the same link a plain anchor would, but intercepts the click
  * and asks for acknowledgement before redirecting.
  */
-export function ExternalNotice({ href, title, copy = externalNoticeCopy.en }: ExternalNoticeProps) {
+export function ExternalNotice({ href, title, copy }: ExternalNoticeProps) {
     const [open, setOpen] = useState(false);
     const dialogRef = useRef<HTMLDivElement>(null);
     const returnFocusRef = useRef<HTMLButtonElement>(null);
