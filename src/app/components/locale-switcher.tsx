@@ -6,7 +6,9 @@ interface LocaleSwitcherProps {
     hrefLang: string;
     /** The locale the link switches to. */
     locale: "en" | "zh";
+    /** Visible text, in the target locale. */
     label: string;
+    /** Read by screen readers after the label, in the current page's locale. */
     aria: string;
     /** Hidden unless the locale script flagged the visitor as reading Chinese. */
     zhReadersOnly?: boolean;
@@ -23,7 +25,6 @@ export function LocaleSwitcher({ href, hrefLang, locale, label, aria, zhReadersO
         <a
             href={href}
             hrefLang={hrefLang}
-            aria-label={aria}
             onClick={() => {
                 try {
                     localStorage.setItem("locale-pref", locale);
@@ -33,7 +34,9 @@ export function LocaleSwitcher({ href, hrefLang, locale, label, aria, zhReadersO
             }}
             className={`${zhReadersOnly ? "hidden zh-reader:inline " : ""}border border-hairline px-2 py-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink hover:border-ink transition-colors duration-150`}
         >
-            {label}
+            {/* The visible label starts the accessible name, so voice control can target it by what it shows. */}
+            <span lang={hrefLang}>{label}</span>
+            <span className="sr-only"> {aria}</span>
         </a>
     );
 }

@@ -128,13 +128,16 @@
     "footer": {
         "location": "Emil Krebs - Kiel, Germany",
         "copyright": "Emil Krebs. All rights reserved.",
-        "resume": "Resume (PDF)"
+        "resume": "Resume (PDF)",
+        "links": { "story": "Story", "healthstack": "Healthstack", "imprint": "Imprint", "privacy": "Privacy" }
     },
     "backHeader": {
         "label": "Back to home"
     },
     "story": {
         "contents": "Contents",
-        "confidentialNotice": "Details hidden due to active NDA restrictions."
+        "confidentialNotice": "Details hidden due to active NDA restrictions.",
+        "events": "Events",
+        "waterkant": { "place": "Kiel", "role": "Attendee" }
     }
 }

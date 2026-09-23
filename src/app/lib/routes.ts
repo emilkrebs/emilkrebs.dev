@@ -1,5 +1,5 @@
 import { SITE_URL } from "./constants";
-import type { Locale } from "./i18n/types";
+import { htmlLang, type Locale } from "./i18n";
 
 interface Route {
     /** Canonical path per published locale, trailing slash included. */
@@ -44,7 +44,7 @@ export function languageAlternates(route: RouteKey): Record<string, string> | un
     const locales = routeLocales(route);
     if (locales.length < 2) return undefined;
     return {
-        ...Object.fromEntries(locales.map((locale) => [locale, absoluteUrl(routePath(route, locale))])),
+        ...Object.fromEntries(locales.map((locale) => [htmlLang[locale], absoluteUrl(routePath(route, locale))])),
         "x-default": absoluteUrl(routePath(route, "en")),
     };
 }

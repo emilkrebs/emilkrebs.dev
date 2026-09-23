@@ -7,8 +7,9 @@ import BackHeader from "../../components/back-header";
 import { JsonLd } from "../../components/json-ld";
 import { PlaceholderPlate } from "../../components/placeholder-plate";
 import { StatusLabel, Tag } from "../../components/tag";
+import { FULL_WIDTH_SIZES } from "../../lib/image-sizes";
 import { pageMetadata } from "../../lib/metadata";
-import { softwareApplicationSchema } from "../../lib/structured-data";
+import { projectPageSchema } from "../../lib/structured-data";
 
 interface FeatureSection {
     heading: string;
@@ -114,8 +115,7 @@ function Shot({ src, alt, caption, placeholder }: ShotProps) {
                         src={src}
                         alt={alt}
                         fill
-                        // Full width of the 1120px container (1072px of content).
-                        sizes="(min-width: 1120px) 1072px, 100vw"
+                        sizes={FULL_WIDTH_SIZES}
                         className="object-cover object-center"
                     />
                 ) : (
@@ -189,7 +189,7 @@ export default function HealthstackPage() {
     return (
         <main id="main" className="flex-1">
             <JsonLd
-                data={softwareApplicationSchema({
+                data={projectPageSchema({
                     route: "healthstack",
                     locale: "en",
                     name: page.meta.title,

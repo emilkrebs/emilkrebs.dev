@@ -46,23 +46,23 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                     </div>
                     <div className="flex gap-6 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                         <Link href={routePath("story", locale)} className="hover:text-ink transition-colors duration-150 py-1">
-                            Story
+                            {t.links.story}
                         </Link>
                         <Link href={routePath("healthstack", locale)} className="hover:text-ink transition-colors duration-150 py-1">
-                            Healthstack
+                            {t.links.healthstack}
                         </Link>
                         <Link href={routePath("imprint", locale)} className="hover:text-ink transition-colors duration-150 py-1">
-                            Imprint
+                            {t.links.imprint}
                         </Link>
                         <Link href={routePath("privacy", locale)} className="hover:text-ink transition-colors duration-150 py-1">
-                            Privacy
+                            {t.links.privacy}
                         </Link>
                     </div>
                 </div>
                 <p className="mt-12 text-xs text-ink-soft">
                     © {new Date().getFullYear()} {t.copyright}
                 </p>
-                <div className="mt-10"><TokenMark /></div>
+                <TokenMark className="mt-10" />
             </div>
         </footer>
     );

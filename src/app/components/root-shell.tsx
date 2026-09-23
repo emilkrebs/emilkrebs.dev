@@ -8,13 +8,15 @@ import { routePath } from "../lib/routes";
  * Runs before first paint on English pages. It does two things:
  *
  * - Flags visitors who read Chinese (any Chinese language in the browser's
- *   preferences, or Chinese picked with the switcher earlier) with
- *   `data-zh-reader` on <html>, which reveals the switcher to the Chinese
- *   version via the `zh-reader:` variant. Everyone else never sees it.
+ *   preferences, or any choice made with the switcher, which only readers of
+ *   the Chinese pages ever see) with `data-zh-reader` on <html>, which
+ *   reveals the switcher to the Chinese version via the `zh-reader:`
+ *   variant. Everyone else never sees it.
  * - Sends browsers whose primary language is Chinese from `/` to `/zh/` on
  *   entry, unless the visitor picked English with the switcher. Navigation
  *   within the site (a same-origin referrer) is never redirected: "Back to
- *   home" on an English page stays English.
+ *   home" on an English page stays English. Query and hash carry over, so
+ *   campaign parameters and anchors survive the redirect.
  */
 const LOCALE_SCRIPT = `(function () {
     try {
@@ -22,13 +24,13 @@ const LOCALE_SCRIPT = `(function () {
         try { pref = localStorage.getItem("locale-pref"); } catch (e) {}
         var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
         var isZh = function (lang) { return String(lang).toLowerCase().indexOf("zh") === 0; };
-        if (pref === "zh" || Array.prototype.some.call(langs, isZh)) {
+        if (pref !== null || Array.prototype.some.call(langs, isZh)) {
             document.documentElement.setAttribute("data-zh-reader", "");
         }
         if (location.pathname !== "/") return;
         if (document.referrer.indexOf(location.origin + "/") === 0) return;
         if (pref === "en") return;
-        if (pref === "zh" || isZh(langs[0])) location.replace(${JSON.stringify(routePath("home", "zh"))});
+        if (pref === "zh" || isZh(langs[0])) location.replace(${JSON.stringify(routePath("home", "zh"))} + location.search + location.hash);
     } catch (e) {}
 })();`;
 

@@ -7,6 +7,7 @@ import { Tag } from "./tag";
 import { TokenMark } from "./token-mark";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
 import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
+import { FULL_WIDTH_SIZES, HALF_WIDTH_SIZES } from "../lib/image-sizes";
 import { routePath, type RouteKey } from "../lib/routes";
 import { profilePageSchema } from "../lib/structured-data";
 
@@ -24,10 +25,6 @@ interface ProjectBase {
 }
 
 type Project = ProjectBase & ProjectCopy;
-
-// Card widths in the 1120px container (1072px of content), for srcset selection.
-const FULL_WIDTH_SIZES = "(min-width: 1120px) 1072px, 100vw";
-const HALF_WIDTH_SIZES = "(min-width: 1120px) 524px, (min-width: 768px) 50vw, 100vw";
 
 const FLAGSHIP_BASE: ProjectBase[] = [
     {
@@ -206,9 +203,7 @@ function Hero({ t }: { t: LandingCopy }) {
                 </figure>
             </div>
 
-            <div className="mt-16 md:mt-20">
-                <TokenMark count={16} />
-            </div>
+            <TokenMark count={16} className="mt-16 md:mt-20" />
         </section>
     );
 }

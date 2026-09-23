@@ -26,6 +26,7 @@ export interface FooterCopy {
     location: string;
     copyright: string;
     resume: string;
+    links: { story: string; healthstack: string; imprint: string; privacy: string };
 }
 
 export interface BackHeaderCopy {
@@ -35,6 +36,8 @@ export interface BackHeaderCopy {
 export interface StoryCopy {
     contents: string;
     confidentialNotice: string;
+    events: string;
+    waterkant: { place: string; role: string };
 }
 
 export interface MetaCopy {

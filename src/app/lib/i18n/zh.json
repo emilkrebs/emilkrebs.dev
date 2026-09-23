@@ -128,13 +128,16 @@
     "footer": {
         "location": "Emil Krebs - 基尔，德国",
         "copyright": "Emil Krebs。保留所有权利。",
-        "resume": "简历 (PDF)"
+        "resume": "简历 (PDF)",
+        "links": { "story": "故事", "healthstack": "Healthstack", "imprint": "法律声明", "privacy": "隐私政策" }
     },
     "backHeader": {
         "label": "返回首页"
     },
     "story": {
         "contents": "目录",
-        "confidentialNotice": "受现行保密协议约束，详情不予公开。"
+        "confidentialNotice": "受现行保密协议约束，详情不予公开。",
+        "events": "活动",
+        "waterkant": { "place": "基尔", "role": "参会者" }
     }
 }

@@ -100,14 +100,20 @@ export function aboutPageSchema({ route, locale, name, description }: PageSchema
     });
 }
 
-export function softwareApplicationSchema({ route, locale, name, description, image }: PageSchemaOptions & { image: string }) {
+/**
+ * A page about one of the projects. A WebPage, not a SoftwareApplication:
+ * Google reads that as a Software App rich result and flags it invalid
+ * without offers and ratings, which an unreleased project has neither of.
+ */
+export function projectPageSchema({ route, locale, name, description, image }: PageSchemaOptions & { image: string }) {
     return graph({
-        "@type": "SoftwareApplication",
+        "@type": "WebPage",
+        url: absoluteUrl(routePath(route, locale)),
         name,
         description,
-        url: absoluteUrl(routePath(route, locale)),
-        image: absoluteUrl(image),
-        applicationCategory: "HealthApplication",
+        inLanguage: htmlLang[locale],
+        primaryImageOfPage: { "@type": "ImageObject", url: absoluteUrl(image) },
+        isPartOf: websiteRef,
         author: personRef,
     });
 }

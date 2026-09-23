@@ -5,6 +5,7 @@ import { SmartLink } from "./smart-link";
 import { Tag } from "./tag";
 import { TokenMark } from "./token-mark";
 import { storyCopy, type Locale } from "../lib/i18n";
+import { STORY_CARD_SIZES, STORY_COMPACT_CARD_SIZES } from "../lib/image-sizes";
 import { routePath, type RouteKey } from "../lib/routes";
 
 interface EraProps {
@@ -16,7 +17,11 @@ interface EraProps {
 
 function Era({ id, period, title, children }: EraProps) {
     return (
-        <section id={id} className="relative mt-20 md:mt-24 pl-10 md:pl-14 first:mt-0">
+        // --era-gutter: the indent between the rail and the text; event markers reach back across it.
+        <section
+            id={id}
+            className="relative mt-20 md:mt-24 [--era-gutter:2.5rem] md:[--era-gutter:3.5rem] pl-(--era-gutter) first:mt-0"
+        >
             <span className="absolute left-0 top-1.5 size-2.5 bg-signal" aria-hidden="true" />
             <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{period}</p>
             <h2 className="mt-3 text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.01em]">
@@ -49,8 +54,9 @@ function Timeline({ children, locale = "en" }: TimelineProps) {
                 }))}
             />
             <div className="relative mt-20 md:mt-24">
-                {children}
+                {/* Before the eras, so their markers paint over the rail. */}
                 <span className="absolute left-[4px] top-0 bottom-0 w-px bg-hairline" aria-hidden="true" />
+                {children}
             </div>
         </>
     );
@@ -73,7 +79,7 @@ function Contents({ items, locale = "en" }: ContentsProps) {
         <nav aria-label={t.contents} className="mt-20 md:mt-24 border border-hairline">
             <div className="flex items-center justify-between gap-6 px-8 py-4 border-b border-hairline">
                 <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{t.contents}</p>
-                <TokenMark count={8} className="hidden md:flex" />
+                <TokenMark count={8} className="max-md:hidden" />
             </div>
             <ul>
                 {items.map((item) => (
@@ -133,8 +139,7 @@ function Showcase({ tags, route, href, confidential, compact, locale = "en", ...
             href={route ? routePath(route, locale) : href}
             confidential={isConfidential}
             variant={compact ? "compact" : undefined}
-            // Grid cells in the story column (792px): three compact or two regular per row.
-            sizes={compact ? "(min-width: 768px) 256px, 100vw" : "(min-width: 768px) 384px, 100vw"}
+            sizes={compact ? STORY_COMPACT_CARD_SIZES : STORY_CARD_SIZES}
             filledTags
             locale={locale}
         />
@@ -177,9 +182,12 @@ interface EventRowProps {
 function EventRow({ date, name, place, role, href }: EventRowProps) {
     return (
         <li className="relative flex items-baseline gap-x-4 text-sm leading-6">
-            {/* A minor stop on the timeline rail: hollow, smaller than the era mark. */}
+            {/*
+              * A minor stop on the timeline rail: hollow, smaller than the era mark.
+              * Centered on the rail (4px + 0.5px) from an EventList placed directly in an Era.
+              */}
             <span
-                className="absolute top-2 left-[calc(1px_-_2.5rem)] md:left-[calc(1px_-_3.5rem)] size-[7px] border border-ink-soft bg-paper"
+                className="absolute top-2 left-[calc(1px_-_var(--era-gutter))] size-[7px] border border-ink-soft bg-paper"
                 aria-hidden="true"
             />
             <span className="w-24 shrink-0 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
@@ -202,9 +210,22 @@ function EventRow({ date, name, place, role, href }: EventRowProps) {
     );
 }
 
-function EventList({ label, children }: { label: string; children: React.ReactNode }) {
+/** Waterkant Festival in Kiel, a yearly stop on the timeline. */
+function Waterkant({ date, locale = "en" }: { date: string; locale?: Locale }) {
+    const t = storyCopy[locale].waterkant;
+    return <EventRow date={date} name="Waterkant Festival" place={t.place} role={t.role} href="https://waterkant.sh" />;
+}
+
+interface EventListProps {
+    /** Accessible name; defaults to the locale's "Events". */
+    label?: string;
+    children: React.ReactNode;
+    locale?: Locale;
+}
+
+function EventList({ label, children, locale = "en" }: EventListProps) {
     return (
-        <ul aria-label={label} className="my-8 space-y-1.5">
+        <ul aria-label={label ?? storyCopy[locale].events} className="my-8 space-y-1.5">
             {children}
         </ul>
     );
@@ -226,7 +247,7 @@ function PullQuote({ children }: { children: React.ReactNode }) {
     );
 }
 
-const shared = { Era, ShowcaseGrid, TagRow, EventList, EventRow, Lead, TokenMark, PullQuote };
+const shared = { Era, ShowcaseGrid, TagRow, EventRow, Lead, TokenMark, PullQuote };
 
 /**
  * The /story grammar per locale. English is the default set that
@@ -234,12 +255,14 @@ const shared = { Era, ShowcaseGrid, TagRow, EventList, EventRow, Lead, TokenMark
  * passes its set as the `components` prop, which MDX merges over it.
  */
 export const storyComponents: Record<Locale, MDXComponents> = {
-    en: { ...shared, Timeline, Contents, Showcase },
+    en: { ...shared, Timeline, Contents, Showcase, EventList, Waterkant },
     zh: {
         ...shared,
         Timeline: (props: TimelineProps) => <Timeline {...props} locale="zh" />,
         Contents: (props: ContentsProps) => <Contents {...props} locale="zh" />,
         Showcase: (props: ShowcaseProps) => <Showcase {...props} locale="zh" />,
+        EventList: (props: EventListProps) => <EventList {...props} locale="zh" />,
+        Waterkant: (props: { date: string }) => <Waterkant {...props} locale="zh" />,
         // CJK has no true italic; the accent stays upright and contrasts by the serif face alone.
         em: ({ children }) => <em className="font-serif not-italic">{children}</em>,
     },
