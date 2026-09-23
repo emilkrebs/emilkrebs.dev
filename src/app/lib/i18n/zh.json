@@ -1,7 +1,7 @@
 {
     "navAria": "主导航",
     "nav": [
-        { "href": "/story", "label": "故事" },
+        { "href": "/zh/story", "label": "故事" },
         { "href": "#work", "label": "工作" },
         { "href": "#projects", "label": "项目" }
     ],
@@ -114,6 +114,15 @@
     },
     "footer": {
         "location": "Emil Krebs - 基尔，德国",
-        "copyright": "Emil Krebs。保留所有权利。"
+        "copyright": "Emil Krebs。保留所有权利。",
+        "storyHref": "/zh/story"
+    },
+    "backHeader": {
+        "href": "/zh/",
+        "label": "返回首页"
+    },
+    "story": {
+        "contents": "目录",
+        "confidentialNotice": "受现行保密协议约束，详情不予公开。"
     }
 }

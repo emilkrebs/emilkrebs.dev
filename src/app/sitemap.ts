@@ -41,6 +41,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: new Date(),
             changeFrequency: "monthly",
             priority: 0.7,
+            alternates: {
+                languages: {
+                    en: "/story/",
+                    zh: "/zh/story/",
+                    "x-default": "/story/",
+                },
+            },
+        },
+        {
+            url: "https://emilkrebs.dev/zh/story",
+            lastModified: new Date(),
+            changeFrequency: "monthly",
+            priority: 0.6,
+            alternates: {
+                languages: {
+                    en: "/story/",
+                    zh: "/zh/story/",
+                    "x-default": "/story/",
+                },
+            },
         },
         {
             url: "https://emilkrebs.dev/imprint",

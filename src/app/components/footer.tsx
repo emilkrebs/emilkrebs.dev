@@ -45,7 +45,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                         </a>
                     </div>
                     <div className="flex gap-6 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                        <a href="/story" className="hover:text-ink transition-colors duration-150 py-1">
+                        <a href={t.storyHref} className="hover:text-ink transition-colors duration-150 py-1">
                             Story
                         </a>
                         <a href="/healthstack" className="hover:text-ink transition-colors duration-150 py-1">

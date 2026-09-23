@@ -112,6 +112,15 @@
     },
     "footer": {
         "location": "Emil Krebs - Kiel, Germany",
-        "copyright": "Emil Krebs. All rights reserved."
+        "copyright": "Emil Krebs. All rights reserved.",
+        "storyHref": "/story"
+    },
+    "backHeader": {
+        "href": "/",
+        "label": "Back to home"
+    },
+    "story": {
+        "contents": "Contents",
+        "confidentialNotice": "Details hidden due to active NDA restrictions."
     }
 }

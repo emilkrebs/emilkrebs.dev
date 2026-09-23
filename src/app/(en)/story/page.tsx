@@ -7,6 +7,11 @@ export const metadata: Metadata = {
     description: "The personal journey, background, and software engineering philosophy of Emil Krebs.",
     alternates: {
         canonical: "/story/",
+        languages: {
+            en: "/story/",
+            zh: "/zh/story/",
+            "x-default": "/story/",
+        },
     },
     openGraph: {
         type: "website",

@@ -1,15 +1,18 @@
 import enJson from "./en.json";
 import zhJson from "./zh.json";
 import type {
+    BackHeaderCopy,
     ExternalNoticeCopy,
     FooterCopy,
     LandingCopy,
     Locale,
     LocaleBundle,
     PreviewConsentCopy,
+    StoryCopy,
 } from "./types";
 
 export type {
+    BackHeaderCopy,
     ExternalNoticeCopy,
     FooterCopy,
     LandingCopy,
@@ -18,6 +21,7 @@ export type {
     NavItem,
     PreviewConsentCopy,
     ProjectCopy,
+    StoryCopy,
 } from "./types";
 
 const en = enJson satisfies LocaleBundle;
@@ -41,6 +45,16 @@ export const externalNoticeCopy: Record<Locale, ExternalNoticeCopy> = {
 export const footerCopy: Record<Locale, FooterCopy> = {
     en: en.footer,
     zh: zh.footer,
+};
+
+export const backHeaderCopy: Record<Locale, BackHeaderCopy> = {
+    en: en.backHeader,
+    zh: zh.backHeader,
+};
+
+export const storyCopy: Record<Locale, StoryCopy> = {
+    en: en.story,
+    zh: zh.story,
 };
 
 export const copy: Record<Locale, LandingCopy> = {

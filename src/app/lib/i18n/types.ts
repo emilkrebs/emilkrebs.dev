@@ -32,6 +32,17 @@ export interface ExternalNoticeCopy {
 export interface FooterCopy {
     location: string;
     copyright: string;
+    storyHref: string;
+}
+
+export interface BackHeaderCopy {
+    href: string;
+    label: string;
+}
+
+export interface StoryCopy {
+    contents: string;
+    confidentialNotice: string;
 }
 
 export interface ProjectCopy {
@@ -76,4 +87,6 @@ export interface LandingCopy {
 
 export interface LocaleBundle extends LandingCopy {
     footer: FooterCopy;
+    backHeader: BackHeaderCopy;
+    story: StoryCopy;
 }
