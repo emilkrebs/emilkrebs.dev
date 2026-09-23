@@ -15,7 +15,6 @@ export function RouteLocaleSwitcher({ route, locale }: { route: RouteKey; locale
         <LocaleSwitcher
             href={target.href}
             hrefLang={htmlLang[target.locale]}
-            locale={target.locale}
             label={t.label}
             aria={t.aria}
             zhReadersOnly={target.locale === "zh"}

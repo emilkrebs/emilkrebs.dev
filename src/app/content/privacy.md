@@ -11,7 +11,7 @@ Simple Analytics gives insight about visitors only in general, but not about ind
 
 ## Cookies
 
-This website does not use cookies. Cookies are small data files that a website transfers to your computer's hard drive when you visit the site. They allow the website to remember certain information about you, such as your preferences or browsing history.
+This website does not use cookies or local storage. Cookies are small data files that a website transfers to your computer's hard drive when you visit the site. They allow the website to remember certain information about you, such as your preferences or browsing history.
 
 ## Third-party links
 
