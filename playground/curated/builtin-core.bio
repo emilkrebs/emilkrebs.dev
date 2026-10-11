@@ -152,7 +152,7 @@ type protocol is schedulable @icon("git-branch") @color("sky") {
 // ── User ─────────────────────────────────────────────────────────────────────
 // The entity a protocol is FOR — one per workspace directory, matching the
 // timeline's workspace-isolation model (each client/person is a directory).
-// `weight` is the load-bearing member: body-weight-relative doses (`2 g/kg`)
+// `weight` is the load member: body-weight-relative doses (`2 g/kg`)
 // resolve against it at hover time, and the validator warns when a per-kg
 // measurement exists but no user weight is in scope. Declares no traits:
 // a user is not dosed, scheduled or interacted with.

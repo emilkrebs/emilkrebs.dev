@@ -38,6 +38,46 @@ section[id] {
     }
 }
 
+/* Chinese pages: vermilion accent, CJK-first font stacks, CJK-friendly typesetting. */
+html:lang(zh) {
+    --color-signal: #c8102e;
+    --font-sans: var(--font-schibsted-grotesk), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Noto Sans CJK SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: var(--font-plex-mono), "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Noto Sans CJK SC", "Microsoft YaHei", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* #c8102e is 3.2:1 on night paper; this red clears 4.5:1 on both night surfaces. */
+@media (prefers-color-scheme: dark) {
+    html:lang(zh) {
+        --color-signal: #f04438;
+    }
+}
+
+html:lang(zh) body {
+    font-family: var(--font-sans);
+    line-height: 1.75;
+    letter-spacing: 0.02em;
+}
+
+html:lang(zh) .leading-relaxed,
+html:lang(zh) [class*="leading-[1.6]"] {
+    line-height: 1.8;
+}
+
+/* Headlines wrap to two lines in Chinese; 1.1 is too tight for full-width glyphs. */
+html:lang(zh) [class*="leading-[1.1]"] {
+    line-height: 1.3;
+}
+
+/* Wide tracking opens gaps between CJK glyphs. */
+html:lang(zh) [class*="tracking-[0.08em]"] {
+    letter-spacing: 0.04em;
+}
+
+/* Negative tracking crowds CJK headings; the Latin h1 wordmark and nav logo keep theirs. */
+html:lang(zh) :is(h2, h3):is(.tracking-tight, [class*="tracking-[-"]) {
+    letter-spacing: 0;
+}
+
 body {
     background-color: var(--color-paper);
     color: var(--color-ink);
