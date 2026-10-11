@@ -22,6 +22,15 @@ export interface ExternalNoticeCopy {
     back: string;
 }
 
+export interface WeChatCopy {
+    label: string;
+    heading: string;
+    idLabel: string;
+    qrAlt: string;
+    close: string;
+    closeAria: string;
+}
+
 export interface FooterCopy {
     location: string;
     copyright: string;
@@ -60,6 +69,8 @@ export interface LandingCopy {
     switcher: LocaleSwitcherCopy;
     heroTagline: string;
     ctas: { github: string; linkedin: string; email: string };
+    /** Chinese locale only. */
+    wechat?: WeChatCopy;
     portraitAlt: string;
     thinking: string;
     fieldHeading: string;

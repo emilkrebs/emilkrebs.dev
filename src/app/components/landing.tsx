@@ -5,6 +5,7 @@ import { ProjectCard } from "./project-card";
 import { RouteLocaleSwitcher } from "./route-locale-switcher";
 import { Tag } from "./tag";
 import { TokenMark } from "./token-mark";
+import { WeChatLink } from "./wechat-link";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
 import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
 import { FULL_WIDTH_SIZES, HALF_WIDTH_SIZES } from "../lib/image-sizes";
@@ -154,6 +155,12 @@ function Hero({ t }: { t: LandingCopy }) {
                             {t.ctas.email}
                             <span className="text-signal" aria-hidden="true">→</span>
                         </a>
+                        {t.wechat && (
+                            <WeChatLink
+                                copy={t.wechat}
+                                className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                            />
+                        )}
                     </div>
                 </div>
 

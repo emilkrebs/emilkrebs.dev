@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { TokenMark } from "./token-mark";
+import { WeChatLink } from "./wechat-link";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../lib/constants";
-import { footerCopy, type Locale } from "../lib/i18n";
+import { copy, footerCopy, type Locale } from "../lib/i18n";
 import { routePath } from "../lib/routes";
 
 export function Footer({ locale = "en" }: { locale?: Locale }) {
     const t = footerCopy[locale];
+    const wechat = copy[locale].wechat;
     return (
         <footer className="w-full mt-auto">
             <div className="mx-auto w-full max-w-280 px-6 py-16 border-t border-hairline">
@@ -36,6 +38,12 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                         >
                             Email <span className="text-signal" aria-hidden="true">→</span>
                         </a>
+                        {wechat && (
+                            <WeChatLink
+                                copy={wechat}
+                                className="inline-flex items-center gap-2 hover:text-signal transition-colors duration-150 py-1"
+                            />
+                        )}
                         <a
                             href={RESUME_PATH}
                             type="application/pdf"

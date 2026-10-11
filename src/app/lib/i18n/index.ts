@@ -19,6 +19,7 @@ export type {
     PreviewConsentCopy,
     ProjectCopy,
     StoryCopy,
+    WeChatCopy,
 } from "./types";
 
 const en = enJson satisfies LocaleBundle;

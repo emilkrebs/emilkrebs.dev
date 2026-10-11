@@ -24,6 +24,14 @@
     "switcher": { "label": "EN", "aria": "切换到英文版" },
     "heroTagline": "TypeFox 软件工程师。德国基尔。",
     "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "邮件" },
+    "wechat": {
+        "label": "微信",
+        "heading": "添加微信",
+        "idLabel": "微信号",
+        "qrAlt": "Emil 爱米尔的微信二维码",
+        "close": "关闭",
+        "closeAria": "关闭微信二维码"
+    },
     "portraitAlt": "Emil Krebs，软件工程师",
     "thinking": "思考中...",
     "fieldHeading": "领域",
