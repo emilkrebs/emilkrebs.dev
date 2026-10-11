@@ -1,5 +1,7 @@
 export const SITE_URL = "https://emilkrebs.dev";
 export const SITE_NAME = "Emil Krebs";
+// The name used in China.
+export const CHINESE_NAME = "爱米尔";
 
 export const EMAIL_ADDRESS = "hello@emilkrebs.dev";
 export const PHONE_NUMBER = "+49 157 74601 701";

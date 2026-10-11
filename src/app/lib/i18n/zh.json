@@ -1,9 +1,11 @@
 {
     "meta": {
-        "title": "Emil Krebs - 基尔的软件工程师",
+        "title": "Emil Krebs (爱米尔) - 基尔的软件工程师",
         "description": "德国基尔 TypeFox 的软件工程师。我构建读取、理解和转换代码的工具：语言服务器、DSL，以及 Prami 和 Healthstack 等产品。一切以开源发布。",
         "keywords": [
             "Emil Krebs",
+            "爱米尔",
+            "AiMiEr",
             "软件工程师",
             "TypeFox GmbH",
             "软件工程",
@@ -28,7 +30,7 @@
         "label": "微信",
         "heading": "添加微信",
         "idLabel": "微信号",
-        "qrAlt": "Emil 爱米尔的微信二维码",
+        "qrAlt": "Emil Krebs 的微信二维码",
         "close": "关闭",
         "closeAria": "关闭微信二维码"
     },

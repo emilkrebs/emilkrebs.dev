@@ -1,4 +1,4 @@
-import { GITHUB_URL, LINKEDIN_URL, SITE_NAME, SITE_URL } from "./constants";
+import { CHINESE_NAME, GITHUB_URL, LINKEDIN_URL, SITE_NAME, SITE_URL } from "./constants";
 import { copy, htmlLang, type Locale } from "./i18n";
 import { absoluteUrl, routeLocales, routePath, type RouteKey } from "./routes";
 
@@ -18,6 +18,7 @@ const websiteRef = { "@type": "WebSite", "@id": WEBSITE_ID, name: SITE_NAME, url
 function person(locale: Locale) {
     return {
         ...personRef,
+        alternateName: [CHINESE_NAME, "AiMiEr"],
         image: absoluteUrl("/pictures/portrait.webp"),
         jobTitle: "Software Engineer",
         description: copy[locale].jsonLd.personDescription,
