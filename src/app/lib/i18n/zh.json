@@ -49,7 +49,7 @@
         },
         {
             "title": "安全与隐私",
-            "proof": "VailNote 的零知识加密、WatchLock 的 WearOS 锁定，默认无遥测。"
+            "proof": "VailNote 的隐私优先设计、WatchLock 的 WearOS 锁定，默认无遥测。"
         },
         {
             "title": "开源",
@@ -83,7 +83,7 @@
         {
             "id": "vailnote",
             "name": "VailNote",
-            "description": "加密笔记分享，采用零知识加密与自毁笔记。",
+            "description": "隐私优先的笔记分享应用。",
             "caption": "在线 - vailnote.com"
         },
         {
