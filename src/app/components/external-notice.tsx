@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useModal } from "./use-modal";
 import type { ExternalNoticeCopy } from "../lib/i18n";
 
 interface ExternalNoticeProps {
     href: string;
     title: string;
     copy: ExternalNoticeCopy;
+    /** The trigger's visible label; defaults to the generic "Open". */
+    label?: string;
 }
 
 /**
@@ -14,40 +17,21 @@ interface ExternalNoticeProps {
  * Renders the same link a plain anchor would, but intercepts the click
  * and asks for acknowledgement before redirecting.
  */
-export function ExternalNotice({ href, title, copy }: ExternalNoticeProps) {
+export function ExternalNotice({ href, title, copy, label }: ExternalNoticeProps) {
     const [open, setOpen] = useState(false);
     const dialogRef = useRef<HTMLDivElement>(null);
-    const returnFocusRef = useRef<HTMLButtonElement>(null);
 
-    useEffect(() => {
-        if (!open) return;
-
-        const previouslyFocused = document.activeElement as HTMLElement | null;
-        dialogRef.current?.focus();
-
-        const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") setOpen(false);
-        };
-
-        document.addEventListener("keydown", onKeyDown);
-        document.documentElement.style.overflow = "hidden";
-
-        return () => {
-            document.removeEventListener("keydown", onKeyDown);
-            document.documentElement.style.overflow = "";
-            previouslyFocused?.focus();
-        };
-    }, [open]);
+    useModal(open, setOpen, dialogRef);
 
     return (
         <>
             <button
                 type="button"
-                ref={returnFocusRef}
                 onClick={() => setOpen(true)}
                 className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
             >
-                {copy.open}
+                {label ?? copy.open}
+                <span className="sr-only">: {title}</span>
                 <span className="text-signal" aria-hidden="true">→</span>
             </button>
 
@@ -62,7 +46,7 @@ export function ExternalNotice({ href, title, copy }: ExternalNoticeProps) {
                         type="button"
                         aria-label={copy.closeNoticeAria}
                         onClick={() => setOpen(false)}
-                        className="absolute inset-0 bg-ink/60 backdrop-blur-sm"
+                        className="absolute inset-0 bg-paper-deep"
                     />
                     <div
                         ref={dialogRef}

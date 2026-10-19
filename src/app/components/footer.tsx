@@ -52,7 +52,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                             {t.resume} <span className="text-signal" aria-hidden="true">→</span>
                         </a>
                     </div>
-                    <div className="flex gap-6 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                    <div className="flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                         <Link href={routePath("story", locale)} className="hover:text-ink transition-colors duration-150 py-1">
                             {t.links.story}
                         </Link>

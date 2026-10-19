@@ -20,7 +20,7 @@ interface ProjectBase {
     route?: RouteKey;
     tags: string[];
     image?: string;
-    placeholder?: string;
+    /** A third-party live page, loaded on click over the image. */
     preview?: string;
     notice?: boolean;
 }
@@ -39,11 +39,18 @@ const FLAGSHIP_BASE: ProjectBase[] = [
         id: "healthstack",
         route: "healthstack",
         tags: ["Theia", "Langium", "TypeScript", "Electron"],
-        image: "/pictures/healthstack-dashboard.webp",
+        image: "/pictures/healthstack-playground.webp",
     },
 ];
 
 const PROJECT_BASE: ProjectBase[] = [
+    {
+        id: "langium-showcase",
+        href: "https://langium.org/showcase/",
+        tags: ["Langium", "TypeScript", "DSLs"],
+        image: "/pictures/langium-minilogo.webp",
+        preview: "https://langium.org/showcase/minilogo/",
+    },
     {
         id: "vailnote",
         href: "https://vailnote.com/",
@@ -63,15 +70,8 @@ const PROJECT_BASE: ProjectBase[] = [
         image: "/pictures/bipoc.webp",
     },
     {
-        id: "langium-showcase",
-        href: "https://langium.org/showcase/",
-        tags: ["Langium", "TypeScript", "DSLs"],
-        preview: "https://langium.org/showcase/minilogo/",
-        placeholder: "/pictures/langium-placeholder.png",
-    },
-    {
         id: "this-site",
-        route: "home",
+        href: "https://github.com/emilkrebs/emilkrebs.dev",
         tags: ["Next.js", "TypeScript", "Tailwind CSS"],
         image: "/pictures/this-site.webp",
     },
@@ -87,8 +87,11 @@ function mergeProjects(base: ProjectBase[], copies: ProjectCopy[]): Project[] {
     });
 }
 
+/** GitHub, LinkedIn, Email: the plain arrow links that leave the page. */
+const EXIT_LINK_CLASS = "inline-flex items-center gap-2 py-2.5 font-medium hover:text-signal transition-colors duration-150";
+
 function Nav({ t, locale }: { t: LandingCopy; locale: Locale }) {
-    const linkClass = "py-2 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150";
+    const linkClass = "py-3 font-mono text-xs uppercase tracking-[0.04em] sm:tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150";
     return (
         <nav aria-label={t.navAria} className="sticky top-0 z-50 bg-paper border-b border-hairline">
             <div className="mx-auto flex items-center justify-between max-w-280 px-4 md:px-6 h-16">
@@ -98,7 +101,7 @@ function Nav({ t, locale }: { t: LandingCopy; locale: Locale }) {
                 >
                     emil<span className="text-signal">.</span>krebs
                 </a>
-                <div className="flex items-center gap-4 md:gap-8">
+                <div className="flex items-center gap-3 sm:gap-4 md:gap-8">
                     <Link href={routePath("story", locale)} className={linkClass}>
                         {t.nav.story}
                     </Link>
@@ -107,6 +110,10 @@ function Nav({ t, locale }: { t: LandingCopy; locale: Locale }) {
                     </a>
                     <a href="#projects" className={linkClass}>
                         {t.nav.projects}
+                    </a>
+                    {/* Phones skip it: the hero's Email link and the closing section already cover contact. */}
+                    <a href="#contact" className={`${linkClass} max-sm:hidden`}>
+                        {t.nav.contact}
                     </a>
                     <RouteLocaleSwitcher route="home" locale={locale} />
                 </div>
@@ -121,7 +128,7 @@ function Hero({ t }: { t: LandingCopy }) {
             id="top"
             className="mx-auto max-w-280 px-6 pt-16 md:pt-24 pb-16 md:pb-20"
         >
-            <div className="flex flex-col-reverse md:flex-row md:items-start justify-between gap-12 md:gap-20">
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-12 md:gap-20">
                 <div className="max-w-160">
                     <h1 className="font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(3rem,8vw,6.5rem)]">
                         Emil Krebs
@@ -129,12 +136,12 @@ function Hero({ t }: { t: LandingCopy }) {
                     <p className="mt-8 text-lg md:text-xl leading-relaxed max-w-[46ch]">
                         {t.heroTagline}
                     </p>
-                    <div className="mt-10 flex flex-wrap items-center gap-6">
+                    <div className="mt-8 flex flex-wrap items-center gap-x-6">
                         <a
                             href={GITHUB_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                            className={EXIT_LINK_CLASS}
                         >
                             {t.ctas.github}
                             <span className="text-signal" aria-hidden="true">→</span>
@@ -143,23 +150,20 @@ function Hero({ t }: { t: LandingCopy }) {
                             href={LINKEDIN_URL}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                            className={EXIT_LINK_CLASS}
                         >
                             {t.ctas.linkedin}
                             <span className="text-signal" aria-hidden="true">→</span>
                         </a>
                         <a
                             href={`mailto:${EMAIL_ADDRESS}`}
-                            className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                            className={EXIT_LINK_CLASS}
                         >
                             {t.ctas.email}
                             <span className="text-signal" aria-hidden="true">→</span>
                         </a>
                         {t.wechat && (
-                            <WeChatLink
-                                copy={t.wechat}
-                                className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
-                            />
+                            <WeChatLink copy={t.wechat} className={EXIT_LINK_CLASS} />
                         )}
                     </div>
                 </div>
@@ -201,7 +205,6 @@ function Hero({ t }: { t: LandingCopy }) {
                     </div>
                     <div
                         className="absolute -top-2.5 -right-2.5 z-20 bg-paper border border-signal-accent/60 px-2.5 py-1.5"
-                        role="status"
                     >
                         <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
                             <span className="block text-ink-soft">{t.thinking}</span>
@@ -226,7 +229,8 @@ function SectionHeading({ id, children }: { id?: string; children: string }) {
     );
 }
 
-function Field({ t }: { t: LandingCopy }) {
+function Field({ t, locale }: { t: LandingCopy; locale: Locale }) {
+    const [before, accent, after] = t.fieldLead;
     return (
         <section
             id="field"
@@ -234,9 +238,10 @@ function Field({ t }: { t: LandingCopy }) {
         >
             <SectionHeading>{t.fieldHeading}</SectionHeading>
             <p className="text-xl md:text-2xl leading-relaxed max-w-[64ch]">
-                {t.fieldLead[0]}
-                <i className="mx-1">TypeFox</i>
-                {t.fieldLead[1]}
+                {before}
+                {/* CJK has no true italic; the zh accent contrasts by the serif face alone. */}
+                <em className={locale === "zh" ? "font-serif not-italic" : "font-serif italic"}>{accent}</em>
+                {after}
             </p>
         </section>
     );
@@ -246,7 +251,7 @@ function WhatIDo({ t }: { t: LandingCopy }) {
     return (
         <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
             <SectionHeading>{t.strengthsHeading}</SectionHeading>
-            <div className="flex flex-col gap-20 md:gap-24">
+            <div className="flex flex-col gap-14 md:gap-16">
                 {t.strengths.map((strength) => (
                     <div
                         key={strength.title}
@@ -318,7 +323,7 @@ function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
             notice={project.notice}
             image={project.image}
             preview={project.preview}
-            placeholder={project.placeholder}
+            linkLabel={project.linkLabel}
             variant={flagship ? "flagship" : undefined}
             sizes={wide ? FULL_WIDTH_SIZES : HALF_WIDTH_SIZES}
             locale={locale}
@@ -356,6 +361,25 @@ function Projects({ t, locale }: { t: LandingCopy; locale: Locale }) {
     );
 }
 
+function Contact({ t }: { t: LandingCopy }) {
+    return (
+        <section
+            id="contact"
+            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
+        >
+            <SectionHeading>{t.contact.heading}</SectionHeading>
+            <p className="text-xl md:text-2xl leading-relaxed max-w-[52ch]">{t.contact.lead}</p>
+            <a
+                href={`mailto:${EMAIL_ADDRESS}`}
+                className="mt-8 inline-flex items-center gap-3 py-2 text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] break-all hover:text-signal transition-colors duration-150"
+            >
+                {EMAIL_ADDRESS}
+                <span className="text-signal" aria-hidden="true">→</span>
+            </a>
+        </section>
+    );
+}
+
 export function Landing({ locale }: { locale: Locale }) {
     const t = copy[locale];
 
@@ -364,10 +388,11 @@ export function Landing({ locale }: { locale: Locale }) {
             <JsonLd data={profilePageSchema(locale)} />
             <Nav t={t} locale={locale} />
             <Hero t={t} />
-            <Field t={t} />
+            <Field t={t} locale={locale} />
             <WhatIDo t={t} />
             <Work t={t} />
             <Projects t={t} locale={locale} />
+            <Contact t={t} />
         </main>
     );
 }

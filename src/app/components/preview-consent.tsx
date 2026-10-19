@@ -8,7 +8,9 @@ interface PreviewConsentProps {
     id: string;
     src: string;
     title: string;
-    placeholder?: string;
+    /** A real screenshot of the previewed page, shown until the visitor loads the live version. */
+    backdrop?: string;
+    backdropAlt?: string;
     copy: PreviewConsentCopy;
     /** The backdrop's rendered width, for srcset selection. */
     sizes?: string;
@@ -22,7 +24,7 @@ interface PreviewConsentProps {
  * mounted after the click, so nothing is requested from the third party
  * before the visitor agrees.
  */
-export function PreviewConsent({ id, src, title, placeholder, copy, sizes = "100vw" }: PreviewConsentProps) {
+export function PreviewConsent({ id, src, title, backdrop, backdropAlt = "", copy, sizes = "100vw" }: PreviewConsentProps) {
     const [loaded, setLoaded] = useState(false);
     const [fadeIn, setFadeIn] = useState(false);
     const [gone, setGone] = useState(false);
@@ -51,17 +53,17 @@ export function PreviewConsent({ id, src, title, placeholder, copy, sizes = "100
                         if (e.propertyName === "opacity") setGone(true);
                     }}
                 >
-                    {placeholder && (
+                    {backdrop && (
                         <Image
-                            src={placeholder}
-                            alt=""
+                            src={backdrop}
+                            alt={backdropAlt}
                             fill
                             sizes={sizes}
-                            aria-hidden="true"
-                            className="absolute inset-0 object-cover object-top blur-md scale-105"
+                            className="absolute inset-0 object-cover object-top"
                         />
                     )}
-                    <div className="relative flex flex-col items-center justify-center gap-6">
+                    {/* A solid panel, so the notice reads at full contrast over any screenshot. */}
+                    <div className="relative flex max-w-sm flex-col items-center justify-center gap-4 bg-paper border border-hairline px-6 py-5">
                         <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
                             {copy.notice}
                         </p>

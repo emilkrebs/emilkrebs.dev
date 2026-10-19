@@ -26,6 +26,7 @@
 # ai skills tooling (local only, not published)
 .impeccable
 .agents/skills
+.claude/skills
 .github/skills
 .github/agents
 .github/hooks

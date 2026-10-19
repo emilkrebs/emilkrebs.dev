@@ -118,7 +118,7 @@ interface ShowcaseProps {
     image?: string;
     caption?: string;
     preview?: string;
-    placeholder?: string;
+    placeholder?: boolean;
     compact?: boolean;
     locale?: Locale;
 }

@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "Emil Krebs - Software engineer in Kiel",
-        "description": "Software engineer at TypeFox in Kiel, Germany. I build the tools that read, understand, and transform code: language servers, DSLs, and products like Prami and Healthstack. Everything ships open source.",
+        "description": "Software engineer at TypeFox in Kiel, Germany. I build frontends, DSLs, and IDEs, ship my own products like Prami and Healthstack, and contribute to open-source projects.",
         "keywords": [
             "Emil Krebs",
             "Software engineer",
@@ -9,6 +9,7 @@
             "Software engineering",
             "Language Server Protocol",
             "Langium",
+            "Domain-Specific Languages",
             "Developer Tools",
             "Theia",
             "TypeScript",
@@ -20,34 +21,39 @@
     },
     "skipLink": "Skip to content",
     "navAria": "Primary",
-    "nav": { "story": "Story", "work": "Work", "projects": "Projects" },
+    "nav": { "story": "Story", "work": "Work", "projects": "Projects", "contact": "Contact" },
     "switcher": { "label": "中文", "aria": "Switch to the Chinese version" },
-    "heroTagline": "Software engineer at TypeFox. Kiel, Germany.",
+    "heroTagline": "Software engineer at TypeFox in Kiel, Germany. I build frontends, DSLs, and IDEs, ship my own products like Prami and Healthstack, and contribute to open-source projects.",
     "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "Email" },
     "portraitAlt": "Emil Krebs, Software engineer",
     "thinking": "Thinking...",
     "fieldHeading": "Field",
     "fieldLead": [
-        "I build the tools that read, understand, and transform code. At",
-        " that means custom domain-specific tools like IDEs. In my free time it means products: a spaced-repetition app, a lifestyle IDE powered by its own language & native AI, and a note tool built for privacy. I contribute to various open source projects."
+        "I build the tools that read, ",
+        "understand",
+        ", and transform code. At TypeFox that means custom vscode-extensions, the LSP, and the IDEs around them. On my own time it means products: Prami, a spaced-repetition app; Healthstack, an IDE with its own language; and VailNote, zero-knowledge note sharing. Upstream, I contribute to Eclipse Langium."
     ],
     "strengthsHeading": "What I do",
     "strengths": [
         {
             "title": "Developer tooling",
-            "proof": "Language servers, the LSP, Langium DSLs, Theia-based IDEs, and generators — the domain-specific tools that let editors understand code."
+            "proof": "Extensions, Langium DSLs, and custom IDEs: the tools that let editors understand code. The Healthstack language runs its own language server in your browser."
+        },
+        {
+            "title": "Products and frontend",
+            "proof": "Products built and run end to end: VailNote is live, Prami is in testing. At TypeFox I also build components for Baukasten and interfaces for client projects."
         },
         {
             "title": "Security & privacy",
-            "proof": "Zero-knowledge encryption in VailNote, WearOS locking in WatchLock, no telemetry by default."
+            "proof": "Zero-knowledge encryption in VailNote, phone locking from the watch in WatchLock, and the CSP and security-header middleware I contributed to the Fresh framework."
         },
         {
             "title": "Open source",
-            "proof": "The Langium showcase, Theia, the Fresh ecosystem, and the BIPoC Climate Justice conference site."
+            "proof": "Eclipse Langium: the state machine, arithmetics, MiniLogo, and domain model showcases on langium.org, its playground upgrade to Langium 4.1, and fixes in the core. And various contributions to other open-source projects."
         }
     ],
     "workHeading": "Work",
-    "workBlurb": "Software Engineer: language servers, the LSP, and the tooling that lets editors understand code. This is the craft the rest of this page proves.",
+    "workBlurb": "Software engineer in a full role since October 2025, on client projects with large, international teams. Before that, an internship at fifteen and a year and a half part-time. Alongside the job, a full-time Bachelor's in Computer Science and Sociology.",
     "projectsHeading": "Projects",
     "open": "Open",
     "privateLabel": "Private",
@@ -59,14 +65,16 @@
             "name": "Prami",
             "description": "Active recall and spaced repetition, engineered so the review schedule fades into the background.",
             "status": "Preview",
-            "caption": "In testing - Prami"
+            "caption": "In testing - prami.app",
+            "linkLabel": "Open prami.app"
         },
         {
             "id": "healthstack",
             "name": "Healthstack",
-            "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
-            "status": "Concept",
-            "caption": "Concept Page"
+            "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. The DSL's language server runs on the project page.",
+            "status": "Preview",
+            "caption": "Live - emilkrebs.dev/playground",
+            "linkLabel": "Read the Healthstack page"
         }
     ],
     "projects": [
@@ -74,31 +82,36 @@
             "id": "vailnote",
             "name": "VailNote",
             "description": "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
-            "caption": "Live - vailnote.com"
+            "caption": "Live - vailnote.com",
+            "linkLabel": "Open vailnote.com"
         },
         {
             "id": "watchlock",
             "name": "WatchLock",
             "description": "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
-            "caption": "Live - github.com/emilkrebs/WatchLock"
+            "caption": "Source - github.com/emilkrebs/WatchLock",
+            "linkLabel": "Source on GitHub"
         },
         {
             "id": "bipoc",
             "name": "BIPoC Climate Justice Conference",
             "description": "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
-            "caption": "Live - bipoclimatejusticenetwork.org"
+            "caption": "Live - bipoclimatejusticenetwork.org",
+            "linkLabel": "Open the conference site"
         },
         {
             "id": "langium-showcase",
             "name": "Langium Showcase",
-            "description": "DSL showcases built with Langium: state machines, arithmetic, MiniLogo, and domain models.",
-            "caption": "Live - langium.org/showcase/minilogo"
+            "description": "I built the state machine, arithmetics, MiniLogo, and domain model showcases on langium.org: each one a live editor for its language.",
+            "caption": "Live - langium.org/showcase",
+            "linkLabel": "Open the showcase"
         },
         {
             "id": "this-site",
             "name": "This site",
             "description": "Static export. No server, no database. Typeset per the spec you are reading.",
-            "caption": "Live - emilkrebs.dev"
+            "caption": "Live - emilkrebs.dev",
+            "linkLabel": "Source on GitHub"
         }
     ],
     "consent": {
@@ -122,8 +135,12 @@
         "accept": "Accept and continue",
         "back": "Back"
     },
+    "contact": {
+        "heading": "Contact",
+        "lead": "For roles, collaborations, or questions about anything on this page, write to me."
+    },
     "jsonLd": {
-        "personDescription": "Software engineer at TypeFox GmbH from Kiel, Germany, building language servers, DSLs, and products like Prami and Healthstack. Everything ships open source."
+        "personDescription": "Software engineer at TypeFox GmbH in Kiel, Germany, building language servers, DSLs, and IDEs, and products like Prami and Healthstack. Contributor to Eclipse Langium."
     },
     "footer": {
         "location": "Emil Krebs - Kiel, Germany",

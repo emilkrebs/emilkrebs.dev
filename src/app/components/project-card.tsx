@@ -17,11 +17,13 @@ export interface ProjectCardProps {
     notice?: boolean;
     status?: string;
     image?: string;
-    /** A third-party live preview, always loaded behind the consent gate. */
+    /** A third-party live page, loaded only on click; the image stays visible until then. */
     preview?: string;
-    /** Blurred backdrop behind the consent gate. */
-    placeholder?: string;
+    /** No screenshot yet: shows the shared pending plate instead. */
+    placeholder?: boolean;
     caption?: string;
+    /** Names the link's destination; falls back to the generic "Open". */
+    linkLabel?: string;
     /** NDA work: dashed frame, no media, no details. */
     confidential?: boolean;
     /** flagship: larger title. compact: square media, tighter type, no caption. */
@@ -45,6 +47,7 @@ export function ProjectCard({
     preview,
     placeholder,
     caption,
+    linkLabel,
     confidential,
     variant,
     filledTags,
@@ -52,7 +55,7 @@ export function ProjectCard({
 }: ProjectCardProps) {
     const t = copy[locale];
     const compact = variant === "compact";
-    const slug = name.toLowerCase().replace(/\s+/g, "-");
+    const label = linkLabel ?? t.open;
 
     return (
         <article
@@ -88,10 +91,11 @@ export function ProjectCard({
                             </div>
                         ) : preview ? (
                             <PreviewConsent
-                                id={`consent-${slug}`}
+                                id={`consent-${name.toLowerCase().replace(/\s+/g, "-")}`}
                                 src={preview}
                                 title={`${name}${t.previewTitleSuffix}`}
-                                placeholder={placeholder}
+                                backdrop={image}
+                                backdropAlt={`${name}${t.screenshotAltSuffix}`}
                                 copy={t.consent}
                                 sizes={sizes}
                             />
@@ -152,13 +156,14 @@ export function ProjectCard({
                 <div className={compact ? "mt-5" : "mt-8"}>
                     {href ? (
                         notice ? (
-                            <ExternalNotice href={href} title={name} copy={t.externalNotice} />
+                            <ExternalNotice href={href} title={name} copy={t.externalNotice} label={label} />
                         ) : (
                             <SmartLink
                                 href={href}
                                 className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
                             >
-                                {t.open}
+                                {label}
+                                <span className="sr-only">: {name}</span>
                                 <span className="text-signal" aria-hidden="true">→</span>
                             </SmartLink>
                         )

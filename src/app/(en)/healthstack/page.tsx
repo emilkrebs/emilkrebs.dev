@@ -132,9 +132,9 @@ function Shot({ src, alt, caption, placeholder }: ShotProps) {
 function StatTable({ stats }: { stats: { value: string; label: string }[] }) {
     const fill = (6 - (stats.length % 6)) % 6;
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-hairline border border-hairline">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-px bg-hairline border border-hairline">
             {stats.map((stat) => (
-                <div key={stat.label} className="bg-paper-deep p-4">
+                <div key={stat.label} className="min-w-0 bg-paper-deep p-4 [overflow-wrap:anywhere]">
                     <div className="font-mono text-sm md:text-base text-ink leading-snug">
                         {stat.value}
                     </div>
@@ -223,7 +223,7 @@ export default function HealthstackPage() {
                 <FeatureSection key={section.heading} section={section} />
             ))}
 
-            <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
+            <section id="dsl" className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline scroll-mt-16">
                 <SectionHeading>{dsl.heading}</SectionHeading>
                 <p className="text-base md:text-lg leading-relaxed max-w-[62ch] mb-10">
                     <InlineText text={dsl.body} />

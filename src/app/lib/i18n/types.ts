@@ -61,11 +61,14 @@ export interface ProjectCopy {
     description: string;
     status?: string;
     caption?: string;
+    /** Names the link's destination; falls back to the generic "Open". */
+    linkLabel?: string;
 }
+
 
 export interface LandingCopy {
     navAria: string;
-    nav: { story: string; work: string; projects: string };
+    nav: { story: string; work: string; projects: string; contact: string };
     switcher: LocaleSwitcherCopy;
     heroTagline: string;
     ctas: { github: string; linkedin: string; email: string };
@@ -74,6 +77,7 @@ export interface LandingCopy {
     portraitAlt: string;
     thinking: string;
     fieldHeading: string;
+    /** [before, accent, after]: the middle part is set in the serif accent. */
     fieldLead: string[];
     strengthsHeading: string;
     strengths: { title: string; proof: string }[];
@@ -88,6 +92,7 @@ export interface LandingCopy {
     projects: ProjectCopy[];
     consent: PreviewConsentCopy;
     externalNotice: ExternalNoticeCopy;
+    contact: { heading: string; lead: string };
     jsonLd: {
         personDescription: string;
     };

@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useModal } from "./use-modal";
 import { WECHAT_ID, WECHAT_QR_PATH } from "../lib/constants";
 import type { WeChatCopy } from "../lib/i18n";
 
@@ -15,25 +16,7 @@ export function WeChatLink({ copy, className }: WeChatLinkProps) {
     const [open, setOpen] = useState(false);
     const dialogRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (!open) return;
-
-        const previouslyFocused = document.activeElement as HTMLElement | null;
-        dialogRef.current?.focus();
-
-        const onKeyDown = (event: KeyboardEvent) => {
-            if (event.key === "Escape") setOpen(false);
-        };
-
-        document.addEventListener("keydown", onKeyDown);
-        document.documentElement.style.overflow = "hidden";
-
-        return () => {
-            document.removeEventListener("keydown", onKeyDown);
-            document.documentElement.style.overflow = "";
-            previouslyFocused?.focus();
-        };
-    }, [open]);
+    useModal(open, setOpen, dialogRef);
 
     return (
         <>
@@ -53,7 +36,7 @@ export function WeChatLink({ copy, className }: WeChatLinkProps) {
                         type="button"
                         aria-label={copy.closeAria}
                         onClick={() => setOpen(false)}
-                        className="absolute inset-0 bg-ink/60 backdrop-blur-sm"
+                        className="absolute inset-0 bg-paper-deep"
                     />
                     <div
                         ref={dialogRef}

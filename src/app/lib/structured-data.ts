@@ -43,6 +43,7 @@ function person(locale: Locale) {
             "Software Engineering",
             "Language Server Protocol",
             "Langium",
+            "Domain-Specific Languages",
             "Theia",
             "Developer Tools",
             "TypeScript",
