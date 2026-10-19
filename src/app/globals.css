@@ -195,14 +195,17 @@ html:lang(zh) main > section + section::before {
     html:lang(zh) footer::before {
         content: "";
         position: absolute;
-        inset: 0;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 64px;
         z-index: 0;
         pointer-events: none;
         background-image: url("/pictures/zh-textures/06-tapian-band.webp");
         background-repeat: repeat;
         background-size: 1024px auto;
-        mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
+        mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
     }
 }
 
