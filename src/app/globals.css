@@ -90,7 +90,7 @@ html:lang(zh) :is(h2, h3):is(.tracking-tight, [class*="tracking-[-"]) {
       Pre-normalized to mean #f7f5f0 and mirror-tiled to 2048px so no seam. */
 @media (prefers-color-scheme: light) {
     html:lang(zh) body {
-        background-image: url("/pictures/zh-textures/05-xuanzhi-paper.webp");
+        background-image: url("/pictures/zh-textures/05-xuanzhi-paper-pro.webp");
         background-size: 2048px auto;
         background-repeat: repeat;
     }
@@ -160,7 +160,7 @@ html:lang(zh) main > section + section::before {
     height: 12px;
     transform: translateY(-50%);
     pointer-events: none;
-    background-image: url("/pictures/zh-textures/01-huiwen-strip.webp");
+    background-image: url("/pictures/zh-textures/01-huiwen-strip-pro.webp");
     background-repeat: repeat-x;
     background-size: auto 12px;
     opacity: 0.65;

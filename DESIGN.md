@@ -179,12 +179,14 @@ English is the default and fallback language at `/`. zh-CN variants of the landi
 
 **Status: proposal, not shipped.** A visual mock, CSS-only in `globals.css`, active only under `html:lang(zh)`. The zh pages may carry one step more ornament than the English spec sheet, in the register of a printed Chinese document. The tiles are generated and live in `public/pictures/zh-textures/`; five are used, one is rejected:
 
-- **宣纸 xuanzhi** — handmade-paper fibre. Light mode only, as the body background. The tile is mean-normalized to `#f7f5f0`, high-passed to remove large blotches, and mirror-tiled to 2048px so it repeats without a seam. Night paper stays flat.
+- **宣纸 xuanzhi** — handmade-paper fibre (pro pack). Light mode only, as the body background. The tile is mean-normalized to `#f7f5f0`, high-passed to remove large blotches, and mirror-tiled to 2048px so it repeats without a seam. Night paper stays flat.
 - **云纹 yunwen** — cloud scroll. A watermark behind the hero name only (ink-on-transparent at 10% alpha, paper-on-transparent at 12% at night), masked away before the tagline and before the portrait plate. It reads as a watermark, not wallpaper.
-- **回纹 huiwen** — meander. A 12px `repeat-x` strip centred on every section hairline below the hero, 65% opacity (50% inverted at night): a hairline ornament, not a band. The strip is alpha, not a paper rectangle, so only the key-fret ink prints.
+- **回纹 huiwen** — meander (pro pack). A 12px `repeat-x` strip centred on every section hairline below the hero, 65% opacity (50% inverted at night): a hairline ornament, not a band. The strip is alpha, not a paper rectangle, so only the key-fret ink prints.
 - **冰裂纹 binglie** — crackle glaze. Dark mode only, on the paper-deep surfaces of project cards, as a light-line transparent tile at 16% alpha. No blend mode and no negative z-index.
 - **碑拓 tapian** — dark stone rubbing. Dark mode only, a transparent tile behind the footer band at 43% alpha, masked to fade in from the top edge.
 - **窗棂 chuangling** — lattice: rejected, too busy, and the frame is baked into the tile.
+
+Pack mix: 宣纸 and 回纹 come from `qwen-image-3.0-pro`; 云纹, 冰裂 and 碑拓 stay on `qwen-image-3.0`. The pro paper grain is denser and the pro meander is a true single strip; the standard pack's crackle and stone are quieter on dark surfaces.
 
 Discipline: the ornament lives at edges, dividers, and watermarks. It never sits behind body copy, tags, metadata rows, or the nav; every layer is `pointer-events: none`, adds no layout and no horizontal scroll, keeps text at AA in both schemes, and never animates. The token-mark remains the page's only standing mark; these textures are a zh-only proposal layered beside that rule, not a change to it.
 
