@@ -175,6 +175,19 @@ English is the default and fallback language at `/`. zh-CN variants of the landi
 
 **Auto-redirect:** a visitor whose primary browser language is Chinese (zh-*) and who lands on `/` is redirected client-side to `/zh/` (inline script in the English layout head, so it runs before first paint; it fires only on the landing route, never on subpages). Navigating within the site (a same-origin referrer) never triggers it — "Back to home" on an English page stays English. Nothing is stored: the site keeps no memory of a past choice, so a visitor whose browser still reports Chinese first is redirected again on their next fresh visit even after picking English once. This is a deliberate trade-off for carrying no client-side storage at all (see Localization > Copy storage: no cookies, no local storage, nothing to disclose or consent to) — the cost is that "get me back to English" isn't remembered, only ever decided fresh from the browser's current language.
 
+### Chinese ornamental layer (mock)
+
+**Status: proposal, not shipped.** A visual mock, CSS-only in `globals.css`, active only under `html:lang(zh)`. The zh pages may carry one step more ornament than the English spec sheet, in the register of a printed Chinese document. The tiles are generated and live in `public/pictures/zh-textures/`; five are used, one is rejected:
+
+- **宣纸 xuanzhi** — handmade-paper fibre. Light mode only, as the body background. The tile is mean-normalized to `#f7f5f0`, high-passed to remove large blotches, and mirror-tiled to 2048px so it repeats without a seam. Night paper stays flat.
+- **云纹 yunwen** — cloud scroll. A watermark behind the hero name only (ink-on-transparent at 10% alpha, paper-on-transparent at 12% at night), masked away before the tagline and before the portrait plate. It reads as a watermark, not wallpaper.
+- **回纹 huiwen** — meander. A 12px `repeat-x` strip centred on every section hairline below the hero, 65% opacity (50% inverted at night): a hairline ornament, not a band. The strip is alpha, not a paper rectangle, so only the key-fret ink prints.
+- **冰裂纹 binglie** — crackle glaze. Dark mode only, on the paper-deep surfaces of project cards, as a light-line transparent tile at 16% alpha. No blend mode and no negative z-index.
+- **碑拓 tapian** — dark stone rubbing. Dark mode only, a transparent tile behind the footer band at 43% alpha, masked to fade in from the top edge.
+- **窗棂 chuangling** — lattice: rejected, too busy, and the frame is baked into the tile.
+
+Discipline: the ornament lives at edges, dividers, and watermarks. It never sits behind body copy, tags, metadata rows, or the nav; every layer is `pointer-events: none`, adds no layout and no horizontal scroll, keeps text at AA in both schemes, and never animates. The token-mark remains the page's only standing mark; these textures are a zh-only proposal layered beside that rule, not a change to it.
+
 **Language switcher:** a bordered tag in the nav grammar (hairline border, 0px corners, mono, ink-soft, hover ink) so it reads as an action distinct from nav links. On the Chinese pages (`/zh/`, `/zh/story/`) it is always visible, labeled EN, and returns to the English counterpart (`/zh/` to `/`, `/zh/story/` to `/story/`, where it sits at the right end of the back header) — a Chinese reader should always have a way back. On the English pages it switches forward to zh (labeled 中文), but stays hidden by default: showing it to every English visitor regardless of whether they read Chinese would read as noise, or confuse readers into thinking the page has a Chinese-only feature. It only reveals itself (`data-zh-reader` on `<html>`, read by the `zh-reader:` variant) to a visitor whose browser's current primary language is Chinese — the same, purely live check the auto-redirect above uses, so the switcher only ever appears to people who can use it.
 
 ## Elevation & Depth

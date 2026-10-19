@@ -78,6 +78,134 @@ html:lang(zh) :is(h2, h3):is(.tracking-tight, [class*="tracking-[-"]) {
     letter-spacing: 0;
 }
 
+/* -------------------------------------------------------------------------
+   Chinese ornamental layer (mock proposal, zh pages only, see DESIGN.md).
+   Tiles live in public/pictures/zh-textures/. Discipline: ornament lives at
+   edges, dividers, and watermarks; it never sits behind body copy, tags,
+   metadata rows, or the nav. Every layer is pointer-events: none, adds no
+   layout, and never animates.
+   ------------------------------------------------------------------------- */
+
+/* 1. 宣纸 xuanzhi — handmade-paper grain for the whole page, light mode only.
+      Pre-normalized to mean #f7f5f0 and mirror-tiled to 2048px so no seam. */
+@media (prefers-color-scheme: light) {
+    html:lang(zh) body {
+        background-image: url("/pictures/zh-textures/05-xuanzhi-paper.webp");
+        background-size: 2048px auto;
+        background-repeat: repeat;
+    }
+}
+
+/* 2. 云纹 yunwen — cloud watermark behind the hero name only. The box stops
+      before the tagline and the mask fades before the portrait plate. */
+html:lang(zh) section#top {
+    position: relative;
+}
+
+/* Children paint above the watermark; the watermark itself must not use a
+   negative z-index or the body background will hide it. */
+html:lang(zh) section#top > * {
+    position: relative;
+    z-index: 1;
+}
+
+html:lang(zh) section#top::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 224px;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("/pictures/zh-textures/02-yunwen-ink.webp");
+    background-repeat: repeat;
+    background-size: 440px auto;
+    opacity: 1;
+    mask-image:
+        linear-gradient(to bottom, black 55%, transparent 100%),
+        linear-gradient(to right, black 55%, transparent 75%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+        linear-gradient(to bottom, black 55%, transparent 100%),
+        linear-gradient(to right, black 55%, transparent 75%);
+    -webkit-mask-composite: source-in;
+}
+
+/* Mobile stacks the plate below the text; keep the watermark clear of both. */
+@media (max-width: 767px) {
+    html:lang(zh) section#top::before {
+        height: 132px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    html:lang(zh) section#top::before {
+        background-image: url("/pictures/zh-textures/02-yunwen-paper.webp");
+    }
+}
+
+/* 3. 回纹 huiwen — meander hairline strip centered on every section border
+      below the hero, so the rhythm reads as a system, not decoration. */
+html:lang(zh) main > section + section {
+    position: relative;
+}
+
+html:lang(zh) main > section + section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 12px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    background-image: url("/pictures/zh-textures/01-huiwen-strip.webp");
+    background-repeat: repeat-x;
+    background-size: auto 12px;
+    opacity: 0.65;
+}
+
+@media (prefers-color-scheme: dark) {
+    html:lang(zh) main > section + section::before {
+        opacity: 0.5;
+        filter: invert(1);
+    }
+}
+
+/* 4. Night surfaces — 冰裂纹 binglie crackle on project-card paper-deep,
+      碑拓 tapian stone rubbing behind the footer band. Dark mode only.
+      Both assets carry their own alpha: no blend modes, no negative z-index. */
+@media (prefers-color-scheme: dark) {
+    html:lang(zh) article.bg-paper-deep {
+        background-image: url("/pictures/zh-textures/04-binglie-lines.webp");
+        background-repeat: repeat;
+        background-size: 1024px auto;
+    }
+
+    html:lang(zh) footer {
+        position: relative;
+    }
+
+    html:lang(zh) footer > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    html:lang(zh) footer::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background-image: url("/pictures/zh-textures/06-tapian-band.webp");
+        background-repeat: repeat;
+        background-size: 1024px auto;
+        mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 22%);
+    }
+}
+
 body {
     background-color: var(--color-paper);
     color: var(--color-ink);
