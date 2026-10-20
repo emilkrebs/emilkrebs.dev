@@ -196,16 +196,22 @@ html:lang(zh) main > section + section::before {
         content: "";
         position: absolute;
         top: 0;
-        right: 0;
-        left: 0;
-        height: 64px;
+        left: 50%;
+        right: auto;
+        width: min(100%, 1120px);
+        transform: translateX(-50%);
+        height: 40px;
         z-index: 0;
         pointer-events: none;
         background-image: url("/pictures/zh-textures/06-tapian-band.webp");
         background-repeat: repeat;
         background-size: 1024px auto;
-        mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
-        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%),
+            linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 100%),
+            linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+        mask-composite: intersect;
+        -webkit-mask-composite: source-in;
     }
 }
 
