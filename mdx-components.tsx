@@ -6,7 +6,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
         ...components,
         h1: ({ children }) => (
-            <h1 className="font-bold tracking-[-0.03em] leading-[0.98] text-[clamp(2.5rem,6vw,4.5rem)]">
+            <h1 className="page-title font-bold tracking-[-0.03em] leading-[0.98] text-[clamp(2.5rem,6vw,4.5rem)]">
                 {children}
             </h1>
         ),

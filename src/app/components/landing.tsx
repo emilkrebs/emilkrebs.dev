@@ -126,11 +126,11 @@ function Hero({ t }: { t: LandingCopy }) {
     return (
         <section
             id="top"
-            className="mx-auto max-w-280 px-6 pt-16 md:pt-24 pb-16 md:pb-20"
+            className="relative mx-auto max-w-280 px-6 pt-16 md:pt-24 pb-16 md:pb-20"
         >
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-12 md:gap-20">
                 <div className="max-w-160">
-                    <h1 className="font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(3rem,8vw,6.5rem)]">
+                    <h1 className="hero-title font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(3rem,8vw,6.5rem)]">
                         Emil Krebs
                     </h1>
                     <p className="mt-8 text-lg md:text-xl leading-relaxed max-w-[46ch]">
@@ -384,7 +384,7 @@ export function Landing({ locale }: { locale: Locale }) {
     const t = copy[locale];
 
     return (
-        <main id="main">
+        <main id="main" className="landing">
             <JsonLd data={profilePageSchema(locale)} />
             <Nav t={t} locale={locale} />
             <Hero t={t} />

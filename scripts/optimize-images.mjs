@@ -9,11 +9,13 @@
  *
  * A source is rendered again when its content or the encoder settings
  * change, or when one of its variants is missing. The content hashes live in
- * node_modules/.cache, so a fresh install renders everything.
+ * node_modules/.cache, so a fresh install renders everything. Variants no
+ * source accounts for (a source renamed, deleted or moved out of
+ * public/pictures) are removed, so they never reach the export.
  */
 import { createHash } from "node:crypto";
-import { access, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join, parse } from "node:path";
+import { access, mkdir, readdir, readFile, rm, rmdir, writeFile } from "node:fs/promises";
+import { dirname, join, parse, relative } from "node:path";
 import sharp from "sharp";
 import config from "../next.config.mjs";
 
@@ -34,6 +36,12 @@ async function exists(path) {
     } catch {
         return false;
     }
+}
+
+/** A source's variant at one width, relative to OUT_DIR. */
+function variant(file, width) {
+    const { dir, name } = parse(file);
+    return join(dir, `${name}-${width}.webp`);
 }
 
 async function readManifest() {
@@ -66,8 +74,8 @@ await Promise.all(files.map(async (file) => {
     const hash = createHash("sha256").update(SETTINGS).update(source).digest("hex");
     manifest[file] = hash;
 
-    const { dir, name, ext } = parse(file);
-    const target = (width) => join(OUT_DIR, dir, `${name}-${width}.webp`);
+    const { dir, ext } = parse(file);
+    const target = (width) => join(OUT_DIR, variant(file, width));
     if (previous[file] === hash && (await Promise.all(WIDTHS.map((width) => exists(target(width))))).every(Boolean)) {
         return;
     }
@@ -85,7 +93,20 @@ await Promise.all(files.map(async (file) => {
     }));
 }));
 
+const expected = new Set(files.flatMap((file) => WIDTHS.map((width) => variant(file, width))));
+await mkdir(OUT_DIR, { recursive: true });
+const entries = await readdir(OUT_DIR, { recursive: true, withFileTypes: true });
+const stale = entries.filter((entry) => entry.isFile() && !expected.has(relative(OUT_DIR, join(entry.parentPath, entry.name))));
+await Promise.all(stale.map((entry) => rm(join(entry.parentPath, entry.name))));
+// Deepest first, so a folder emptied by the removals above goes with its parents.
+const folders = entries.filter((entry) => entry.isDirectory()).map((entry) => join(entry.parentPath, entry.name));
+for (const folder of folders.sort((a, b) => b.length - a.length)) {
+    await rmdir(folder).catch((error) => {
+        if (error.code !== "ENOTEMPTY") throw error;
+    });
+}
+
 await mkdir(dirname(MANIFEST), { recursive: true });
 await writeFile(MANIFEST, `${JSON.stringify(manifest, null, 4)}\n`);
 
-console.log(`optimize-images: ${files.length} images, ${written} variants written to ${OUT_DIR}`);
+console.log(`optimize-images: ${files.length} images, ${written} variants written, ${stale.length} stale removed in ${OUT_DIR}`);
