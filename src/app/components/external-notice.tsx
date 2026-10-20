@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useModal } from "./use-modal";
 import type { ExternalNoticeCopy } from "../lib/i18n";
 
@@ -35,7 +36,8 @@ export function ExternalNotice({ href, title, copy, label }: ExternalNoticeProps
                 <span className="text-signal" aria-hidden="true">→</span>
             </button>
 
-            {open && (
+            {/* Portaled to <body>: a stacking context around the trigger would otherwise bury it under the sticky nav. */}
+            {open && createPortal(
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center p-6"
                     role="dialog"
@@ -101,7 +103,8 @@ export function ExternalNotice({ href, title, copy, label }: ExternalNoticeProps
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>,
+                document.body,
             )}
         </>
     );

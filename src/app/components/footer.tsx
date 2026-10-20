@@ -10,7 +10,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
     const wechat = copy[locale].wechat;
     return (
         <footer className="w-full mt-auto">
-            <div className="mx-auto w-full max-w-280 px-6 py-16 border-t border-hairline">
+            <div className="footer-column mx-auto w-full max-w-280 px-6 py-16 border-t border-hairline">
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
                         <p>{t.location}</p>

@@ -59,7 +59,7 @@ export function ProjectCard({
 
     return (
         <article
-            className={`relative overflow-hidden bg-paper-deep border flex flex-col group transition-colors duration-150 ${confidential
+            className={`project-card relative overflow-hidden bg-paper-deep border flex flex-col group transition-colors duration-150 ${confidential
                 ? "border-ink/35 border-dashed hover:border-ink/70"
                 : "border-hairline hover:border-ink"
             }`}

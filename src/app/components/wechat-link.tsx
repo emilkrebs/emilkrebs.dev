@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useModal } from "./use-modal";
 import { WECHAT_ID, WECHAT_QR_PATH } from "../lib/constants";
 import type { WeChatCopy } from "../lib/i18n";
@@ -25,7 +26,8 @@ export function WeChatLink({ copy, className }: WeChatLinkProps) {
                 <span className="text-signal" aria-hidden="true">→</span>
             </button>
 
-            {open && (
+            {/* Portaled to <body>: a stacking context around the trigger would otherwise bury it under the sticky nav. */}
+            {open && createPortal(
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center p-6"
                     role="dialog"
@@ -72,7 +74,8 @@ export function WeChatLink({ copy, className }: WeChatLinkProps) {
                             {copy.idLabel}: <span className="text-ink normal-case select-all">{WECHAT_ID}</span>
                         </p>
                     </div>
-                </div>
+                </div>,
+                document.body,
             )}
         </>
     );
