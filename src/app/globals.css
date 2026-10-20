@@ -96,9 +96,36 @@ html:lang(zh) :is(h2, h3):is(.tracking-tight, [class*="tracking-[-"]) {
     }
 }
 
-/* 2. 云纹 yunwen — cloud watermark behind the hero name only. The box stops
-      before the tagline, the mask fades before the portrait plate, and the
-      left edge fades so wide viewports never show a cut column of cloud. */
+/* 2. 云纹 yunwen — cloud watermark behind each page's title: the hero name on
+      the landing, the MDX h1 (.page-title) on the story. The mask fades
+      before the copy below and to the right, and the left edge fades so wide
+      viewports never show a cut column of cloud. */
+html:lang(zh) section#top::before,
+html:lang(zh) .page-title::before {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    background-image: url("/pictures/zh-textures/02-yunwen-ink.webp");
+    background-repeat: repeat;
+    background-size: 440px auto;
+    mask-image:
+        linear-gradient(to bottom, black 55%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 8%, black 55%, transparent 75%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+        linear-gradient(to bottom, black 55%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 8%, black 55%, transparent 75%);
+    -webkit-mask-composite: source-in;
+}
+
+@media (prefers-color-scheme: dark) {
+    html:lang(zh) section#top::before,
+    html:lang(zh) .page-title::before {
+        background-image: url("/pictures/zh-textures/02-yunwen-paper.webp");
+    }
+}
+
+/* Hero: the box stops before the tagline and the portrait plate. */
 html:lang(zh) section#top {
     position: relative;
 }
@@ -111,26 +138,11 @@ html:lang(zh) section#top > * {
 }
 
 html:lang(zh) section#top::before {
-    content: "";
-    position: absolute;
     top: 0;
     right: 0;
     left: 0;
     height: 224px;
     z-index: 0;
-    pointer-events: none;
-    background-image: url("/pictures/zh-textures/02-yunwen-ink.webp");
-    background-repeat: repeat;
-    background-size: 440px auto;
-    opacity: 1;
-    mask-image:
-        linear-gradient(to bottom, black 55%, transparent 100%),
-        linear-gradient(to right, transparent 0%, black 8%, black 55%, transparent 75%);
-    mask-composite: intersect;
-    -webkit-mask-image:
-        linear-gradient(to bottom, black 55%, transparent 100%),
-        linear-gradient(to right, transparent 0%, black 8%, black 55%, transparent 75%);
-    -webkit-mask-composite: source-in;
 }
 
 /* Mobile stacks the plate below the text; keep the watermark clear of both. */
@@ -140,25 +152,44 @@ html:lang(zh) section#top::before {
     }
 }
 
-@media (prefers-color-scheme: dark) {
-    html:lang(zh) section#top::before {
-        background-image: url("/pictures/zh-textures/02-yunwen-paper.webp");
+/* Story title: the h1 isolates, so the watermark can sit under its glyphs
+   without dropping behind the body paper. The box reaches up into the
+   section's top padding and out to its side padding, and ends before the
+   lead line. */
+html:lang(zh) .page-title {
+    position: relative;
+    isolation: isolate;
+}
+
+html:lang(zh) .page-title::before {
+    top: -2.5rem;
+    right: -1.5rem;
+    bottom: -1rem;
+    left: -1.5rem;
+    z-index: -1;
+}
+
+@media (min-width: 768px) {
+    html:lang(zh) .page-title::before {
+        top: -4rem;
     }
 }
 
-/* 3. 回纹 huiwen — meander strip in place of every section hairline below
-      the hero, so the rhythm reads as a system, not decoration. The hairline
-      goes transparent (it would strike through the frets); the strip is
-      centred and fades at both ends so no fret is cut mid-cell. */
+/* 3. 回纹 huiwen — the divider. On the landing, a meander strip in place of
+      every section hairline below the hero, so the rhythm reads as a system,
+      not decoration. On the story, one strip parts the contents table from
+      the timeline (.story-timeline), centred in the gap between them. The
+      hairline goes transparent (it would strike through the frets); the
+      strip is centred and fades at both ends so no fret is cut mid-cell. */
 html:lang(zh) main > section + section {
     position: relative;
     border-top-color: transparent;
 }
 
-html:lang(zh) main > section + section::before {
+html:lang(zh) main > section + section::before,
+html:lang(zh) .story-timeline::before {
     content: "";
     position: absolute;
-    top: 0;
     right: 0;
     left: 0;
     height: 12px;
@@ -173,20 +204,82 @@ html:lang(zh) main > section + section::before {
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
 }
 
+html:lang(zh) main > section + section::before {
+    top: 0;
+}
+
+/* Half the timeline's top margin (mt-20, md:mt-24). */
+html:lang(zh) .story-timeline::before {
+    top: -2.5rem;
+}
+
+@media (min-width: 768px) {
+    html:lang(zh) .story-timeline::before {
+        top: -3rem;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
-    html:lang(zh) main > section + section::before {
+    html:lang(zh) main > section + section::before,
+    html:lang(zh) .story-timeline::before {
         opacity: 0.5;
         filter: invert(1);
     }
 }
 
-/* 4. Night surfaces — 冰裂纹 binglie crackle on project-card paper-deep,
-      碑拓 tapian stone rubbing behind the footer band. Dark mode only.
-      Both assets carry their own alpha: no blend modes, no negative z-index. */
+/* 4. 冰裂纹 binglie — crackle glaze on the landing's project cards only, ink
+      lines by day and light lines at night. The story's showcase cards stay
+      flat: there are dozens of them, and crackle on each is noise. Day alpha
+      tops out at 9%, so ink-soft tags stay at 4.5:1 where a line crosses
+      them. The tiles carry their own alpha: no blend modes, no negative
+      z-index. */
+html:lang(zh) #projects article.bg-paper-deep {
+    background-image: url("/pictures/zh-textures/04-binglie-lines-ink.webp");
+    background-repeat: repeat;
+    background-size: 1024px auto;
+}
+
 @media (prefers-color-scheme: dark) {
-    html:lang(zh) article.bg-paper-deep {
+    html:lang(zh) #projects article.bg-paper-deep {
         background-image: url("/pictures/zh-textures/04-binglie-lines.webp");
-        background-repeat: repeat;
+    }
+}
+
+/* 5. 碑拓 tapian — rubbing for inscriptions. The story's pull quote
+      (.pull-quote) sits on a rubbing sheet from its signal rule to a faded
+      right edge, 1.5rem above and below with a short feather, so it reads as
+      a sheet, not a shadow. By day the sheet is the ink rubbing (ink on
+      paper, veins left bare); at night it is the stone itself. The quote
+      isolates so the sheet sits under its text. */
+html:lang(zh) .pull-quote {
+    position: relative;
+    isolation: isolate;
+}
+
+html:lang(zh) .pull-quote::before {
+    content: "";
+    position: absolute;
+    top: -1.5rem;
+    right: 0;
+    bottom: -1.5rem;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("/pictures/zh-textures/06-tapian-band-ink.webp");
+    background-repeat: repeat;
+    background-size: 512px auto;
+    mask-image: linear-gradient(to bottom, transparent 0, black 6px, black calc(100% - 6px), transparent 100%),
+        linear-gradient(to right, black 0%, black 60%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 6px, black calc(100% - 6px), transparent 100%),
+        linear-gradient(to right, black 0%, black 60%, transparent 100%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+}
+
+/* At night the stone also runs along the footer's top edge. */
+@media (prefers-color-scheme: dark) {
+    html:lang(zh) .pull-quote::before {
+        background-image: url("/pictures/zh-textures/06-tapian-band.webp");
         background-size: 1024px auto;
     }
 

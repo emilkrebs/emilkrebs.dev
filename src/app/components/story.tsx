@@ -53,7 +53,7 @@ function Timeline({ children, locale = "en" }: TimelineProps) {
                     title: era.props.title,
                 }))}
             />
-            <div className="relative mt-20 md:mt-24">
+            <div className="story-timeline relative mt-20 md:mt-24">
                 {/* Before the eras, so their markers paint over the rail. */}
                 <span className="absolute left-[4px] top-0 bottom-0 w-px bg-hairline" aria-hidden="true" />
                 {children}
@@ -241,7 +241,7 @@ function Lead({ children }: { children: React.ReactNode }) {
 
 function PullQuote({ children }: { children: React.ReactNode }) {
     return (
-        <blockquote className="mt-20 md:mt-24 border-l border-signal pl-6 md:pl-8 [&>p]:mb-0 [&>p]:max-w-[52ch] [&>p]:text-xl [&>p]:leading-relaxed md:[&>p]:text-2xl">
+        <blockquote className="pull-quote mt-20 md:mt-24 border-l border-signal pl-6 md:pl-8 [&>p]:mb-0 [&>p]:max-w-[52ch] [&>p]:text-xl [&>p]:leading-relaxed md:[&>p]:text-2xl">
             {children}
         </blockquote>
     );
