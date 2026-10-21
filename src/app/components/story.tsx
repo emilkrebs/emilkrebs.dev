@@ -116,6 +116,8 @@ interface ShowcaseProps {
     /** Comma-separated. */
     tags?: string;
     image?: string;
+    /** Alt text for a plate that is not a screenshot, such as a project's mark. */
+    imageAlt?: string;
     caption?: string;
     preview?: string;
     placeholder?: boolean;
