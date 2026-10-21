@@ -1,22 +1,27 @@
-import Image from "next/image";
 import type { Metadata } from "next";
 import { existsSync } from "fs";
 import { join } from "path";
 import content from "../../content/healthstack.json";
 import BackHeader from "../../components/back-header";
 import { JsonLd } from "../../components/json-ld";
-import { PlaceholderPlate } from "../../components/placeholder-plate";
+import {
+    FeatureSection,
+    InlineText,
+    SectionHeading,
+    Shot,
+    StatusSection,
+    type Stat,
+} from "../../components/project-page";
 import { StatusLabel, Tag } from "../../components/tag";
-import { FULL_WIDTH_SIZES } from "../../lib/image-sizes";
 import { pageMetadata } from "../../lib/metadata";
 import { projectPageSchema } from "../../lib/structured-data";
 
-interface FeatureSection {
+interface FeatureContent {
     heading: string;
     /** `*accent*` renders in the serif italic. */
     title: string;
     proof: string;
-    stats: { value: string; label: string }[];
+    stats: Stat[];
     /** Screenshot path; until one exists, `placeholder` labels the pending plate. */
     image?: string;
     placeholder: string;
@@ -34,7 +39,7 @@ interface HealthstackContent {
         imageAlt: string;
         caption: string;
     };
-    sections: FeatureSection[];
+    sections: FeatureContent[];
     dsl: {
         /** `` `code` `` renders as inline code. */
         body: string;
@@ -78,111 +83,6 @@ function playgroundIsBuilt(): boolean {
     return existsSync(join(process.cwd(), "public", "playground", "index.html"));
 }
 
-/** Plain text with `*accent*` in the serif italic and `` `code` `` as inline code. */
-function InlineText({ text }: { text: string }) {
-    return text.split(/(\*[^*]+\*|`[^`]+`)/).map((part, i) => {
-        if (part.length > 2 && part.startsWith("*") && part.endsWith("*")) {
-            return <em key={i} className="font-serif italic font-normal">{part.slice(1, -1)}</em>;
-        }
-        if (part.length > 2 && part.startsWith("`") && part.endsWith("`")) {
-            return <code key={i} className="font-mono text-sm">{part.slice(1, -1)}</code>;
-        }
-        return part;
-    });
-}
-
-function SectionHeading({ children }: { children: string }) {
-    return (
-        <h2 className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft mb-10">
-            {children}
-        </h2>
-    );
-}
-
-interface ShotProps {
-    src?: string;
-    alt: string;
-    caption: string;
-    placeholder?: string;
-}
-
-function Shot({ src, alt, caption, placeholder }: ShotProps) {
-    return (
-        <figure>
-            <div className="relative aspect-16/10 border border-hairline overflow-hidden bg-paper">
-                {src ? (
-                    <Image
-                        src={src}
-                        alt={alt}
-                        fill
-                        sizes={FULL_WIDTH_SIZES}
-                        className="object-cover object-center"
-                    />
-                ) : (
-                    <PlaceholderPlate label={placeholder ?? ""} />
-                )}
-            </div>
-            <figcaption className="pt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
-                {caption}
-            </figcaption>
-        </figure>
-    );
-}
-
-function StatTable({ stats }: { stats: { value: string; label: string }[] }) {
-    const fill = (6 - (stats.length % 6)) % 6;
-    return (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-px bg-hairline border border-hairline">
-            {stats.map((stat) => (
-                <div key={stat.label} className="min-w-0 bg-paper-deep p-4 [overflow-wrap:anywhere]">
-                    <div className="font-mono text-sm md:text-base text-ink leading-snug">
-                        {stat.value}
-                    </div>
-                    <div className="mt-1 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
-                        {stat.label}
-                    </div>
-                </div>
-            ))}
-            {Array.from({ length: fill }).map((_, i) => (
-                <div
-                    key={`fill-${i}`}
-                    aria-hidden="true"
-                    className="bg-paper-deep p-4"
-                />
-            ))}
-        </div>
-    );
-}
-
-function FeatureSection({ section }: { section: FeatureSection }) {
-    return (
-        <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
-            <SectionHeading>{section.heading}</SectionHeading>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-                <div className="md:col-span-5 flex flex-col">
-                    <h3 className="text-2xl md:text-3xl font-semibold tracking-tight leading-snug">
-                        <InlineText text={section.title} />
-                    </h3>
-                    <p className="mt-4 text-base leading-relaxed text-ink/85">
-                        {section.proof}
-                    </p>
-                </div>
-                <div className="md:col-span-7">
-                    <StatTable stats={section.stats} />
-                </div>
-            </div>
-            <div className="mt-8">
-                <Shot
-                    src={section.image}
-                    alt={`${section.heading} in the Healthstack dev build`}
-                    caption={section.caption}
-                    placeholder={section.placeholder}
-                />
-            </div>
-        </section>
-    );
-}
-
 export default function HealthstackPage() {
     const { hero, dsl, status } = page;
     const playgroundBuilt = playgroundIsBuilt();
@@ -220,7 +120,20 @@ export default function HealthstackPage() {
             </section>
 
             {page.sections.map((section) => (
-                <FeatureSection key={section.heading} section={section} />
+                <FeatureSection
+                    key={section.heading}
+                    heading={section.heading}
+                    title={section.title}
+                    proof={section.proof}
+                    stats={section.stats}
+                >
+                    <Shot
+                        src={section.image}
+                        alt={`${section.heading} in the Healthstack dev build`}
+                        caption={section.caption}
+                        placeholder={section.placeholder}
+                    />
+                </FeatureSection>
             ))}
 
             <section id="dsl" className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline scroll-mt-16">
@@ -267,22 +180,12 @@ export default function HealthstackPage() {
                 </div>
             </section>
 
-            <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
-                <SectionHeading>{status.heading}</SectionHeading>
-                <div className="bg-paper-deep border border-hairline p-8 md:p-10">
-                    <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
-                        {status.title}
-                    </h3>
-                    <p className="mt-4 text-base leading-relaxed text-ink/85 max-w-[62ch]">
-                        {status.body}
-                    </p>
-                    <div className="mt-6 flex flex-wrap gap-2">
-                        {status.tags.map((tag) => (
-                            <Tag key={tag}>{tag}</Tag>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            <StatusSection
+                heading={status.heading}
+                title={status.title}
+                body={status.body}
+                tags={status.tags}
+            />
         </main>
     );
 }

@@ -106,15 +106,16 @@ export function aboutPageSchema({ route, locale, name, description }: PageSchema
  * A page about one of the projects. A WebPage, not a SoftwareApplication:
  * Google reads that as a Software App rich result and flags it invalid
  * without offers and ratings, which an unreleased project has neither of.
+ * A page whose screenshot is still pending names no image.
  */
-export function projectPageSchema({ route, locale, name, description, image }: PageSchemaOptions & { image: string }) {
+export function projectPageSchema({ route, locale, name, description, image }: PageSchemaOptions & { image?: string }) {
     return graph({
         "@type": "WebPage",
         url: absoluteUrl(routePath(route, locale)),
         name,
         description,
         inLanguage: htmlLang[locale],
-        primaryImageOfPage: { "@type": "ImageObject", url: absoluteUrl(image) },
+        ...(image && { primaryImageOfPage: { "@type": "ImageObject", url: absoluteUrl(image) } }),
         isPartOf: websiteRef,
         author: personRef,
     });

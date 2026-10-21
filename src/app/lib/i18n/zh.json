@@ -117,6 +117,13 @@
             "linkLabel": "打开示例"
         },
         {
+            "id": "med-research-mcp",
+            "name": "med-research-mcp",
+            "description": "为 AI 智能体检索医学文献的 MCP 服务器：查询 PubMed、Europe PMC、ChinaXiv 与 RussiaRxiv，并依据元数据为每条结果标注研究设计。",
+            "caption": "源代码 - github.com/emilkrebs/med-research-mcp",
+            "linkLabel": "阅读 med-research-mcp 页面"
+        },
+        {
             "id": "this-site",
             "name": "本站",
             "description": "静态导出。无服务器，无数据库。按你正在阅读的这份规范排版。",
@@ -160,6 +167,10 @@
     },
     "backHeader": {
         "label": "返回首页"
+    },
+    "placeholderPlate": {
+        "pending": "截图待补",
+        "aria": ["", " 截图占位"]
     },
     "story": {
         "contents": "目录",

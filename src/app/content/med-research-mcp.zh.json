@@ -1,0 +1,120 @@
+{
+    "meta": {
+        "title": "med-research-mcp：医学文献检索 MCP 服务器",
+        "description": "面向 AI 智能体的 MCP 服务器：检索 PubMed、Europe PMC、ChinaXiv 与 RussiaRxiv，并依据 NLM 元数据为每条结果标注研究设计与等级。开源，MIT 许可证。"
+    },
+    "hero": {
+        "title": "先看研究设计，再下结论。",
+        "status": "预发布",
+        "lead": "med-research-mcp 是一个 MCP 服务器，为医学、临床与膳食补充剂研究提供文献检索。AI 助手通过它查询 PubMed、Europe PMC、ChinaXiv 和 RussiaRxiv，每条结果都附有研究设计标注；回答之前，助手就能分清荟萃分析与病例报告，并认出已撤稿的论文。",
+        "tags": ["四个数据库", "研究设计标注", "撤稿提示", "全文转 Markdown", "不调用大模型", "本地运行"],
+        "links": {
+            "source": "在 GitHub 查看源代码",
+            "npm": "在 npm 查看软件包"
+        },
+        "imageAlt": "MCP 客户端中带研究设计标注的检索结果",
+        "placeholder": "med-research-mcp",
+        "caption": "MCP 客户端 - 带研究设计标注的检索结果"
+    },
+    "sections": [
+        {
+            "heading": "标注",
+            "title": "标注只依据元数据，*从不猜测*。",
+            "proof": "研究设计取自美国国家医学图书馆（NLM）的文献类型标注，等级依据牛津循证医学中心（OCEBM）2011 年证据等级。元数据没有标注的记录一律为 `unknown`：未标注不等于证据弱，这类记录由模型读摘要判断。等级衡量的是研究设计，而不是单项研究的质量。",
+            "stats": [
+                { "value": "retracted", "label": "已撤稿，等级降为 0" },
+                { "value": "expression-of-concern", "label": "期刊发布了关注声明" },
+                { "value": "corrected", "label": "有勘误" },
+                { "value": "updated", "label": "已有新版本" },
+                { "value": "preprint", "label": "未经同行评审" },
+                { "value": "machine-translated", "label": "机器翻译的文本" }
+            ],
+            "table": {
+                "label": "设计等级与对应的研究设计",
+                "columns": ["设计等级", "研究设计"],
+                "rows": [
+                    { "key": "5", "value": "汇总随机对照试验的荟萃分析或系统综述。元数据很少写明汇总了哪些研究，因此只有网状荟萃分析会得到 5。" },
+                    { "key": "4", "value": "随机对照试验" },
+                    { "key": "3", "value": "队列研究" },
+                    { "key": "2", "value": "非随机对照试验、临床试验、观察性研究、病例对照研究、横断面研究" },
+                    { "key": "1", "value": "病例报告；未标为系统综述的综述" },
+                    { "key": "0", "value": "动物研究、体外研究；已撤稿的论文，撤稿声明、关注声明与勘误等通知，研究方案，社论与评论" },
+                    { "key": "null", "value": "未标注的记录，以及未注明汇总了哪些研究的荟萃分析与系统综述。未评级，不等于弱。" }
+                ],
+                "note": "排序说明：检索结果按研究设计等级排序（依据牛津循证医学中心 2011 年证据等级与美国国家医学图书馆的文献类型标注）：设计等级 5 至 2 级的文献依次排在最前，其次为未评级的文献，最后为 1 级和 0 级的文献；同一等级内保留各数据库的原始顺序。不使用个人数据，不做个性化推荐。"
+            }
+        },
+        {
+            "heading": "数据库",
+            "title": "四个数据库，合并成一份结果。",
+            "proof": "四个数据库并行检索，结果按 DOI 去重：同一篇论文只保留一条记录，其他副本上的撤稿与勘误标记也会合并过来。某个数据库出错时，其余数据库的结果照常返回；只有全部失败才报错，故障不会被误当成“没有相关研究”。",
+            "stats": [
+                { "value": "4", "label": "数据库" },
+                { "value": "DOI", "label": "去重依据" },
+                { "value": "按设计等级", "label": "合并后排序" },
+                { "value": "默认 10 · 最多 50", "label": "每库结果数" },
+                { "value": "[tiab] · [mesh] · [pt]", "label": "PubMed 字段标签" },
+                { "value": "警告", "label": "单库故障时" }
+            ],
+            "table": {
+                "label": "数据库与来源",
+                "columns": ["数据库", "来源与内容"],
+                "rows": [
+                    { "key": "PubMed", "value": "NCBI E-utilities。PubMed / MEDLINE，记录带 NLM 的文献类型标注。" },
+                    { "key": "Europe PMC", "value": "EMBL-EBI 的 REST API。PubMed 的镜像，另收录预印本和中国生物学文摘（CBA）等来源；MEDLINE 收录的记录带同样的文献类型标注。" },
+                    { "key": "ChinaXiv", "value": "ChinaXiv 预印本，英文文本多为机器翻译，经第三方 ChinaRxiv API 提供。没有文献类型元数据，研究设计一律为 `unknown`。" },
+                    { "key": "RussiaRxiv", "value": "俄罗斯及苏联时期的论文，英文为机器翻译，同样来自 ChinaRxiv；摘要大多由 ChinaRxiv 撰写，而非原作者。" }
+                ],
+                "note": "ChinaRxiv 是独立项目，与中国科学院科技论文预发布平台 ChinaXiv 没有隶属关系。这两个来源检索的是英文译本；引用其中的数字之前，请先核对原始记录。"
+            }
+        },
+        {
+            "heading": "工具与技能",
+            "title": "先检索，再读摘要，必要时读全文。",
+            "proof": "`literature_search` 检索并标注，`literature_fetch` 取回完整记录与摘要，`literature_fulltext` 在摘要不够时获取全文：依次尝试 Europe PMC、Unpaywall 收录的开放获取版本和 DOI 直链，均不可得时退回摘要，并说明每条途径的结果。三个 Agent Skills 教模型写精确的检索式、读懂标注，并在结论只依赖单篇论文时做批判性评价。",
+            "stats": [
+                { "value": "3", "label": "只读工具" },
+                { "value": "3", "label": "Agent Skills" },
+                { "value": "Markdown", "label": "全文格式" },
+                { "value": "50,000", "label": "全文默认字符上限" },
+                { "value": "仅公网地址", "label": "全文请求" },
+                { "value": "偏倚风险 · 效应量 · 异质性", "label": "批判性评价要点" }
+            ]
+        },
+        {
+            "heading": "基准测试",
+            "title": "每一条引用都经过*核对*。",
+            "proof": "仓库附带一套基准测试，衡量模型借助本服务器回答生物医学问题的表现。答案中的 PMID 在 PubMed 上实时核对，查不到即记为编造。其中 4 道题询问并不存在的研究，只有明确指出查无此研究才得分；另有 4 道题的答案只在 PubMed 之外：三项收录于中国生物学文摘（CBA）的中医临床研究，以及一篇 ChinaXiv 预印本。",
+            "stats": [
+                { "value": "32", "label": "问题" },
+                { "value": "4", "label": "询问虚构研究" },
+                { "value": "4", "label": "答案只在 PubMed 之外" },
+                { "value": "实时", "label": "引用核对" },
+                { "value": "人工盲评", "label": "开放式答案" },
+                { "value": "Qwen · DeepSeek · Gemma", "label": "默认参测模型" }
+            ]
+        }
+    ],
+    "install": {
+        "heading": "安装",
+        "body": "需要 Node.js 22.22.2+、24.15.0+ 或 26+。在客户端的 MCP 配置中加入以下内容，并把邮箱换成你自己的：NCBI 的使用政策要求请求附带联系邮箱，以便在封禁超出限额的 IP 之前联系到你。",
+        "label": "客户端配置 · JSON",
+        "note": "设置 `NCBI_API_KEY` 后，PubMed 的速率上限从每秒 3 次提高到 10 次。其余配置项，以及为团队部署 HTTP 服务（含 Docker）的说明，见 GitHub 上的英文文档。"
+    },
+    "status": {
+        "heading": "状态",
+        "title": "预发布",
+        "body": "npm 上已有 0.6.0 的预发布版本，最新一版由 GitHub Actions 发布并附来源证明（provenance）。源代码以 MIT 许可证公开。服务器在你自己的电脑上运行：不调用大模型，没有账号，没有遥测。暂无公共托管实例。Healthstack 的 @Evidence 智能体也通过它检索文献。",
+        "tags": ["TypeScript", "Node.js", "MCP", "SQLite"],
+        "notes": [
+            {
+                "label": "隐私",
+                "body": "检索式会发送到所选的数据库：美国的 NCBI、英国的 EMBL-EBI 与 ChinaRxiv；获取全文时还会访问 Unpaywall、doi.org 和出版商网站。请勿在检索中填写姓名、病历号等任何可识别患者身份的信息。"
+            },
+            {
+                "label": "预期用途",
+                "body": "本工具是面向科研与教育的学术文献检索工具，用于检索 PubMed、Europe PMC、ChinaRxiv 等数据库中已发表的科学文献，依据文献元数据标注研究设计类型，并获取可公开获取的全文，或在用户自行配置时经其所在机构获取的全文。本工具不用于任何疾病的诊断、预防、监护、治疗或者缓解，不提供用药指导或治疗建议，不用于针对具体患者的诊疗决策，不处理患者数据，不作为医疗器械使用。研究设计标注仅反映文献的索引信息，不代表研究结论可靠或适用于任何个人。如有健康问题，请咨询医生。"
+            }
+        ]
+    }
+}

@@ -42,6 +42,13 @@ export interface BackHeaderCopy {
     label: string;
 }
 
+export interface PlaceholderPlateCopy {
+    /** The plate's pending line, set in mono caps. */
+    pending: string;
+    /** [before, after] the plate's name: its accessible name. */
+    aria: string[];
+}
+
 export interface StoryCopy {
     contents: string;
     confidentialNotice: string;
@@ -103,5 +110,6 @@ export interface LocaleBundle extends LandingCopy {
     skipLink: string;
     footer: FooterCopy;
     backHeader: BackHeaderCopy;
+    placeholderPlate: PlaceholderPlateCopy;
     story: StoryCopy;
 }

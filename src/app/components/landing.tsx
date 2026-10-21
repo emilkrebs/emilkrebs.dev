@@ -9,7 +9,7 @@ import { WeChatLink } from "./wechat-link";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
 import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
 import { FULL_WIDTH_SIZES, HALF_WIDTH_SIZES } from "../lib/image-sizes";
-import { routePath, type RouteKey } from "../lib/routes";
+import { routeAvailable, routePath, type RouteKey } from "../lib/routes";
 import { profilePageSchema } from "../lib/structured-data";
 
 interface ProjectBase {
@@ -22,6 +22,8 @@ interface ProjectBase {
     image?: string;
     /** A third-party live page, loaded on click over the image. */
     preview?: string;
+    /** No screenshot yet: the card shows the shared pending plate. */
+    placeholder?: boolean;
     notice?: boolean;
 }
 
@@ -52,6 +54,12 @@ const PROJECT_BASE: ProjectBase[] = [
         preview: "https://langium.org/showcase/minilogo/",
     },
     {
+        id: "med-research-mcp",
+        route: "med-research-mcp",
+        tags: ["TypeScript", "MCP", "Node.js"],
+        placeholder: true,
+    },
+    {
         id: "vailnote",
         href: "https://vailnote.com/",
         tags: ["TypeScript", "Fresh", "Deno", "MongoDB"],
@@ -77,14 +85,17 @@ const PROJECT_BASE: ProjectBase[] = [
     },
 ];
 
-function mergeProjects(base: ProjectBase[], copies: ProjectCopy[]): Project[] {
-    return base.map((project) => {
-        const projectCopy = copies.find((c) => c.id === project.id);
-        if (!projectCopy) {
-            throw new Error(`Missing landing copy for project "${project.id}"`);
-        }
-        return { ...project, ...projectCopy };
-    });
+function mergeProjects(base: ProjectBase[], copies: ProjectCopy[], locale: Locale): Project[] {
+    return base
+        // A project page not yet published in this locale, or in English to fall back on, gets no card.
+        .filter((project) => !project.route || routeAvailable(project.route, locale))
+        .map((project) => {
+            const projectCopy = copies.find((c) => c.id === project.id);
+            if (!projectCopy) {
+                throw new Error(`Missing landing copy for project "${project.id}"`);
+            }
+            return { ...project, ...projectCopy };
+        });
 }
 
 /** GitHub, LinkedIn, Email: the plain arrow links that leave the page. */
@@ -323,6 +334,7 @@ function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
             notice={project.notice}
             image={project.image}
             preview={project.preview}
+            placeholder={project.placeholder}
             linkLabel={project.linkLabel}
             variant={flagship ? "flagship" : undefined}
             sizes={wide ? FULL_WIDTH_SIZES : HALF_WIDTH_SIZES}
@@ -332,8 +344,8 @@ function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
 }
 
 function Projects({ t, locale }: { t: LandingCopy; locale: Locale }) {
-    const flagships = mergeProjects(FLAGSHIP_BASE, t.flagships);
-    const projects = mergeProjects(PROJECT_BASE, t.projects);
+    const flagships = mergeProjects(FLAGSHIP_BASE, t.flagships, locale);
+    const projects = mergeProjects(PROJECT_BASE, t.projects, locale);
     return (
         <section
             id="projects"
@@ -349,7 +361,8 @@ function Projects({ t, locale }: { t: LandingCopy; locale: Locale }) {
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {projects.map((project, index) => {
-                    const wide = index % 3 === 0 || index === projects.length - 1;
+                    // Wide, narrow, narrow, repeating; a narrow card left alone in the last row goes wide.
+                    const wide = index % 3 === 0 || (index % 3 === 1 && index === projects.length - 1);
                     return (
                         <div key={project.id} className={wide ? "md:col-span-2" : ""}>
                             <ProjectEntry project={project} locale={locale} wide={wide} />

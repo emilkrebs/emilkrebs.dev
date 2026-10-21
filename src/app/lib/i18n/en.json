@@ -151,6 +151,10 @@
     "backHeader": {
         "label": "Back to home"
     },
+    "placeholderPlate": {
+        "pending": "SCREENSHOT PENDING",
+        "aria": ["Placeholder for a ", " screenshot"]
+    },
     "story": {
         "contents": "Contents",
         "confidentialNotice": "Details hidden due to active NDA restrictions.",

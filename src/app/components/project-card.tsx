@@ -113,7 +113,7 @@ export function ProjectCard({
                                 }
                             />
                         ) : (
-                            <PlaceholderPlate label={name} />
+                            <PlaceholderPlate label={name} locale={locale} />
                         )}
                     </div>
                     {!compact && caption && (
