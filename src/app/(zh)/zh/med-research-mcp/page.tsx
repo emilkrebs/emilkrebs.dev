@@ -13,6 +13,7 @@ import {
 } from "../../../components/project-page";
 import { SmartLink } from "../../../components/smart-link";
 import { StatusLabel, Tag } from "../../../components/tag";
+import { MED_RESEARCH_MCP_LINKS } from "../../../lib/constants";
 import { pageMetadata } from "../../../lib/metadata";
 import { projectPageSchema } from "../../../lib/structured-data";
 
@@ -31,6 +32,8 @@ interface FeatureContent {
     /** `` `code` `` renders as inline code. */
     proof: string;
     stats: Stat[];
+    /** Two stat columns, for values too long for three. */
+    wideStats?: boolean;
     table?: SpecTableContent;
 }
 
@@ -41,7 +44,8 @@ interface MedResearchContent {
         status: string;
         lead: string;
         tags: string[];
-        links: { source: string; npm: string };
+        /** Link labels; the demo link shows only when MED_RESEARCH_MCP_LINKS.demo is set. */
+        links: { demo: string; source: string; npm: string };
         /** Screenshot path; until one exists, `placeholder` labels the pending plate. */
         image?: string;
         imageAlt: string;
@@ -54,6 +58,8 @@ interface MedResearchContent {
         heading: string;
         title: string;
         body: string;
+        /** Appended to the body while no demo is set. */
+        noDemo: string;
         tags: string[];
         notes: { label: string; body: string }[];
     };
@@ -61,8 +67,7 @@ interface MedResearchContent {
 
 const page: MedResearchContent = content;
 
-const REPO_URL = "https://github.com/emilkrebs/med-research-mcp";
-const NPM_URL = "https://www.npmjs.com/package/med-research-mcp";
+const { demo: DEMO_URL } = MED_RESEARCH_MCP_LINKS;
 
 // The README's configuration for any MCP client. Its first two install paths,
 // Claude Code and Claude Desktop, are not offered in mainland China.
@@ -76,7 +81,7 @@ const CLIENT_CONFIG = `{
   }
 }`;
 
-/** GitHub and npm: the link-arrows that leave the page. */
+/** The demo, GitHub and npm: the link-arrows that leave the page. */
 const EXIT_LINK_CLASS = "inline-flex items-center gap-2 py-2.5 font-medium hover:text-signal transition-colors duration-150";
 
 export const metadata: Metadata = pageMetadata({
@@ -119,11 +124,17 @@ export default function MedResearchPage() {
                     ))}
                 </div>
                 <div className="mt-6 flex flex-wrap items-center gap-x-6">
-                    <SmartLink href={REPO_URL} className={EXIT_LINK_CLASS}>
+                    {DEMO_URL && (
+                        <SmartLink href={DEMO_URL} className={EXIT_LINK_CLASS}>
+                            {hero.links.demo}
+                            <span className="text-signal" aria-hidden="true">→</span>
+                        </SmartLink>
+                    )}
+                    <SmartLink href={MED_RESEARCH_MCP_LINKS.source} className={EXIT_LINK_CLASS}>
                         {hero.links.source}
                         <span className="text-signal" aria-hidden="true">→</span>
                     </SmartLink>
-                    <SmartLink href={NPM_URL} className={EXIT_LINK_CLASS}>
+                    <SmartLink href={MED_RESEARCH_MCP_LINKS.npm} className={EXIT_LINK_CLASS}>
                         {hero.links.npm}
                         <span className="text-signal" aria-hidden="true">→</span>
                     </SmartLink>
@@ -146,6 +157,7 @@ export default function MedResearchPage() {
                     title={section.title}
                     proof={section.proof}
                     stats={section.stats}
+                    wideStats={section.wideStats}
                     locale="zh"
                 >
                     {section.table && (
@@ -190,7 +202,8 @@ export default function MedResearchPage() {
             <StatusSection
                 heading={status.heading}
                 title={status.title}
-                body={status.body}
+                // Chinese sentences join without a space.
+                body={DEMO_URL ? status.body : `${status.body}${status.noDemo}`}
                 tags={status.tags}
             >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">

@@ -9,6 +9,7 @@
         "lead": "med-research-mcp 是一个 MCP 服务器，为医学、临床与膳食补充剂研究提供文献检索。AI 助手通过它查询 PubMed、Europe PMC、ChinaXiv 和 RussiaRxiv，每条结果都附有研究设计标注；回答之前，助手就能分清荟萃分析与病例报告，并认出已撤稿的论文。",
         "tags": ["四个数据库", "研究设计标注", "撤稿提示", "全文转 Markdown", "不调用大模型", "本地运行"],
         "links": {
+            "demo": "打开演示",
             "source": "在 GitHub 查看源代码",
             "npm": "在 npm 查看软件包"
         },
@@ -29,6 +30,7 @@
                 { "value": "preprint", "label": "未经同行评审" },
                 { "value": "machine-translated", "label": "机器翻译的文本" }
             ],
+            "wideStats": true,
             "table": {
                 "label": "设计等级与对应的研究设计",
                 "columns": ["设计等级", "研究设计"],
@@ -104,7 +106,8 @@
     "status": {
         "heading": "状态",
         "title": "预发布",
-        "body": "npm 上已有 0.6.0 的预发布版本，最新一版由 GitHub Actions 发布并附来源证明（provenance）。源代码以 MIT 许可证公开。服务器在你自己的电脑上运行：不调用大模型，没有账号，没有遥测。暂无公共托管实例。Healthstack 的 @Evidence 智能体也通过它检索文献。",
+        "body": "npm 上已有 0.6.0 的预发布版本，最新一版由 GitHub Actions 发布并附来源证明（provenance）。源代码以 MIT 许可证公开。Healthstack 的 @Evidence 智能体也通过它检索文献。服务器在你自己的电脑上运行：不调用大模型，没有账号，没有遥测。",
+        "noDemo": "暂无公共托管实例。",
         "tags": ["TypeScript", "Node.js", "MCP", "SQLite"],
         "notes": [
             {

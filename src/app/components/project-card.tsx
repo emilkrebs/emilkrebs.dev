@@ -17,6 +17,8 @@ export interface ProjectCardProps {
     notice?: boolean;
     status?: string;
     image?: string;
+    /** Alt text for a plate that is not a screenshot; defaults to "<name> screenshot". */
+    imageAlt?: string;
     /** A third-party live page, loaded only on click; the image stays visible until then. */
     preview?: string;
     /** No screenshot yet: shows the shared pending plate instead. */
@@ -44,6 +46,7 @@ export function ProjectCard({
     notice,
     status,
     image,
+    imageAlt,
     preview,
     placeholder,
     caption,
@@ -102,7 +105,7 @@ export function ProjectCard({
                         ) : image ? (
                             <Image
                                 src={image}
-                                alt={`${name}${t.screenshotAltSuffix}`}
+                                alt={imageAlt ?? `${name}${t.screenshotAltSuffix}`}
                                 fill
                                 sizes={sizes}
                                 unoptimized={image.endsWith(".svg")}
@@ -126,7 +129,8 @@ export function ProjectCard({
                 </div>
             )}
             <div className={`${compact ? "p-5 md:p-6" : "p-8 md:p-10"} flex flex-col flex-1`}>
-                <div className="flex items-start justify-between gap-4">
+                {/* A name too long to share its line with the status label takes the line, so it never breaks at a hyphen. */}
+                <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
                     <h3
                         className={`${variant === "flagship"
                             ? "text-3xl md:text-4xl"
@@ -158,13 +162,14 @@ export function ProjectCard({
                         notice ? (
                             <ExternalNotice href={href} title={name} copy={t.externalNotice} label={label} />
                         ) : (
+                            // Inline, not flex: a label that wraps keeps its arrow on its last word.
                             <SmartLink
                                 href={href}
-                                className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
+                                className="font-medium group-hover:text-signal transition-colors duration-150"
                             >
                                 {label}
                                 <span className="sr-only">: {name}</span>
-                                <span className="text-signal" aria-hidden="true">→</span>
+                                <span className="ml-2 text-signal" aria-hidden="true">→</span>
                             </SmartLink>
                         )
                     ) : (

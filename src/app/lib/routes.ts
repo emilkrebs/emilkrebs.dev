@@ -4,7 +4,7 @@ import { htmlLang, type Locale } from "./i18n";
 interface Route {
     /**
      * Canonical path per published locale, trailing slash included. A route
-     * launches in English, or in Chinese first with English to follow.
+     * launches in English, or may launch in Chinese first, with English to follow.
      */
     paths: { en: string; zh?: string } | { en?: undefined; zh: string };
     /** Whether search engines may index the route. */
@@ -20,7 +20,7 @@ export const ROUTES = {
     home: { paths: { en: "/", zh: "/zh/" }, index: true },
     story: { paths: { en: "/story/", zh: "/zh/story/" }, index: true },
     healthstack: { paths: { en: "/healthstack/" }, index: true },
-    "med-research-mcp": { paths: { zh: "/zh/med-research-mcp/" }, index: true },
+    "med-research-mcp": { paths: { en: "/med-research-mcp/", zh: "/zh/med-research-mcp/" }, index: true },
     // Legal pages carry personal contact data and have no search value.
     imprint: { paths: { en: "/imprint/" }, index: false },
     privacy: { paths: { en: "/privacy/" }, index: false },
@@ -42,7 +42,9 @@ export function routeLocales(route: RouteKey): Locale[] {
  * exists, or to Chinese for a route not yet published in English.
  */
 export function routePath(route: RouteKey, locale: Locale = "en"): string {
-    const paths: Route["paths"] = ROUTES[route].paths;
+    // Widened, not narrowed: while every route has an English path, an
+    // annotation would narrow away the Chinese-first branch below.
+    const paths = ROUTES[route].paths as Route["paths"];
     if (paths.en === undefined) return paths[locale] ?? paths.zh;
     return paths[locale] ?? paths.en;
 }

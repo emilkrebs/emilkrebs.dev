@@ -1,0 +1,201 @@
+{
+    "meta": {
+        "title": "med-research-mcp: medical literature search for AI agents",
+        "description": "An MCP server that searches PubMed, Europe PMC, ChinaXiv and RussiaRxiv for AI agents and labels every result with its study design, from NLM metadata. Open source, MIT license."
+    },
+    "hero": {
+        "title": "Study design first. Then the answer.",
+        "status": "Pre-release",
+        "lead": "med-research-mcp is an MCP server for medical, clinical and supplementation research. An AI assistant uses it to search PubMed, Europe PMC, ChinaXiv and RussiaRxiv, and every result comes labeled with its study design, so the assistant can tell a meta-analysis from a case report, and see which papers were retracted, before it answers.",
+        "tags": ["Four databases", "Study-design labels", "Retraction flags", "Full text as markdown", "No LLM calls", "Self-hosted"],
+        "links": {
+            "demo": "Open the demo",
+            "source": "Source on GitHub",
+            "npm": "Package on npm"
+        },
+        "image": "/pictures/med-research-mcp.webp",
+        "imageAlt": "The med-research-mcp mark: the three strokes of the Model Context Protocol logo, with a serpent's head, forked tongue and tail added",
+        "placeholder": "med-research-mcp",
+        "caption": "Mark - med-research-mcp"
+    },
+    "problem": {
+        "heading": "Problem",
+        "title": "Real papers, cited for things they don't say.",
+        "paragraphs": [
+            "Asked what the evidence says, a language model answers from what it remembers. It hasn't seen papers published after its training, it rarely knows records outside PubMed, and it can't tell from memory whether a paper is a meta-analysis, a case report or retracted.",
+            "In the benchmark, Claude Haiku 5.5 without tools invented no PMIDs at all. But 24 of the 56 citations it gave were contradicted by the paper they point to, and none of its 12 answers on recent papers matched the key. With the server, 1 of 417 citations was contradicted, and all 12 answers matched."
+        ]
+    },
+    "audience": {
+        "heading": "Who it's for",
+        "rows": [
+            {
+                "title": "Research and education",
+                "body": "Literature searches in medical, clinical and supplementation research, run through an AI assistant, where what the evidence actually says matters more than a list of abstracts."
+            },
+            {
+                "title": "Agent builders",
+                "body": "Developers who give an agent a literature tool. Any MCP client runs it, the three tools are read-only, and the server makes no LLM calls of its own. Healthstack's @Evidence agent searches through it."
+            },
+            {
+                "title": "Not for patient care",
+                "body": "It finds and labels published literature. It is not meant for diagnosis, treatment or decisions about an individual patient's care, and it is not a medical device."
+            }
+        ]
+    },
+    "sections": [
+        {
+            "heading": "Labels",
+            "title": "Labels from the metadata, *never a guess*.",
+            "proof": "The study design comes from the publication types the U.S. National Library of Medicine (NLM) indexes, and the design tier follows the Oxford CEBM 2011 levels of evidence. A record without that metadata says `unknown`: unlabeled, not weak, and the model reads its abstract instead. The tier ranks the design, not the quality of the study.",
+            "stats": [
+                { "value": "retracted", "label": "Retracted, tier\u00a00" },
+                { "value": "expression-of-concern", "label": "Journal raised concerns" },
+                { "value": "corrected", "label": "Erratum exists" },
+                { "value": "updated", "label": "Newer version exists" },
+                { "value": "preprint", "label": "Not peer reviewed" },
+                { "value": "machine-translated", "label": "Machine-translated text" }
+            ],
+            "wideStats": true,
+            "table": {
+                "label": "Design tiers and the study designs they hold",
+                "columns": ["Tier", "Study design"],
+                "rows": [
+                    {
+                        "key": "5",
+                        "value": "A meta-analysis or systematic review that pooled randomized trials. Metadata rarely shows what was pooled, so only a network meta-analysis gets 5."
+                    },
+                    { "key": "4", "value": "Randomized controlled trial" },
+                    { "key": "3", "value": "Cohort study" },
+                    { "key": "2", "value": "Non-randomized controlled trial, clinical trial, observational study, case-control study, cross-sectional study" },
+                    { "key": "1", "value": "Case report; a review not indexed as systematic" },
+                    {
+                        "key": "0",
+                        "value": "Animal and in-vitro studies; retracted papers, notices of retraction, concern or correction, trial protocols, editorials and comments"
+                    },
+                    { "key": "null", "value": "Unlabeled records, and meta-analyses and systematic reviews whose pooled designs aren't indexed. Unrated, not weak." }
+                ],
+                "note": "Ranking: results are sorted by design tier, following the Oxford CEBM 2011 levels of evidence and NLM's publication types. Tiers 5 to 2 come first, in that order, then unrated records, then tiers 1 and 0; within a tier, each database's original order is kept. No personal data is used, and nothing is personalized."
+            }
+        },
+        {
+            "heading": "Databases",
+            "title": "Four databases, one merged list.",
+            "proof": "The databases are searched in parallel and the results de-duplicated by DOI: one record per paper survives, and it takes over the retraction and correction flags of the other copies. When one database fails, the others still return results, with a warning. Only when every database fails does the search report an error, so an outage never looks like an empty result.",
+            "stats": [
+                { "value": "4", "label": "Databases" },
+                { "value": "DOI", "label": "De-duplication key" },
+                { "value": "By design tier", "label": "Merged ranking" },
+                { "value": "10 · max 50", "label": "Results per database" },
+                { "value": "[tiab] · [mesh] · [au] · [pt]", "label": "PubMed field tags" },
+                { "value": "Warning", "label": "When one database fails" }
+            ],
+            "table": {
+                "label": "Databases and their sources",
+                "columns": ["Database", "Source and coverage"],
+                "rows": [
+                    { "key": "PubMed", "value": "NCBI E-utilities. PubMed and MEDLINE, with NLM's publication types on each record." },
+                    {
+                        "key": "Europe PMC",
+                        "value": "The Europe PMC REST API, run by EMBL-EBI. A mirror of PubMed, plus preprints and other sources such as Chinese Biological Abstracts; its MEDLINE records carry the same publication types."
+                    },
+                    {
+                        "key": "ChinaXiv",
+                        "value": "ChinaXiv preprints, mostly machine-translated into English, served by the third-party ChinaRxiv API. No publication-type metadata, so the design is always `unknown`."
+                    },
+                    {
+                        "key": "RussiaRxiv",
+                        "value": "Soviet-era and Russian papers, machine-translated, also from ChinaRxiv. Most abstracts were written by ChinaRxiv, not by the authors."
+                    }
+                ],
+                "note": "ChinaRxiv is an independent project, not affiliated with ChinaXiv, the preprint platform of the Chinese Academy of Sciences. Both of its sources are searched in English translation: check the original record before relying on a number from them."
+            }
+        },
+        {
+            "heading": "Tools and skills",
+            "title": "Search first, abstracts next, full text last.",
+            "proof": "`literature_search` searches and labels, `literature_fetch` returns full records and abstracts, and `literature_fulltext` looks for the full text when the abstract isn't enough: Europe PMC, then the open-access copies Unpaywall knows, your institution's proxy if you configure one, then the DOI itself. When none works, it returns the abstract and says what each route answered. Three Agent Skills teach the model to write precise queries, read the labels, and appraise a paper when a conclusion rests on it alone.",
+            "stats": [
+                { "value": "3", "label": "Read-only tools" },
+                { "value": "3", "label": "Agent Skills" },
+                { "value": "Markdown", "label": "Full-text format" },
+                { "value": "50,000", "label": "Default full-text character cap" },
+                { "value": "Public addresses only", "label": "Full-text fetches" },
+                { "value": "Bias\u00a0·\u00a0effect\u00a0size ·\u00a0heterogeneity", "label": "Appraisal lenses" }
+            ],
+            "wideStats": true
+        },
+        {
+            "heading": "Benchmark",
+            "title": "Every citation *checked* against its paper.",
+            "proof": "The repository ships a benchmark of 32 biomedical questions, run with the server and without it. Every PMID in an answer is checked on live PubMed, and every citation against the paper it points to. Four questions ask about studies that don't exist, four have their answer only outside PubMed, in Chinese Biological Abstracts or ChinaXiv, and four ask about papers published after the model's training data.",
+            "stats": [
+                { "value": "32", "label": "Questions" },
+                { "value": "7", "label": "Categories" },
+                { "value": "3", "label": "Runs per question" },
+                { "value": "Claude Haiku 5.5", "label": "Model in the runs" },
+                { "value": "Live PubMed", "label": "Citation check" },
+                { "value": "Not yet", "label": "Human grading" }
+            ],
+            "results": {
+                "label": "Benchmark results for Claude Haiku 5.5, without and with the server",
+                "columns": ["Measure", "Without the server", "With the server"],
+                "rows": [
+                    { "label": "Recent papers: answers matching the key", "meta": "4\u00a0questions ×\u00a03\u00a0runs", "values": ["0 of 12", "12 of 12"] },
+                    { "label": "Records outside PubMed: answers matching the key", "meta": "4\u00a0questions ×\u00a03\u00a0runs", "values": ["0 of 12", "7 of 12"] },
+                    { "label": "Citations contradicted by their paper", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "values": ["24 of 56", "1 of 417"] },
+                    { "label": "Fabricated PMIDs", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "values": ["0 of 56", "0 of 429"] },
+                    { "label": "Mean time per answer", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "values": ["10.0 s", "12.8 s"] },
+                    { "label": "Mean tokens per answer", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "values": ["2,056", "36,515"] }
+                ],
+                "note": "Claude Haiku 5.5 through the Anthropic API, run on 2026-10-17 on that day's server build, before the 0.6.0 pre-releases. The first two rows come from a run over 8 questions, the rest from a run over 24; a later run of all 32 questions with the server answered 12 of 12 on recent papers and 11 of 12 outside PubMed. Answers are scored against fixed keys and live PubMed, and the contradicted citations were checked by hand. One model, open-ended answers not yet graded by people, no web-search baseline: a first measurement, not a ranking."
+            }
+        }
+    ],
+    "usage": {
+        "heading": "How to use it",
+        "install": {
+            "title": "Add the server",
+            "body": "Needs Node.js 22.22.2 or later on 22, 24.15.0 or later on 24, or 26+. The server runs straight from npm, so there is nothing to clone or build. Replace `you@example.com` with your own address: NCBI's usage policy asks for a contact email on every request, so NCBI can reach you before blocking an IP that exceeds its limits.",
+            "claudeCode": {
+                "label": "Claude Code · shell",
+                "note": "`-s user` makes the server available in all your projects; the tools appear in new sessions."
+            },
+            "clients": {
+                "label": "Cursor, Windsurf, Cline and other clients · JSON",
+                "note": "Clients configured in YAML take the same `command`, `args` and `env`."
+            },
+            "note": "Claude Desktop installs from the `.mcpb` bundle on the GitHub releases, with no JSON to edit, and `med-research-mcp@next` installs the newest pre-release. Setting `NCBI_API_KEY` raises the PubMed rate limit from 3 to 10 requests per second. The other variables, the Agent Skills, and running the server over HTTP for a team, Docker included, are documented on GitHub."
+        },
+        "ask": {
+            "title": "Ask a question",
+            "body": "Ask in plain language; the assistant picks the tools. Three questions from the server's own skill:",
+            "examples": [
+                { "prompt": "What study design is PMID 36615805, and how strong is that design?" },
+                { "prompt": "Compare DORAs vs trazodone for sleep quality. Which has stronger evidence, and why?" },
+                { "prompt": "Summarize the 2023 Jensen trial on melatonin and REM sleep.", "note": "That trial doesn't exist: the answer should say so." }
+            ]
+        },
+        "check": {
+            "title": "Check the answer",
+            "body": "The assistant usually searches first, reads the promising abstracts, and fetches the full text when it needs the methods or the sample size. Every result carries its PMID or DOI and its design label, so each cited claim in the answer can be traced to a paper and checked there."
+        }
+    },
+    "status": {
+        "heading": "Status",
+        "title": "Pre-release",
+        "body": "Pre-releases of 0.6.0 are on npm, the latest published by GitHub Actions with provenance. The source is MIT-licensed. The server runs on machines you control, with no accounts and no telemetry.",
+        "tags": ["TypeScript", "Node.js", "MCP", "SQLite"],
+        "notes": [
+            {
+                "label": "Privacy",
+                "body": "Queries go to the databases you search: NCBI in the US, EMBL-EBI in the UK, and ChinaRxiv. Full-text requests also go to Unpaywall, doi.org and the publishers' sites. Results are cached on your machine. Don't put names, record numbers or anything else that identifies a patient into a query."
+            },
+            {
+                "label": "Intended use",
+                "body": "med-research-mcp is a literature search and retrieval tool for research and education. It finds published scientific records (PubMed, Europe PMC, ChinaXiv and RussiaRxiv), labels each with the study design recorded in its bibliographic metadata, and retrieves full texts that are openly available or, if the user configures it, available through their institution's access. It is not intended to diagnose, prevent, monitor, predict, treat or alleviate any disease, to provide dosing or treatment recommendations, or to inform decisions about the care of an individual patient, and it does not process patient data. It is not a medical device and has not been assessed by any regulator. Design labels describe how a study was indexed, not whether its results are valid or apply to anyone."
+            }
+        ],
+        "noDemo": "There is no public hosted instance."
+    }
+}

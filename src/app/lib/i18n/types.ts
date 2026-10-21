@@ -68,6 +68,8 @@ export interface ProjectCopy {
     description: string;
     status?: string;
     caption?: string;
+    /** Alt text for a plate that is not a screenshot, such as a mark; falls back to "<name> screenshot". */
+    imageAlt?: string;
     /** Names the link's destination; falls back to the generic "Open". */
     linkLabel?: string;
 }

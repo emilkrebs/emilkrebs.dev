@@ -107,6 +107,14 @@
             "linkLabel": "Open the showcase"
         },
         {
+            "id": "med-research-mcp",
+            "name": "med-research-mcp",
+            "description": "An MCP server that searches PubMed, Europe PMC, ChinaXiv and RussiaRxiv for AI agents and labels every result with its study design, from NLM metadata.",
+            "caption": "Source - github.com/emilkrebs/med-research-mcp",
+            "imageAlt": "The med-research-mcp mark: the Model Context Protocol logo drawn as a serpent",
+            "linkLabel": "Read the med-research-mcp page"
+        },
+        {
             "id": "this-site",
             "name": "This site",
             "description": "Static export. No server, no database. Typeset per the spec you are reading.",

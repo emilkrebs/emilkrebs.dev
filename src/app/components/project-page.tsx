@@ -5,9 +5,10 @@ import type { Locale } from "../lib/i18n";
 import { FULL_WIDTH_SIZES } from "../lib/image-sizes";
 
 /**
- * The grammar the project pages share (/healthstack, /zh/med-research-mcp):
+ * The grammar the project pages share (/healthstack, /med-research-mcp):
  * mono section headings, feature sections with a spec-style stat table,
- * screenshot plates, spec tables, and the closing status block.
+ * prose and row sections, screenshot plates, spec and data tables, and the
+ * closing status block.
  */
 
 export interface Stat {
@@ -75,10 +76,16 @@ export function Shot({ src, alt, caption, placeholder, locale = "en" }: ShotProp
     );
 }
 
-export function StatTable({ stats }: { stats: Stat[] }) {
-    const fill = (6 - (stats.length % 6)) % 6;
+/**
+ * Spec-style stats in hairline cells, three across on wide screens. `wide`
+ * sets two across from sm up and one below, for values too long for a third
+ * of the column (code identifiers would otherwise break at their hyphens).
+ */
+export function StatTable({ stats, wide = false }: { stats: Stat[]; wide?: boolean }) {
+    // Empty cells close the last row: to a multiple of 6 so both 2 and 3 across close.
+    const fill = wide ? stats.length % 2 : (6 - (stats.length % 6)) % 6;
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-px bg-hairline border border-hairline">
+        <div className={`grid ${wide ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-2 lg:grid-cols-3"} gap-px bg-hairline border border-hairline`}>
             {stats.map((stat) => (
                 <div key={stat.label} className="min-w-0 bg-paper-deep p-4 [overflow-wrap:anywhere]">
                     <div className="font-mono text-sm md:text-base text-ink leading-snug">
@@ -93,7 +100,7 @@ export function StatTable({ stats }: { stats: Stat[] }) {
                 <div
                     key={`fill-${i}`}
                     aria-hidden="true"
-                    className="bg-paper-deep p-4"
+                    className={`bg-paper-deep p-4${wide ? " hidden sm:block" : ""}`}
                 />
             ))}
         </div>
@@ -158,13 +165,15 @@ interface FeatureSectionProps {
     /** `` `code` `` renders as inline code. */
     proof: string;
     stats: Stat[];
+    /** Two stat columns at every width, for long values (see StatTable). */
+    wideStats?: boolean;
     locale?: Locale;
     /** Full-width matter under the text and stats: a screenshot plate, a spec table. */
     children?: React.ReactNode;
 }
 
 /** One capability: mono heading, headline, proof sentence, and stat table, with optional matter below. */
-export function FeatureSection({ heading, title, proof, stats, locale = "en", children }: FeatureSectionProps) {
+export function FeatureSection({ heading, title, proof, stats, wideStats, locale = "en", children }: FeatureSectionProps) {
     return (
         <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
             <SectionHeading>{heading}</SectionHeading>
@@ -179,11 +188,133 @@ export function FeatureSection({ heading, title, proof, stats, locale = "en", ch
                     </p>
                 </div>
                 <div className="md:col-span-7">
-                    <StatTable stats={stats} />
+                    <StatTable stats={stats} wide={wideStats} />
                 </div>
             </div>
             {children && <div className="mt-8">{children}</div>}
         </section>
+    );
+}
+
+interface ProseSectionProps {
+    heading: string;
+    /** `*accent*` renders in the serif accent. */
+    title: string;
+    /** One paragraph each; `` `code` `` renders as inline code. */
+    paragraphs: string[];
+    locale?: Locale;
+}
+
+/** An argument in prose: the headline beside its paragraphs, on the feature sections' 5/7 grid. */
+export function ProseSection({ heading, title, paragraphs, locale = "en" }: ProseSectionProps) {
+    return (
+        <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
+            <SectionHeading>{heading}</SectionHeading>
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+                <h3 className={`md:col-span-5 text-2xl md:text-3xl font-semibold tracking-tight leading-snug${locale === "zh" ? " break-keep" : ""}`}>
+                    <InlineText text={title} locale={locale} />
+                </h3>
+                <div className="md:col-span-7 flex flex-col gap-4">
+                    {paragraphs.map((paragraph) => (
+                        <p key={paragraph} className="max-w-[62ch] text-base md:text-lg leading-relaxed text-ink/85">
+                            <InlineText text={paragraph} locale={locale} />
+                        </p>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+interface Row {
+    title: string;
+    /** `` `code` `` renders as inline code. */
+    body: string;
+}
+
+/** Short statements in the landing's "What I do" grammar: a signal token and headline, its sentence beside it. */
+export function RowsSection({ heading, rows, locale = "en" }: { heading: string; rows: Row[]; locale?: Locale }) {
+    return (
+        <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
+            <SectionHeading>{heading}</SectionHeading>
+            <div className="flex flex-col gap-10 md:gap-14">
+                {rows.map((row) => (
+                    <div key={row.title} className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8">
+                        <h3 className="md:col-span-5 text-2xl md:text-3xl font-semibold tracking-tight flex items-start gap-3">
+                            <span className="mt-3 size-1.5 bg-signal shrink-0" aria-hidden="true" />
+                            {row.title}
+                        </h3>
+                        <p className="md:col-span-7 max-w-[62ch] text-base md:text-lg leading-relaxed text-ink/85">
+                            <InlineText text={row.body} locale={locale} />
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </section>
+    );
+}
+
+export interface DataRow {
+    label: string;
+    /** The sample behind the row, as a mono line under its label. */
+    meta?: string;
+    values: string[];
+}
+
+interface DataTableProps {
+    /** The table's accessible name. */
+    label: string;
+    /** The row-header column first, then one per value. */
+    columns: string[];
+    rows: DataRow[];
+}
+
+/**
+ * Measured results in the spec table's hairline grammar: a row header (what
+ * was measured, and on how many answers) and mono values set flush right in
+ * tabular figures, so the columns compare at a glance. On a phone the value
+ * headers wrap instead of the table scrolling.
+ */
+export function DataTable({ label, columns, rows }: DataTableProps) {
+    const [rowColumn, ...valueColumns] = columns;
+    const header = "px-3 md:px-4 py-3 align-bottom font-mono text-xs font-normal uppercase tracking-[0.04em] sm:tracking-[0.08em] text-ink/75";
+    return (
+        <table className="w-full border-collapse border border-hairline bg-paper-deep text-left">
+            <caption className="sr-only">{label}</caption>
+            <thead>
+                <tr>
+                    <th scope="col" className={header}>{rowColumn}</th>
+                    {valueColumns.map((column) => (
+                        <th key={column} scope="col" className={`${header} w-22 md:w-48 border-l border-hairline text-right`}>
+                            {column}
+                        </th>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                {rows.map((row) => (
+                    <tr key={row.label} className="border-t border-hairline">
+                        <th scope="row" className="px-3 md:px-4 py-4 align-top font-normal">
+                            <span className="block text-sm md:text-base leading-snug text-ink">{row.label}</span>
+                            {row.meta && (
+                                <span className="mt-1.5 block font-mono text-xs uppercase tracking-[0.04em] sm:tracking-[0.08em] text-ink/75">
+                                    {row.meta}
+                                </span>
+                            )}
+                        </th>
+                        {row.values.map((value, index) => (
+                            <td
+                                key={valueColumns[index]}
+                                className="border-l border-hairline px-3 md:px-4 py-4 align-top text-right font-mono text-sm md:text-base tabular-nums text-ink"
+                            >
+                                {/* On the span, not the cell: a page's pretty wrapping of table cells would reset the cell's wrap mode. */}
+                                <span className="whitespace-nowrap">{value}</span>
+                            </td>
+                        ))}
+                    </tr>
+                ))}
+            </tbody>
+        </table>
     );
 }
 

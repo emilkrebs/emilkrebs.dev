@@ -57,7 +57,7 @@ const PROJECT_BASE: ProjectBase[] = [
         id: "med-research-mcp",
         route: "med-research-mcp",
         tags: ["TypeScript", "MCP", "Node.js"],
-        placeholder: true,
+        image: "/pictures/med-research-mcp.webp",
     },
     {
         id: "vailnote",
@@ -333,6 +333,7 @@ function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
             href={project.route ? routePath(project.route, locale) : project.href}
             notice={project.notice}
             image={project.image}
+            imageAlt={project.imageAlt}
             preview={project.preview}
             placeholder={project.placeholder}
             linkLabel={project.linkLabel}
