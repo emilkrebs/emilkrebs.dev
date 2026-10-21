@@ -3,16 +3,20 @@ import content from "../../content/med-research-mcp.json";
 import BackHeader from "../../components/back-header";
 import { JsonLd } from "../../components/json-ld";
 import {
+    BarPanels,
     DataTable,
     FeatureSection,
     InlineText,
     ProseSection,
     RowsSection,
     SectionHeading,
+    ShareChart,
     Shot,
     SpecTable,
     StatusSection,
+    type BarPanel,
     type DataRow,
+    type ShareRow,
     type Stat,
 } from "../../components/project-page";
 import { SmartLink } from "../../components/smart-link";
@@ -39,8 +43,23 @@ interface FeatureContent {
     /** Two stat columns, for values too long for three. */
     wideStats?: boolean;
     table?: SpecTableContent;
-    /** Measured results, with a note on how they were measured. */
-    results?: { label: string; columns: string[]; rows: DataRow[]; note: string };
+    /** Measured results, charted and tabled, with a note on how they were measured. */
+    results?: ResultsContent;
+}
+
+interface ResultsContent {
+    label: string;
+    /** The row-header column, then one per condition: the baseline, then with the server. */
+    columns: string[];
+    /** The conditions' short names, beside the bars. */
+    short: string[];
+    /** What the charts tell assistive technology in place of the drawing. */
+    chartNote: string;
+    /** Counts out of a sample: charted as shares, tabled as "x of n". */
+    shares: { title: string; rows: { label: string; meta: string; values: { count: number; of: number }[] }[] };
+    /** Means in a unit each: charted one panel per measure. */
+    measures: { title: string; rows: { label: string; meta: string; unit: string; decimals: number; values: number[] }[] };
+    note: string;
 }
 
 interface ConfigContent {
@@ -119,6 +138,54 @@ const OG_IMAGE = {
     height: 630,
     alt: page.hero.imageAlt,
 };
+
+const formatCount = ({ count, of }: { count: number; of: number }) => `${count} of ${of}`;
+
+function formatMeasure(value: number, decimals: number, unit: string) {
+    return `${value.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}${unit}`;
+}
+
+/** The axis end: the first round number at least 5% above the largest value. */
+function axisMax(value: number) {
+    const target = value * 1.05;
+    const power = 10 ** Math.floor(Math.log10(target));
+    return [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].map((step) => step * power).find((end) => end >= target) ?? target;
+}
+
+/** Axis labels compact from 1,000 up: 40,000 reads 40K. */
+const formatTick = (value: number, unit: string) => `${value >= 1000 ? `${value / 1000}K` : value}${unit}`;
+
+function shareRows(results: ResultsContent): ShareRow[] {
+    return results.shares.rows.map((row) => ({
+        label: row.label,
+        meta: row.meta,
+        points: row.values.map((value) => ({ at: value.count / value.of, label: formatCount(value) })),
+    }));
+}
+
+function barPanels(results: ResultsContent): BarPanel[] {
+    return results.measures.rows.map((row) => {
+        const max = axisMax(Math.max(...row.values));
+        return {
+            label: row.label,
+            meta: row.meta,
+            ticks: [formatTick(0, row.unit), formatTick(max, row.unit)],
+            bars: row.values.map((value) => ({ at: value / max, label: formatMeasure(value, row.decimals, row.unit) })),
+        };
+    });
+}
+
+/** The table view of both charts: every value, with its sample. */
+function dataRows(results: ResultsContent): DataRow[] {
+    return [
+        ...results.shares.rows.map((row) => ({ label: row.label, meta: row.meta, values: row.values.map(formatCount) })),
+        ...results.measures.rows.map((row) => ({
+            label: row.label,
+            meta: row.meta,
+            values: row.values.map((value) => formatMeasure(value, row.decimals, row.unit)),
+        })),
+    ];
+}
 
 /** The demo, GitHub and npm: the link-arrows that leave the page. */
 const EXIT_LINK_CLASS = "inline-flex items-center gap-2 py-2.5 font-medium hover:text-signal transition-colors duration-150";
@@ -247,16 +314,31 @@ export default function MedResearchPage() {
                         </>
                     )}
                     {section.results && (
-                        <>
-                            <DataTable
-                                label={section.results.label}
-                                columns={section.results.columns}
-                                rows={section.results.rows}
+                        <div className="flex flex-col gap-6">
+                            <ShareChart
+                                title={section.results.shares.title}
+                                legend={section.results.columns.slice(1)}
+                                description={section.results.chartNote}
+                                rows={shareRows(section.results)}
                             />
-                            <p className="mt-4 max-w-[62ch] text-sm leading-relaxed text-ink-soft">
-                                {section.results.note}
-                            </p>
-                        </>
+                            <BarPanels
+                                title={section.results.measures.title}
+                                legend={section.results.columns.slice(1)}
+                                short={section.results.short}
+                                description={section.results.chartNote}
+                                panels={barPanels(section.results)}
+                            />
+                            <div>
+                                <DataTable
+                                    label={section.results.label}
+                                    columns={section.results.columns}
+                                    rows={dataRows(section.results)}
+                                />
+                                <p className="mt-4 max-w-[62ch] text-sm leading-relaxed text-ink-soft">
+                                    {section.results.note}
+                                </p>
+                            </div>
+                        </div>
                     )}
                 </FeatureSection>
             ))}

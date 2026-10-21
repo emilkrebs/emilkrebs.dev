@@ -140,14 +140,52 @@
             "results": {
                 "label": "Benchmark results for Claude Haiku 5.5, without and with the server",
                 "columns": ["Measure", "Without the server", "With the server"],
-                "rows": [
-                    { "label": "Recent papers: answers matching the key", "meta": "4\u00a0questions ×\u00a03\u00a0runs", "values": ["0 of 12", "12 of 12"] },
-                    { "label": "Records outside PubMed: answers matching the key", "meta": "4\u00a0questions ×\u00a03\u00a0runs", "values": ["0 of 12", "7 of 12"] },
-                    { "label": "Citations contradicted by their paper", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "values": ["24 of 56", "1 of 417"] },
-                    { "label": "Fabricated PMIDs", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "values": ["0 of 56", "0 of 429"] },
-                    { "label": "Mean time per answer", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "values": ["10.0 s", "12.8 s"] },
-                    { "label": "Mean tokens per answer", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "values": ["2,056", "36,515"] }
-                ],
+                "short": ["Without", "With"],
+                "chartNote": "The same numbers, with the sample behind each, are in the table below.",
+                "shares": {
+                    "title": "Share of answers and citations",
+                    "rows": [
+                        {
+                            "label": "Recent papers: answers matching the key",
+                            "meta": "4\u00a0questions ×\u00a03\u00a0runs",
+                            "values": [
+                                { "count": 0, "of": 12 },
+                                { "count": 12, "of": 12 }
+                            ]
+                        },
+                        {
+                            "label": "Records outside PubMed: answers matching the key",
+                            "meta": "4\u00a0questions ×\u00a03\u00a0runs",
+                            "values": [
+                                { "count": 0, "of": 12 },
+                                { "count": 7, "of": 12 }
+                            ]
+                        },
+                        {
+                            "label": "Citations contradicted by their paper",
+                            "meta": "24\u00a0questions ×\u00a03\u00a0runs",
+                            "values": [
+                                { "count": 24, "of": 56 },
+                                { "count": 1, "of": 417 }
+                            ]
+                        },
+                        {
+                            "label": "Fabricated PMIDs",
+                            "meta": "24\u00a0questions ×\u00a03\u00a0runs",
+                            "values": [
+                                { "count": 0, "of": 56 },
+                                { "count": 0, "of": 429 }
+                            ]
+                        }
+                    ]
+                },
+                "measures": {
+                    "title": "Cost per answer",
+                    "rows": [
+                        { "label": "Mean time per answer", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "unit": " s", "decimals": 1, "values": [10.0464, 12.816] },
+                        { "label": "Mean tokens per answer", "meta": "24\u00a0questions ×\u00a03\u00a0runs", "unit": "", "decimals": 0, "values": [2056.07, 36515.01] }
+                    ]
+                },
                 "note": "Claude Haiku 5.5 through the Anthropic API, run on 2026-10-17 on that day's server build, before the 0.6.0 pre-releases. The first two rows come from a run over 8 questions, the rest from a run over 24; a later run of all 32 questions with the server answered 12 of 12 on recent papers and 11 of 12 outside PubMed. Answers are scored against fixed keys and live PubMed, and the contradicted citations were checked by hand. One model, open-ended answers not yet graded by people, no web-search baseline: a first measurement, not a ranking."
             }
         }
