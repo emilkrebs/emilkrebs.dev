@@ -39,18 +39,11 @@ const FLAGSHIP_BASE: ProjectBase[] = [
         id: "healthstack",
         route: "healthstack",
         tags: ["Theia", "Langium", "TypeScript", "Electron"],
-        image: "/pictures/healthstack-playground.webp",
+        image: "/pictures/healthstack-dashboard.webp",
     },
 ];
 
 const PROJECT_BASE: ProjectBase[] = [
-    {
-        id: "langium-showcase",
-        href: "https://langium.org/showcase/",
-        tags: ["Langium", "TypeScript", "DSLs"],
-        image: "/pictures/langium-minilogo.webp",
-        preview: "https://langium.org/showcase/minilogo/",
-    },
     {
         id: "vailnote",
         href: "https://vailnote.com/",
@@ -58,10 +51,23 @@ const PROJECT_BASE: ProjectBase[] = [
         image: "/pictures/vailnote.webp",
     },
     {
+        id: "med-research-mcp",
+        href: "https://github.com/emilkrebs/med-research-mcp",
+        tags: ["TypeScript", "MCP", "Node.js"],
+        image: "/pictures/med-research-mcp.svg",
+    },
+    {
         id: "watchlock",
         href: "https://github.com/emilkrebs/WatchLock",
         tags: ["Kotlin", "Android", "WearOS"],
         image: "/pictures/watchlock.webp",
+    },
+    {
+        id: "langium-showcase",
+        href: "https://langium.org/showcase/",
+        tags: ["Langium", "TypeScript", "DSLs"],
+        image: "/pictures/langium-minilogo.webp",
+        preview: "https://langium.org/showcase/minilogo/",
     },
     {
         id: "bipoc",
@@ -272,7 +278,7 @@ function WhatIDo({ t }: { t: LandingCopy }) {
 }
 
 function Work({ t }: { t: LandingCopy }) {
-    const tags = ["TypeScript", "LSP", "Langium", "Theia", "Node.js"];
+    const tags = ["TypeScript", "LSP", "React", "Next.js", "Langium", "Theia", "Node.js"];
     return (
         <section
             id="work"
@@ -312,6 +318,7 @@ interface ProjectEntryProps {
 }
 
 function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
+    const href = project.route ? routePath(project.route, locale) : project.href;
     return (
         <ProjectCard
             name={project.name}
@@ -319,11 +326,12 @@ function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
             status={project.status}
             caption={project.caption}
             tags={project.tags}
-            href={project.route ? routePath(project.route, locale) : project.href}
+            href={href}
             notice={project.notice}
             image={project.image}
             preview={project.preview}
             linkLabel={project.linkLabel}
+            linkOverride={project.linkOverride}
             variant={flagship ? "flagship" : undefined}
             sizes={wide ? FULL_WIDTH_SIZES : HALF_WIDTH_SIZES}
             locale={locale}
@@ -349,7 +357,9 @@ function Projects({ t, locale }: { t: LandingCopy; locale: Locale }) {
 
             <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {projects.map((project, index) => {
-                    const wide = index % 3 === 0 || index === projects.length - 1;
+                    // Wide, narrow, narrow… — a narrow card with no partner after it becomes wide instead.
+                    const wide =
+                        index % 3 === 0 || (index % 3 === 1 && index === projects.length - 1);
                     return (
                         <div key={project.id} className={wide ? "md:col-span-2" : ""}>
                             <ProjectEntry project={project} locale={locale} wide={wide} />

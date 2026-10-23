@@ -78,21 +78,6 @@ html:lang(zh) :is(h2, h3):is(.tracking-tight, [class*="tracking-[-"]) {
     letter-spacing: 0;
 }
 
-/* -------------------------------------------------------------------------
-   Chinese ornamental layer (mock proposal, zh pages only, see DESIGN.md).
-   Tiles live in ./zh-textures/ and are bundled from here, so their URLs are
-   content-hashed. Discipline: ornament lives at edges, dividers, watermarks,
-   and low-contrast surface grain; nothing sits behind the nav. Every layer
-   is pointer-events: none, adds no layout, and never animates.
-
-   The layer sits in the components cascade layer, so a utility on a hooked
-   element always wins. It is screen-only, and steps aside for visitors who
-   ask for more contrast or force their own colours. Watermarks sit at
-   z-index -1, either inside an isolated title or in the root stacking
-   context, which still paints them above the canvas that carries the body
-   paper. A container that holds a dialog trigger never gets a z-index or
-   isolation: a stacking context there would bury the dialog.
-   ------------------------------------------------------------------------- */
 @layer components {
     @media screen and (not (prefers-contrast: more)) and (not (forced-colors: active)) {
         html:lang(zh) {
@@ -235,14 +220,14 @@ html:lang(zh) :is(h2, h3):is(.tracking-tight, [class*="tracking-[-"]) {
               and crackle on each is noise. Both tiles top out near 9% alpha, so
               ink-soft tags keep 4.5:1 where a line crosses them. The tiles
               carry their own alpha: no blend modes, no negative z-index. */
-        html:lang(zh) .landing .project-card {
+        html:lang(zh) .project-card {
             background-image: url("./zh-textures/04-binglie-lines-ink.webp");
             background-repeat: repeat;
             background-size: 1024px auto;
         }
 
         @media (prefers-color-scheme: dark) {
-            html:lang(zh) .landing .project-card {
+            html:lang(zh) .project-card {
                 background-image: url("./zh-textures/04-binglie-lines.webp");
             }
         }

@@ -89,6 +89,14 @@
     ],
     "projects": [
         {
+            "id": "med-research-mcp",
+            "name": "Med Research MCP",
+            "description": "面向 AI 代理的循证文献检索：支持 PubMed、Europe PMC、ChinaXiv 和 RussiaRxiv 的 MCP 服务器。",
+            "caption": "在线 - modelscope.cn/mcp/servers/emilkrebs/med-research-mcp",
+            "linkLabel": "打开 Med Research MCP",
+            "linkOverride": "https://modelscope.cn/mcp/servers/emilkrebs/med-research-mcp"
+        },
+        {
             "id": "vailnote",
             "name": "VailNote",
             "description": "隐私优先的笔记分享应用。",

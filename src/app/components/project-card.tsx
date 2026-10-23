@@ -24,6 +24,8 @@ export interface ProjectCardProps {
     caption?: string;
     /** Names the link's destination; falls back to the generic "Open". */
     linkLabel?: string;
+    // Overrides the href with a different URL, if provided.
+    linkOverride?: string;
     /** NDA work: dashed frame, no media, no details. */
     confidential?: boolean;
     /** flagship: larger title. compact: square media, tighter type, no caption. */
@@ -48,6 +50,7 @@ export function ProjectCard({
     placeholder,
     caption,
     linkLabel,
+    linkOverride,
     confidential,
     variant,
     filledTags,
@@ -57,9 +60,11 @@ export function ProjectCard({
     const compact = variant === "compact";
     const label = linkLabel ?? t.open;
 
+    const link = linkOverride ?? href;
+
     return (
         <article
-            className={`project-card relative overflow-hidden bg-paper-deep border flex flex-col group transition-colors duration-150 ${confidential
+            className={`project-card relative overflow-hidden bg-paper-deep border flex flex-col group transition-colors duration-150 h-full ${confidential
                 ? "border-ink/35 border-dashed hover:border-ink/70"
                 : "border-hairline hover:border-ink"
             }`}
@@ -154,12 +159,12 @@ export function ProjectCard({
                     </div>
                 )}
                 <div className={compact ? "mt-5" : "mt-8"}>
-                    {href ? (
+                    {link ? (
                         notice ? (
-                            <ExternalNotice href={href} title={name} copy={t.externalNotice} label={label} />
+                            <ExternalNotice href={link} title={name} copy={t.externalNotice} label={label} />
                         ) : (
                             <SmartLink
-                                href={href}
+                                href={link}
                                 className="inline-flex items-center gap-2 font-medium group-hover:text-signal transition-colors duration-150"
                             >
                                 {label}

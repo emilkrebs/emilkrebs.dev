@@ -63,6 +63,8 @@ export interface ProjectCopy {
     caption?: string;
     /** Names the link's destination; falls back to the generic "Open". */
     linkLabel?: string;
+    /** Overrides the href; used for special routing cases. */
+    linkOverride?: string;
 }
 
 

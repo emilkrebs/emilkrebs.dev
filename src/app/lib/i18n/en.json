@@ -79,6 +79,13 @@
     ],
     "projects": [
         {
+            "id": "med-research-mcp",
+            "name": "Med Research MCP",
+            "description": "Evidence-graded scientific literature search for AI agents: an MCP server for PubMed, Europe PMC, ChinaXiv and RussiaRxiv.",
+            "caption": "Online - https://github.com/emilkrebs/med-research-mcp",
+            "linkLabel": "Open Med Research MCP"
+        },
+        {
             "id": "vailnote",
             "name": "VailNote",
             "description": "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",

@@ -219,10 +219,6 @@ export default function HealthstackPage() {
                 </div>
             </section>
 
-            {page.sections.map((section) => (
-                <FeatureSection key={section.heading} section={section} />
-            ))}
-
             <section id="dsl" className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline scroll-mt-16">
                 <SectionHeading>{dsl.heading}</SectionHeading>
                 <p className="text-base md:text-lg leading-relaxed max-w-[62ch] mb-10">
@@ -266,6 +262,12 @@ export default function HealthstackPage() {
                     )}
                 </div>
             </section>
+
+
+            {page.sections.map((section) => (
+                <FeatureSection key={section.heading} section={section} />
+            ))}
+
 
             <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
                 <SectionHeading>{status.heading}</SectionHeading>
