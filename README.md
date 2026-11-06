@@ -41,7 +41,7 @@ npm run dev
 
 ## Generative-engine optimisation
 
-[GEO.md](./GEO.md) records the scope and approved copy decisions. The static export
+The scope and approved copy decisions live outside this repository. The static export
 publishes [llms.txt](./public/llms.txt) without a route handler. Keep its facts in
 sync with the rendered site and its UTF-8 size below 1,500 bytes.
 

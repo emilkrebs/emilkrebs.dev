@@ -129,7 +129,17 @@ None yet.
 - Repeat the 96-response measurement every two weeks after the baseline.
   Review accumulated results monthly; turn a repeated omission or wrong answer
   into a task for the page that owns the subject.
-- Repeat the [edge crawler check](../../GEO.md#51-edge-crawler-check-replaces-the-robots-task)
-  quarterly (next due 2027-02-06) and after every Cloudflare setting change.
-  A managed robots block is an edge configuration regression, not a reason to
-  add a per-bot allow-list to the repository.
+- Repeat the edge crawler check quarterly (next due 2027-02-06) and after every
+  Cloudflare setting change. A managed robots block is an edge configuration
+  regression, not a reason to add a per-bot allow-list to the repository.
+
+  ```bash
+  for ua in GPTBot PerplexityBot ClaudeBot Bingbot Baiduspider Bytespider; do
+    printf "%-14s " "$ua"
+    curl -s -o /dev/null -w "%{http_code}\n" -A "Mozilla/5.0 (compatible; $ua/1.0)" https://emilkrebs.dev/
+  done
+  curl -s https://emilkrebs.dev/robots.txt
+  ```
+
+  Pass: every request 200, and a robots body containing only `User-Agent: *`,
+  `Allow: /`, and the sitemap line.

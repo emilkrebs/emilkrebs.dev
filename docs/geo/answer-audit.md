@@ -7,14 +7,14 @@ are rendered prose, not assembled from a card title, metadata, or JSON-LD.
 Existing mentions elsewhere remain; no FAQ, facts table, or new route was added.
 The owner's approved identity wording uses name, role, employer, and city without
 comparing him with another person.
-Quotations preserve the text in exported HTML; story leads retain their existing
-uppercase visual styling.
+Quotations preserve the text in exported HTML; the story kicker keeps its existing
+uppercase styling, and the identity sentence leads the body copy.
 
 ## Canonical answers
 
 | Entity | Owning route | Sentence as rendered | Result |
 | --- | --- | --- | --- |
-| Emil Krebs | `/story/` | Emil Krebs is a software engineer at TypeFox in Kiel, Germany. | pass - replaced the generic lead |
+| Emil Krebs | `/story/` | Emil Krebs is a software engineer at TypeFox in Kiel, Germany. | pass - first body paragraph; kicker unchanged |
 | TypeFox work | `/` (Field) | At TypeFox I build custom VS Code extensions, language servers using the LSP, and the IDEs around them. | pass - removed the context-dependent "that means" |
 | Kiel University education | `/#work` | Alongside the job, I am studying full-time for a Bachelor's in Computer Science and Sociology at Kiel University. | pass - named the institution; studies are ongoing |
 | Langium Showcase / open-source contribution | `/#projects` | The Langium Showcase includes the state machine, arithmetics, MiniLogo, and domain model editors I built for langium.org. | pass - named the project in its description |
@@ -39,7 +39,7 @@ the Chinese project link continues to use the existing English page.
 
 | Entity | Owning route | Sentence as rendered | Result |
 | --- | --- | --- | --- |
-| Emil Krebs | `/zh/story/` | Emil Krebs（爱米尔）是德国基尔 TypeFox 的软件工程师。 | pass |
+| Emil Krebs | `/zh/story/` | Emil Krebs（爱米尔）是德国基尔 TypeFox 的软件工程师。 | pass - first body paragraph |
 | TypeFox work | `/zh/` | 在 TypeFox，我构建定制的 VS Code 扩展、使用 LSP 的语言服务器，以及围绕它们的 IDE。 | pass |
 | Kiel University education | `/zh/#work` | 工作之余，我在基尔大学全日制攻读计算机科学与社会学学士学位。 | pass |
 | Langium Showcase | `/zh/#projects` | Langium Showcase 包含我为 langium.org 构建的状态机、算术、MiniLogo 与领域模型实时编辑器。 | pass |
