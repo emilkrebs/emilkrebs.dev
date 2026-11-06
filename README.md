@@ -41,17 +41,12 @@ npm run dev
 
 ## Generative-engine optimisation
 
-The scope and approved copy decisions live outside this repository. The static export
-publishes [llms.txt](./public/llms.txt) without a route handler. Keep its facts in
-sync with the rendered site and its UTF-8 size below 1,500 bytes.
-
-- [Answer audit](./docs/geo/answer-audit.md)
-- [Off-site entity parity](./docs/geo/entity-parity.md)
-- [Probe log and release checks](./docs/geo/probe-log.md)
+The static export publishes [llms.txt](./public/llms.txt) without a route handler.
+Keep its facts in sync with the rendered site and its UTF-8 size below 1,500 bytes.
 
 Run `npm run lint` and `npm run build` before checking the exported copy. Manual
 AI baselines, external profile updates, and post-deployment edge checks are
-tracked separately; a successful build does not complete them.
+tracked outside this repository; a successful build does not complete them.
 
 ## Performance [_↗_](https://pagespeed.web.dev/analysis/https-emilkrebs-dev/oai9o409h0?hl=en_GB&form_factor=mobile)
 
