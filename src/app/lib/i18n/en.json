@@ -31,7 +31,7 @@
     "fieldLead": [
         "I build the tools that read, ",
         "understand",
-        ", and transform code. At TypeFox that means custom vscode-extensions, the LSP, and the IDEs around them. On my own time it means products: Prami, a spaced-repetition app; Healthstack, an IDE with its own language; and VailNote, zero-knowledge note sharing. Upstream, I contribute to Eclipse Langium."
+        ", and transform code. At TypeFox I build custom VS Code extensions, language servers using the LSP, and the IDEs around them. On my own time it means products: Prami, a spaced-repetition app; Healthstack, an IDE with its own language; and VailNote, zero-knowledge note sharing. Upstream, I contribute to Eclipse Langium."
     ],
     "strengthsHeading": "What I do",
     "strengths": [
@@ -53,7 +53,7 @@
         }
     ],
     "workHeading": "Work",
-    "workBlurb": "Software engineer in a full role since October 2025, on client projects with large, international teams. Before that, an internship at fifteen and a year and a half part-time. Alongside the job, a full-time Bachelor's in Computer Science and Sociology.",
+    "workBlurb": "Software engineer in a full role since October 2025, on client projects with large, international teams. Before that, an internship at fifteen and a year and a half part-time. Alongside the job, I am studying full-time for a Bachelor's in Computer Science and Sociology at Kiel University.",
     "projectsHeading": "Projects",
     "open": "Open",
     "privateLabel": "Private",
@@ -63,7 +63,7 @@
         {
             "id": "prami",
             "name": "Prami",
-            "description": "Active recall and spaced repetition, engineered so the review schedule fades into the background.",
+            "description": "Prami is an active-recall and spaced-repetition app, engineered so the review schedule fades into the background.",
             "status": "Preview",
             "caption": "In testing - prami.app",
             "linkLabel": "Open prami.app"
@@ -81,42 +81,42 @@
         {
             "id": "med-research-mcp",
             "name": "Med Research MCP",
-            "description": "Evidence-graded scientific literature search for AI agents: an MCP server for PubMed, Europe PMC, ChinaXiv and RussiaRxiv.",
+            "description": "Med Research MCP is an MCP server for evidence-graded scientific literature search for AI agents, covering PubMed, Europe PMC, ChinaXiv and RussiaRxiv.",
             "caption": "Online - https://github.com/emilkrebs/med-research-mcp",
             "linkLabel": "Open Med Research MCP"
         },
         {
             "id": "vailnote",
             "name": "VailNote",
-            "description": "Encrypted note sharing with zero-knowledge encryption and self-destructing notes.",
+            "description": "VailNote is an encrypted note-sharing app with zero-knowledge encryption and self-destructing notes.",
             "caption": "Live - vailnote.com",
             "linkLabel": "Open vailnote.com"
         },
         {
             "id": "watchlock",
             "name": "WatchLock",
-            "description": "Lock your phone with your smartwatch. WearOS and Android, built for personal security.",
+            "description": "WatchLock lets you lock your phone with your smartwatch. WearOS and Android, built for personal security.",
             "caption": "Source - github.com/emilkrebs/WatchLock",
             "linkLabel": "Source on GitHub"
         },
         {
             "id": "bipoc",
             "name": "BIPoC Climate Justice Conference",
-            "description": "The official site for the BIPoC Climate Justice Conference 2024 and 2025, localized and fully markdown-driven.",
+            "description": "The BIPoC Climate Justice Conference website covers the 2024 and 2025 events, is localized, and is fully markdown-driven.",
             "caption": "Live - bipoclimatejusticenetwork.org",
             "linkLabel": "Open the conference site"
         },
         {
             "id": "langium-showcase",
             "name": "Langium Showcase",
-            "description": "I built the state machine, arithmetics, MiniLogo, and domain model showcases on langium.org: each one a live editor for its language.",
+            "description": "The Langium Showcase includes the state machine, arithmetics, MiniLogo, and domain model editors I built for langium.org.",
             "caption": "Live - langium.org/showcase",
             "linkLabel": "Open the showcase"
         },
         {
             "id": "this-site",
             "name": "This site",
-            "description": "Static export. No server, no database. Typeset per the spec you are reading.",
+            "description": "emilkrebs.dev is a statically exported site with no server or database. Typeset per the spec you are reading.",
             "caption": "Live - emilkrebs.dev",
             "linkLabel": "Source on GitHub"
         }

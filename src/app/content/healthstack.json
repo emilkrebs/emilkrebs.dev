@@ -6,7 +6,7 @@
     "hero": {
         "title": "Protocols as code. Biology as data. AI as your cortex.",
         "status": "Preview - dev build",
-        "lead": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
+        "lead": "Healthstack is a specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
         "tags": [
             "DSL .bio protocols",
             "Timeline planned vs logged",

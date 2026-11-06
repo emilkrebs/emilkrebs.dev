@@ -39,6 +39,20 @@ npm run build
 npm run dev
 ```
 
+## Generative-engine optimisation
+
+[GEO.md](./GEO.md) records the scope and approved copy decisions. The static export
+publishes [llms.txt](./public/llms.txt) without a route handler. Keep its facts in
+sync with the rendered site and its UTF-8 size below 1,500 bytes.
+
+- [Answer audit](./docs/geo/answer-audit.md)
+- [Off-site entity parity](./docs/geo/entity-parity.md)
+- [Probe log and release checks](./docs/geo/probe-log.md)
+
+Run `npm run lint` and `npm run build` before checking the exported copy. Manual
+AI baselines, external profile updates, and post-deployment edge checks are
+tracked separately; a successful build does not complete them.
+
 ## Performance [_↗_](https://pagespeed.web.dev/analysis/https-emilkrebs-dev/oai9o409h0?hl=en_GB&form_factor=mobile)
 
 <img width="1016" height="1069" alt="image" src="https://github.com/user-attachments/assets/87a32615-5980-4608-b28b-ed3c8170310a" />
