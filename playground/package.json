@@ -18,7 +18,7 @@
     "monaco-editor": "^0.57.0",
     "typir": "~0.3.3",
     "typir-langium": "~0.3.3",
-    "vscode-languageserver": "~10.1.2",
+    "vscode-languageserver": "~11.0.0",
     "vscode-oniguruma": "^2.0.1",
     "vscode-textmate": "^9.3.2",
     "vscode-uri": "^3.2.0"
@@ -26,6 +26,6 @@
   "devDependencies": {
     "esbuild": "^0.28.2",
     "typescript": "^6.0.3",
-    "vite": "^8.3.4"
+    "vite": "^8.3.6"
   }
 }
