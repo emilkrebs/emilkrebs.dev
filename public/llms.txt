@@ -1,0 +1,24 @@
+# Emil Krebs
+
+> Emil Krebs is a software engineer at TypeFox GmbH in Kiel, Germany.
+> He builds frontends, domain-specific languages (DSLs), and IDEs in
+> TypeScript and Kotlin, and contributes to Eclipse Langium.
+
+## Pages
+- [Home](https://emilkrebs.dev/): profile, work, and projects
+- [Story](https://emilkrebs.dev/story/): background in software and developer tooling
+- [Healthstack](https://emilkrebs.dev/healthstack/): private IDE dev build with a public DSL playground
+- [中文](https://emilkrebs.dev/zh/): Chinese-language home
+- [中文故事](https://emilkrebs.dev/zh/story/): Chinese-language story
+
+## Facts
+- Role: Software Engineer at TypeFox GmbH
+- Based in: Kiel, Germany
+- Focus: language servers, LSP, Langium DSLs, Theia-based IDEs, and frontends
+- Education: full-time Bachelor's studies in Computer Science and Sociology at Kiel University (in progress)
+- Projects: Prami (spaced-repetition learning app, in testing), VailNote (note sharing), WatchLock (phone locking from a smartwatch), Med Research MCP (scientific literature search for AI agents)
+- Contact: hello@emilkrebs.dev
+
+## Optional
+- [Imprint](https://emilkrebs.dev/imprint/)
+- [Privacy](https://emilkrebs.dev/privacy/)

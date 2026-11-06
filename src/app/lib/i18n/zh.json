@@ -41,7 +41,7 @@
     "fieldLead": [
         "我构建能读取、",
         "理解",
-        "并转换代码的工具。在 TypeFox，这意味着定制的 VS Code 扩展、LSP，以及围绕它们的 IDE。业余时间则是产品：间隔重复应用 Prami；拥有自有语言的 IDE Healthstack；以及隐私优先的笔记分享工具 VailNote。在上游，我为 Eclipse Langium 贡献代码。"
+        "并转换代码的工具。在 TypeFox，我构建定制的 VS Code 扩展、使用 LSP 的语言服务器，以及围绕它们的 IDE。业余时间则是产品：间隔重复应用 Prami；拥有自有语言的 IDE Healthstack；以及隐私优先的笔记分享工具 VailNote。在上游，我为 Eclipse Langium 贡献代码。"
     ],
     "strengthsHeading": "我的专长",
     "strengths": [
@@ -63,7 +63,7 @@
         }
     ],
     "workHeading": "工作",
-    "workBlurb": "自2025年10月起以正式职位担任软件工程师，参与大型国际团队的客户项目。此前，十五岁时在此实习，之后做了一年半兼职。工作之余，全日制攻读计算机科学与社会学学士学位。",
+    "workBlurb": "自2025年10月起以正式职位担任软件工程师，参与大型国际团队的客户项目。此前，十五岁时在此实习，之后做了一年半兼职。工作之余，我在基尔大学全日制攻读计算机科学与社会学学士学位。",
     "projectsHeading": "项目",
     "open": "打开",
     "privateLabel": "私有",
@@ -73,7 +73,7 @@
         {
             "id": "prami",
             "name": "Prami",
-            "description": "主动回忆与间隔重复，复习日程经精心设计，近乎无感。",
+            "description": "Prami 是一款主动回忆与间隔重复学习应用，复习日程经精心设计，近乎无感。",
             "status": "预览",
             "caption": "测试中 - prami.app",
             "linkLabel": "打开 prami.app"
@@ -91,7 +91,7 @@
         {
             "id": "med-research-mcp",
             "name": "Med Research MCP",
-            "description": "面向 AI 代理的循证文献检索：支持 PubMed、Europe PMC、ChinaXiv 和 RussiaRxiv 的 MCP 服务器。",
+            "description": "Med Research MCP 是面向 AI 代理的循证文献检索 MCP 服务器，支持 PubMed、Europe PMC、ChinaXiv 和 RussiaRxiv。",
             "caption": "在线 - modelscope.cn/mcp/servers/emilkrebs/med-research-mcp",
             "linkLabel": "打开 Med Research MCP",
             "linkOverride": "https://modelscope.cn/mcp/servers/emilkrebs/med-research-mcp"
@@ -99,35 +99,35 @@
         {
             "id": "vailnote",
             "name": "VailNote",
-            "description": "隐私优先的笔记分享应用。",
+            "description": "VailNote 是一款隐私优先的笔记分享应用。",
             "caption": "在线 - vailnote.com",
             "linkLabel": "打开 vailnote.com"
         },
         {
             "id": "watchlock",
             "name": "WatchLock",
-            "description": "用智能手表锁定手机。支持 WearOS 与 Android，为个人安全而造。",
+            "description": "WatchLock 让你用智能手表锁定手机。支持 WearOS 与 Android，为个人安全而造。",
             "caption": "源代码 - github.com/emilkrebs/WatchLock",
             "linkLabel": "在 GitHub 查看源代码"
         },
         {
             "id": "bipoc",
             "name": "BIPoC Climate Justice Conference",
-            "description": "BIPoC Climate Justice Conference 2024 与 2025 的官方网站，支持本地化，完全由 Markdown 驱动。",
+            "description": "BIPoC Climate Justice Conference 的官方网站涵盖 2024 与 2025 年的活动，支持本地化，完全由 Markdown 驱动。",
             "caption": "在线 - bipoclimatejusticenetwork.org",
             "linkLabel": "打开会议网站"
         },
         {
             "id": "langium-showcase",
             "name": "Langium Showcase",
-            "description": "我构建了 langium.org 上的状态机、算术、MiniLogo 与领域模型示例：每一个都是其语言的实时编辑器。",
+            "description": "Langium Showcase 包含我为 langium.org 构建的状态机、算术、MiniLogo 与领域模型实时编辑器。",
             "caption": "在线 - langium.org/showcase",
             "linkLabel": "打开示例"
         },
         {
             "id": "this-site",
             "name": "本站",
-            "description": "静态导出。无服务器，无数据库。按你正在阅读的这份规范排版。",
+            "description": "emilkrebs.dev 是一个静态导出的网站，无服务器，无数据库。按你正在阅读的这份规范排版。",
             "caption": "在线 - emilkrebs.dev",
             "linkLabel": "在 GitHub 查看源代码"
         }
