@@ -1,4 +1,4 @@
-import { CHINESE_NAME, GITHUB_URL, LINKEDIN_URL, SITE_NAME, SITE_URL } from "./constants";
+import { CHINESE_NAME, GITHUB_URL, LINKEDIN_URL, MEDIUM_URL, NPM_URL, SITE_NAME, SITE_URL } from "./constants";
 import { copy, htmlLang, type Locale } from "./i18n";
 import { absoluteUrl, routeLocales, routePath, type RouteKey } from "./routes";
 
@@ -22,7 +22,7 @@ function person(locale: Locale) {
         image: absoluteUrl("/pictures/portrait.webp"),
         jobTitle: "Software Engineer",
         description: copy[locale].jsonLd.personDescription,
-        sameAs: [GITHUB_URL, LINKEDIN_URL],
+        sameAs: [GITHUB_URL, LINKEDIN_URL, MEDIUM_URL, NPM_URL],
         address: {
             "@type": "PostalAddress",
             addressLocality: "Kiel",
