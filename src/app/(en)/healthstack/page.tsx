@@ -19,6 +19,8 @@ interface FeatureSection {
     stats: { value: string; label: string }[];
     /** Screenshot path; until one exists, `placeholder` labels the pending plate. */
     image?: string;
+    /** What the screenshot shows; required once `image` is set. */
+    imageAlt?: string;
     placeholder: string;
     caption: string;
 }
@@ -174,7 +176,7 @@ function FeatureSection({ section }: { section: FeatureSection }) {
             <div className="mt-8">
                 <Shot
                     src={section.image}
-                    alt={`${section.heading} in the Healthstack dev build`}
+                    alt={section.imageAlt ?? `${section.heading} in the Healthstack dev build`}
                     caption={section.caption}
                     placeholder={section.placeholder}
                 />

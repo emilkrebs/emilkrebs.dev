@@ -24,12 +24,14 @@
             "title": "Your entire protocol history on *one axis*.",
             "proof": "Every protocol, dose, and threshold on one axis: planned against actual, with threshold events armed and crossed, dose dots per phase, and the whole history exportable to your calendar.",
             "stats": [
-                { "value": "218", "label": "events" },
+                { "value": "6,003", "label": "events" },
                 { "value": "2", "label": "layers: planned / actual" },
                 { "value": "Armed · crossed", "label": "threshold states" },
                 { "value": "Dose dots", "label": "per phase" },
                 { "value": ".ics", "label": "export format" }
             ],
+            "image": "/pictures/healthstack-timeline.webp",
+            "imageAlt": "Unified timeline from July to December 2026: the Metabolic Reset phases Prep, Insulin Sensitivity, Lipid Optimization and Maintenance as dashed planned bars with dose dots above solid actual bars, a red NOW marker, and daily HRV, resting heart rate, sleep and step readings below with amber threshold-armed points.",
             "placeholder": "Timeline",
             "caption": "Dev build - timeline"
         },
@@ -44,6 +46,8 @@
                 { "value": "Auto", "label": "re-layout" },
                 { "value": "Git", "label": "versioning" }
             ],
+            "image": "/pictures/healthstack-protocol-builder.webp",
+            "imageAlt": "Protocol Builder graph of the Metabolic Reset protocol: the protocol node fans out to four phases, ten interventions and four substances, dotted blue track edges run to ten biomarkers, and a red dashed conflict edge links Berberine and Metformin.",
             "placeholder": "Protocol builder",
             "caption": "Dev build - protocol builder"
         },
@@ -58,6 +62,8 @@
                 { "value": "Sparkline", "label": "trends" },
                 { "value": "mg/dL ↔ mmol/L", "label": "units" }
             ],
+            "image": "/pictures/healthstack-biomarker-tracker.webp",
+            "imageAlt": "Biomarker Tracker overview table: LDL cholesterol flagged Out of Range at 104 mg/dL, followed by markers rated Good or Optimal, each with its latest value and unit, a bar showing its position in the range, a sparkline and a percentage trend.",
             "placeholder": "Biomarker tracker",
             "caption": "Dev build - biomarker tracker"
         },
@@ -72,6 +78,8 @@
                 { "value": "0-100%", "label": "normalized" },
                 { "value": "AI", "label": "analysis hand-off" }
             ],
+            "image": "/pictures/healthstack-trends.webp",
+            "imageAlt": "Two stacked trend charts on a shared April 2025 to October 2026 timeline: ApoB falling to 84 mg/dL and LDL cholesterol to 104 mg/dL toward shaded reference and optimal bands, both marked improving.",
             "placeholder": "Trends",
             "caption": "Dev build - trends"
         },
@@ -86,6 +94,8 @@
                 { "value": "@ProtocolPlanner", "label": ".bio drafts" },
                 { "value": "BYO key", "label": "multi-provider" }
             ],
+            "image": "/pictures/healthstack-ai-agents.webp",
+            "imageAlt": "Ask Cortex chat panel beside the Protocol Builder graph, with suggested prompts addressed to @BiomarkerAnalyst, @Evidence and @ProtocolPlanner and a note that agent tool calls ask for confirmation first.",
             "placeholder": "Cortex",
             "caption": "Dev build - Cortex chat"
         }
@@ -102,7 +112,7 @@
     "status": {
         "heading": "Status",
         "title": "Preview build",
-        "body": "Everything on this page is the dev build: it runs, the DSL compiles, the diagnostics fire. Expect rough edges, no data guarantees, and no product promises. The screenshot is real, taken from the app as it works today. A public preview is not hosted yet; when it is, it will appear here.",
+        "body": "Everything on this page is the dev build: it runs, the DSL compiles, the diagnostics fire. Expect rough edges, no data guarantees, and no product promises. The screenshots are real, taken from the app as it works today. A public preview is not hosted yet; when it is, it will appear here.",
         "tags": ["Theia", "Langium", "TypeScript", "Electron"]
     }
 }
