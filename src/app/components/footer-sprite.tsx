@@ -4,13 +4,13 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 /**
- * The footer's one gated easter egg: a shaded pixel-art crab (Krebs = crab)
- * perched on the top hairline rule, in the outlined three-tone style of a
- * 32x32 game sprite. Inert on load; a click makes it raise its big fiddler
- * claw in a wave, then the arrow keys scuttle it sideways along the rule.
- * Escape or 20s of inactivity settles it back down. Decorative only
- * (aria-hidden, never focusable) and fully static under reduced motion.
- * See DESIGN.md > Motion for the scoped exception.
+ * The footer's one gated easter egg: a low-res pixel-art crab (Krebs = crab)
+ * perched on the top hairline rule — a simplified 16x20 sprite, 1px ink
+ * outline and a flat signal shell, kept calm and iconic. Inert on load; a
+ * click makes it raise its big fiddler claw in a wave, then the arrow keys
+ * scuttle it sideways along the rule. Escape or 20s of inactivity settles it
+ * back down. Decorative only (aria-hidden, never focusable) and fully static
+ * under reduced motion. See DESIGN.md > Motion for the scoped exception.
  */
 
 const ART = "/pictures/easter-egg";
@@ -23,9 +23,9 @@ const FRAMES = {
     walk2: `${ART}/crab-walk-2.png`,
 };
 
-const SCALE = 2; // integer 2x only: crisp on retina and non-retina
-const WIDTH = 32 * SCALE; // 64px
-const HEIGHT = 40 * SCALE; // 80px
+const SCALE = 4; // integer 4x: chunky low-res pixels, same 64x80 footprint
+const WIDTH = 16 * SCALE; // 64px
+const HEIGHT = 20 * SCALE; // 80px
 const WAVE_FRAME_MS = 180;
 const WAVE_TOTAL_MS = 720; // two visible raises, then stand
 const REDUCED_WAVE_MS = 800; // one static raised-arm frame
@@ -242,8 +242,8 @@ export function FooterSprite() {
             // global focus-visible ring (signal) never prints on the sprite.
             onMouseDown={(event) => event.preventDefault()}
             // -57px, not -56px: the absolutely positioned box starts inside the
-            // column's 1px top border, so the extra pixel lands the art's row 28
-            // (its seat / feet) exactly on the hairline.
+            // column's 1px top border, so the extra pixel lands the art's seat row
+            // (row 14 at 4x = 56px) exactly on the hairline.
             className="absolute -top-[57px] left-6 z-10 cursor-pointer select-none"
             style={{ width: WIDTH, height: HEIGHT, outline: "none" }}
         >
