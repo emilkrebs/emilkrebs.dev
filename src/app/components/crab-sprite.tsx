@@ -43,11 +43,14 @@ const WIDTH = 32 * SCALE; // 64px
 const HEIGHT = 40 * SCALE; // 80px
 const SHEET_WIDTH = 256 * SCALE; // 8 frames of 32px, at 2x
 const WAVE_FRAME_MS = 180;
-const WAVE_TOTAL_MS = 720; // two visible raises, then stand
+// wave-2 (set on click) -> wave-1 -> wave-2 held an extra beat -> stand, one
+// step per WAVE_FRAME_MS, so the stand lands at 720ms after two visible raises.
+const WAVE_STEPS = [FRAMES.wave1, FRAMES.wave2, FRAMES.wave2, FRAMES.stand];
 const REDUCED_WAVE_MS = 800; // one static raised-arm frame
 const WALK_SPEED = 40; // px per second
 const WALK_FRAME_MS = 125; // 8 fps
 const IDLE_EXIT_MS = 20_000;
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 type Phase = "seated" | "waving" | "walking";
 
@@ -58,20 +61,20 @@ function isTypingTarget(target: EventTarget | null): boolean {
     return target instanceof HTMLElement && target.isContentEditable;
 }
 
-export function FooterSprite() {
+export function CrabSprite() {
     const [phase, setPhase] = useState<Phase>("seated");
     const [frame, setFrame] = useState<number>(FRAMES.sit);
-    const xRef = useRef(0); // offset from the column's left content edge, kept across states
-    const maxXRef = useRef(0);
-    const rootRef = useRef<HTMLDivElement>(null);
     const [blink, setBlink] = useState(false);
+    const rootRef = useRef<HTMLDivElement>(null);
+    const xRef = useRef(0); // offset from the column's left content edge, kept across states
+    const boundsRef = useRef({ padLeft: 0, maxX: 0 });
     const blinkTimer = useRef(0);
     useEffect(() => () => window.clearTimeout(blinkTimer.current), []);
 
     // Live prefers-reduced-motion, as an external store. Turning it on sits
     // the sprite down; the server snapshot is false (the sprite is inert anyway).
     const subscribeReducedMotion = useCallback((onChange: () => void) => {
-        const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const query = window.matchMedia(REDUCED_MOTION_QUERY);
         const notify = () => {
             if (query.matches) setPhase("seated");
             onChange();
@@ -79,12 +82,10 @@ export function FooterSprite() {
         query.addEventListener("change", notify);
         return () => query.removeEventListener("change", notify);
     }, []);
-    const readReducedMotion = useCallback(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches, []);
+    const readReducedMotion = useCallback(() => window.matchMedia(REDUCED_MOTION_QUERY).matches, []);
     const reducedMotion = useSyncExternalStore(subscribeReducedMotion, readReducedMotion, () => false);
 
-    // Hover blinks once: shut the lids for a beat, then reopen. Only the idle
-    // sit/stand frames have a closed-eye variant, so this is a no-op mid-wave or
-    // mid-walk. Disabled under reduced motion.
+    // Blink on hover
     const onHover = () => {
         if (reducedMotion) return;
         window.clearTimeout(blinkTimer.current);
@@ -92,72 +93,60 @@ export function FooterSprite() {
         blinkTimer.current = window.setTimeout(() => setBlink(false), BLINK_MS);
     };
 
-    // Keep the figure inside the rule whenever the column changes width, in any
-    // phase: a visitor can walk to the right edge, sit down, then rotate the
-    // phone, and the sprite must not end up outside the footer's content edge.
-    useEffect(() => {
+    // Measure the column's content span (the rule's width), clamp x into it and
+    // place the sprite. One implementation shared by the resize watcher and the
+    // walk loop; bounds live in a ref so ticks read fresh values after a resize.
+    const measure = useCallback(() => {
         const root = rootRef.current;
         const column = root?.parentElement;
         if (!root || !column) return;
-        const clamp = () => {
-            const styles = window.getComputedStyle(column);
-            const padLeft = parseFloat(styles.paddingLeft);
-            const contentWidth = column.clientWidth - padLeft - parseFloat(styles.paddingRight);
-            maxXRef.current = Math.max(0, contentWidth - WIDTH);
-            xRef.current = Math.min(xRef.current, maxXRef.current);
-            root.style.left = `${padLeft + xRef.current}px`;
-        };
-        clamp();
-        window.addEventListener("resize", clamp);
-        return () => window.removeEventListener("resize", clamp);
+        const styles = window.getComputedStyle(column);
+        const padLeft = parseFloat(styles.paddingLeft);
+        const contentWidth = column.clientWidth - padLeft - parseFloat(styles.paddingRight);
+        boundsRef.current = { padLeft, maxX: Math.max(0, contentWidth - WIDTH) };
+        xRef.current = Math.min(xRef.current, boundsRef.current.maxX);
+        root.style.left = `${padLeft + xRef.current}px`;
     }, []);
 
-    // Waving: wave-2 (set on click), wave-1, wave-2 at 180ms per frame, then
-    // stand and walk. Reduced motion: hold the static wave-2, then sit.
+    // Keep the figure inside the rule whenever the column changes width, in any phase.
+    useEffect(() => {
+        measure();
+        window.addEventListener("resize", measure);
+        return () => window.removeEventListener("resize", measure);
+    }, [measure]);
+
+    // Waving: step the raise sequence on a single interval, then stand and walk.
+    // Reduced motion: hold the static wave-2, then sit.
     useEffect(() => {
         if (phase !== "waving") return;
         if (reducedMotion) {
             const timer = window.setTimeout(() => setPhase("seated"), REDUCED_WAVE_MS);
             return () => window.clearTimeout(timer);
         }
-        const timers = [
-            window.setTimeout(() => setFrame(FRAMES.wave1), WAVE_FRAME_MS),
-            window.setTimeout(() => setFrame(FRAMES.wave2), WAVE_FRAME_MS * 2),
-            window.setTimeout(() => {
-                setFrame(FRAMES.stand);
+        let step = 0;
+        const timer = window.setInterval(() => {
+            const next = WAVE_STEPS[step++];
+            setFrame(next);
+            if (next === FRAMES.stand) {
+                window.clearInterval(timer);
                 setPhase("walking");
-            }, WAVE_TOTAL_MS),
-        ];
-        return () => timers.forEach((timer) => window.clearTimeout(timer));
+            }
+        }, WAVE_FRAME_MS);
+        return () => window.clearInterval(timer);
     }, [phase, reducedMotion]);
 
     // Walking: the key listeners, movement loop and idle exit exist only here.
     useEffect(() => {
         const root = rootRef.current;
-        const column = root?.parentElement;
-        if (phase !== "walking" || reducedMotion || !root || !column) return;
+        if (phase !== "walking" || reducedMotion || !root) return;
+        measure();
 
-        const pressed = { left: false, right: false };
-        let padLeft = 0;
+        const pressed = new Set<string>();
         let raf = 0;
         let lastTime = 0;
         let walkClock = 0;
         let walkStep = 0;
         let idleTimer = 0;
-
-        const applyPosition = () => {
-            root.style.left = `${padLeft + xRef.current}px`;
-        };
-
-        // Clamp the 64px box to the column's content width (the rule's span).
-        const measure = () => {
-            const styles = window.getComputedStyle(column);
-            padLeft = parseFloat(styles.paddingLeft);
-            const contentWidth = column.clientWidth - padLeft - parseFloat(styles.paddingRight);
-            maxXRef.current = Math.max(0, contentWidth - WIDTH);
-            xRef.current = Math.min(xRef.current, maxXRef.current);
-            applyPosition();
-        };
 
         const stopLoop = () => {
             if (raf) window.cancelAnimationFrame(raf);
@@ -165,18 +154,23 @@ export function FooterSprite() {
             lastTime = 0;
             walkClock = 0;
         };
+        // Stop and stand. Cleanup uses stopLoop alone so a re-wave keeps its frame.
+        const halt = () => {
+            stopLoop();
+            setFrame(FRAMES.stand);
+        };
 
         const tick = (now: number) => {
-            const dir = (pressed.right ? 1 : 0) - (pressed.left ? 1 : 0);
+            const dir = (pressed.has("ArrowRight") ? 1 : 0) - (pressed.has("ArrowLeft") ? 1 : 0);
             if (dir === 0) {
-                stopLoop();
-                setFrame(FRAMES.stand);
+                halt();
                 return;
             }
             const dt = lastTime ? Math.min(now - lastTime, 100) : 0;
             lastTime = now;
-            xRef.current = Math.min(maxXRef.current, Math.max(0, xRef.current + (dir * WALK_SPEED * dt) / 1000));
-            applyPosition();
+            const { padLeft, maxX } = boundsRef.current;
+            xRef.current = Math.min(maxX, Math.max(0, xRef.current + (dir * WALK_SPEED * dt) / 1000));
+            root.style.left = `${padLeft + xRef.current}px`;
             walkClock += dt;
             if (walkClock >= WALK_FRAME_MS) {
                 walkClock %= WALK_FRAME_MS;
@@ -204,49 +198,34 @@ export function FooterSprite() {
             if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
             event.preventDefault(); // only these two keys, only while walking
             armIdle();
-            if (event.key === "ArrowLeft") pressed.left = true;
-            else pressed.right = true;
+            pressed.add(event.key);
             startLoop();
         };
 
         const onKeyUp = (event: KeyboardEvent) => {
-            if (event.key === "ArrowLeft") pressed.left = false;
-            else if (event.key === "ArrowRight") pressed.right = false;
-            else return;
-            if (pressed.left || pressed.right) {
-                // The opposite key is still held: keep walking instead of stalling.
-                startLoop();
-                return;
-            }
-            stopLoop();
-            setFrame(FRAMES.stand);
+            if (!pressed.delete(event.key)) return;
+            if (pressed.size === 0) halt();
+            else startLoop(); // the other arrow is still held: keep walking
         };
 
         // A held key never sends keyup once the window loses focus.
         const onBlur = () => {
-            pressed.left = false;
-            pressed.right = false;
-            stopLoop();
-            setFrame(FRAMES.stand);
+            pressed.clear();
+            halt();
         };
 
-        const onResize = () => measure();
-
-        measure();
         armIdle();
         window.addEventListener("keydown", onKeyDown);
         window.addEventListener("keyup", onKeyUp);
         window.addEventListener("blur", onBlur);
-        window.addEventListener("resize", onResize);
         return () => {
             window.clearTimeout(idleTimer);
             stopLoop();
             window.removeEventListener("keydown", onKeyDown);
             window.removeEventListener("keyup", onKeyUp);
             window.removeEventListener("blur", onBlur);
-            window.removeEventListener("resize", onResize);
         };
-    }, [phase, reducedMotion]);
+    }, [phase, reducedMotion, measure]);
 
     // Click from seated starts the wave; click while walking re-waves in place.
     const activate = () => {
@@ -269,17 +248,8 @@ export function FooterSprite() {
             tabIndex={-1}
             onClick={activate}
             onMouseEnter={onHover}
-            // Decorative: a click must not pull focus off the page, and the
-            // global focus-visible ring (signal) never prints on the sprite.
             onMouseDown={(event) => event.preventDefault()}
-            // -57px, not -56px: the absolutely positioned box starts inside the
-            // column's 1px top border, so the extra pixel lands the art's seat row
-            // (row 28 at 2x = 56px) exactly on the hairline.
-            className="absolute -top-[57px] left-6 z-10 cursor-pointer select-none"
-            // One sheet for both schemes (Emil's call: the outline stays black,
-            // the red shell carries the silhouette on ink): a single request,
-            // the pose is a 2x background-position offset. No scheme CSS, no
-            // per-frame URL swaps, survives pre-hydration.
+            className="absolute -top-14.25 left-6 z-10 cursor-pointer select-none"
             style={{
                 width: WIDTH,
                 height: HEIGHT,
