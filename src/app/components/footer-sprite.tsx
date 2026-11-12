@@ -4,10 +4,11 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 /**
- * The footer's one gated easter egg: a 1-bit Emil seated on the top hairline
- * rule. Inert on load; a click makes it wave, then the arrow keys walk it along
- * the rule. Escape or 20s of inactivity sits it back down. Decorative only
- * (aria-hidden, never focusable) and fully static under reduced motion.
+ * The footer's one gated easter egg: a small shaded pixel-art Emil seated on
+ * the top hairline rule, in the outlined three-tone style of a 32x32 game
+ * sprite. Inert on load; a click makes it wave, then the arrow keys walk it
+ * along the rule. Escape or 20s of inactivity sits it back down. Decorative
+ * only (aria-hidden, never focusable) and fully static under reduced motion.
  * See DESIGN.md > Motion for the scoped exception.
  */
 
@@ -22,7 +23,7 @@ const FRAMES = {
 };
 
 const SCALE = 2; // integer 2x only: crisp on retina and non-retina
-const WIDTH = 22 * SCALE; // 44px
+const WIDTH = 32 * SCALE; // 64px
 const HEIGHT = 40 * SCALE; // 80px
 const WAVE_FRAME_MS = 180;
 const WAVE_TOTAL_MS = 720; // two visible raises, then stand
@@ -118,7 +119,7 @@ export function FooterSprite() {
             root.style.left = `${padLeft + xRef.current}px`;
         };
 
-        // Clamp the 44px box to the column's content width (the rule's span).
+        // Clamp the 64px box to the column's content width (the rule's span).
         const measure = () => {
             const styles = window.getComputedStyle(column);
             padLeft = parseFloat(styles.paddingLeft);
@@ -237,7 +238,7 @@ export function FooterSprite() {
             tabIndex={-1}
             onClick={activate}
             // Decorative: a click must not pull focus off the page, and the
-            // global focus-visible ring (signal) never prints on ink-only art.
+            // global focus-visible ring (signal) never prints on the sprite.
             onMouseDown={(event) => event.preventDefault()}
             // -57px, not -56px: the absolutely positioned box starts inside the
             // column's 1px top border, so the extra pixel lands the art's row 28
@@ -245,9 +246,9 @@ export function FooterSprite() {
             className="absolute -top-[57px] left-6 z-10 cursor-pointer select-none"
             style={{ width: WIDTH, height: HEIGHT, outline: "none" }}
         >
-            {/* Day and night art are the same drawing in opposite tokens: ink on
-                paper, paper on ink. CSS picks one per scheme, so the swap needs
-                no JS and survives before hydration. */}
+            {/* Day and night art are the same drawing; the night twin lifts the
+                near-black outline so the silhouette still reads on ink. CSS picks
+                one per scheme, so the swap needs no JS and survives pre-hydration. */}
             <Image
                 src={src}
                 alt=""
