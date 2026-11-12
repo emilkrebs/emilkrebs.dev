@@ -1,39 +1,47 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 /**
  * The footer's one gated easter egg: a simple pixel-art crab (Krebs = crab)
  * perched on the top hairline rule — a low, wide, symmetric 32x40 sprite with
  * a 1px black outline (black in both schemes), flat red shell and two open side
- * pincers, redrawn from Emil's 8-bit crab references. Inert on load; hovering
- * blinks once, a click holds the whole pincers up in a wave, then the arrow keys
- * scuttle it sideways along the rule. Escape or 20s of inactivity settles it
- * back down. Decorative only (aria-hidden, never focusable) and fully static
- * under reduced motion. See DESIGN.md > Motion.
+ * pincers, redrawn from Emil's 8-bit crab references. All eight poses live in
+ * one 256x40 sprite sheet shared by both color schemes, so the whole egg costs
+ * a single image request and the pose is a background-position offset, not a
+ * URL swap. Inert on load; hovering blinks once, a click holds the whole
+ * pincers up in a wave, then the arrow keys scuttle it sideways along the rule.
+ * Escape or 20s of inactivity settles it back down. Decorative only
+ * (aria-hidden, never focusable) and fully static under reduced motion.
+ * See DESIGN.md > Motion.
  */
 
 const ART = "/pictures/easter-egg";
+const SPRITE = `${ART}/crab-sprite.png`;
+
+// Frame indices in the horizontal sheet, left to right.
 const FRAMES = {
-    sit: `${ART}/crab-sit.png`,
-    wave1: `${ART}/crab-wave-1.png`,
-    wave2: `${ART}/crab-wave-2.png`,
-    stand: `${ART}/crab-stand.png`,
-    walk1: `${ART}/crab-walk-1.png`,
-    walk2: `${ART}/crab-walk-2.png`,
-};
+    sit: 0,
+    sitBlink: 1,
+    stand: 2,
+    standBlink: 3,
+    wave1: 4,
+    wave2: 5,
+    walk1: 6,
+    walk2: 7,
+} as const;
 
 // Closed-eye variants for the hover blink (idle poses only).
-const BLINK: Record<string, string> = {
-    [FRAMES.sit]: `${ART}/crab-sit-blink.png`,
-    [FRAMES.stand]: `${ART}/crab-stand-blink.png`,
+const BLINK: Partial<Record<number, number>> = {
+    [FRAMES.sit]: FRAMES.sitBlink,
+    [FRAMES.stand]: FRAMES.standBlink,
 };
 const BLINK_MS = 160;
 
 const SCALE = 2; // integer 2x, same 64x80 footprint
 const WIDTH = 32 * SCALE; // 64px
 const HEIGHT = 40 * SCALE; // 80px
+const SHEET_WIDTH = 256 * SCALE; // 8 frames of 32px, at 2x
 const WAVE_FRAME_MS = 180;
 const WAVE_TOTAL_MS = 720; // two visible raises, then stand
 const REDUCED_WAVE_MS = 800; // one static raised-arm frame
@@ -52,7 +60,7 @@ function isTypingTarget(target: EventTarget | null): boolean {
 
 export function FooterSprite() {
     const [phase, setPhase] = useState<Phase>("seated");
-    const [frame, setFrame] = useState(FRAMES.sit);
+    const [frame, setFrame] = useState<number>(FRAMES.sit);
     const xRef = useRef(0); // offset from the column's left content edge, kept across states
     const maxXRef = useRef(0);
     const rootRef = useRef<HTMLDivElement>(null);
@@ -249,11 +257,11 @@ export function FooterSprite() {
 
     // Seated is always sit; under reduced motion walking is disabled (sit) and
     // waving is the single static raised-arm frame.
-    let src = FRAMES.sit;
+    let src: number = FRAMES.sit;
     if (phase === "waving") src = reducedMotion ? FRAMES.wave2 : frame;
     else if (phase === "walking" && !reducedMotion) src = frame;
-    if (blink && BLINK[src]) src = BLINK[src];
-    const darkSrc = src.replace(".png", "-dark.png");
+    const blinkFrame = BLINK[src];
+    if (blink && blinkFrame !== undefined) src = blinkFrame;
     return (
         <div
             ref={rootRef}
@@ -268,34 +276,20 @@ export function FooterSprite() {
             // column's 1px top border, so the extra pixel lands the art's seat row
             // (row 28 at 2x = 56px) exactly on the hairline.
             className="absolute -top-[57px] left-6 z-10 cursor-pointer select-none"
-            style={{ width: WIDTH, height: HEIGHT, outline: "none" }}
-        >
-            {/* The outline stays black in both schemes (Emil's call), so the day
-                and night art are identical; the red shell carries the silhouette
-                on ink. CSS picks one per scheme, no JS, survives pre-hydration. */}
-            <Image
-                src={src}
-                alt=""
-                width={WIDTH}
-                height={HEIGHT}
-                unoptimized
-                priority={false}
-                draggable={false}
-                className="footer-sprite footer-sprite-light block"
-                style={{ imageRendering: "pixelated" }}
-            />
-            <Image
-                src={darkSrc}
-                alt=""
-                width={WIDTH}
-                height={HEIGHT}
-                unoptimized
-                priority={false}
-                draggable={false}
-                aria-hidden="true"
-                className="footer-sprite footer-sprite-dark absolute inset-0 block"
-                style={{ imageRendering: "pixelated" }}
-            />
-        </div>
+            // One sheet for both schemes (Emil's call: the outline stays black,
+            // the red shell carries the silhouette on ink): a single request,
+            // the pose is a 2x background-position offset. No scheme CSS, no
+            // per-frame URL swaps, survives pre-hydration.
+            style={{
+                width: WIDTH,
+                height: HEIGHT,
+                outline: "none",
+                backgroundImage: `url(${SPRITE})`,
+                backgroundSize: `${SHEET_WIDTH}px ${HEIGHT}px`,
+                backgroundPosition: `-${src * WIDTH}px 0`,
+                backgroundRepeat: "no-repeat",
+                imageRendering: "pixelated",
+            }}
+        />
     );
 }
