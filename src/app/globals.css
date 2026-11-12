@@ -394,3 +394,21 @@ body {
         filter: none;
     }
 }
+
+/* Footer easter egg: the outline stays black in both schemes, so the two assets
+   are identical and CSS just picks one per scheme (the red shell carries the
+   silhouette on ink). Same swap pattern as the TypeFox wordmark, kept so the
+   structure stays scheme-driven and survives pre-hydration. */
+.footer-sprite-dark {
+    display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .footer-sprite-light {
+        display: none;
+    }
+
+    .footer-sprite-dark {
+        display: block;
+    }
+}
