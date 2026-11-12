@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterSprite } from "./footer-sprite";
 import { TokenMark } from "./token-mark";
 import { WeChatLink } from "./wechat-link";
 import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../lib/constants";
@@ -10,7 +11,8 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
     const wechat = copy[locale].wechat;
     return (
         <footer className="w-full mt-auto">
-            <div className="footer-column mx-auto w-full max-w-280 px-6 py-16 border-t border-hairline">
+            <div className="footer-column relative mx-auto w-full max-w-280 overflow-visible px-6 py-16 border-t border-hairline">
+                <FooterSprite />
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
                         <p>{t.location}</p>

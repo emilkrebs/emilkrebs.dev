@@ -394,3 +394,20 @@ body {
         filter: none;
     }
 }
+
+/* Footer easter egg: the art exists twice, once per scheme (ink on paper, paper
+   on ink), and CSS picks it. Same rule as the TypeFox wordmark: the asset never
+   changes, only which of the two is printed. */
+.footer-sprite-dark {
+    display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .footer-sprite-light {
+        display: none;
+    }
+
+    .footer-sprite-dark {
+        display: block;
+    }
+}
