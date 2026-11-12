@@ -4,22 +4,23 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 /**
- * The footer's one gated easter egg: a small shaded pixel-art Emil seated on
- * the top hairline rule, in the outlined three-tone style of a 32x32 game
- * sprite. Inert on load; a click makes it wave, then the arrow keys walk it
- * along the rule. Escape or 20s of inactivity sits it back down. Decorative
- * only (aria-hidden, never focusable) and fully static under reduced motion.
+ * The footer's one gated easter egg: a shaded pixel-art crab (Krebs = crab)
+ * perched on the top hairline rule, in the outlined three-tone style of a
+ * 32x32 game sprite. Inert on load; a click makes it raise its big fiddler
+ * claw in a wave, then the arrow keys scuttle it sideways along the rule.
+ * Escape or 20s of inactivity settles it back down. Decorative only
+ * (aria-hidden, never focusable) and fully static under reduced motion.
  * See DESIGN.md > Motion for the scoped exception.
  */
 
 const ART = "/pictures/easter-egg";
 const FRAMES = {
-    sit: `${ART}/emil-sit.png`,
-    wave1: `${ART}/emil-wave-1.png`,
-    wave2: `${ART}/emil-wave-2.png`,
-    stand: `${ART}/emil-stand.png`,
-    walk1: `${ART}/emil-walk-1.png`,
-    walk2: `${ART}/emil-walk-2.png`,
+    sit: `${ART}/crab-sit.png`,
+    wave1: `${ART}/crab-wave-1.png`,
+    wave2: `${ART}/crab-wave-2.png`,
+    stand: `${ART}/crab-stand.png`,
+    walk1: `${ART}/crab-walk-1.png`,
+    walk2: `${ART}/crab-walk-2.png`,
 };
 
 const SCALE = 2; // integer 2x only: crisp on retina and non-retina
