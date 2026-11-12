@@ -395,9 +395,10 @@ body {
     }
 }
 
-/* Footer easter egg: the art exists twice, once per scheme (ink on paper, paper
-   on ink), and CSS picks it. Same rule as the TypeFox wordmark: the asset never
-   changes, only which of the two is printed. */
+/* Footer easter egg: the outline stays black in both schemes, so the two assets
+   are identical and CSS just picks one per scheme (the red shell carries the
+   silhouette on ink). Same swap pattern as the TypeFox wordmark, kept so the
+   structure stays scheme-driven and survives pre-hydration. */
 .footer-sprite-dark {
     display: none;
 }

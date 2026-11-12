@@ -6,11 +6,12 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "
 /**
  * The footer's one gated easter egg: a simple pixel-art crab (Krebs = crab)
  * perched on the top hairline rule — a low, wide, symmetric 32x40 sprite with
- * a 1px ink outline, flat red shell and two open side pincers, redrawn from
- * Emil's 8-bit crab references. Inert on load; a click lifts its pincers in a
- * wave, then the arrow keys scuttle it sideways along the rule. Escape or 20s
- * of inactivity settles it back down. Decorative only (aria-hidden, never
- * focusable) and fully static under reduced motion. See DESIGN.md > Motion.
+ * a 1px black outline (black in both schemes), flat red shell and two open side
+ * pincers, redrawn from Emil's 8-bit crab references. Inert on load; hovering
+ * blinks once, a click holds the whole pincers up in a wave, then the arrow keys
+ * scuttle it sideways along the rule. Escape or 20s of inactivity settles it
+ * back down. Decorative only (aria-hidden, never focusable) and fully static
+ * under reduced motion. See DESIGN.md > Motion.
  */
 
 const ART = "/pictures/easter-egg";
@@ -22,6 +23,13 @@ const FRAMES = {
     walk1: `${ART}/crab-walk-1.png`,
     walk2: `${ART}/crab-walk-2.png`,
 };
+
+// Closed-eye variants for the hover blink (idle poses only).
+const BLINK: Record<string, string> = {
+    [FRAMES.sit]: `${ART}/crab-sit-blink.png`,
+    [FRAMES.stand]: `${ART}/crab-stand-blink.png`,
+};
+const BLINK_MS = 160;
 
 const SCALE = 2; // integer 2x, same 64x80 footprint
 const WIDTH = 32 * SCALE; // 64px
@@ -48,6 +56,9 @@ export function FooterSprite() {
     const xRef = useRef(0); // offset from the column's left content edge, kept across states
     const maxXRef = useRef(0);
     const rootRef = useRef<HTMLDivElement>(null);
+    const [blink, setBlink] = useState(false);
+    const blinkTimer = useRef(0);
+    useEffect(() => () => window.clearTimeout(blinkTimer.current), []);
 
     // Live prefers-reduced-motion, as an external store. Turning it on sits
     // the sprite down; the server snapshot is false (the sprite is inert anyway).
@@ -62,6 +73,16 @@ export function FooterSprite() {
     }, []);
     const readReducedMotion = useCallback(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches, []);
     const reducedMotion = useSyncExternalStore(subscribeReducedMotion, readReducedMotion, () => false);
+
+    // Hover blinks once: shut the lids for a beat, then reopen. Only the idle
+    // sit/stand frames have a closed-eye variant, so this is a no-op mid-wave or
+    // mid-walk. Disabled under reduced motion.
+    const onHover = () => {
+        if (reducedMotion) return;
+        window.clearTimeout(blinkTimer.current);
+        setBlink(true);
+        blinkTimer.current = window.setTimeout(() => setBlink(false), BLINK_MS);
+    };
 
     // Keep the figure inside the rule whenever the column changes width, in any
     // phase: a visitor can walk to the right edge, sit down, then rotate the
@@ -231,6 +252,7 @@ export function FooterSprite() {
     let src = FRAMES.sit;
     if (phase === "waving") src = reducedMotion ? FRAMES.wave2 : frame;
     else if (phase === "walking" && !reducedMotion) src = frame;
+    if (blink && BLINK[src]) src = BLINK[src];
     const darkSrc = src.replace(".png", "-dark.png");
     return (
         <div
@@ -238,6 +260,7 @@ export function FooterSprite() {
             aria-hidden="true"
             tabIndex={-1}
             onClick={activate}
+            onMouseEnter={onHover}
             // Decorative: a click must not pull focus off the page, and the
             // global focus-visible ring (signal) never prints on the sprite.
             onMouseDown={(event) => event.preventDefault()}
@@ -247,9 +270,9 @@ export function FooterSprite() {
             className="absolute -top-[57px] left-6 z-10 cursor-pointer select-none"
             style={{ width: WIDTH, height: HEIGHT, outline: "none" }}
         >
-            {/* Day and night art are the same drawing; the night twin lifts the
-                near-black outline so the silhouette still reads on ink. CSS picks
-                one per scheme, so the swap needs no JS and survives pre-hydration. */}
+            {/* The outline stays black in both schemes (Emil's call), so the day
+                and night art are identical; the red shell carries the silhouette
+                on ink. CSS picks one per scheme, no JS, survives pre-hydration. */}
             <Image
                 src={src}
                 alt=""
