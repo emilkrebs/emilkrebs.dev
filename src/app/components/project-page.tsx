@@ -102,7 +102,7 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
                         className="size-6"
                     />
                     <span className="mt-4 block text-base font-semibold">{slug}</span>
-                    <span className="mt-2 block text-sm leading-relaxed text-ink/85">{description}</span>
+                    <span className="mt-2 block flex-1 text-sm leading-relaxed text-ink/85">{description}</span>
                     <span className="mt-4 block font-mono text-xs tracking-[0.04em] text-ink-soft">
                         <span className="group-open:hidden">{t.skillRead} <span aria-hidden="true">+</span></span>
                         <span className="hidden group-open:inline">{t.skillClose} <span aria-hidden="true">-</span></span>
