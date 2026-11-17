@@ -26,6 +26,10 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
+      # Fails on upstream drift: re-run scripts/sync-project.mjs and commit.
+      # Never part of npm run build; a build must not depend on the network.
+      - name: Check vendored project content
+        run: node scripts/sync-project.mjs --check
       # next build also type-checks the project
       - name: Build
         run: npm run build

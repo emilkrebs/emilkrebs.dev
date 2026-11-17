@@ -8,8 +8,10 @@
 - [Home](https://emilkrebs.dev/): profile, work, and projects
 - [Story](https://emilkrebs.dev/story/): background in software and developer tooling
 - [Healthstack](https://emilkrebs.dev/healthstack/): private IDE dev build with a public DSL playground
+- [Med Research MCP](https://emilkrebs.dev/projects/med-research-mcp/): evidence-graded literature search MCP server, with demo, README and agent skills
 - [中文](https://emilkrebs.dev/zh/): Chinese-language home
 - [中文故事](https://emilkrebs.dev/zh/story/): Chinese-language story
+- [中文项目页](https://emilkrebs.dev/zh/projects/med-research-mcp/): Chinese-language Med Research MCP project page
 
 ## Facts
 - Role: Software Engineer at TypeFox GmbH

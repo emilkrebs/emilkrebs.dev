@@ -3,7 +3,6 @@ import { Footer } from "./footer";
 import { fontVariables } from "../lib/fonts";
 import { copy, htmlLang, type Locale } from "../lib/i18n";
 import { routePath } from "../lib/routes";
-
 /**
  * Runs before first paint on English pages. It does two things, based only
  * on the browser's current primary language — nothing is stored, so a fresh
@@ -37,9 +36,11 @@ const LOCALE_SCRIPT = `(function () {
     } catch (e) {}
 })();`;
 
-const ANALYTICS_SRC = "https://scripts.simpleanalyticscdn.com/latest.js";
-
-/** The document shell shared by the per-locale root layouts. */
+/**
+ * The document shell shared by the per-locale root layouts. Analytics is
+ * rendered per page (components/analytics.tsx), not here, so project record
+ * pages can carry no third-party scripts at all.
+ */
 export function RootShell({ locale, children }: { locale: Locale; children: React.ReactNode }) {
     return (
         // suppressHydrationWarning: the locale script adds data-zh-reader to <html> before React hydrates.
@@ -60,7 +61,6 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
                 >
                     {copy[locale].skipLink}
                 </a>
-                <script async defer src={ANALYTICS_SRC}></script>
                 {children}
                 <Footer locale={locale} />
             </body>

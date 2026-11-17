@@ -49,6 +49,30 @@ export interface StoryCopy {
     waterkant: { place: string; role: string };
 }
 
+export interface ProjectPageCopy {
+    /** {version} and {license} come from the vendored package.json. */
+    statusLine: string;
+    demoHeading: string;
+    demoAlt: string;
+    /** {size} is the GIF's weight, measured at build time. */
+    demoPlay: string;
+    demoStop: string;
+    demoNote: string;
+    demoNoscript: string;
+    readmeHeading: string;
+    skillsHeading: string;
+    skillsLead: string;
+    skillRead: string;
+    skillClose: string;
+    /** {file} is the zip's name. */
+    skillDownload: string;
+    bundleDownload: string;
+    provenanceLabel: string;
+    provenanceRendered: string;
+    provenanceSynced: string;
+    skills: { id: string; description: string }[];
+}
+
 export interface MetaCopy {
     title: string;
     description: string;
@@ -106,4 +130,5 @@ export interface LocaleBundle extends LandingCopy {
     footer: FooterCopy;
     backHeader: BackHeaderCopy;
     story: StoryCopy;
+    projectPage: ProjectPageCopy;
 }
