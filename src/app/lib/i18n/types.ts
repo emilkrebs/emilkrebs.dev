@@ -64,9 +64,6 @@ export interface ProjectPageCopy {
     skillClose: string;
     /** Label for the plain-markdown download. */
     skillDownload: string;
-    provenanceLabel: string;
-    provenanceRendered: string;
-    provenanceSynced: string;
     skills: { id: string; description: string }[];
 }
 

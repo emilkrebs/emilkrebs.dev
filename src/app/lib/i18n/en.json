@@ -176,9 +176,6 @@
         "skillRead": "Read SKILL.md",
         "skillClose": "Close",
         "skillDownload": "Download SKILL.md",
-        "provenanceLabel": "Provenance",
-        "provenanceRendered": "Rendered from",
-        "provenanceSynced": "synced",
         "skills": [
             {
                 "id": "med-research",

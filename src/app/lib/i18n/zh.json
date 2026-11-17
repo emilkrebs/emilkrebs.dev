@@ -186,9 +186,6 @@
         "skillRead": "阅读 SKILL.md",
         "skillClose": "收起",
         "skillDownload": "下载 SKILL.md",
-        "provenanceLabel": "来源",
-        "provenanceRendered": "本页渲染自",
-        "provenanceSynced": "同步于",
         "skills": [
             {
                 "id": "med-research",

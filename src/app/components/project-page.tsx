@@ -59,25 +59,6 @@ export function projectOgImage(locale: Locale): OgImage {
     return { url: "/og/med-research-mcp.jpg", width: 1200, height: 630, alt: projectLead(locale) };
 }
 
-/** The project's skill mark, in site ink: decoration, no accessible name. */
-function SkillIcon({ className }: { className?: string }) {
-    return (
-        <svg
-            viewBox="0 0 62 62"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={5}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={className}
-            aria-hidden="true"
-        >
-            <path d="M23.746,61.44l-0.634,-20.621m0,0l-7.017,-11.089" />
-            <path d="M32.621,26.077l0,-10.742m0,10.742l-9.603,-3.322m9.603,3.322l-9.545,13.973m9.545,-13.973l5.938,8.693m-5.938,-8.693l9.603,-3.322" />
-        </svg>
-    );
-}
-
 /** Upstream byte size of a vendored SKILL.md (the provenance line is ours). */
 function skillKilobytes(content: string): string {
     const bytes = Buffer.byteLength(content) - (content.indexOf("\n") + 1);
@@ -94,22 +75,26 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
     const content = skillFiles[slug];
     const frontmatter = parseSkill(content);
     return (
-        <article className="border border-hairline">
-            <details className="group">
-                <summary className="flex cursor-pointer list-none items-start gap-4 p-6 [&::-webkit-details-marker]:hidden">
-                    <SkillIcon className="mt-1 size-7 shrink-0 text-ink" />
-                    <span className="min-w-0 flex-1">
-                        <span className="block font-mono text-sm font-medium tracking-tight">{slug}</span>
-                        <span className="mt-2 block max-w-[62ch] text-sm leading-relaxed text-ink/85">
-                            {description}
-                        </span>
-                    </span>
-                    <span className="shrink-0 font-mono text-xs tracking-[0.04em] text-ink-soft">
+        <article className="flex h-full flex-col border border-hairline md:[&:has(details[open])]:col-span-3">
+            <details className="group flex-1">
+                <summary className="flex cursor-pointer list-none flex-col p-5 [&::-webkit-details-marker]:hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- the skill mark keeps its own colour; an inline SVG would inherit the ink */}
+                    <img
+                        src="/pictures/med-research-skills.svg"
+                        alt=""
+                        aria-hidden="true"
+                        width={24}
+                        height={24}
+                        className="size-6"
+                    />
+                    <span className="mt-4 block font-mono text-sm font-medium">{slug}</span>
+                    <span className="mt-2 block text-sm leading-relaxed text-ink/85">{description}</span>
+                    <span className="mt-4 block font-mono text-xs tracking-[0.04em] text-ink-soft">
                         <span className="group-open:hidden">{t.skillRead} <span aria-hidden="true">+</span></span>
                         <span className="hidden group-open:inline">{t.skillClose} <span aria-hidden="true">-</span></span>
                     </span>
                 </summary>
-                <div className="border-t border-hairline px-6 py-6">
+                <div className="border-t border-hairline px-5 py-5">
                     {frontmatter.description && (
                         <p className="mb-6 max-w-[70ch] text-sm leading-relaxed text-ink/85">
                             {frontmatter.description}
@@ -118,14 +103,14 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
                     <SkillBody content={content} sha={meta.sha} slug={slug} />
                 </div>
             </details>
-            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-hairline px-6 py-3">
+            <div className="mt-auto flex items-center justify-between gap-x-4 border-t border-hairline px-5 py-3">
                 <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                     {skillKilobytes(content)} KB
                 </span>
                 <a
                     href={`/downloads/${slug}.md`}
                     download
-                    className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                    className="inline-flex items-center gap-2 text-sm font-medium hover:text-signal transition-colors duration-150"
                 >
                     {t.skillDownload}
                     <span className="text-signal" aria-hidden="true">↓</span>
@@ -157,15 +142,28 @@ export function ProjectPage({ locale }: { locale: Locale }) {
             />
             <BackHeader route="project_med_research" locale={locale} />
 
-            {/* Head: the claim on the left, a mono spec block on the right. The
-                block is what keeps the top from being a marketing hero with an
-                empty half: every value in it comes from the vendored manifest. */}
+            {/* Head: the mark and the claim on the left, a mono spec block on
+                the right. The spec block keeps the top from being a marketing
+                hero with an empty half: every value comes from the vendored
+                manifest. The mark is the project's own, and it is the first
+                thing a returning reader recognises. */}
             <section className="mx-auto max-w-280 px-6 pt-10 pb-10 md:pt-14 md:pb-12">
                 <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-16">
                     <div>
-                        <h1 className="text-[clamp(1.75rem,2.6vw,2.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-                            {PROJECT_NAME}
-                        </h1>
+                        <div className="flex items-center gap-4">
+                            {/* eslint-disable-next-line @next/next/no-img-element -- brand mark: an SVG that must keep its own colours */}
+                            <img
+                                src="/pictures/med-research-mcp.svg"
+                                alt=""
+                                aria-hidden="true"
+                                width={48}
+                                height={48}
+                                className="size-12 shrink-0"
+                            />
+                            <h1 className="text-[clamp(1.75rem,2.6vw,2.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                                {PROJECT_NAME}
+                            </h1>
+                        </div>
                         <p className="mt-5 max-w-[62ch] text-base leading-relaxed md:text-lg">{lead}</p>
                         <div className="mt-6 flex flex-wrap items-center gap-x-6">
                             {OUTBOUND_LINKS.map((link) => (
@@ -226,7 +224,7 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                     {t.skillsHeading}
                 </h2>
                 <p className="max-w-[62ch] text-base leading-relaxed md:text-lg">{t.skillsLead}</p>
-                <div className="mt-8 flex flex-col gap-4">
+                <div className="mt-8 grid gap-4 md:grid-cols-3">
                     {SKILL_SLUGS.map((slug) => (
                         <SkillCard
                             key={slug}
@@ -236,21 +234,6 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                         />
                     ))}
                 </div>
-            </section>
-
-            <section className="mx-auto max-w-280 border-t border-hairline px-6 py-10">
-                <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                    {t.provenanceLabel}: {t.provenanceRendered}{" "}
-                    <a
-                        href={`${REPO_URL}/commit/${meta.sha}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-ink underline decoration-hairline underline-offset-4 hover:text-signal hover:decoration-signal transition-colors duration-150"
-                    >
-                        {REPO}@{meta.sha.slice(0, 7)}
-                    </a>
-                    {" - "}{t.provenanceSynced} {meta.syncedAt.slice(0, 10)}
-                </p>
             </section>
         </main>
     );
