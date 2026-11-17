@@ -32,7 +32,7 @@ const LINK_CLASS = "underline decoration-hairline underline-offset-4 hover:text-
 /** Shared by both documents; the plugin decides what survives and how. */
 const components = {
     h2: ({ children, id }: { children?: React.ReactNode; id?: string }) => (
-        <h2 id={id} className="mt-12 mb-4 text-2xl md:text-3xl font-semibold tracking-tight leading-snug">{children}</h2>
+        <h2 id={id} className="mt-10 mb-4 text-2xl md:text-3xl font-semibold tracking-tight leading-snug">{children}</h2>
     ),
     h3: ({ children, id }: { children?: React.ReactNode; id?: string }) => (
         <h3 id={id} className="mt-8 mb-3 text-xl md:text-2xl font-semibold tracking-tight leading-snug">{children}</h3>

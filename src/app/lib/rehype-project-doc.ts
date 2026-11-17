@@ -94,6 +94,29 @@ function stripChrome(tree: Root) {
     }
 }
 
+/**
+ * Remove one section, heading included, up to the next heading of the same or
+ * a higher level. The page renders the agent skills itself (with downloads),
+ * so the README's own section is dropped instead of being said twice.
+ */
+function dropSection(tree: Root, pattern: RegExp) {
+    const children = tree.children;
+    for (let i = 0; i < children.length; i++) {
+        const node = children[i];
+        if (!isElement(node) || !/^h[1-6]$/.test(node.tagName)) continue;
+        if (!pattern.test(textOf(node).trim())) continue;
+        const level = Number(node.tagName[1]);
+        let end = i + 1;
+        while (end < children.length) {
+            const next = children[end];
+            if (isElement(next) && /^h[1-6]$/.test(next.tagName) && Number(next.tagName[1]) <= level) break;
+            end++;
+        }
+        children.splice(i, end - i);
+        i--;
+    }
+}
+
 function transformAlerts(tree: Root) {
     walk(tree, (node) => {
         if (node.tagName !== "blockquote") return;
@@ -160,7 +183,10 @@ function dropImages(tree: Root) {
 
 export function rehypeProjectDoc(options: ProjectDocOptions) {
     return (tree: Root) => {
-        if (options.mode === "readme") stripChrome(tree);
+        if (options.mode === "readme") {
+            stripChrome(tree);
+            dropSection(tree, /^(agent skills|智能体技能)$/i);
+        }
         transformAlerts(tree);
         slugHeadings(tree, options.mode, options.idPrefix);
         pinLinks(tree, options.sha);

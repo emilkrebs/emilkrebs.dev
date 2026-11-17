@@ -50,23 +50,20 @@ export interface StoryCopy {
 }
 
 export interface ProjectPageCopy {
-    /** {version} and {license} come from the vendored package.json. */
-    statusLine: string;
-    demoHeading: string;
+    /** Labels for the head's spec block; values come from the vendored package.json. */
+    specVersion: string;
+    specLicense: string;
+    specSource: string;
+    specSynced: string;
     demoAlt: string;
-    /** {size} is the GIF's weight, measured at build time. */
-    demoPlay: string;
-    demoStop: string;
+    /** One line under the demo plate: what the ten seconds show. */
     demoNote: string;
-    demoNoscript: string;
-    readmeHeading: string;
     skillsHeading: string;
     skillsLead: string;
     skillRead: string;
     skillClose: string;
-    /** {file} is the zip's name. */
+    /** Label for the plain-markdown download. */
     skillDownload: string;
-    bundleDownload: string;
     provenanceLabel: string;
     provenanceRendered: string;
     provenanceSynced: string;
