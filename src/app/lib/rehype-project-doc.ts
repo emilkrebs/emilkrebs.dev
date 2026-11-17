@@ -7,8 +7,9 @@ import type { Element, ElementContent, Root, RootContent, Text } from "hast";
  * this site. Runs after rehype-raw, on the hast tree:
  *
  * - readme mode: strips the GitHub listing chrome (centered icon, title,
- *   tagline, badges, language line, demo GIF and its caption), keeps the
- *   in-page anchor line as a mono contents row;
+ *   tagline, badges, language line, demo GIF and its caption); the in-page
+ *   anchor line is kept as a mono contents row, or dropped when the page
+ *   head carries it instead (liftContents, see components/readme.tsx);
  * - GitHub alerts ([!IMPORTANT]) become labelled asides;
  * - headings get GitHub-style slugs so the README's #install, #privacy and
  *   #medical-disclaimer anchors resolve; skill headings are demoted one level
@@ -28,6 +29,8 @@ export interface ProjectDocOptions {
     mode: "readme" | "skill";
     /** Skill mode: prefix for heading ids, unique per skill. */
     idPrefix?: string;
+    /** Readme mode: the page head renders the contents line, so drop it here. */
+    liftContents?: boolean;
 }
 
 function isElement(node: RootContent | ElementContent | undefined): node is Element {
@@ -62,7 +65,7 @@ function walk(node: Root | Element, visit: (element: Element) => void) {
 }
 
 /** The leading run of centered header blocks, before the prose starts. */
-function stripChrome(tree: Root) {
+function stripChrome(tree: Root, liftContents?: boolean) {
     const children = tree.children;
     let i = 0;
     while (i < children.length) {
@@ -82,6 +85,10 @@ function stripChrome(tree: Root) {
             const isLanguageLine = links.some((a) => /README(\.zh-CN)?\.md$/.test(String(a.properties?.href ?? "")));
             const isAnchorLine = links.length > 0 && links.every((a) => String(a.properties?.href ?? "").startsWith("#"));
             if (isAnchorLine && !hasMedia && !isLanguageLine) {
+                if (liftContents) {
+                    children.splice(i, 1);
+                    continue;
+                }
                 delete node.properties.align;
                 node.properties.className = ["readme-contents"];
                 i++;
@@ -184,7 +191,7 @@ function dropImages(tree: Root) {
 export function rehypeProjectDoc(options: ProjectDocOptions) {
     return (tree: Root) => {
         if (options.mode === "readme") {
-            stripChrome(tree);
+            stripChrome(tree, options.liftContents);
             dropSection(tree, /^(agent skills|智能体技能)$/i);
         }
         transformAlerts(tree);

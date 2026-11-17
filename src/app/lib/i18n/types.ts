@@ -50,11 +50,12 @@ export interface StoryCopy {
 }
 
 export interface ProjectPageCopy {
-    /** Labels for the head's spec block; values come from the vendored package.json. */
-    specVersion: string;
-    specLicense: string;
-    specSource: string;
-    specSynced: string;
+    /** Mono label on the head's one-command install strip. */
+    installLabel: string;
+    /** Arrow link from the install strip to the README's install section. */
+    installGuide: string;
+    /** Accessible name of the head's contents jump row. */
+    contentsAria: string;
     demoAlt: string;
     /** One line under the demo plate: what the ten seconds show. */
     demoNote: string;

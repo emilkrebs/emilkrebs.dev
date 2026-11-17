@@ -3,7 +3,7 @@ import { join } from "path";
 import BackHeader from "./back-header";
 import { JsonLd } from "./json-ld";
 import { ProjectDemo } from "./project-demo";
-import { parseSkill, Readme, SkillBody } from "./readme";
+import { parseSkill, parseContents, Readme, SkillBody } from "./readme";
 import { copy, type Locale, type ProjectPageCopy } from "../lib/i18n";
 import type { OgImage } from "../lib/metadata";
 import { projectPageSchema } from "../lib/structured-data";
@@ -19,6 +19,11 @@ import meta from "../content/projects/med-research-mcp/meta.json";
  * sections, so the page carries no mono "DEMO"/"README" wrapper labels on top
  * of them. The skills section is the only section this shell introduces, and
  * it is numbered in the same grammar.
+ *
+ * The head answers the first three questions in order: what is this (the
+ * lead), how do I run it (the one-command strip), where is everything (the
+ * README's own contents line, lifted here with its localized labels). The
+ * version-and-license line and the outbound exits close the head quietly.
  */
 
 const REPO = "emilkrebs/med-research-mcp";
@@ -39,6 +44,15 @@ const SKILLS_ANCHOR: Record<Locale, string> = {
     en: "agent-skills",
     zh: "智能体技能",
 };
+
+/** The README's install heading slug, per locale; the head's strip links to it. */
+const INSTALL_ANCHOR: Record<Locale, string> = {
+    en: "install",
+    zh: "安装",
+};
+
+/** The command every MCP client configuration runs; identical in both locales. */
+const INSTALL_COMMAND = "npx -y med-research-mcp";
 
 const readme: Record<Locale, string> = {
     en: readFileSync(join(CONTENT_DIR, "readme.en.md"), "utf8"),
@@ -87,7 +101,7 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
                         height={24}
                         className="size-6"
                     />
-                    <span className="mt-4 block font-mono text-sm font-medium">{slug}</span>
+                    <span className="mt-4 block text-base font-semibold">{slug}</span>
                     <span className="mt-2 block text-sm leading-relaxed text-ink/85">{description}</span>
                     <span className="mt-4 block font-mono text-xs tracking-[0.04em] text-ink-soft">
                         <span className="group-open:hidden">{t.skillRead} <span aria-hidden="true">+</span></span>
@@ -123,12 +137,7 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
 export function ProjectPage({ locale }: { locale: Locale }) {
     const t = copy[locale].projectPage;
     const lead = projectLead(locale);
-    const spec = [
-        { label: t.specVersion, value: meta.version },
-        { label: t.specLicense, value: meta.license },
-        { label: t.specSource, value: "emilkrebs/med-research-mcp", href: REPO_URL },
-        { label: t.specSynced, value: meta.syncedAt.slice(0, 10) },
-    ];
+    const contents = parseContents(readme[locale]);
     return (
         <main id="main" className="flex-1">
             <JsonLd
@@ -142,67 +151,78 @@ export function ProjectPage({ locale }: { locale: Locale }) {
             />
             <BackHeader route="project_med_research" locale={locale} />
 
-            {/* Head: the mark and the claim on the left, a mono spec block on
-                the right. The spec block keeps the top from being a marketing
-                hero with an empty half: every value comes from the vendored
-                manifest. The mark is the project's own, and it is the first
+            {/* Head: the mark and the claim, then the one command that runs
+                the server, then the README's own contents line as a jump row
+                (its labels are the vendored README's, already localized).
+                Version, license and the outbound exits close the head on one
+                quiet row. The mark is the project's own, and it is the first
                 thing a returning reader recognises. */}
             <section className="mx-auto max-w-280 px-6 pt-10 pb-10 md:pt-14 md:pb-12">
-                <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-start md:gap-16">
-                    <div>
-                        <div className="flex items-center gap-4">
-                            {/* eslint-disable-next-line @next/next/no-img-element -- brand mark: an SVG that must keep its own colours */}
-                            <img
-                                src="/pictures/med-research-mcp.svg"
-                                alt=""
-                                aria-hidden="true"
-                                width={48}
-                                height={48}
-                                className="size-12 shrink-0"
-                            />
-                            <h1 className="text-[clamp(1.75rem,2.6vw,2.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-                                {PROJECT_NAME}
-                            </h1>
-                        </div>
-                        <p className="mt-5 max-w-[62ch] text-base leading-relaxed md:text-lg">{lead}</p>
-                        <div className="mt-6 flex flex-wrap items-center gap-x-6">
-                            {OUTBOUND_LINKS.map((link) => (
-                                <a
-                                    key={link.label}
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 py-2 font-medium hover:text-signal transition-colors duration-150"
-                                >
-                                    {link.label}
-                                    <span className="text-signal" aria-hidden="true">→</span>
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                    <dl className="grid grid-cols-2 gap-x-10 gap-y-5 md:pt-1">
-                        {spec.map((item) => (
-                            <div key={item.label}>
-                                <dt className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                                    {item.label}
-                                </dt>
-                                <dd className="mt-1 font-mono text-sm">
-                                    {item.href ? (
-                                        <a
-                                            href={item.href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="underline decoration-hairline underline-offset-4 hover:text-signal hover:decoration-signal transition-colors duration-150"
-                                        >
-                                            {item.value}
-                                        </a>
-                                    ) : (
-                                        item.value
-                                    )}
-                                </dd>
-                            </div>
+                <div className="flex items-center gap-4">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- brand mark: an SVG that must keep its own colours */}
+                    <img
+                        src="/pictures/med-research-mcp.svg"
+                        alt=""
+                        aria-hidden="true"
+                        width={48}
+                        height={48}
+                        className="size-12 shrink-0"
+                    />
+                    <h1 className="text-[clamp(1.75rem,2.6vw,2.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                        {PROJECT_NAME}
+                    </h1>
+                </div>
+                <p className="mt-5 max-w-[62ch] text-base leading-relaxed md:text-lg">{lead}</p>
+
+                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border border-hairline bg-paper-deep px-4 py-3 md:px-5">
+                    <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                        {t.installLabel}
+                    </span>
+                    <code className="font-mono text-sm [overflow-wrap:anywhere]">{INSTALL_COMMAND}</code>
+                    <a
+                        href={`#${INSTALL_ANCHOR[locale]}`}
+                        className="inline-flex items-center gap-2 text-sm font-medium hover:text-signal transition-colors duration-150 md:ml-auto"
+                    >
+                        {t.installGuide}
+                        <span className="text-signal" aria-hidden="true">→</span>
+                    </a>
+                </div>
+
+                {contents.length > 0 && (
+                    <nav
+                        aria-label={t.contentsAria}
+                        className="mt-6 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-[0.08em] text-ink/75"
+                    >
+                        {contents.map((item) => (
+                            <a
+                                key={item.href}
+                                href={item.href}
+                                className="py-1 hover:text-signal transition-colors duration-150"
+                            >
+                                {item.label}
+                            </a>
                         ))}
-                    </dl>
+                    </nav>
+                )}
+
+                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+                    <span className="font-mono text-xs tracking-[0.08em] text-ink-soft">
+                        v{meta.version} · {meta.license}
+                    </span>
+                    <div className="flex flex-wrap items-center gap-x-6 md:ml-auto">
+                        {OUTBOUND_LINKS.map((link) => (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 py-2 font-medium hover:text-signal transition-colors duration-150"
+                            >
+                                {link.label}
+                                <span className="text-signal" aria-hidden="true">→</span>
+                            </a>
+                        ))}
+                    </div>
                 </div>
             </section>
 
@@ -212,7 +232,7 @@ export function ProjectPage({ locale }: { locale: Locale }) {
 
             <section className="mx-auto max-w-280 border-t border-hairline px-6 py-12 md:py-16">
                 <div className="max-w-4xl">
-                    <Readme content={readme[locale]} sha={meta.sha} />
+                    <Readme content={readme[locale]} sha={meta.sha} liftContents={contents.length > 0} />
                 </div>
             </section>
 

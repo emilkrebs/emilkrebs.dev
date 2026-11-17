@@ -27,6 +27,12 @@ interface ProjectDemoProps {
 export function ProjectDemo({ locale, alt, note }: ProjectDemoProps) {
     return (
         <figure>
+            {/* The label sits above the plate: the recording opens on an empty
+                chat window, so without a line here the first second reads as a
+                broken embed rather than a demo. */}
+            <figcaption className="pb-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                {note}
+            </figcaption>
             <div className="relative aspect-video overflow-hidden border border-hairline bg-paper-deep">
                 {/* eslint-disable-next-line @next/next/no-img-element -- animated WebP: an animation is not an image the responsive pipeline can serve */}
                 <img
@@ -38,9 +44,6 @@ export function ProjectDemo({ locale, alt, note }: ProjectDemoProps) {
                     className="absolute inset-0 size-full object-cover"
                 />
             </div>
-            <figcaption className="pt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                {note}
-            </figcaption>
         </figure>
     );
 }

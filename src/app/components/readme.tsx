@@ -17,6 +17,29 @@ import { SmartLink } from "./smart-link";
 
 const PROVENANCE = /^<!-- vendored from [^\n]*-->\n/;
 const FRONTMATTER = /^---\n([\s\S]*?)\n---\n/;
+const CENTERED_BLOCK = /<p align="center">([\s\S]*?)<\/p>/g;
+const ANCHOR_LINK = /<a href="(#[^"]+)">([^<]+)<\/a>/g;
+
+/**
+ * The README's own in-page contents line (the centered paragraph whose links
+ * are all anchors), so the page head can carry it as a jump row with the
+ * README's own localized labels. Returns [] when no such line exists; the
+ * renderer then keeps the line in the body as a fallback.
+ */
+export function parseContents(content: string): { href: string; label: string }[] {
+    const text = content.replace(PROVENANCE, "");
+    for (const block of text.matchAll(CENTERED_BLOCK)) {
+        const inner = block[1];
+        if (/<img/i.test(inner)) continue;
+        const links = [...inner.matchAll(ANCHOR_LINK)].map((match) => ({
+            href: match[1],
+            label: match[2].trim(),
+        }));
+        const linkCount = (inner.match(/<a /g) ?? []).length;
+        if (links.length > 0 && links.length === linkCount) return links;
+    }
+    return [];
+}
 
 /** The vendored SKILL.md split into its frontmatter description and body. */
 export function parseSkill(content: string): { description: string; body: string } {
@@ -85,7 +108,7 @@ const components = {
     ),
     blockquote: ({ children, className }: { children?: React.ReactNode; className?: string }) =>
         className?.includes("readme-alert") ? (
-            <aside className="mb-6 border border-hairline bg-paper-deep p-4 md:p-6">{children}</aside>
+            <aside className="mb-6 border border-hairline bg-paper-deep p-4 md:p-5">{children}</aside>
         ) : (
             <blockquote className="mb-4 border-l-2 border-ink/30 pl-4 text-ink/85 max-w-[70ch]">{children}</blockquote>
         ),
@@ -99,10 +122,10 @@ const components = {
     ),
     thead: ({ children }: { children?: React.ReactNode }) => <thead className="bg-paper-deep">{children}</thead>,
     th: ({ children }: { children?: React.ReactNode }) => (
-        <th className="border-b border-hairline px-4 py-3 text-left font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{children}</th>
+        <th className="border-b border-hairline px-4 py-2.5 text-left font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">{children}</th>
     ),
     td: ({ children }: { children?: React.ReactNode }) => (
-        <td className="border-b border-hairline px-4 py-3 align-top leading-relaxed [overflow-wrap:anywhere]">{children}</td>
+        <td className="border-b border-hairline px-4 py-2.5 align-top leading-relaxed [overflow-wrap:anywhere]">{children}</td>
     ),
     // The plugin drops images; this keeps any survivor from reaching the DOM.
     img: () => null,
@@ -112,15 +135,17 @@ interface ReadmeProps {
     /** Vendored markdown, provenance comment included. */
     content: string;
     sha: string;
+    /** The page head carries the contents line (see parseContents). */
+    liftContents?: boolean;
 }
 
 /** The project README, GitHub chrome stripped, anchors and all. */
-export function Readme({ content, sha }: ReadmeProps) {
+export function Readme({ content, sha, liftContents }: ReadmeProps) {
     return (
-        <div className="readme-doc">
+        <div className="readme-doc project-readme">
             <Markdown
                 remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw, [rehypeProjectDoc, { sha, mode: "readme" }]]}
+                rehypePlugins={[rehypeRaw, [rehypeProjectDoc, { sha, mode: "readme", liftContents }]]}
                 components={components}
             >
                 {content.replace(PROVENANCE, "")}

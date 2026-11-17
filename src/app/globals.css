@@ -414,4 +414,15 @@ body {
     }
 }
 
+/* Project record page: the README's h2s open spec sections with a hairline,
+   so the long document scans as sections instead of one prose block. Scoped
+   to the README body (.project-readme); skill bodies keep their compact
+   cards, and the heading's own utilities set its margins. */
+@layer components {
+    .project-readme h2 {
+        border-top: 1px solid var(--color-hairline);
+        padding-top: 1.5rem;
+    }
+}
+
 

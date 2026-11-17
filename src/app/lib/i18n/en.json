@@ -165,12 +165,11 @@
         "waterkant": { "place": "Kiel", "role": "Attendee" }
     },
     "projectPage": {
-        "specVersion": "Version",
-        "specLicense": "License",
-        "specSource": "Source",
-        "specSynced": "Synced",
+        "installLabel": "One command",
+        "installGuide": "Install guide",
+        "contentsAria": "On this page",
         "demoAlt": "Real output: the assistant is asked whether tirzepatide helps with obstructive sleep apnea, searches the databases, and returns study cards labelled with their study design and integrity flags.",
-        "demoNote": "Ten seconds of real output: one question, one search across four databases, and the labels the assistant reads before it answers.",
+        "demoNote": "Real output: one question, four databases, ten seconds.",
         "skillsHeading": "Agent skills",
         "skillsLead": "Three skills teach the assistant to use the tools well. Read them here, or download the one you need for your own client.",
         "skillRead": "Read SKILL.md",

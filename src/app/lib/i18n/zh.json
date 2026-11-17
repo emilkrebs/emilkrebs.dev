@@ -175,12 +175,11 @@
         "waterkant": { "place": "基尔", "role": "参会者" }
     },
     "projectPage": {
-        "specVersion": "版本",
-        "specLicense": "许可证",
-        "specSource": "源码",
-        "specSynced": "同步",
+        "installLabel": "一条命令",
+        "installGuide": "安装指南",
+        "contentsAria": "本页目录",
         "demoAlt": "真实输出：向助手提问替尔泊肽是否有助于阻塞性睡眠呼吸暂停，它检索各数据库，返回标有研究设计与警示标记的文献卡片。",
-        "demoNote": "十秒真实输出：一个问题、一次覆盖四个数据库的检索，以及助手在回答前读取的标注。",
+        "demoNote": "真实输出：一个问题、四个数据库、十秒。",
         "skillsHeading": "智能体技能",
         "skillsLead": "三个技能教助手用好这些工具。可在此阅读，也可下载需要的那个用于你自己的客户端。",
         "skillRead": "阅读 SKILL.md",
