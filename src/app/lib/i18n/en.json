@@ -82,8 +82,8 @@
             "id": "med-research-mcp",
             "name": "Med Research MCP",
             "description": "Med Research MCP is an MCP server for evidence-graded scientific literature search for AI agents, covering PubMed, Europe PMC, ChinaXiv and RussiaRxiv.",
-            "caption": "Online - https://github.com/emilkrebs/med-research-mcp",
-            "linkLabel": "Open Med Research MCP"
+            "caption": "Online - emilkrebs.dev/projects/med-research-mcp",
+            "linkLabel": "Read the Med Research MCP page"
         },
         {
             "id": "vailnote",
@@ -163,5 +163,30 @@
         "confidentialNotice": "Details hidden due to active NDA restrictions.",
         "events": "Events",
         "waterkant": { "place": "Kiel", "role": "Attendee" }
+    },
+    "projectPage": {
+        "installGuide": "Install",
+        "contentsAria": "On this page",
+        "demoAlt": "Real output: the assistant is asked whether tirzepatide helps with obstructive sleep apnea, searches the databases, and returns study cards labelled with their study design and integrity flags.",
+        "demoNote": "Real output: one question, four databases, ten seconds.",
+        "skillsHeading": "Agent skills",
+        "skillsLead": "Three skills teach the assistant to use the tools well. Read them here, or download the one you need for your own client.",
+        "skillRead": "Read SKILL.md",
+        "skillClose": "Close",
+        "skillDownload": "Download SKILL.md",
+        "skills": [
+            {
+                "id": "med-research",
+                "description": "The workflow: writing precise PubMed queries, reading the labels, classifying unlabeled papers, and reporting findings with how certain they are."
+            },
+            {
+                "id": "med-research-ebm",
+                "description": "Critical appraisal, loaded only when a conclusion will rest on one paper: risk of bias, effect sizes, heterogeneity, causation, applicability."
+            },
+            {
+                "id": "med-research-setup",
+                "description": "Helps an assistant install and troubleshoot the server."
+            }
+        ]
     }
 }

@@ -1,5 +1,6 @@
 import StoryContent from "../../content/story.mdx";
 import type { Metadata } from "next";
+import { Analytics } from "../../components/analytics";
 import BackHeader from "../../components/back-header";
 import { JsonLd } from "../../components/json-ld";
 import { pageMetadata } from "../../lib/metadata";
@@ -13,6 +14,7 @@ export const metadata: Metadata = pageMetadata({ route: "story", locale: "en", t
 export default function StoryPage() {
     return (
         <main id="main" className="flex min-h-screen w-full flex-col items-center justify-start">
+            <Analytics />
             <JsonLd data={aboutPageSchema({ route: "story", locale: "en", name: title, description })} />
             <BackHeader route="story" maxWidth="4xl" />
             <section className="w-full max-w-4xl px-6 pt-10 md:pt-16 pb-24">

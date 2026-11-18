@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { existsSync } from "fs";
 import { join } from "path";
 import content from "../../content/healthstack.json";
+import { Analytics } from "../../components/analytics";
 import BackHeader from "../../components/back-header";
 import { JsonLd } from "../../components/json-ld";
 import { PlaceholderPlate } from "../../components/placeholder-plate";
@@ -190,6 +191,7 @@ export default function HealthstackPage() {
     const playgroundBuilt = playgroundIsBuilt();
     return (
         <main id="main" className="flex-1">
+            <Analytics />
             <JsonLd
                 data={projectPageSchema({
                     route: "healthstack",

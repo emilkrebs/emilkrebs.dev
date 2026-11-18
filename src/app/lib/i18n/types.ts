@@ -49,6 +49,23 @@ export interface StoryCopy {
     waterkant: { place: string; role: string };
 }
 
+export interface ProjectPageCopy {
+    /** The head's install block-link: jumps to the README's install section. */
+    installGuide: string;
+    /** Accessible name of the head's contents jump row. */
+    contentsAria: string;
+    demoAlt: string;
+    /** One line under the demo plate: what the ten seconds show. */
+    demoNote: string;
+    skillsHeading: string;
+    skillsLead: string;
+    skillRead: string;
+    skillClose: string;
+    /** Label for the plain-markdown download. */
+    skillDownload: string;
+    skills: { id: string; description: string }[];
+}
+
 export interface MetaCopy {
     title: string;
     description: string;
@@ -106,4 +123,5 @@ export interface LocaleBundle extends LandingCopy {
     footer: FooterCopy;
     backHeader: BackHeaderCopy;
     story: StoryCopy;
+    projectPage: ProjectPageCopy;
 }

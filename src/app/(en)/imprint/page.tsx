@@ -4,6 +4,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { EMAIL_ADDRESS, PHONE_NUMBER } from "../../lib/constants";
 import { pageMetadata } from "../../lib/metadata";
+import { Analytics } from "../../components/analytics";
 import BackHeader from "../../components/back-header";
 
 export const metadata: Metadata = pageMetadata({
@@ -19,6 +20,7 @@ const markdown = readFileSync(join(process.cwd(), "src/app/content/imprint.md"),
 export default function Imprint() {
     return (
         <main id="main" className="flex min-h-screen w-full flex-col items-center justify-start">
+            <Analytics />
             <BackHeader route="imprint" maxWidth="3xl" />
             <section className="w-full max-w-3xl px-6 pt-10 md:pt-16 pb-24">
                 <RenderMarkdown content={markdown} />

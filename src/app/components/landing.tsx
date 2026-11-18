@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Analytics } from "./analytics";
 import { JsonLd } from "./json-ld";
 import { ProjectCard } from "./project-card";
 import { RouteLocaleSwitcher } from "./route-locale-switcher";
@@ -52,7 +53,7 @@ const PROJECT_BASE: ProjectBase[] = [
     },
     {
         id: "med-research-mcp",
-        href: "https://github.com/emilkrebs/med-research-mcp",
+        route: "project_med_research",
         tags: ["TypeScript", "MCP", "Node.js"],
         image: "/pictures/med-research-mcp.svg",
     },
@@ -395,6 +396,7 @@ export function Landing({ locale }: { locale: Locale }) {
 
     return (
         <main id="main" className="landing">
+            <Analytics />
             <JsonLd data={profilePageSchema(locale)} />
             <Nav t={t} locale={locale} />
             <Hero t={t} />

@@ -395,4 +395,34 @@ body {
     }
 }
 
+/* Vendored project documents (components/readme.tsx): the inline-code chip
+   resets inside code blocks, anchored headings clear the sticky back header,
+   and the table's last row does not double the frame's bottom hairline. */
+@layer components {
+    .readme-doc pre code {
+        background-color: transparent;
+        padding: 0;
+        font-size: inherit;
+    }
+
+    .readme-doc [id] {
+        scroll-margin-top: 4.5rem;
+    }
+
+    .readme-doc tbody tr:last-child td {
+        border-bottom: 0;
+    }
+}
+
+/* Project record page: the README's h2s open spec sections with a hairline,
+   so the long document scans as sections instead of one prose block. Scoped
+   to the README body (.project-readme); skill bodies keep their compact
+   cards, and the heading's own utilities set its margins. */
+@layer components {
+    .project-readme h2 {
+        border-top: 1px solid var(--color-hairline);
+        padding-top: 1.5rem;
+    }
+}
+
 

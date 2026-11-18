@@ -18,6 +18,7 @@ export type {
     MetaCopy,
     PreviewConsentCopy,
     ProjectCopy,
+    ProjectPageCopy,
     StoryCopy,
     WeChatCopy,
 } from "./types";
