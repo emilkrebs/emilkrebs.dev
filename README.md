@@ -12,6 +12,7 @@
 [![Deployed](https://github.com/emilkrebs/emilkrebs-website/actions/workflows/static.yml/badge.svg)](https://github.com/emilkrebs/emilkrebs-website/actions/workflows/static.yml)
 
 </div>
+
 <hr>
 
 My website was made with Next.js, TypeScript, and Tailwind CSS deployed using
@@ -50,8 +51,4 @@ tracked outside this repository; a successful build does not complete them.
 
 ## Performance [_↗_](https://pagespeed.web.dev/analysis/https-emilkrebs-dev/n9vix5zf6e?hl=en_GB&form_factor=mobile)
 
-<img width="1016" height="1213" alt="PageSpeed Insights mobile report for emilkrebs.dev: Performance, Accessibility, Best Practices and SEO all 100, agentic browsing 3/3, on an emulated Moto G Power with Slow 4G" src="./docs/performance/pagespeed-mobile.png" />
-
-## Screenshot
-
-<img width="1920" height="947" alt="image" src="https://github.com/user-attachments/assets/f3c216ba-4565-4b34-806a-66380c9d7cff" />
+<img width="1016" height="1213" alt="grafik" src="https://github.com/user-attachments/assets/57000563-a9a3-4c91-be75-ac715a5ee137" />
