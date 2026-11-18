@@ -85,16 +85,16 @@ const components = {
                 </p>
             );
         }
-        return <p className="mb-4 leading-relaxed max-w-[70ch]">{children}</p>;
+        return <p className="mb-4 leading-relaxed">{children}</p>;
     },
     a: ({ children, href }: { children?: React.ReactNode; href?: string }) => (
         <SmartLink href={href ?? ""} className={LINK_CLASS}>{children}</SmartLink>
     ),
     ul: ({ children }: { children?: React.ReactNode }) => (
-        <ul className="pl-6 mb-4 list-disc space-y-1 max-w-[70ch]">{children}</ul>
+        <ul className="pl-6 mb-4 list-disc space-y-1">{children}</ul>
     ),
     ol: ({ children }: { children?: React.ReactNode }) => (
-        <ol className="pl-6 mb-4 list-decimal space-y-1 max-w-[70ch]">{children}</ol>
+        <ol className="pl-6 mb-4 list-decimal space-y-1">{children}</ol>
     ),
     li: ({ children }: { children?: React.ReactNode }) => <li className="leading-relaxed">{children}</li>,
     strong: ({ children }: { children?: React.ReactNode }) => <strong className="font-semibold">{children}</strong>,
@@ -110,7 +110,7 @@ const components = {
         className?.includes("readme-alert") ? (
             <aside className="mb-6 border border-hairline bg-paper-deep p-4 md:p-5">{children}</aside>
         ) : (
-            <blockquote className="mb-4 border-l-2 border-ink/30 pl-4 text-ink/85 max-w-[70ch]">{children}</blockquote>
+            <blockquote className="mb-4 border-l-2 border-ink/30 pl-4 text-ink/85">{children}</blockquote>
         ),
     hr: () => <hr className="my-8 border-hairline" />,
     table: ({ children }: { children?: React.ReactNode }) => (

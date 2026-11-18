@@ -90,8 +90,8 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
     const frontmatter = parseSkill(content);
     return (
         <article className="flex h-full flex-col border border-hairline md:[&:has(details[open])]:col-span-3">
-            <details className="group flex-1">
-                <summary className="flex cursor-pointer list-none flex-col p-5 [&::-webkit-details-marker]:hidden">
+            <details className="group flex flex-1 flex-col">
+                <summary className="flex flex-1 cursor-pointer list-none flex-col p-5 [&::-webkit-details-marker]:hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element -- the skill mark keeps its own colour; an inline SVG would inherit the ink */}
                     <img
                         src="/pictures/med-research-skills.svg"
@@ -110,7 +110,7 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
                 </summary>
                 <div className="border-t border-hairline px-5 py-5">
                     {frontmatter.description && (
-                        <p className="mb-6 max-w-[70ch] text-sm leading-relaxed text-ink/85">
+                        <p className="mb-6 text-sm leading-relaxed text-ink/85">
                             {frontmatter.description}
                         </p>
                     )}
@@ -149,7 +149,7 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                     image: "/og/med-research-mcp.jpg",
                 })}
             />
-            <BackHeader route="project_med_research" locale={locale} />
+            <BackHeader route="project_med_research" maxWidth="4xl" locale={locale} />
 
             {/* Head: the mark and the claim, then the one command that runs
                 the server, then the README's own contents line as a jump row
@@ -158,70 +158,72 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                 quiet row. The mark is the project's own, and it is the first
                 thing a returning reader recognises. */}
             <section className="mx-auto max-w-280 px-6 pt-10 pb-10 md:pt-14 md:pb-12">
-                <div className="flex items-center gap-4">
-                    {/* eslint-disable-next-line @next/next/no-img-element -- brand mark: an SVG that must keep its own colours */}
-                    <img
-                        src="/pictures/med-research-mcp.svg"
-                        alt=""
-                        aria-hidden="true"
-                        width={48}
-                        height={48}
-                        className="size-12 shrink-0"
-                    />
-                    <h1 className="text-[clamp(1.75rem,2.6vw,2.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-                        {PROJECT_NAME}
-                    </h1>
-                </div>
-                <p className="mt-5 max-w-[62ch] text-base leading-relaxed md:text-lg">{lead}</p>
+                <div className="mx-auto max-w-4xl">
+                    <div className="flex items-center gap-4">
+                        {/* eslint-disable-next-line @next/next/no-img-element -- brand mark: an SVG that must keep its own colours */}
+                        <img
+                            src="/pictures/med-research-mcp.svg"
+                            alt=""
+                            aria-hidden="true"
+                            width={48}
+                            height={48}
+                            className="size-12 shrink-0"
+                        />
+                        <h1 className="text-[clamp(1.75rem,2.6vw,2.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+                            {PROJECT_NAME}
+                        </h1>
+                    </div>
+                    <p className="mt-5 max-w-[62ch] text-base leading-relaxed md:text-lg">{lead}</p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border border-hairline bg-paper-deep px-4 py-3 md:px-5">
-                    <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                        {t.installLabel}
-                    </span>
-                    <code className="font-mono text-sm [overflow-wrap:anywhere]">{INSTALL_COMMAND}</code>
-                    <a
-                        href={`#${INSTALL_ANCHOR[locale]}`}
-                        className="inline-flex items-center gap-2 text-sm font-medium hover:text-signal transition-colors duration-150 md:ml-auto"
-                    >
-                        {t.installGuide}
-                        <span className="text-signal" aria-hidden="true">→</span>
-                    </a>
-                </div>
+                    <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border border-hairline bg-paper-deep px-4 py-3 md:px-5">
+                        <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                            {t.installLabel}
+                        </span>
+                        <code className="font-mono text-sm [overflow-wrap:anywhere]">{INSTALL_COMMAND}</code>
+                        <a
+                            href={`#${INSTALL_ANCHOR[locale]}`}
+                            className="inline-flex items-center gap-2 text-sm font-medium hover:text-signal transition-colors duration-150 md:ml-auto"
+                        >
+                            {t.installGuide}
+                            <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
+                    </div>
 
-                {contents.length > 0 && (
-                    <nav
-                        aria-label={t.contentsAria}
-                        className="mt-6 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-[0.08em] text-ink/75"
-                    >
-                        {contents.map((item) => (
-                            <a
-                                key={item.href}
-                                href={item.href}
-                                className="py-1 hover:text-signal transition-colors duration-150"
-                            >
-                                {item.label}
-                            </a>
-                        ))}
-                    </nav>
-                )}
+                    {contents.length > 0 && (
+                        <nav
+                            aria-label={t.contentsAria}
+                            className="mt-6 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-[0.08em] text-ink/75"
+                        >
+                            {contents.map((item) => (
+                                <a
+                                    key={item.href}
+                                    href={item.href}
+                                    className="py-1 hover:text-signal transition-colors duration-150"
+                                >
+                                    {item.label}
+                                </a>
+                            ))}
+                        </nav>
+                    )}
 
-                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-                    <span className="font-mono text-xs tracking-[0.08em] text-ink-soft">
-                        v{meta.version} · {meta.license}
-                    </span>
-                    <div className="flex flex-wrap items-center gap-x-6 md:ml-auto">
-                        {OUTBOUND_LINKS.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 py-2 font-medium hover:text-signal transition-colors duration-150"
-                            >
-                                {link.label}
-                                <span className="text-signal" aria-hidden="true">→</span>
-                            </a>
-                        ))}
+                    <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+                        <span className="font-mono text-xs tracking-[0.08em] text-ink-soft">
+                            v{meta.version} · {meta.license}
+                        </span>
+                        <div className="flex flex-wrap items-center gap-x-6 md:ml-auto">
+                            {OUTBOUND_LINKS.map((link) => (
+                                <a
+                                    key={link.label}
+                                    href={link.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 py-2 font-medium hover:text-signal transition-colors duration-150"
+                                >
+                                    {link.label}
+                                    <span className="text-signal" aria-hidden="true">→</span>
+                                </a>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -231,28 +233,30 @@ export function ProjectPage({ locale }: { locale: Locale }) {
             </section>
 
             <section className="mx-auto max-w-280 border-t border-hairline px-6 py-12 md:py-16">
-                <div className="max-w-4xl">
+                <div className="mx-auto max-w-4xl">
                     <Readme content={readme[locale]} sha={meta.sha} liftContents={contents.length > 0} />
                 </div>
             </section>
 
             <section className="mx-auto max-w-280 border-t border-hairline px-6 py-12 md:py-16">
-                <h2
-                    id={SKILLS_ANCHOR[locale]}
-                    className="mb-4 text-2xl font-semibold leading-snug tracking-tight md:text-3xl"
-                >
-                    {t.skillsHeading}
-                </h2>
-                <p className="max-w-[62ch] text-base leading-relaxed md:text-lg">{t.skillsLead}</p>
-                <div className="mt-8 grid gap-4 md:grid-cols-3">
-                    {SKILL_SLUGS.map((slug) => (
-                        <SkillCard
-                            key={slug}
-                            slug={slug}
-                            description={t.skills.find((skill) => skill.id === slug)?.description ?? ""}
-                            t={t}
-                        />
-                    ))}
+                <div className="mx-auto max-w-4xl">
+                    <h2
+                        id={SKILLS_ANCHOR[locale]}
+                        className="mb-4 scroll-mt-[4.5rem] text-2xl font-semibold leading-snug tracking-tight md:text-3xl"
+                    >
+                        {t.skillsHeading}
+                    </h2>
+                    <p className="max-w-[62ch] text-base leading-relaxed md:text-lg">{t.skillsLead}</p>
+                    <div className="mt-8 grid gap-4 md:grid-cols-3">
+                        {SKILL_SLUGS.map((slug) => (
+                            <SkillCard
+                                key={slug}
+                                slug={slug}
+                                description={t.skills.find((skill) => skill.id === slug)?.description ?? ""}
+                                t={t}
+                            />
+                        ))}
+                    </div>
                 </div>
             </section>
         </main>
