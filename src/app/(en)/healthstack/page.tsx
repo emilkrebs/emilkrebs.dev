@@ -3,14 +3,11 @@ import type { Metadata } from "next";
 import { existsSync } from "fs";
 import { join } from "path";
 import content from "../../content/healthstack.json";
-import { Analytics } from "../../components/analytics";
-import BackHeader from "../../components/back-header";
-import { JsonLd } from "../../components/json-ld";
 import { PlaceholderPlate } from "../../components/placeholder-plate";
-import { StatusLabel, Tag } from "../../components/tag";
+import { PageSection, Plate, ProjectHero, ProjectShell } from "../../components/project-layout";
+import { Tag } from "../../components/tag";
 import { FULL_WIDTH_SIZES } from "../../lib/image-sizes";
 import { pageMetadata } from "../../lib/metadata";
-import { projectPageSchema } from "../../lib/structured-data";
 
 interface FeatureSection {
     heading: string;
@@ -111,24 +108,19 @@ interface ShotProps {
 
 function Shot({ src, alt, caption, placeholder }: ShotProps) {
     return (
-        <figure>
-            <div className="relative aspect-16/10 border border-hairline overflow-hidden bg-paper">
-                {src ? (
-                    <Image
-                        src={src}
-                        alt={alt}
-                        fill
-                        sizes={FULL_WIDTH_SIZES}
-                        className="object-cover object-center"
-                    />
-                ) : (
-                    <PlaceholderPlate label={placeholder ?? ""} />
-                )}
-            </div>
-            <figcaption className="pt-3 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
-                {caption}
-            </figcaption>
-        </figure>
+        <Plate caption={caption} className="aspect-16/10 bg-paper">
+            {src ? (
+                <Image
+                    src={src}
+                    alt={alt}
+                    fill
+                    sizes={FULL_WIDTH_SIZES}
+                    className="object-cover object-center"
+                />
+            ) : (
+                <PlaceholderPlate label={placeholder ?? ""} />
+            )}
+        </Plate>
     );
 }
 
@@ -159,7 +151,7 @@ function StatTable({ stats }: { stats: { value: string; label: string }[] }) {
 
 function FeatureSection({ section }: { section: FeatureSection }) {
     return (
-        <section className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline">
+        <PageSection className="py-16 md:py-20">
             <SectionHeading>{section.heading}</SectionHeading>
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
                 <div className="md:col-span-5 flex flex-col">
@@ -182,7 +174,7 @@ function FeatureSection({ section }: { section: FeatureSection }) {
                     placeholder={section.placeholder}
                 />
             </div>
-        </section>
+        </PageSection>
     );
 }
 
@@ -190,29 +182,14 @@ export default function HealthstackPage() {
     const { hero, dsl, status } = page;
     const playgroundBuilt = playgroundIsBuilt();
     return (
-        <main id="main" className="flex-1">
-            <Analytics />
-            <JsonLd
-                data={projectPageSchema({
-                    route: "healthstack",
-                    locale: "en",
-                    name: page.meta.title,
-                    description: page.meta.description,
-                    image: hero.image,
-                })}
-            />
-            <BackHeader route="healthstack" />
-
-            <section className="mx-auto max-w-280 px-6 pt-10 md:pt-16 pb-16 md:pb-20">
-                <div className="flex items-start justify-between gap-4 flex-wrap">
-                    <h1 className="font-bold tracking-[-0.03em] leading-[0.95] text-[clamp(2rem,4.5vw,3.25rem)] max-w-[16ch]">
-                        {hero.title}
-                    </h1>
-                    <StatusLabel>{hero.status}</StatusLabel>
-                </div>
-                <p className="mt-6 max-w-[62ch] text-base md:text-lg leading-relaxed">
-                    {hero.lead}
-                </p>
+        <ProjectShell
+            route="healthstack"
+            name={page.meta.title}
+            description={page.meta.description}
+            image={hero.image}
+            analytics
+        >
+            <ProjectHero title={hero.title} status={hero.status} lead={hero.lead}>
                 <div className="mt-8 flex flex-wrap gap-2">
                     {hero.tags.map((tag) => (
                         <Tag key={tag}>{tag}</Tag>
@@ -221,9 +198,9 @@ export default function HealthstackPage() {
                 <div className="mt-10 md:mt-14">
                     <Shot src={hero.image} alt={hero.imageAlt} caption={hero.caption} />
                 </div>
-            </section>
+            </ProjectHero>
 
-            <section id="dsl" className="mx-auto max-w-280 px-6 py-16 md:py-20 border-t border-hairline scroll-mt-16">
+            <PageSection id="dsl" className="py-16 md:py-20 scroll-mt-16">
                 <SectionHeading>{dsl.heading}</SectionHeading>
                 <p className="text-base md:text-lg leading-relaxed max-w-[62ch] mb-10">
                     <InlineText text={dsl.body} />
@@ -265,15 +242,13 @@ export default function HealthstackPage() {
                         </div>
                     )}
                 </div>
-            </section>
-
+            </PageSection>
 
             {page.sections.map((section) => (
                 <FeatureSection key={section.heading} section={section} />
             ))}
 
-
-            <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
+            <PageSection className="py-16 md:py-24">
                 <SectionHeading>{status.heading}</SectionHeading>
                 <div className="bg-paper-deep border border-hairline p-8 md:p-10">
                     <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
@@ -288,7 +263,7 @@ export default function HealthstackPage() {
                         ))}
                     </div>
                 </div>
-            </section>
-        </main>
+            </PageSection>
+        </ProjectShell>
     );
 }

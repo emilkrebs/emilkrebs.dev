@@ -1,3 +1,4 @@
+import { Plate } from "./project-layout";
 import type { Locale } from "../lib/i18n";
 
 /**
@@ -26,24 +27,19 @@ interface ProjectDemoProps {
 
 export function ProjectDemo({ locale, alt, note }: ProjectDemoProps) {
     return (
-        <figure>
-            {/* The label sits above the plate: the recording opens on an empty
-                chat window, so without a line here the first second reads as a
-                broken embed rather than a demo. */}
-            <figcaption className="pb-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                {note}
-            </figcaption>
-            <div className="relative aspect-video overflow-hidden border border-hairline bg-paper-deep">
-                {/* eslint-disable-next-line @next/next/no-img-element -- animated WebP: an animation is not an image the responsive pipeline can serve */}
-                <img
-                    src={DEMO[locale]}
-                    alt={alt}
-                    width={1120}
-                    height={630}
-                    decoding="async"
-                    className="absolute inset-0 size-full object-cover"
-                />
-            </div>
-        </figure>
+        // The label sits above the plate: the recording opens on an empty chat
+        // window, so without a line there the first second reads as a broken
+        // embed rather than a demo.
+        <Plate caption={note} captionAbove className="aspect-video bg-paper-deep">
+            {/* eslint-disable-next-line @next/next/no-img-element -- animated WebP: an animation is not an image the responsive pipeline can serve */}
+            <img
+                src={DEMO[locale]}
+                alt={alt}
+                width={1120}
+                height={630}
+                decoding="async"
+                className="absolute inset-0 size-full object-cover"
+            />
+        </Plate>
     );
 }

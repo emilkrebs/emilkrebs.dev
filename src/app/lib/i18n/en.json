@@ -82,7 +82,7 @@
             "id": "med-research-mcp",
             "name": "Med Research MCP",
             "description": "Med Research MCP is an MCP server for evidence-graded scientific literature search for AI agents, covering PubMed, Europe PMC, ChinaXiv and RussiaRxiv.",
-            "caption": "Online - emilkrebs.dev/projects/med-research-mcp",
+            "caption": "Online - emilkrebs.dev/med-research-mcp",
             "linkLabel": "Read the Med Research MCP page"
         },
         {

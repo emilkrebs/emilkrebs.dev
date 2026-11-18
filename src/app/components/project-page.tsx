@@ -1,12 +1,10 @@
 import { readFileSync } from "fs";
 import { join } from "path";
-import BackHeader from "./back-header";
-import { JsonLd } from "./json-ld";
 import { ProjectDemo } from "./project-demo";
+import { PageSection, ProjectHero, ProjectShell } from "./project-layout";
 import { parseSkill, parseContents, Readme, SkillBody } from "./readme";
 import { copy, type Locale, type ProjectPageCopy } from "../lib/i18n";
 import type { OgImage } from "../lib/metadata";
-import { projectPageSchema } from "../lib/structured-data";
 import meta from "../content/projects/med-research-mcp/meta.json";
 
 /**
@@ -139,105 +137,76 @@ export function ProjectPage({ locale }: { locale: Locale }) {
     const lead = projectLead(locale);
     const contents = parseContents(readme[locale]);
     return (
-        <main id="main" className="flex-1">
-            <JsonLd
-                data={projectPageSchema({
-                    route: "project_med_research",
-                    locale,
-                    name: PROJECT_NAME,
-                    description: lead,
-                    image: "/og/med-research-mcp.jpg",
-                })}
-            />
-            <BackHeader route="project_med_research" maxWidth="column" locale={locale} />
+        <ProjectShell
+            route="project_med_research"
+            locale={locale}
+            name={PROJECT_NAME}
+            description={lead}
+            image="/og/med-research-mcp.jpg"
+            analytics={false}
+        >
+            <ProjectHero title={PROJECT_NAME} mark="/pictures/med-research-mcp.svg" lead={lead}>
+                <a
+                    href={`#${INSTALL_ANCHOR[locale]}`}
+                    className="mt-8 flex items-center justify-between gap-x-6 border border-hairline bg-paper-deep px-4 py-3.5 transition-colors duration-150 hover:border-ink md:px-5"
+                >
+                    <span className="text-base font-medium">{t.installGuide}</span>
+                    <span className="text-signal" aria-hidden="true">→</span>
+                </a>
 
-            {/* Head: the mark and the claim, then the install block-link
-                jumping to the README's install section, then the README's
-                own contents line as a jump row
-                (its labels are the vendored README's, already localized).
-                Version, license and the outbound exits close the head on one
-                quiet row. The mark is the project's own, and it is the first
-                thing a returning reader recognises. */}
-            <section className="mx-auto max-w-280 px-6 pt-10 pb-10 md:pt-14 md:pb-12">
-                <div className="mx-auto max-w-4xl">
-                    <div className="flex items-center gap-4">
-                        {/* eslint-disable-next-line @next/next/no-img-element -- brand mark: an SVG that must keep its own colours */}
-                        <img
-                            src="/pictures/med-research-mcp.svg"
-                            alt=""
-                            aria-hidden="true"
-                            width={48}
-                            height={48}
-                            className="size-12 shrink-0"
-                        />
-                        <h1 className="text-[clamp(1.75rem,2.6vw,2.25rem)] font-bold leading-[1.05] tracking-[-0.03em]">
-                            {PROJECT_NAME}
-                        </h1>
-                    </div>
-                    <p className="mt-5 max-w-[62ch] text-base leading-relaxed md:text-lg">{lead}</p>
-
-                    <a
-                        href={`#${INSTALL_ANCHOR[locale]}`}
-                        className="mt-8 flex items-center justify-between gap-x-6 border border-hairline bg-paper-deep px-4 py-3.5 transition-colors duration-150 hover:border-ink md:px-5"
+                {contents.length > 0 && (
+                    <nav
+                        aria-label={t.contentsAria}
+                        className="mt-6 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-[0.08em] text-ink/75"
                     >
-                        <span className="text-base font-medium">{t.installGuide}</span>
-                        <span className="text-signal" aria-hidden="true">→</span>
-                    </a>
+                        {contents.map((item) => (
+                            <a
+                                key={item.href}
+                                href={item.href}
+                                className="py-1 hover:text-signal transition-colors duration-150"
+                            >
+                                {item.label}
+                            </a>
+                        ))}
+                    </nav>
+                )}
 
-                    {contents.length > 0 && (
-                        <nav
-                            aria-label={t.contentsAria}
-                            className="mt-6 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-[0.08em] text-ink/75"
-                        >
-                            {contents.map((item) => (
-                                <a
-                                    key={item.href}
-                                    href={item.href}
-                                    className="py-1 hover:text-signal transition-colors duration-150"
-                                >
-                                    {item.label}
-                                </a>
-                            ))}
-                        </nav>
-                    )}
-
-                    <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-                        <span className="font-mono text-xs tracking-[0.08em] text-ink-soft">
-                            v{meta.version} · {meta.license}
-                        </span>
-                        <div className="flex flex-wrap items-center gap-x-6 md:ml-auto">
-                            {OUTBOUND_LINKS.map((link) => (
-                                <a
-                                    key={link.label}
-                                    href={link.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-2 py-2 font-medium hover:text-signal transition-colors duration-150"
-                                >
-                                    {link.label}
-                                    <span className="text-signal" aria-hidden="true">→</span>
-                                </a>
-                            ))}
-                        </div>
+                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+                    <span className="font-mono text-xs tracking-[0.08em] text-ink-soft">
+                        v{meta.version} · {meta.license}
+                    </span>
+                    <div className="flex flex-wrap items-center gap-x-6 md:ml-auto">
+                        {OUTBOUND_LINKS.map((link) => (
+                            <a
+                                key={link.label}
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-2 py-2 font-medium hover:text-signal transition-colors duration-150"
+                            >
+                                {link.label}
+                                <span className="text-signal" aria-hidden="true">→</span>
+                            </a>
+                        ))}
                     </div>
                 </div>
-            </section>
+            </ProjectHero>
 
-            <section className="mx-auto max-w-280 border-t border-hairline px-6 py-10 md:py-12">
+            <PageSection className="py-10 md:py-12">
                 <ProjectDemo locale={locale} alt={t.demoAlt} note={t.demoNote} />
-            </section>
+            </PageSection>
 
-            <section className="mx-auto max-w-280 border-t border-hairline px-6 py-12 md:py-16">
+            <PageSection className="py-12 md:py-16">
                 <div className="mx-auto max-w-4xl">
                     <Readme content={readme[locale]} sha={meta.sha} liftContents={contents.length > 0} />
                 </div>
-            </section>
+            </PageSection>
 
-            <section className="mx-auto max-w-280 border-t border-hairline px-6 py-12 md:py-16">
+            <PageSection className="py-12 md:py-16">
                 <div className="mx-auto max-w-4xl">
                     <h2
                         id={SKILLS_ANCHOR[locale]}
-                        className="mb-4 scroll-mt-[4.5rem] text-2xl font-semibold leading-snug tracking-tight md:text-3xl"
+                        className="mb-4 scroll-mt-18 text-2xl font-semibold leading-snug tracking-tight md:text-3xl"
                     >
                         {t.skillsHeading}
                     </h2>
@@ -254,7 +223,7 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                         ))}
                     </div>
                 </div>
-            </section>
-        </main>
+            </PageSection>
+        </ProjectShell>
     );
 }

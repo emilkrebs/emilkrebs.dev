@@ -92,7 +92,7 @@
             "id": "med-research-mcp",
             "name": "Med Research MCP",
             "description": "Med Research MCP 是面向 AI 代理的循证文献检索 MCP 服务器，支持 PubMed、Europe PMC、ChinaXiv 和 RussiaRxiv。",
-            "caption": "在线 - emilkrebs.dev/zh/projects/med-research-mcp",
+            "caption": "在线 - emilkrebs.dev/zh/med-research-mcp",
             "linkLabel": "阅读 Med Research MCP 页面"
         },
         {

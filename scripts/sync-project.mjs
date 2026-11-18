@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Vendors github.com/emilkrebs/med-research-mcp for the project page at
- * /projects/med-research-mcp/. Resolves main to one commit SHA, then fetches
+ * /med-research-mcp/. Resolves main to one commit SHA, then fetches
  * every source by that SHA, never by a floating ref:
  *
  * - the two READMEs and the three SKILL.md files into src/app/content, each

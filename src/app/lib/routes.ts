@@ -18,7 +18,7 @@ export const ROUTES = {
     story: { paths: { en: "/story/", zh: "/zh/story/" }, index: true },
     healthstack: { paths: { en: "/healthstack/" }, index: true },
     project_med_research: {
-        paths: { en: "/projects/med-research-mcp/", zh: "/zh/projects/med-research-mcp/" },
+        paths: { en: "/med-research-mcp/", zh: "/zh/med-research-mcp/" },
         index: true,
     },
     // Legal pages carry personal contact data and have no search value.
