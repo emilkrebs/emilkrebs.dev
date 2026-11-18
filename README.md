@@ -48,9 +48,9 @@ Run `npm run lint` and `npm run build` before checking the exported copy. Manual
 AI baselines, external profile updates, and post-deployment edge checks are
 tracked outside this repository; a successful build does not complete them.
 
-## Performance [_↗_](https://pagespeed.web.dev/analysis/https-emilkrebs-dev/oai9o409h0?hl=en_GB&form_factor=mobile)
+## Performance [_↗_](https://pagespeed.web.dev/analysis/https-emilkrebs-dev/n9vix5zf6e?hl=en_GB&form_factor=mobile)
 
-<img width="1016" height="1069" alt="image" src="https://github.com/user-attachments/assets/87a32615-5980-4608-b28b-ed3c8170310a" />
+<img width="1016" height="1213" alt="PageSpeed Insights mobile report for emilkrebs.dev: Performance, Accessibility, Best Practices and SEO all 100, agentic browsing 3/3, on an emulated Moto G Power with Slow 4G" src="./docs/performance/pagespeed-mobile.png" />
 
 ## Screenshot
 

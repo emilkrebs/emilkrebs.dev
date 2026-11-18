@@ -149,7 +149,7 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                     image: "/og/med-research-mcp.jpg",
                 })}
             />
-            <BackHeader route="project_med_research" maxWidth="4xl" locale={locale} />
+            <BackHeader route="project_med_research" maxWidth="column" locale={locale} />
 
             {/* Head: the mark and the claim, then the install block-link
                 jumping to the README's install section, then the README's
