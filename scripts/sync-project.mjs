@@ -11,7 +11,7 @@
  *   comment, into public/downloads as plain markdown: a visitor takes a skill
  *   without unpacking anything;
  * - the two demo recordings, converted to animated WebP, into
- *   public/media/projects/med-research-mcp;
+ *   public/media/med-research-mcp;
  * - meta.json with { version, license, sha, syncedAt }.
  *
  * Usage:
@@ -30,8 +30,8 @@ import { dirname, join } from "node:path";
 import sharp from "sharp";
 
 const REPO = "emilkrebs/med-research-mcp";
-const CONTENT_DIR = "src/app/content/projects/med-research-mcp";
-const MEDIA_DIR = "public/media/projects/med-research-mcp";
+const CONTENT_DIR = "src/app/content/med-research-mcp";
+const MEDIA_DIR = "public/media/med-research-mcp";
 const DOWNLOAD_DIR = "public/downloads";
 
 const SKILLS = ["med-research", "med-research-ebm", "med-research-setup"];

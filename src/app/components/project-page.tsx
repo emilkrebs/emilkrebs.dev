@@ -5,7 +5,7 @@ import { PageSection, ProjectHero, ProjectShell } from "./project-layout";
 import { parseSkill, parseContents, Readme, SkillBody } from "./readme";
 import { copy, type Locale, type ProjectPageCopy } from "../lib/i18n";
 import type { OgImage } from "../lib/metadata";
-import meta from "../content/projects/med-research-mcp/meta.json";
+import meta from "../content/med-research-mcp/meta.json";
 
 /**
  * The record page for med-research-mcp, shared by both locales. Everything
@@ -27,7 +27,7 @@ import meta from "../content/projects/med-research-mcp/meta.json";
 const REPO = "emilkrebs/med-research-mcp";
 const REPO_URL = `https://github.com/${REPO}`;
 const PROJECT_NAME = "med-research-mcp";
-const CONTENT_DIR = join(process.cwd(), "src/app/content/projects/med-research-mcp");
+const CONTENT_DIR = join(process.cwd(), "src/app/content/med-research-mcp");
 
 const OUTBOUND_LINKS = [
     { label: "npm", href: "https://www.npmjs.com/package/med-research-mcp" },

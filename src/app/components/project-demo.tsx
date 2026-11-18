@@ -14,8 +14,8 @@ import type { Locale } from "../lib/i18n";
  * keeps it out of that pipeline and out of next/image.
  */
 const DEMO: Record<Locale, string> = {
-    en: "/media/projects/med-research-mcp/med-research-mcp-demo.webp",
-    zh: "/media/projects/med-research-mcp/med-research-mcp-demo-zh.webp",
+    en: "/media/med-research-mcp/med-research-mcp-demo.webp",
+    zh: "/media/med-research-mcp/med-research-mcp-demo-zh.webp",
 };
 
 interface ProjectDemoProps {
