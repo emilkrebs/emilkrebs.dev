@@ -20,7 +20,7 @@ const DEMO: Record<Locale, string> = {
 interface ProjectDemoProps {
     locale: Locale;
     alt: string;
-    /** One line under the plate: what the ten seconds show. */
+    /** One line above the plate: what the ten seconds show. */
     note: string;
 }
 

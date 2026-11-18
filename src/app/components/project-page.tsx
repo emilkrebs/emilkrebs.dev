@@ -18,7 +18,7 @@ import meta from "../content/projects/med-research-mcp/meta.json";
  * One document, one heading system: the README's own h2s are the page's
  * sections, so the page carries no mono "DEMO"/"README" wrapper labels on top
  * of them. The skills section is the only section this shell introduces, and
- * it is numbered in the same grammar.
+ * it is set in the same heading grammar.
  *
  * The head answers the first three questions in order: what is this (the
  * lead), how do I run it (the install block-link), where is everything (the
@@ -80,9 +80,10 @@ interface SkillCardProps {
     slug: (typeof SKILL_SLUGS)[number];
     description: string;
     t: ProjectPageCopy;
+    locale: Locale;
 }
 
-function SkillCard({ slug, description, t }: SkillCardProps) {
+function SkillCard({ slug, description, t, locale }: SkillCardProps) {
     const content = skillFiles[slug];
     const frontmatter = parseSkill(content);
     return (
@@ -102,12 +103,12 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
                         <span className="text-base font-semibold">{slug}</span>
                     </span>
                     <span className="mt-3 block flex-1 text-sm leading-relaxed text-ink/85">{description}</span>
-                    <span className="mt-4 block font-mono text-xs tracking-[0.04em] text-ink-soft">
+                    <span className="mt-4 block font-mono text-xs tracking-[0.08em] text-ink-soft">
                         <span className="group-open:hidden">{t.skillRead} <span aria-hidden="true">+</span></span>
                         <span className="hidden group-open:inline">{t.skillClose} <span aria-hidden="true">-</span></span>
                     </span>
                 </summary>
-                <div className="border-t border-hairline px-5 py-5">
+                <div className="border-t border-hairline px-5 py-5" lang={locale === "zh" ? "en" : undefined}>
                     {frontmatter.description && (
                         <p className="mb-6 text-sm leading-relaxed text-ink/85">
                             {frontmatter.description}
@@ -248,6 +249,7 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                                 slug={slug}
                                 description={t.skills.find((skill) => skill.id === slug)?.description ?? ""}
                                 t={t}
+                                locale={locale}
                             />
                         ))}
                     </div>

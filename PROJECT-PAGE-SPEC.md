@@ -1,6 +1,6 @@
 # Project page spec: /projects/med-research-mcp/
 
-**Status:** ready to implement. Design decisions belong to the implementer; the contracts, constraints and acceptance checks below do not.
+**Status:** SUPERSEDED — implemented in PR #274 (2026-11-18). The settled design decisions live in DESIGN.md (the `/projects/med-research-mcp` entry and §Motion); where this spec conflicts with DESIGN.md or the shipped code, those win. Kept for the upstream asset facts and the acceptance checks.
 **Target repo:** `github.com/emilkrebs/med-research-mcp` (public, default branch `main`). No local clone: everything is read from GitHub at a pinned commit.
 **Site repo:** this one. Next 16.4.5, `output: "export"`, `trailingSlash: true`.
 

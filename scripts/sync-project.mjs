@@ -10,7 +10,8 @@
  * - the same three SKILL.md files, unmodified and without the provenance
  *   comment, into public/downloads as plain markdown: a visitor takes a skill
  *   without unpacking anything;
- * - the two demo GIFs into public/pictures;
+ * - the two demo recordings, converted to animated WebP, into
+ *   public/media/projects/med-research-mcp;
  * - meta.json with { version, license, sha, syncedAt }.
  *
  * Usage:

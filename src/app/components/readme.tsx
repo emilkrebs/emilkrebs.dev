@@ -79,7 +79,7 @@ const components = {
         }
         if (className?.includes("readme-alert-label")) {
             return (
-                <p className="mb-2 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-signal">
+                <p className="mb-2 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink">
                     <span className="size-1.5 bg-signal" aria-hidden="true" />
                     {children}
                 </p>
