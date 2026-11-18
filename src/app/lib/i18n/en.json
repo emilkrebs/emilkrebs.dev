@@ -165,8 +165,7 @@
         "waterkant": { "place": "Kiel", "role": "Attendee" }
     },
     "projectPage": {
-        "installLabel": "One command",
-        "installGuide": "Install guide",
+        "installGuide": "Install",
         "contentsAria": "On this page",
         "demoAlt": "Real output: the assistant is asked whether tirzepatide helps with obstructive sleep apnea, searches the databases, and returns study cards labelled with their study design and integrity flags.",
         "demoNote": "Real output: one question, four databases, ten seconds.",

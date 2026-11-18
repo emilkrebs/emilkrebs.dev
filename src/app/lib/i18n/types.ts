@@ -50,9 +50,7 @@ export interface StoryCopy {
 }
 
 export interface ProjectPageCopy {
-    /** Mono label on the head's one-command install strip. */
-    installLabel: string;
-    /** Arrow link from the install strip to the README's install section. */
+    /** The head's install block-link: jumps to the README's install section. */
     installGuide: string;
     /** Accessible name of the head's contents jump row. */
     contentsAria: string;

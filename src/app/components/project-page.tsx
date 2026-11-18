@@ -21,7 +21,7 @@ import meta from "../content/projects/med-research-mcp/meta.json";
  * it is numbered in the same grammar.
  *
  * The head answers the first three questions in order: what is this (the
- * lead), how do I run it (the one-command strip), where is everything (the
+ * lead), how do I run it (the install block-link), where is everything (the
  * README's own contents line, lifted here with its localized labels). The
  * version-and-license line and the outbound exits close the head quietly.
  */
@@ -50,9 +50,6 @@ const INSTALL_ANCHOR: Record<Locale, string> = {
     en: "install",
     zh: "安装",
 };
-
-/** The command every MCP client configuration runs; identical in both locales. */
-const INSTALL_COMMAND = "npx -y med-research-mcp";
 
 const readme: Record<Locale, string> = {
     en: readFileSync(join(CONTENT_DIR, "readme.en.md"), "utf8"),
@@ -92,17 +89,19 @@ function SkillCard({ slug, description, t }: SkillCardProps) {
         <article className="flex h-full flex-col border border-hairline md:[&:has(details[open])]:col-span-3">
             <details className="group flex flex-1 flex-col">
                 <summary className="flex flex-1 cursor-pointer list-none flex-col p-5 [&::-webkit-details-marker]:hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element -- the skill mark keeps its own colour; an inline SVG would inherit the ink */}
-                    <img
-                        src="/pictures/med-research-skills.svg"
-                        alt=""
-                        aria-hidden="true"
-                        width={24}
-                        height={24}
-                        className="size-6"
-                    />
-                    <span className="mt-4 block text-base font-semibold">{slug}</span>
-                    <span className="mt-2 block flex-1 text-sm leading-relaxed text-ink/85">{description}</span>
+                    <span className="flex items-center gap-3">
+                        {/* eslint-disable-next-line @next/next/no-img-element -- the skill mark keeps its own colour; an inline SVG would inherit the ink */}
+                        <img
+                            src="/pictures/med-research-skills.svg"
+                            alt=""
+                            aria-hidden="true"
+                            width={24}
+                            height={24}
+                            className="size-6 shrink-0"
+                        />
+                        <span className="text-base font-semibold">{slug}</span>
+                    </span>
+                    <span className="mt-3 block flex-1 text-sm leading-relaxed text-ink/85">{description}</span>
                     <span className="mt-4 block font-mono text-xs tracking-[0.04em] text-ink-soft">
                         <span className="group-open:hidden">{t.skillRead} <span aria-hidden="true">+</span></span>
                         <span className="hidden group-open:inline">{t.skillClose} <span aria-hidden="true">-</span></span>
@@ -151,8 +150,9 @@ export function ProjectPage({ locale }: { locale: Locale }) {
             />
             <BackHeader route="project_med_research" maxWidth="4xl" locale={locale} />
 
-            {/* Head: the mark and the claim, then the one command that runs
-                the server, then the README's own contents line as a jump row
+            {/* Head: the mark and the claim, then the install block-link
+                jumping to the README's install section, then the README's
+                own contents line as a jump row
                 (its labels are the vendored README's, already localized).
                 Version, license and the outbound exits close the head on one
                 quiet row. The mark is the project's own, and it is the first
@@ -175,19 +175,13 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                     </div>
                     <p className="mt-5 max-w-[62ch] text-base leading-relaxed md:text-lg">{lead}</p>
 
-                    <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 border border-hairline bg-paper-deep px-4 py-3 md:px-5">
-                        <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                            {t.installLabel}
-                        </span>
-                        <code className="font-mono text-sm [overflow-wrap:anywhere]">{INSTALL_COMMAND}</code>
-                        <a
-                            href={`#${INSTALL_ANCHOR[locale]}`}
-                            className="inline-flex items-center gap-2 text-sm font-medium hover:text-signal transition-colors duration-150 md:ml-auto"
-                        >
-                            {t.installGuide}
-                            <span className="text-signal" aria-hidden="true">→</span>
-                        </a>
-                    </div>
+                    <a
+                        href={`#${INSTALL_ANCHOR[locale]}`}
+                        className="mt-8 flex items-center justify-between gap-x-6 border border-hairline bg-paper-deep px-4 py-3.5 transition-colors duration-150 hover:border-ink md:px-5"
+                    >
+                        <span className="text-base font-medium">{t.installGuide}</span>
+                        <span className="text-signal" aria-hidden="true">→</span>
+                    </a>
 
                     {contents.length > 0 && (
                         <nav
