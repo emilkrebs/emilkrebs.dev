@@ -23,21 +23,19 @@
     "navAria": "Primary",
     "nav": { "story": "Story", "work": "Work", "projects": "Projects", "contact": "Contact" },
     "switcher": { "label": "中文", "aria": "Switch to the Chinese version" },
-    "heroTagline": "Software engineer at TypeFox in Kiel, Germany. I build frontends, DSLs, and IDEs, ship my own products like Prami and Healthstack, and contribute to open-source projects.",
+    "heroTagline": [
+        "Software engineer at TypeFox in Kiel, Germany. I build the tools that read, ",
+        "understand",
+        ", and transform code, and ship products of my own."
+    ],
     "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "Email" },
     "portraitAlt": "Emil Krebs, Software engineer",
     "thinking": "Thinking...",
-    "fieldHeading": "Field",
-    "fieldLead": [
-        "I build the tools that read, ",
-        "understand",
-        ", and transform code. At TypeFox I build custom VS Code extensions, language servers using the LSP, and the IDEs around them. On my own time it means products: Prami, a spaced-repetition app; Healthstack, an IDE with its own language; and VailNote, zero-knowledge note sharing. Upstream, I contribute to Eclipse Langium."
-    ],
     "strengthsHeading": "What I do",
     "strengths": [
         {
             "title": "Developer tooling",
-            "proof": "Extensions, Langium DSLs, and custom IDEs: the tools that let editors understand code. The Healthstack language runs its own language server in your browser."
+            "proof": "At TypeFox I build VS Code extensions, Langium DSLs, language servers on the LSP, and the IDEs around them. The Healthstack language runs its own language server in your browser."
         },
         {
             "title": "Products and frontend",
@@ -49,7 +47,7 @@
         },
         {
             "title": "Open source",
-            "proof": "Eclipse Langium: the state machine, arithmetics, MiniLogo, and domain model showcases on langium.org, its playground upgrade to Langium 4.1, and fixes in the core. And various contributions to other open-source projects."
+            "proof": "Eclipse Langium: the state machine, arithmetics, MiniLogo, and domain model showcases on langium.org, its playground upgrade to Langium 4.1, and fixes in the core."
         }
     ],
     "workHeading": "Work",
@@ -142,6 +140,15 @@
         ],
         "accept": "Accept and continue",
         "back": "Back"
+    },
+    "storyTeaser": {
+        "heading": "Story",
+        "lead": [
+            "It started at ten with a book about Scratch. Then came Minecraft plugins, Discord bots, a ",
+            "first talk",
+            " at fifteen, and 3D animations that took a TikTok account to 97,000 followers."
+        ],
+        "link": "Read the story"
     },
     "contact": {
         "heading": "Contact",

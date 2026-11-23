@@ -25,7 +25,11 @@
     "navAria": "主导航",
     "nav": { "story": "故事", "work": "工作", "projects": "项目", "contact": "联系" },
     "switcher": { "label": "EN", "aria": "切换到英文版" },
-    "heroTagline": "德国基尔 TypeFox 的软件工程师。我构建前端、DSL 和 IDE，开发 Prami、Healthstack 等自有产品，并为开源项目贡献代码。",
+    "heroTagline": [
+        "德国基尔 TypeFox 的软件工程师。我构建能读取、",
+        "理解",
+        "并转换代码的工具，也开发自己的产品。"
+    ],
     "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "邮件" },
     "wechat": {
         "label": "微信",
@@ -37,17 +41,11 @@
     },
     "portraitAlt": "Emil Krebs，软件工程师",
     "thinking": "思考中...",
-    "fieldHeading": "领域",
-    "fieldLead": [
-        "我构建能读取、",
-        "理解",
-        "并转换代码的工具。在 TypeFox，我构建定制的 VS Code 扩展、使用 LSP 的语言服务器，以及围绕它们的 IDE。业余时间则是产品：间隔重复应用 Prami；拥有自有语言的 IDE Healthstack；以及隐私优先的笔记分享工具 VailNote。在上游，我为 Eclipse Langium 贡献代码。"
-    ],
     "strengthsHeading": "我的专长",
     "strengths": [
         {
             "title": "开发者工具",
-            "proof": "编辑器扩展、Langium DSL 和定制 IDE：让编辑器理解代码的工具。Healthstack 的语言在你的浏览器中运行它自己的语言服务器。"
+            "proof": "在 TypeFox，我构建 VS Code 扩展、Langium DSL、基于 LSP 的语言服务器，以及围绕它们的 IDE。Healthstack 的语言在你的浏览器中运行它自己的语言服务器。"
         },
         {
             "title": "产品与前端",
@@ -59,7 +57,7 @@
         },
         {
             "title": "开源",
-            "proof": "Eclipse Langium：langium.org 上的状态机、算术、MiniLogo 与领域模型示例，Playground 升级到 Langium 4.1，以及核心代码修复。此外，我也为其他开源项目做过多项贡献。"
+            "proof": "Eclipse Langium：langium.org 上的状态机、算术、MiniLogo 与领域模型示例，Playground 升级到 Langium 4.1，以及核心代码修复。"
         }
     ],
     "workHeading": "工作",
@@ -152,6 +150,15 @@
         ],
         "accept": "接受并继续",
         "back": "返回"
+    },
+    "storyTeaser": {
+        "heading": "故事",
+        "lead": [
+            "一切始于 10 岁时一本讲 Scratch 的书。之后是 Minecraft 插件、Discord 机器人、15 岁时的",
+            "第一次演讲",
+            "，还有让我的 TikTok 涨到 9.7 万粉丝的 3D 动画。"
+        ],
+        "link": "阅读完整故事"
     },
     "contact": {
         "heading": "联系",

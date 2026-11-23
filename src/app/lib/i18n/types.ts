@@ -91,15 +91,13 @@ export interface LandingCopy {
     navAria: string;
     nav: { story: string; work: string; projects: string; contact: string };
     switcher: LocaleSwitcherCopy;
-    heroTagline: string;
+    /** [before, accent, after]: the title and the claim; the middle part is set in the serif accent. */
+    heroTagline: string[];
     ctas: { github: string; linkedin: string; email: string };
     /** Chinese locale only. */
     wechat?: WeChatCopy;
     portraitAlt: string;
     thinking: string;
-    fieldHeading: string;
-    /** [before, accent, after]: the middle part is set in the serif accent. */
-    fieldLead: string[];
     strengthsHeading: string;
     strengths: { title: string; proof: string }[];
     workHeading: string;
@@ -113,6 +111,13 @@ export interface LandingCopy {
     projects: ProjectCopy[];
     consent: PreviewConsentCopy;
     externalNotice: ExternalNoticeCopy;
+    /** The homepage's way into /story: one line of the long version, then the link. */
+    storyTeaser: {
+        heading: string;
+        /** [before, accent, after]: the middle part is set in the serif accent. */
+        lead: string[];
+        link: string;
+    };
     contact: { heading: string; lead: string };
     jsonLd: {
         personDescription: string;
