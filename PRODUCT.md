@@ -24,7 +24,7 @@ Static-exported site built with Next.js 16, TypeScript, and Tailwind CSS v4, dep
 
 ## Capabilities and Constraints
 
-- Single landing page with sections: Field (who he is), What I do (strengths), Work (TypeFox), Projects, Contact (one line of intent and the visible address), Colophon.
+- Single landing page with sections: Hero (who he is and the claim), What I do (strengths), Work (TypeFox), Projects, Story (one line of the long version, linking /story), Contact (one line of intent, the visible address, and the resume), Colophon.
 - German legal pages must remain: imprint (`/imprint`) and privacy (`/privacy`).
 - Existing SEO and OpenGraph metadata must be preserved and updated (title, description, OG image).
 - Contact surface: email, GitHub, LinkedIn. Social links stay plain and quiet.
