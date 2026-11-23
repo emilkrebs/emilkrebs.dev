@@ -17,7 +17,7 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                     <div className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
                         <p>{t.location}</p>
                     </div>
-                    <div className="flex flex-col gap-2 text-sm">
+                    <div className="flex flex-col gap-2 text-base">
                         <a
                             href={GITHUB_URL}
                             target="_blank"

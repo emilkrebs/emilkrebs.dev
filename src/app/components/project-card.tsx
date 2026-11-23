@@ -26,6 +26,8 @@ export interface ProjectCardProps {
     linkLabel?: string;
     // Overrides the href with a different URL, if provided.
     linkOverride?: string;
+    /** A second arrow link beside the main one. A plain anchor: it may leave the Next app (e.g. /playground/). */
+    extraLink?: { href: string; label: string };
     /** NDA work: dashed frame, no media, no details. */
     confidential?: boolean;
     /** flagship: larger title. compact: square media, tighter type, no caption. */
@@ -51,6 +53,7 @@ export function ProjectCard({
     caption,
     linkLabel,
     linkOverride,
+    extraLink,
     confidential,
     variant,
     filledTags,
@@ -134,10 +137,10 @@ export function ProjectCard({
                 <div className="flex items-start justify-between gap-4">
                     <h3
                         className={`${variant === "flagship"
-                            ? "text-3xl md:text-4xl"
+                            ? "text-3xl"
                             : compact
                                 ? "text-lg md:text-xl"
-                                : "text-2xl md:text-3xl"
+                                : "text-2xl"
                         } font-semibold tracking-tight`}
                     >
                         {name}
@@ -152,13 +155,13 @@ export function ProjectCard({
                 {tags.length > 0 && (
                     <div className={`${compact ? "mt-4" : "mt-6"} flex flex-wrap gap-2`}>
                         {tags.map((tag) => (
-                            <Tag key={tag} filled={filledTags} compact={compact} confidential={confidential}>
+                            <Tag key={tag} filled={filledTags} confidential={confidential}>
                                 {tag}
                             </Tag>
                         ))}
                     </div>
                 )}
-                <div className={compact ? "mt-5" : "mt-8"}>
+                <div className={`${compact ? "mt-5" : "mt-8"} flex flex-wrap items-center gap-x-8 gap-y-3`}>
                     {link ? (
                         notice ? (
                             <ExternalNotice href={link} title={name} copy={t.externalNotice} label={label} />
@@ -176,6 +179,16 @@ export function ProjectCard({
                         <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                             {t.privateLabel}
                         </span>
+                    )}
+                    {extraLink && (
+                        <a
+                            href={extraLink.href}
+                            className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                        >
+                            {extraLink.label}
+                            <span className="sr-only">: {name}</span>
+                            <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
                     )}
                 </div>
             </div>

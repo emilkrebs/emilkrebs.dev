@@ -32,6 +32,7 @@
 .github/hooks
 .codex
 skills-lock.json
+.taste-skill
 # misc
 .DS_Store
 *.pem

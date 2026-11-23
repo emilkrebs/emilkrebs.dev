@@ -25,7 +25,11 @@
     "navAria": "主导航",
     "nav": { "story": "故事", "work": "工作", "projects": "项目", "contact": "联系" },
     "switcher": { "label": "EN", "aria": "切换到英文版" },
-    "heroTagline": "德国基尔 TypeFox 的软件工程师。我构建前端、DSL 和 IDE，开发 Prami、Healthstack 等自有产品，并为开源项目贡献代码。",
+    "heroTagline": [
+        "德国基尔 TypeFox 的软件工程师。我构建能读取、",
+        "理解",
+        "并转换代码的工具，也开发自己的产品。"
+    ],
     "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "邮件" },
     "wechat": {
         "label": "微信",
@@ -37,17 +41,11 @@
     },
     "portraitAlt": "Emil Krebs，软件工程师",
     "thinking": "思考中...",
-    "fieldHeading": "领域",
-    "fieldLead": [
-        "我构建能读取、",
-        "理解",
-        "并转换代码的工具。在 TypeFox，我构建定制的 VS Code 扩展、使用 LSP 的语言服务器，以及围绕它们的 IDE。业余时间则是产品：间隔重复应用 Prami；拥有自有语言的 IDE Healthstack；以及隐私优先的笔记分享工具 VailNote。在上游，我为 Eclipse Langium 贡献代码。"
-    ],
     "strengthsHeading": "我的专长",
     "strengths": [
         {
             "title": "开发者工具",
-            "proof": "编辑器扩展、Langium DSL 和定制 IDE：让编辑器理解代码的工具。Healthstack 的语言在你的浏览器中运行它自己的语言服务器。"
+            "proof": "在 TypeFox，我构建 VS Code 扩展、Langium DSL、基于 LSP 的语言服务器，以及围绕它们的 IDE。Healthstack 的语言在你的浏览器中运行它自己的语言服务器。"
         },
         {
             "title": "产品与前端",
@@ -59,12 +57,13 @@
         },
         {
             "title": "开源",
-            "proof": "Eclipse Langium：langium.org 上的状态机、算术、MiniLogo 与领域模型示例，Playground 升级到 Langium 4.1，以及核心代码修复。此外，我也为其他开源项目做过多项贡献。"
+            "proof": "Eclipse Langium：langium.org 上的状态机、算术、MiniLogo 与领域模型示例，Playground 升级到 Langium 4.1，以及核心代码修复。"
         }
     ],
     "workHeading": "工作",
     "workBlurb": "自2025年10月起以正式职位担任软件工程师，参与大型国际团队的客户项目。此前，十五岁时在此实习，之后做了一年半兼职。工作之余，我在基尔大学全日制攻读计算机科学与社会学学士学位。",
     "projectsHeading": "项目",
+    "storyLink": "更早的项目，以及 10 岁时的起点，都在故事里",
     "open": "打开",
     "privateLabel": "私有",
     "previewTitleSuffix": " 预览",
@@ -81,10 +80,11 @@
         {
             "id": "healthstack",
             "name": "Healthstack",
-            "description": "基于 Eclipse Theia 的生活方式优化专用 IDE：生物标记追踪、单位转换，以及为干预协议量身打造的 DSL。其 DSL 的语言服务器就运行在项目页面上。",
+            "description": "基于 Eclipse Theia 的生活方式优化专用 IDE：生物标记追踪、单位转换，以及为干预协议量身打造的 DSL。其 DSL 的语言服务器直接在你的浏览器中运行。",
             "status": "预览",
             "caption": "在线 - emilkrebs.dev/playground",
-            "linkLabel": "阅读 Healthstack 页面"
+            "linkLabel": "阅读 Healthstack 页面",
+            "extraLinkLabel": "在浏览器中试用这门语言"
         }
     ],
     "projects": [

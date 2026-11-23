@@ -82,6 +82,8 @@ export interface ProjectCopy {
     linkLabel?: string;
     /** Overrides the href; used for special routing cases. */
     linkOverride?: string;
+    /** A second arrow link on the card, e.g. Healthstack's live playground. */
+    extraLinkLabel?: string;
 }
 
 
@@ -89,20 +91,20 @@ export interface LandingCopy {
     navAria: string;
     nav: { story: string; work: string; projects: string; contact: string };
     switcher: LocaleSwitcherCopy;
-    heroTagline: string;
+    /** [before, accent, after]: the title and the claim; the middle part is set in the serif accent. */
+    heroTagline: string[];
     ctas: { github: string; linkedin: string; email: string };
     /** Chinese locale only. */
     wechat?: WeChatCopy;
     portraitAlt: string;
     thinking: string;
-    fieldHeading: string;
-    /** [before, accent, after]: the middle part is set in the serif accent. */
-    fieldLead: string[];
     strengthsHeading: string;
     strengths: { title: string; proof: string }[];
     workHeading: string;
     workBlurb: string;
     projectsHeading: string;
+    /** Closes the project list: the homepage's one way into /story besides the nav. */
+    storyLink: string;
     open: string;
     privateLabel: string;
     previewTitleSuffix: string;

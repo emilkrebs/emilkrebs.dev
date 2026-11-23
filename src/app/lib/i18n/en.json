@@ -23,21 +23,19 @@
     "navAria": "Primary",
     "nav": { "story": "Story", "work": "Work", "projects": "Projects", "contact": "Contact" },
     "switcher": { "label": "中文", "aria": "Switch to the Chinese version" },
-    "heroTagline": "Software engineer at TypeFox in Kiel, Germany. I build frontends, DSLs, and IDEs, ship my own products like Prami and Healthstack, and contribute to open-source projects.",
+    "heroTagline": [
+        "Software engineer at TypeFox in Kiel, Germany. I build the tools that read, ",
+        "understand",
+        ", and transform code, and ship products of my own."
+    ],
     "ctas": { "github": "GitHub", "linkedin": "LinkedIn", "email": "Email" },
     "portraitAlt": "Emil Krebs, Software engineer",
     "thinking": "Thinking...",
-    "fieldHeading": "Field",
-    "fieldLead": [
-        "I build the tools that read, ",
-        "understand",
-        ", and transform code. At TypeFox I build custom VS Code extensions, language servers using the LSP, and the IDEs around them. On my own time it means products: Prami, a spaced-repetition app; Healthstack, an IDE with its own language; and VailNote, zero-knowledge note sharing. Upstream, I contribute to Eclipse Langium."
-    ],
     "strengthsHeading": "What I do",
     "strengths": [
         {
             "title": "Developer tooling",
-            "proof": "Extensions, Langium DSLs, and custom IDEs: the tools that let editors understand code. The Healthstack language runs its own language server in your browser."
+            "proof": "At TypeFox I build VS Code extensions, Langium DSLs, language servers on the LSP, and the IDEs around them. The Healthstack language runs its own language server in your browser."
         },
         {
             "title": "Products and frontend",
@@ -49,12 +47,13 @@
         },
         {
             "title": "Open source",
-            "proof": "Eclipse Langium: the state machine, arithmetics, MiniLogo, and domain model showcases on langium.org, its playground upgrade to Langium 4.1, and fixes in the core. And various contributions to other open-source projects."
+            "proof": "Eclipse Langium: the state machine, arithmetics, MiniLogo, and domain model showcases on langium.org, its playground upgrade to Langium 4.1, and fixes in the core."
         }
     ],
     "workHeading": "Work",
     "workBlurb": "Software engineer in a full role since October 2025, on client projects with large, international teams. Before that, an internship at fifteen and a year and a half part-time. Alongside the job, I am studying full-time for a Bachelor's in Computer Science and Sociology at Kiel University.",
     "projectsHeading": "Projects",
+    "storyLink": "Earlier projects, and how it started at ten, are in the story",
     "open": "Open",
     "privateLabel": "Private",
     "previewTitleSuffix": " preview",
@@ -71,10 +70,11 @@
         {
             "id": "healthstack",
             "name": "Healthstack",
-            "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. The DSL's language server runs on the project page.",
+            "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. The DSL's language server runs in your browser.",
             "status": "Preview",
             "caption": "Live - emilkrebs.dev/playground",
-            "linkLabel": "Read the Healthstack page"
+            "linkLabel": "Read the Healthstack page",
+            "extraLinkLabel": "Try the language in your browser"
         }
     ],
     "projects": [

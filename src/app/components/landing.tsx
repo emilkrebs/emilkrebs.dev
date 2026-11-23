@@ -7,7 +7,7 @@ import { RouteLocaleSwitcher } from "./route-locale-switcher";
 import { Tag } from "./tag";
 import { TokenMark } from "./token-mark";
 import { WeChatLink } from "./wechat-link";
-import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
+import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL, PLAYGROUND_PATH } from "../lib/constants";
 import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
 import { FULL_WIDTH_SIZES, HALF_WIDTH_SIZES } from "../lib/image-sizes";
 import { routePath, type RouteKey } from "../lib/routes";
@@ -24,6 +24,8 @@ interface ProjectBase {
     /** A third-party live page, loaded on click over the image. */
     preview?: string;
     notice?: boolean;
+    /** Target of the card's second arrow link; its label comes from the copy. */
+    extraHref?: string;
 }
 
 type Project = ProjectBase & ProjectCopy;
@@ -41,9 +43,11 @@ const FLAGSHIP_BASE: ProjectBase[] = [
         route: "healthstack",
         tags: ["Theia", "Langium", "TypeScript", "Electron"],
         image: "/pictures/healthstack-dashboard.webp",
+        extraHref: PLAYGROUND_PATH,
     },
 ];
 
+// Langium Showcase sits near the end: little visual impact, so it never takes a wide slot.
 const PROJECT_BASE: ProjectBase[] = [
     {
         id: "vailnote",
@@ -54,7 +58,7 @@ const PROJECT_BASE: ProjectBase[] = [
     {
         id: "med-research-mcp",
         route: "project_med_research",
-        tags: ["TypeScript", "MCP", "Node.js"],
+        tags: ["TypeScript", "MCP", "Node.js", "AI-Tool"],
         image: "/pictures/med-research-mcp.svg",
     },
     {
@@ -97,6 +101,11 @@ function mergeProjects(base: ProjectBase[], copies: ProjectCopy[]): Project[] {
 /** GitHub, LinkedIn, Email: the plain arrow links that leave the page. */
 const EXIT_LINK_CLASS = "inline-flex items-center gap-2 py-2.5 font-medium hover:text-signal transition-colors duration-150";
 
+/** The serif accent. CJK has no true italic; the zh accent contrasts by the serif face alone. */
+function accentClass(locale: Locale): string {
+    return locale === "zh" ? "font-serif not-italic" : "font-serif italic";
+}
+
 function Nav({ t, locale }: { t: LandingCopy; locale: Locale }) {
     const linkClass = "py-3 font-mono text-xs uppercase tracking-[0.04em] sm:tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150";
     return (
@@ -129,7 +138,8 @@ function Nav({ t, locale }: { t: LandingCopy; locale: Locale }) {
     );
 }
 
-function Hero({ t }: { t: LandingCopy }) {
+function Hero({ t, locale }: { t: LandingCopy; locale: Locale }) {
+    const [before, accent, after] = t.heroTagline;
     return (
         <section
             id="top"
@@ -141,7 +151,9 @@ function Hero({ t }: { t: LandingCopy }) {
                         Emil Krebs
                     </h1>
                     <p className="mt-8 text-lg md:text-xl leading-relaxed max-w-[46ch]">
-                        {t.heroTagline}
+                        {before}
+                        <em className={accentClass(locale)}>{accent}</em>
+                        {after}
                     </p>
                     <div className="mt-8 flex flex-wrap items-center gap-x-6">
                         <a
@@ -176,21 +188,22 @@ function Hero({ t }: { t: LandingCopy }) {
                 </div>
 
                 <figure className="shrink-0 relative w-fit">
-                    <span className="absolute inset-0 border border-signal opacity-70" aria-hidden="true">
+                    {/* Print registration ticks: ink-soft, just outside the frame. */}
+                    <span className="absolute inset-0" aria-hidden="true">
                         <span
-                            className="absolute -top-1.5 -left-1.5 size-3.5 border-t-2 border-l-2 border-signal"
+                            className="absolute -top-1.5 -left-1.5 size-3.5 border-t-2 border-l-2 border-ink-soft"
                             aria-hidden="true"
                         />
                         <span
-                            className="absolute -top-1.5 -right-1.5 size-3.5 border-t-2 border-r-2 border-signal"
+                            className="absolute -top-1.5 -right-1.5 size-3.5 border-t-2 border-r-2 border-ink-soft"
                             aria-hidden="true"
                         />
                         <span
-                            className="absolute -bottom-1.5 -left-1.5 size-3.5 border-b-2 border-l-2 border-signal"
+                            className="absolute -bottom-1.5 -left-1.5 size-3.5 border-b-2 border-l-2 border-ink-soft"
                             aria-hidden="true"
                         />
                         <span
-                            className="absolute -bottom-1.5 -right-1.5 size-3.5 border-b-2 border-r-2 border-signal"
+                            className="absolute -bottom-1.5 -right-1.5 size-3.5 border-b-2 border-r-2 border-ink-soft"
                             aria-hidden="true"
                         />
                     </span>
@@ -213,7 +226,7 @@ function Hero({ t }: { t: LandingCopy }) {
                     <div
                         className="absolute -top-2.5 -right-2.5 z-20 bg-paper border border-signal-accent/60 px-2.5 py-1.5"
                     >
-                        <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
+                        <p className="font-mono text-xs uppercase tracking-[0.08em] leading-tight">
                             <span className="block text-ink-soft">{t.thinking}</span>
                         </p>
                     </div>
@@ -236,24 +249,6 @@ function SectionHeading({ id, children }: { id?: string; children: string }) {
     );
 }
 
-function Field({ t, locale }: { t: LandingCopy; locale: Locale }) {
-    const [before, accent, after] = t.fieldLead;
-    return (
-        <section
-            id="field"
-            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
-        >
-            <SectionHeading>{t.fieldHeading}</SectionHeading>
-            <p className="text-xl md:text-2xl leading-relaxed max-w-[64ch]">
-                {before}
-                {/* CJK has no true italic; the zh accent contrasts by the serif face alone. */}
-                <em className={locale === "zh" ? "font-serif not-italic" : "font-serif italic"}>{accent}</em>
-                {after}
-            </p>
-        </section>
-    );
-}
-
 function WhatIDo({ t }: { t: LandingCopy }) {
     return (
         <section className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline">
@@ -264,7 +259,7 @@ function WhatIDo({ t }: { t: LandingCopy }) {
                         key={strength.title}
                         className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8"
                     >
-                        <h3 className="md:col-span-4 text-2xl md:text-3xl font-semibold tracking-tight flex items-start gap-3">
+                        <h3 className="md:col-span-4 text-2xl font-semibold tracking-tight flex items-start gap-3">
                             <span className="mt-3 size-1.5 bg-signal shrink-0" aria-hidden="true" />
                             {strength.title}
                         </h3>
@@ -333,6 +328,11 @@ function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
             preview={project.preview}
             linkLabel={project.linkLabel}
             linkOverride={project.linkOverride}
+            extraLink={
+                project.extraHref && project.extraLinkLabel
+                    ? { href: project.extraHref, label: project.extraLinkLabel }
+                    : undefined
+            }
             variant={flagship ? "flagship" : undefined}
             sizes={wide ? FULL_WIDTH_SIZES : HALF_WIDTH_SIZES}
             locale={locale}
@@ -368,6 +368,12 @@ function Projects({ t, locale }: { t: LandingCopy; locale: Locale }) {
                     );
                 })}
             </div>
+
+            {/* The project list continues on /story, back to the beginning. */}
+            <Link href={routePath("story", locale)} className={`mt-10 ${EXIT_LINK_CLASS}`}>
+                {t.storyLink}
+                <span className="text-signal" aria-hidden="true">→</span>
+            </Link>
         </section>
     );
 }
@@ -379,7 +385,7 @@ function Contact({ t }: { t: LandingCopy }) {
             className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
         >
             <SectionHeading>{t.contact.heading}</SectionHeading>
-            <p className="text-xl md:text-2xl leading-relaxed max-w-[52ch]">{t.contact.lead}</p>
+            <p className="text-xl leading-relaxed max-w-[52ch]">{t.contact.lead}</p>
             <a
                 href={`mailto:${EMAIL_ADDRESS}`}
                 className="mt-8 inline-flex items-center gap-3 py-2 text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] break-all hover:text-signal transition-colors duration-150"
@@ -399,8 +405,7 @@ export function Landing({ locale }: { locale: Locale }) {
             <Analytics />
             <JsonLd data={profilePageSchema(locale)} />
             <Nav t={t} locale={locale} />
-            <Hero t={t} />
-            <Field t={t} locale={locale} />
+            <Hero t={t} locale={locale} />
             <WhatIDo t={t} />
             <Work t={t} />
             <Projects t={t} locale={locale} />
