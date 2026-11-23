@@ -7,8 +7,8 @@ import { RouteLocaleSwitcher } from "./route-locale-switcher";
 import { Tag } from "./tag";
 import { TokenMark } from "./token-mark";
 import { WeChatLink } from "./wechat-link";
-import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL, PLAYGROUND_PATH, RESUME_PATH } from "../lib/constants";
-import { copy, footerCopy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
+import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL, PLAYGROUND_PATH } from "../lib/constants";
+import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
 import { FULL_WIDTH_SIZES, HALF_WIDTH_SIZES } from "../lib/image-sizes";
 import { routePath, type RouteKey } from "../lib/routes";
 import { profilePageSchema } from "../lib/structured-data";
@@ -368,32 +368,17 @@ function Projects({ t, locale }: { t: LandingCopy; locale: Locale }) {
                     );
                 })}
             </div>
-        </section>
-    );
-}
 
-function StoryTeaser({ t, locale }: { t: LandingCopy; locale: Locale }) {
-    const [before, accent, after] = t.storyTeaser.lead;
-    return (
-        <section
-            id="story"
-            className="mx-auto max-w-280 px-6 py-16 md:py-24 border-t border-hairline"
-        >
-            <SectionHeading>{t.storyTeaser.heading}</SectionHeading>
-            <p className="text-xl leading-relaxed max-w-[52ch]">
-                {before}
-                <em className={accentClass(locale)}>{accent}</em>
-                {after}
-            </p>
-            <Link href={routePath("story", locale)} className={`mt-6 ${EXIT_LINK_CLASS}`}>
-                {t.storyTeaser.link}
+            {/* The project list continues on /story, back to the beginning. */}
+            <Link href={routePath("story", locale)} className={`mt-10 ${EXIT_LINK_CLASS}`}>
+                {t.storyLink}
                 <span className="text-signal" aria-hidden="true">→</span>
             </Link>
         </section>
     );
 }
 
-function Contact({ t, locale }: { t: LandingCopy; locale: Locale }) {
+function Contact({ t }: { t: LandingCopy }) {
     return (
         <section
             id="contact"
@@ -401,19 +386,13 @@ function Contact({ t, locale }: { t: LandingCopy; locale: Locale }) {
         >
             <SectionHeading>{t.contact.heading}</SectionHeading>
             <p className="text-xl leading-relaxed max-w-[52ch]">{t.contact.lead}</p>
-            <div className="mt-8 flex flex-col items-start gap-2">
-                <a
-                    href={`mailto:${EMAIL_ADDRESS}`}
-                    className="inline-flex items-center gap-3 py-2 text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] break-all hover:text-signal transition-colors duration-150"
-                >
-                    {EMAIL_ADDRESS}
-                    <span className="text-signal" aria-hidden="true">→</span>
-                </a>
-                <a href={RESUME_PATH} type="application/pdf" className={EXIT_LINK_CLASS}>
-                    {footerCopy[locale].resume}
-                    <span className="text-signal" aria-hidden="true">→</span>
-                </a>
-            </div>
+            <a
+                href={`mailto:${EMAIL_ADDRESS}`}
+                className="mt-8 inline-flex items-center gap-3 py-2 text-[clamp(1.75rem,3vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.01em] break-all hover:text-signal transition-colors duration-150"
+            >
+                {EMAIL_ADDRESS}
+                <span className="text-signal" aria-hidden="true">→</span>
+            </a>
         </section>
     );
 }
@@ -430,8 +409,7 @@ export function Landing({ locale }: { locale: Locale }) {
             <WhatIDo t={t} />
             <Work t={t} />
             <Projects t={t} locale={locale} />
-            <StoryTeaser t={t} locale={locale} />
-            <Contact t={t} locale={locale} />
+            <Contact t={t} />
         </main>
     );
 }

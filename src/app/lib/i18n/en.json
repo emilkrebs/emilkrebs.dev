@@ -53,6 +53,7 @@
     "workHeading": "Work",
     "workBlurb": "Software engineer in a full role since October 2025, on client projects with large, international teams. Before that, an internship at fifteen and a year and a half part-time. Alongside the job, I am studying full-time for a Bachelor's in Computer Science and Sociology at Kiel University.",
     "projectsHeading": "Projects",
+    "storyLink": "Earlier projects, and how it started at ten, are in the story",
     "open": "Open",
     "privateLabel": "Private",
     "previewTitleSuffix": " preview",
@@ -140,15 +141,6 @@
         ],
         "accept": "Accept and continue",
         "back": "Back"
-    },
-    "storyTeaser": {
-        "heading": "Story",
-        "lead": [
-            "It started at ten with a book about Scratch. Then came Minecraft plugins, Discord bots, a ",
-            "first talk",
-            " at fifteen, and 3D animations that took a TikTok account to 97,000 followers."
-        ],
-        "link": "Read the story"
     },
     "contact": {
         "heading": "Contact",

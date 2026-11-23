@@ -103,6 +103,8 @@ export interface LandingCopy {
     workHeading: string;
     workBlurb: string;
     projectsHeading: string;
+    /** Closes the project list: the homepage's one way into /story besides the nav. */
+    storyLink: string;
     open: string;
     privateLabel: string;
     previewTitleSuffix: string;
@@ -111,13 +113,6 @@ export interface LandingCopy {
     projects: ProjectCopy[];
     consent: PreviewConsentCopy;
     externalNotice: ExternalNoticeCopy;
-    /** The homepage's way into /story: one line of the long version, then the link. */
-    storyTeaser: {
-        heading: string;
-        /** [before, accent, after]: the middle part is set in the serif accent. */
-        lead: string[];
-        link: string;
-    };
     contact: { heading: string; lead: string };
     jsonLd: {
         personDescription: string;

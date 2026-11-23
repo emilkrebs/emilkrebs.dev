@@ -63,6 +63,7 @@
     "workHeading": "工作",
     "workBlurb": "自2025年10月起以正式职位担任软件工程师，参与大型国际团队的客户项目。此前，十五岁时在此实习，之后做了一年半兼职。工作之余，我在基尔大学全日制攻读计算机科学与社会学学士学位。",
     "projectsHeading": "项目",
+    "storyLink": "更早的项目，以及 10 岁时的起点，都在故事里",
     "open": "打开",
     "privateLabel": "私有",
     "previewTitleSuffix": " 预览",
@@ -150,15 +151,6 @@
         ],
         "accept": "接受并继续",
         "back": "返回"
-    },
-    "storyTeaser": {
-        "heading": "故事",
-        "lead": [
-            "一切始于 10 岁时一本讲 Scratch 的书。之后是 Minecraft 插件、Discord 机器人、15 岁时的",
-            "第一次演讲",
-            "，还有让我的 TikTok 涨到 9.7 万粉丝的 3D 动画。"
-        ],
-        "link": "阅读完整故事"
     },
     "contact": {
         "heading": "联系",
