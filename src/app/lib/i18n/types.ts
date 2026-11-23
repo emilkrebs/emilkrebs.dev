@@ -35,7 +35,7 @@ export interface FooterCopy {
     location: string;
     copyright: string;
     resume: string;
-    links: { story: string; healthstack: string; imprint: string; privacy: string };
+    links: { story: string; healthstack: string; medResearch: string; imprint: string; privacy: string };
 }
 
 export interface BackHeaderCopy {
