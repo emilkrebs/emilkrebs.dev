@@ -61,6 +61,9 @@ export function Footer({ locale = "en" }: { locale?: Locale }) {
                         <Link href={routePath("healthstack", locale)} className="hover:text-ink transition-colors duration-150 py-1">
                             {t.links.healthstack}
                         </Link>
+                        <Link href={routePath("project_med_research", locale)} className="hover:text-ink transition-colors duration-150 py-1">
+                            {t.links.medResearch}
+                        </Link>
                         <Link href={routePath("imprint", locale)} className="hover:text-ink transition-colors duration-150 py-1">
                             {t.links.imprint}
                         </Link>

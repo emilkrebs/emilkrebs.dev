@@ -163,7 +163,7 @@
         "location": "Emil Krebs - 基尔，德国",
         "copyright": "Emil Krebs。保留所有权利。",
         "resume": "简历 (PDF)",
-        "links": { "story": "故事", "healthstack": "Healthstack", "imprint": "法律声明", "privacy": "隐私政策" }
+        "links": { "story": "故事", "healthstack": "Healthstack", "medResearch": "Med Research MCP", "imprint": "法律声明", "privacy": "隐私政策" }
     },
     "backHeader": {
         "label": "返回首页"
