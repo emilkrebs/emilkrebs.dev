@@ -58,7 +58,7 @@ const PROJECT_BASE: ProjectBase[] = [
     {
         id: "med-research-mcp",
         route: "project_med_research",
-        tags: ["TypeScript", "MCP", "Node.js"],
+        tags: ["TypeScript", "MCP", "Node.js", "AI-Tool"],
         image: "/pictures/med-research-mcp.svg",
     },
     {
@@ -68,17 +68,17 @@ const PROJECT_BASE: ProjectBase[] = [
         image: "/pictures/watchlock.webp",
     },
     {
-        id: "bipoc",
-        href: "https://bipoclimatejusticenetwork.org/",
-        tags: ["Next.js", "TypeScript", "Localization"],
-        image: "/pictures/bipoc.webp",
-    },
-    {
         id: "langium-showcase",
         href: "https://langium.org/showcase/",
         tags: ["Langium", "TypeScript", "DSLs"],
         image: "/pictures/langium-minilogo.webp",
         preview: "https://langium.org/showcase/minilogo/",
+    },
+    {
+        id: "bipoc",
+        href: "https://bipoclimatejusticenetwork.org/",
+        tags: ["Next.js", "TypeScript", "Localization"],
+        image: "/pictures/bipoc.webp",
     },
     {
         id: "this-site",

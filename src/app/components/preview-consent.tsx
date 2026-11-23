@@ -48,22 +48,24 @@ export function PreviewConsent({ id, src, title, backdrop, backdropAlt = "", cop
             {!gone && (
                 <div
                     aria-hidden={loaded}
-                    className={`absolute inset-0 flex items-end justify-start p-3 sm:p-4 transition-opacity duration-700 ease-out ${loaded ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+                    className={`absolute inset-0 flex items-center justify-center p-3 sm:p-4 transition-opacity duration-700 ease-out ${loaded ? "opacity-0 pointer-events-none" : "opacity-100"}`}
                     onTransitionEnd={(e) => {
                         if (e.propertyName === "opacity") setGone(true);
                     }}
                 >
                     {backdrop && (
+                        // Blurred until loaded: it reads as a stand-in, not as the live page.
+                        // The slight scale hides the blur's soft edge inside the plate's clip.
                         <Image
                             src={backdrop}
                             alt={backdropAlt}
                             fill
                             sizes={sizes}
-                            className="absolute inset-0 object-cover object-top"
+                            className="absolute inset-0 object-cover object-top blur-sm scale-105"
                         />
                     )}
-                    {/* A small solid panel in the corner: the notice reads at full contrast and the screenshot stays visible. */}
-                    <div className="relative flex max-w-[17rem] flex-col items-start gap-3 bg-paper border border-hairline px-4 py-3">
+                    {/* A small solid panel, centered: the notice reads at full contrast over the blurred screenshot. */}
+                    <div className="relative flex max-w-[17rem] flex-col items-center gap-3 bg-paper border border-hairline px-4 py-3 text-center">
                         <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-relaxed">
                             {copy.notice}
                         </p>
