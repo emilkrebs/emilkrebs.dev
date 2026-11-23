@@ -134,10 +134,10 @@ export function ProjectCard({
                 <div className="flex items-start justify-between gap-4">
                     <h3
                         className={`${variant === "flagship"
-                            ? "text-3xl md:text-4xl"
+                            ? "text-3xl"
                             : compact
                                 ? "text-lg md:text-xl"
-                                : "text-2xl md:text-3xl"
+                                : "text-2xl"
                         } font-semibold tracking-tight`}
                     >
                         {name}
@@ -152,7 +152,7 @@ export function ProjectCard({
                 {tags.length > 0 && (
                     <div className={`${compact ? "mt-4" : "mt-6"} flex flex-wrap gap-2`}>
                         {tags.map((tag) => (
-                            <Tag key={tag} filled={filledTags} compact={compact} confidential={confidential}>
+                            <Tag key={tag} filled={filledTags} confidential={confidential}>
                                 {tag}
                             </Tag>
                         ))}

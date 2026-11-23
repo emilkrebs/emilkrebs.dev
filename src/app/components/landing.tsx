@@ -265,7 +265,7 @@ function WhatIDo({ t }: { t: LandingCopy }) {
                         key={strength.title}
                         className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8"
                     >
-                        <h3 className="md:col-span-4 text-2xl md:text-3xl font-semibold tracking-tight flex items-start gap-3">
+                        <h3 className="md:col-span-4 text-2xl font-semibold tracking-tight flex items-start gap-3">
                             <span className="mt-3 size-1.5 bg-signal shrink-0" aria-hidden="true" />
                             {strength.title}
                         </h3>
