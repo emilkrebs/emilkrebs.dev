@@ -44,12 +44,14 @@ const FLAGSHIP_BASE: ProjectBase[] = [
     },
 ];
 
+// Langium Showcase leads: the most on-thesis proof of the secondary projects.
 const PROJECT_BASE: ProjectBase[] = [
     {
-        id: "vailnote",
-        href: "https://vailnote.com/",
-        tags: ["TypeScript", "Fresh", "Deno", "MongoDB"],
-        image: "/pictures/vailnote.webp",
+        id: "langium-showcase",
+        href: "https://langium.org/showcase/",
+        tags: ["Langium", "TypeScript", "DSLs"],
+        image: "/pictures/langium-minilogo.webp",
+        preview: "https://langium.org/showcase/minilogo/",
     },
     {
         id: "med-research-mcp",
@@ -64,11 +66,10 @@ const PROJECT_BASE: ProjectBase[] = [
         image: "/pictures/watchlock.webp",
     },
     {
-        id: "langium-showcase",
-        href: "https://langium.org/showcase/",
-        tags: ["Langium", "TypeScript", "DSLs"],
-        image: "/pictures/langium-minilogo.webp",
-        preview: "https://langium.org/showcase/minilogo/",
+        id: "vailnote",
+        href: "https://vailnote.com/",
+        tags: ["TypeScript", "Fresh", "Deno", "MongoDB"],
+        image: "/pictures/vailnote.webp",
     },
     {
         id: "bipoc",

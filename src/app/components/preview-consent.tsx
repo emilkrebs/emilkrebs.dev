@@ -48,7 +48,7 @@ export function PreviewConsent({ id, src, title, backdrop, backdropAlt = "", cop
             {!gone && (
                 <div
                     aria-hidden={loaded}
-                    className={`absolute inset-0 flex flex-col items-center justify-center gap-6 px-8 text-center transition-opacity duration-700 ease-out ${loaded ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+                    className={`absolute inset-0 flex items-end justify-start p-3 sm:p-4 transition-opacity duration-700 ease-out ${loaded ? "opacity-0 pointer-events-none" : "opacity-100"}`}
                     onTransitionEnd={(e) => {
                         if (e.propertyName === "opacity") setGone(true);
                     }}
@@ -62,15 +62,15 @@ export function PreviewConsent({ id, src, title, backdrop, backdropAlt = "", cop
                             className="absolute inset-0 object-cover object-top"
                         />
                     )}
-                    {/* A solid panel, so the notice reads at full contrast over any screenshot. */}
-                    <div className="relative flex max-w-sm flex-col items-center justify-center gap-4 bg-paper border border-hairline px-6 py-5">
-                        <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-loose">
+                    {/* A small solid panel in the corner: the notice reads at full contrast and the screenshot stays visible. */}
+                    <div className="relative flex max-w-[17rem] flex-col items-start gap-3 bg-paper border border-hairline px-4 py-3">
+                        <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft leading-relaxed">
                             {copy.notice}
                         </p>
                         <button
                             type="button"
                             onClick={() => setLoaded(true)}
-                            className="bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.08em] text-paper hover:bg-signal transition-colors duration-150"
+                            className="bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-[0.08em] text-paper hover:bg-signal transition-colors duration-150"
                         >
                             {copy.load}
                         </button>
