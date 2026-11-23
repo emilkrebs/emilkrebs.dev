@@ -176,21 +176,22 @@ function Hero({ t }: { t: LandingCopy }) {
                 </div>
 
                 <figure className="shrink-0 relative w-fit">
-                    <span className="absolute inset-0 border border-signal opacity-70" aria-hidden="true">
+                    {/* Print registration ticks: ink-soft, just outside the frame. */}
+                    <span className="absolute inset-0" aria-hidden="true">
                         <span
-                            className="absolute -top-1.5 -left-1.5 size-3.5 border-t-2 border-l-2 border-signal"
+                            className="absolute -top-1.5 -left-1.5 size-3.5 border-t-2 border-l-2 border-ink-soft"
                             aria-hidden="true"
                         />
                         <span
-                            className="absolute -top-1.5 -right-1.5 size-3.5 border-t-2 border-r-2 border-signal"
+                            className="absolute -top-1.5 -right-1.5 size-3.5 border-t-2 border-r-2 border-ink-soft"
                             aria-hidden="true"
                         />
                         <span
-                            className="absolute -bottom-1.5 -left-1.5 size-3.5 border-b-2 border-l-2 border-signal"
+                            className="absolute -bottom-1.5 -left-1.5 size-3.5 border-b-2 border-l-2 border-ink-soft"
                             aria-hidden="true"
                         />
                         <span
-                            className="absolute -bottom-1.5 -right-1.5 size-3.5 border-b-2 border-r-2 border-signal"
+                            className="absolute -bottom-1.5 -right-1.5 size-3.5 border-b-2 border-r-2 border-ink-soft"
                             aria-hidden="true"
                         />
                     </span>
@@ -213,7 +214,7 @@ function Hero({ t }: { t: LandingCopy }) {
                     <div
                         className="absolute -top-2.5 -right-2.5 z-20 bg-paper border border-signal-accent/60 px-2.5 py-1.5"
                     >
-                        <p className="font-mono text-[10px] uppercase tracking-[0.08em] leading-tight">
+                        <p className="font-mono text-xs uppercase tracking-[0.08em] leading-tight">
                             <span className="block text-ink-soft">{t.thinking}</span>
                         </p>
                     </div>
