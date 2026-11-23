@@ -82,6 +82,8 @@ export interface ProjectCopy {
     linkLabel?: string;
     /** Overrides the href; used for special routing cases. */
     linkOverride?: string;
+    /** A second arrow link on the card, e.g. Healthstack's live playground. */
+    extraLinkLabel?: string;
 }
 
 

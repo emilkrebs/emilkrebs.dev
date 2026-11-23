@@ -17,3 +17,7 @@ export const WECHAT_ID = "emilkrebs";
 export const WECHAT_QR_PATH = "/pictures/wechat.webp";
 
 export const RESUME_PATH = "/resume.pdf";
+
+// The .bio DSL playground: a separate Vite app, served same-origin in the static build
+// and from the Vite dev server in development.
+export const PLAYGROUND_PATH = `${process.env.NEXT_PUBLIC_PLAYGROUND_URL ?? ""}/playground/`;

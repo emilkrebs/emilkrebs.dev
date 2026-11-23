@@ -81,10 +81,11 @@
         {
             "id": "healthstack",
             "name": "Healthstack",
-            "description": "基于 Eclipse Theia 的生活方式优化专用 IDE：生物标记追踪、单位转换，以及为干预协议量身打造的 DSL。其 DSL 的语言服务器就运行在项目页面上。",
+            "description": "基于 Eclipse Theia 的生活方式优化专用 IDE：生物标记追踪、单位转换，以及为干预协议量身打造的 DSL。其 DSL 的语言服务器直接在你的浏览器中运行。",
             "status": "预览",
             "caption": "在线 - emilkrebs.dev/playground",
-            "linkLabel": "阅读 Healthstack 页面"
+            "linkLabel": "阅读 Healthstack 页面",
+            "extraLinkLabel": "在浏览器中试用这门语言"
         }
     ],
     "projects": [

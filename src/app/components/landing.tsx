@@ -7,7 +7,7 @@ import { RouteLocaleSwitcher } from "./route-locale-switcher";
 import { Tag } from "./tag";
 import { TokenMark } from "./token-mark";
 import { WeChatLink } from "./wechat-link";
-import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL } from "../lib/constants";
+import { EMAIL_ADDRESS, GITHUB_URL, LINKEDIN_URL, PLAYGROUND_PATH } from "../lib/constants";
 import { copy, type LandingCopy, type Locale, type ProjectCopy } from "../lib/i18n";
 import { FULL_WIDTH_SIZES, HALF_WIDTH_SIZES } from "../lib/image-sizes";
 import { routePath, type RouteKey } from "../lib/routes";
@@ -24,6 +24,8 @@ interface ProjectBase {
     /** A third-party live page, loaded on click over the image. */
     preview?: string;
     notice?: boolean;
+    /** Target of the card's second arrow link; its label comes from the copy. */
+    extraHref?: string;
 }
 
 type Project = ProjectBase & ProjectCopy;
@@ -41,6 +43,7 @@ const FLAGSHIP_BASE: ProjectBase[] = [
         route: "healthstack",
         tags: ["Theia", "Langium", "TypeScript", "Electron"],
         image: "/pictures/healthstack-dashboard.webp",
+        extraHref: PLAYGROUND_PATH,
     },
 ];
 
@@ -335,6 +338,11 @@ function ProjectEntry({ project, locale, flagship, wide }: ProjectEntryProps) {
             preview={project.preview}
             linkLabel={project.linkLabel}
             linkOverride={project.linkOverride}
+            extraLink={
+                project.extraHref && project.extraLinkLabel
+                    ? { href: project.extraHref, label: project.extraLinkLabel }
+                    : undefined
+            }
             variant={flagship ? "flagship" : undefined}
             sizes={wide ? FULL_WIDTH_SIZES : HALF_WIDTH_SIZES}
             locale={locale}

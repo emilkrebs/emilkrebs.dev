@@ -26,6 +26,8 @@ export interface ProjectCardProps {
     linkLabel?: string;
     // Overrides the href with a different URL, if provided.
     linkOverride?: string;
+    /** A second arrow link beside the main one. A plain anchor: it may leave the Next app (e.g. /playground/). */
+    extraLink?: { href: string; label: string };
     /** NDA work: dashed frame, no media, no details. */
     confidential?: boolean;
     /** flagship: larger title. compact: square media, tighter type, no caption. */
@@ -51,6 +53,7 @@ export function ProjectCard({
     caption,
     linkLabel,
     linkOverride,
+    extraLink,
     confidential,
     variant,
     filledTags,
@@ -158,7 +161,7 @@ export function ProjectCard({
                         ))}
                     </div>
                 )}
-                <div className={compact ? "mt-5" : "mt-8"}>
+                <div className={`${compact ? "mt-5" : "mt-8"} flex flex-wrap items-center gap-x-8 gap-y-3`}>
                     {link ? (
                         notice ? (
                             <ExternalNotice href={link} title={name} copy={t.externalNotice} label={label} />
@@ -176,6 +179,16 @@ export function ProjectCard({
                         <span className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
                             {t.privateLabel}
                         </span>
+                    )}
+                    {extraLink && (
+                        <a
+                            href={extraLink.href}
+                            className="inline-flex items-center gap-2 font-medium hover:text-signal transition-colors duration-150"
+                        >
+                            {extraLink.label}
+                            <span className="sr-only">: {name}</span>
+                            <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
                     )}
                 </div>
             </div>

@@ -71,10 +71,11 @@
         {
             "id": "healthstack",
             "name": "Healthstack",
-            "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. The DSL's language server runs on the project page.",
+            "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. The DSL's language server runs in your browser.",
             "status": "Preview",
             "caption": "Live - emilkrebs.dev/playground",
-            "linkLabel": "Read the Healthstack page"
+            "linkLabel": "Read the Healthstack page",
+            "extraLinkLabel": "Try the language in your browser"
         }
     ],
     "projects": [
