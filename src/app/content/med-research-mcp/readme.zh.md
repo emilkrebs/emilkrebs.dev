@@ -1,4 +1,4 @@
-<!-- vendored from emilkrebs/med-research-mcp@b28f2daeb11ea82b622b5e2317fd1ecab4045813 README.zh-CN.md; regenerate with scripts/sync-project.mjs, do not edit -->
+<!-- vendored from emilkrebs/med-research-mcp@1d4e0ceecfd9c351ac7b16fd53e16355141c449b README.zh-CN.md; regenerate with scripts/sync-project.mjs, do not edit -->
 <p align="center">
   <img src="https://raw.githubusercontent.com/emilkrebs/med-research-mcp/main/mcpb/icon.png" alt="med-research-mcp 图标" width="120" height="120">
 </p>

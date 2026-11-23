@@ -74,9 +74,13 @@ async function fetchBuffer(url) {
 
 /** Resolve main once; everything below is fetched by this SHA. */
 async function resolveSha() {
-    const response = await fetch(`https://api.github.com/repos/${REPO}/commits/main`, {
-        headers: { "User-Agent": "emilkrebs.dev-sync-project", Accept: "application/vnd.github+json" },
-    });
+    // Authenticate when a token is present (CI passes GITHUB_TOKEN). The
+    // unauthenticated api.github.com limit is 60/hr per IP, which shared
+    // Actions runners exhaust -> 403 rate limit exceeded. A token raises it
+    // to 5000/hr. raw.githubusercontent.com below stays unauthenticated.
+    const headers = { "User-Agent": "emilkrebs.dev-sync-project", Accept: "application/vnd.github+json" };
+    if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+    const response = await fetch(`https://api.github.com/repos/${REPO}/commits/main`, { headers });
     if (!response.ok) throw new Error(`Resolving main: ${response.status} ${response.statusText}`);
     const { sha } = await response.json();
     if (!/^[0-9a-f]{40}$/.test(sha)) throw new Error(`Unexpected SHA: ${sha}`);

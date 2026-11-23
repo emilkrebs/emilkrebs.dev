@@ -26,10 +26,6 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
-      # Fails on upstream drift: re-run scripts/sync-project.mjs and commit.
-      # Never part of npm run build; a build must not depend on the network.
-      - name: Check vendored project content
-        run: node scripts/sync-project.mjs --check
       # next build also type-checks the project
       - name: Build
         run: npm run build
@@ -38,6 +34,28 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./out"
+
+  # Audit only: checks the vendored med-research-mcp content against upstream.
+  # Its own job, allowed to fail, so a rate-limited or drifted upstream can
+  # never block the build or deploy. Real drift is cleared by re-running
+  # scripts/sync-project.mjs and committing; the build itself stays network-free.
+  vendored-content:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check vendored project content
+        run: node scripts/sync-project.mjs --check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
   deploy:
     needs: build

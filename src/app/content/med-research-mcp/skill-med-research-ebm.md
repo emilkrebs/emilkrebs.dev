@@ -1,4 +1,4 @@
-<!-- vendored from emilkrebs/med-research-mcp@b28f2daeb11ea82b622b5e2317fd1ecab4045813 skills/med-research-ebm/SKILL.md; regenerate with scripts/sync-project.mjs, do not edit -->
+<!-- vendored from emilkrebs/med-research-mcp@1d4e0ceecfd9c351ac7b16fd53e16355141c449b skills/med-research-ebm/SKILL.md; regenerate with scripts/sync-project.mjs, do not edit -->
 ---
 name: med-research-ebm
 description: Load ONLY when critically appraising a study or deciding whether a paper is trustworthy enough to rely on — risk of bias (Cochrane RoB 2 / ROBINS-I / ROBINS-E), AMSTAR 2 / ROBIS for reviews, effect sizes / confidence intervals / NNT, heterogeneity (I²), prediction intervals and funnel-plot bias, Bradford Hill causation, applicability/external validity, funding and conflicts of interest, selective publication. Not needed for simple lookups or searches; load the `med-research` workflow skill for query patterns, the 0–5 design tiers and the ground rules of evidence.

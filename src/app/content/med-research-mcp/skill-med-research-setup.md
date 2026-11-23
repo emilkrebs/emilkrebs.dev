@@ -1,4 +1,4 @@
-<!-- vendored from emilkrebs/med-research-mcp@b28f2daeb11ea82b622b5e2317fd1ecab4045813 skills/med-research-setup/SKILL.md; regenerate with scripts/sync-project.mjs, do not edit -->
+<!-- vendored from emilkrebs/med-research-mcp@1d4e0ceecfd9c351ac7b16fd53e16355141c449b skills/med-research-setup/SKILL.md; regenerate with scripts/sync-project.mjs, do not edit -->
 ---
 name: med-research-setup
 description: Use when helping a user install, configure, or troubleshoot the med-research-mcp MCP server (evidence-graded multi-database literature search). Walks through registering it with an MCP client (Claude Code, Claude Desktop via .mcpb, Cursor and other JSON configs, Hermes and other YAML configs) via npx or a source build, connecting to a self-hosted HTTP instance, importing the core library directly, wiring up NCBI credentials, installing the companion skills, and verifying it works. Trigger on "install the med-research MCP", "set up med-research-mcp", "configure literature search", or connection/credential problems with it.
