@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { ProjectDemo } from "./project-demo";
-import { PageSection, ProjectHero, ProjectShell } from "./project-layout";
+import { DocColumn, HeadLink, HeadMeta, JumpRow, PageSection, ProjectHero, ProjectShell, type HeadExit } from "./project-layout";
 import { parseSkill, parseContents, Readme, SkillBody } from "./readme";
 import { copy, type Locale, type ProjectPageCopy } from "../lib/i18n";
 import type { OgImage } from "../lib/metadata";
@@ -29,10 +29,10 @@ const REPO_URL = `https://github.com/${REPO}`;
 const PROJECT_NAME = "med-research-mcp";
 const CONTENT_DIR = join(process.cwd(), "src/app/content/med-research-mcp");
 
-const OUTBOUND_LINKS = [
-    { label: "npm", href: "https://www.npmjs.com/package/med-research-mcp" },
-    { label: "GitHub", href: REPO_URL },
-    { label: "ModelScope", href: "https://www.modelscope.cn/mcp/servers/emilkrebs/med-research-mcp" },
+const OUTBOUND_LINKS: HeadExit[] = [
+    { label: "npm", href: "https://www.npmjs.com/package/med-research-mcp", external: true },
+    { label: "GitHub", href: REPO_URL, external: true },
+    { label: "ModelScope", href: "https://www.modelscope.cn/mcp/servers/emilkrebs/med-research-mcp", external: true },
 ];
 
 const SKILL_SLUGS = ["med-research", "med-research-ebm", "med-research-setup"] as const;
@@ -146,50 +146,9 @@ export function ProjectPage({ locale }: { locale: Locale }) {
             analytics={false}
         >
             <ProjectHero title={PROJECT_NAME} mark="/pictures/med-research-mcp.svg" lead={lead}>
-                <a
-                    href={`#${INSTALL_ANCHOR[locale]}`}
-                    className="mt-8 flex items-center justify-between gap-x-6 border border-hairline bg-paper-deep px-4 py-3.5 transition-colors duration-150 hover:border-ink md:px-5"
-                >
-                    <span className="text-base font-medium">{t.installGuide}</span>
-                    <span className="text-signal" aria-hidden="true">→</span>
-                </a>
-
-                {contents.length > 0 && (
-                    <nav
-                        aria-label={t.contentsAria}
-                        className="mt-6 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs uppercase tracking-[0.08em] text-ink/75"
-                    >
-                        {contents.map((item) => (
-                            <a
-                                key={item.href}
-                                href={item.href}
-                                className="py-1 hover:text-signal transition-colors duration-150"
-                            >
-                                {item.label}
-                            </a>
-                        ))}
-                    </nav>
-                )}
-
-                <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
-                    <span className="font-mono text-xs tracking-[0.08em] text-ink-soft">
-                        v{meta.version} · {meta.license}
-                    </span>
-                    <div className="flex flex-wrap items-center gap-x-6 md:ml-auto">
-                        {OUTBOUND_LINKS.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 py-2 font-medium hover:text-signal transition-colors duration-150"
-                            >
-                                {link.label}
-                                <span className="text-signal" aria-hidden="true">→</span>
-                            </a>
-                        ))}
-                    </div>
-                </div>
+                <HeadLink href={`#${INSTALL_ANCHOR[locale]}`}>{t.installGuide}</HeadLink>
+                {contents.length > 0 && <JumpRow label={t.contentsAria} items={contents} />}
+                <HeadMeta meta={`v${meta.version} · ${meta.license}`} exits={OUTBOUND_LINKS} />
             </ProjectHero>
 
             <PageSection className="py-10 md:py-12">
@@ -197,13 +156,13 @@ export function ProjectPage({ locale }: { locale: Locale }) {
             </PageSection>
 
             <PageSection className="py-12 md:py-16">
-                <div className="mx-auto max-w-4xl">
+                <DocColumn>
                     <Readme content={readme[locale]} sha={meta.sha} liftContents={contents.length > 0} />
-                </div>
+                </DocColumn>
             </PageSection>
 
             <PageSection className="py-12 md:py-16">
-                <div className="mx-auto max-w-4xl">
+                <DocColumn>
                     <h2
                         id={SKILLS_ANCHOR[locale]}
                         className="mb-4 scroll-mt-18 text-2xl font-semibold leading-snug tracking-tight md:text-3xl"
@@ -222,7 +181,7 @@ export function ProjectPage({ locale }: { locale: Locale }) {
                             />
                         ))}
                     </div>
-                </div>
+                </DocColumn>
             </PageSection>
         </ProjectShell>
     );
