@@ -1,34 +1,44 @@
 {
     "meta": {
         "title": "Healthstack",
-        "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build."
+        "description": "A specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols. Currently a private dev build.",
+        "imageAlt": "Biomarker dashboard in the Healthstack dev build"
     },
-    "hero": {
-        "title": "Protocols as code. Biology as data. AI as your cortex.",
+    "head": {
         "status": "Preview - dev build",
-        "lead": "Healthstack is a specialized IDE for lifestyle optimization on Eclipse Theia: biomarker tracking, unit conversion, and a purpose-built DSL for intervention protocols.",
-        "tags": [
-            "DSL .bio protocols",
-            "Timeline planned vs logged",
-            "Agents Cortex · Evidence",
-            "Units grammar engine",
-            "Local-first"
-        ],
-        "image": "/pictures/healthstack-dashboard.webp",
-        "imageAlt": "Biomarker dashboard in the Healthstack dev build",
-        "caption": "Thumbnail - Healthstack dev build"
+        "tryLanguage": "Try the language in your browser",
+        "contentsAria": "On this page",
+        "stack": ["Theia", "Langium", "TypeScript", "Electron"],
+        "playgroundExit": "Playground"
+    },
+    "intro": "Protocols as code, biology as data, AI as your cortex. A protocol is a `.bio` file, so it validates as you type and versions in git like any other source. Lab values are tracked against their reference ranges, a timeline lines up what was planned with what happened, and a team of agents reads all of it. Healthstack is local-first.",
+    "preview": {
+        "label": "Preview",
+        "body": "Everything on this page is the dev build: it runs, the DSL compiles, the diagnostics fire. Expect rough edges, no data guarantees, and no product promises. The screenshots are real, taken from the app as it works today. A public preview is not hosted yet; the language is, in the playground below."
+    },
+    "language": {
+        "id": "the-language",
+        "heading": "The language",
+        "short": "Language",
+        "body": "Protocols are data, not prose, and the language's type system is written in the language itself: `substance`, `intervention`, `stack`, and `protocol` are user-extendable `type` declarations in `.bio`, not hardcoded in the grammar. The editor below runs the real language server in this tab. Your data never leaves your machine. It opens with a sample that defines its own types, then extends them; the other samples cover a curated supplement library and the live interaction checker.",
+        "caption": "Live - .bio language server, running in this tab",
+        "openFullScreen": "Open full screen",
+        "iframeTitle": ".bio protocol playground",
+        "fallbackLabel": "Playground not bundled with this build",
+        "fallbackBody": "The .bio language server is not included here. Run the full build chain to embed the live editor on this page."
     },
     "sections": [
         {
+            "id": "timeline",
             "heading": "Timeline",
-            "title": "Your entire protocol history on *one axis*.",
-            "proof": "Every protocol, dose, and threshold on one axis: planned against actual, with threshold events armed and crossed, dose dots per phase, and the whole history exportable to your calendar.",
-            "stats": [
-                { "value": "6,003", "label": "events" },
-                { "value": "2", "label": "layers: planned / actual" },
-                { "value": "Armed · crossed", "label": "threshold states" },
-                { "value": "Dose dots", "label": "per phase" },
-                { "value": ".ics", "label": "export format" }
+            "short": "Timeline",
+            "body": "Every protocol, dose, and threshold on *one axis*: planned against actual, with threshold events armed and crossed, dose dots per phase, and the whole history exportable to your calendar.",
+            "specs": [
+                { "label": "Events", "value": "6,003" },
+                { "label": "Layers", "value": "Planned, actual" },
+                { "label": "Thresholds", "value": "Armed, crossed" },
+                { "label": "Doses", "value": "Dots per phase" },
+                { "label": "Export", "value": ".ics" }
             ],
             "image": "/pictures/healthstack-timeline.webp",
             "imageAlt": "Unified timeline from July to December 2026: the Metabolic Reset phases Prep, Insulin Sensitivity, Lipid Optimization and Maintenance as dashed planned bars with dose dots above solid actual bars, a red NOW marker, and daily HRV, resting heart rate, sleep and step readings below with amber threshold-armed points.",
@@ -36,15 +46,16 @@
             "caption": "Dev build - timeline"
         },
         {
+            "id": "protocol-builder",
             "heading": "Protocol builder",
-            "title": "Compose protocols like a graph, not a spreadsheet.",
-            "proof": "Substances are nodes, synergies and conflicts are edges, and tracks reach from protocol to biomarker. The graph auto-relayouts, and because a protocol is text, it versions in git.",
-            "stats": [
-                { "value": "28", "label": "entities" },
-                { "value": "Synergy · conflict", "label": "edge types" },
-                { "value": "Track", "label": "edges to biomarkers" },
-                { "value": "Auto", "label": "re-layout" },
-                { "value": "Git", "label": "versioning" }
+            "short": "Protocol builder",
+            "body": "Protocols are composed as a graph, not a spreadsheet. Substances are nodes, synergies and conflicts are edges, and tracks reach from protocol to biomarker. The graph lays itself out again as you edit, and because a protocol is text, it versions in git.",
+            "specs": [
+                { "label": "Entities", "value": "28" },
+                { "label": "Edges", "value": "Synergy, conflict" },
+                { "label": "Tracks", "value": "Protocol to biomarker" },
+                { "label": "Layout", "value": "Automatic" },
+                { "label": "Versioning", "value": "Git" }
             ],
             "image": "/pictures/healthstack-protocol-builder.webp",
             "imageAlt": "Protocol Builder graph of the Metabolic Reset protocol: the protocol node fans out to four phases, ten interventions and four substances, dotted blue track edges run to ten biomarkers, and a red dashed conflict edge links Berberine and Metformin.",
@@ -52,15 +63,16 @@
             "caption": "Dev build - protocol builder"
         },
         {
+            "id": "biomarker-tracker",
             "heading": "Biomarker tracker",
-            "title": "Every lab value, in range or out.",
-            "proof": "Each value sits against its reference range with a status: optimal, good, or out. Sparklines show the trend, and units convert as you paste, mg/dL to mmol/L and back.",
-            "stats": [
-                { "value": "14", "label": "biomarkers" },
-                { "value": "198", "label": "data points" },
-                { "value": "Optimal · good · out", "label": "status" },
-                { "value": "Sparkline", "label": "trends" },
-                { "value": "mg/dL ↔ mmol/L", "label": "units" }
+            "short": "Biomarkers",
+            "body": "Each lab value sits against its reference range with a status: optimal, good, or out. Sparklines show the trend, and units convert as you paste, mg/dL to mmol/L and back.",
+            "specs": [
+                { "label": "Biomarkers", "value": "14" },
+                { "label": "Data points", "value": "198" },
+                { "label": "Status", "value": "Optimal, good, out" },
+                { "label": "Trends", "value": "Sparklines" },
+                { "label": "Units", "value": "mg/dL ↔ mmol/L" }
             ],
             "image": "/pictures/healthstack-biomarker-tracker.webp",
             "imageAlt": "Biomarker Tracker overview table: LDL cholesterol flagged Out of Range at 104 mg/dL, followed by markers rated Good or Optimal, each with its latest value and unit, a bar showing its position in the range, a sparkline and a percentage trend.",
@@ -68,51 +80,52 @@
             "caption": "Dev build - biomarker tracker"
         },
         {
+            "id": "trends",
             "heading": "Trends",
-            "title": "See the curve, not just the number.",
-            "proof": "Multiple markers compared on one chart, range bands drawn over time, event markers where protocols started or ended, values normalized across different labs, and an AI hand-off for analysis.",
-            "stats": [
-                { "value": "Multi-marker", "label": "comparison" },
-                { "value": "Range bands", "label": "over time" },
-                { "value": "Event", "label": "markers" },
-                { "value": "0-100%", "label": "normalized" },
-                { "value": "AI", "label": "analysis hand-off" }
+            "short": "Trends",
+            "body": "The curve, not just the number: several markers compared on one chart, range bands drawn over time, event markers where protocols started or ended, values normalized across different labs, and a hand-off to the agents for analysis.",
+            "specs": [
+                { "label": "Comparison", "value": "Multi-marker" },
+                { "label": "Ranges", "value": "Bands over time" },
+                { "label": "Events", "value": "Protocol start, end" },
+                { "label": "Scale", "value": "Normalized 0-100%" },
+                { "label": "Analysis", "value": "Agent hand-off" }
             ],
             "image": "/pictures/healthstack-trends.webp",
             "imageAlt": "Two stacked trend charts on a shared April 2025 to October 2026 timeline: ApoB falling to 84 mg/dL and LDL cholesterol to 104 mg/dL toward shaded reference and optimal bands, both marked improving.",
             "placeholder": "Trends",
             "caption": "Dev build - trends"
-        },
-        {
-            "heading": "AI agents",
-            "title": "Cortex orchestrates *your Healthstack*.",
-            "proof": "Agents with roles: Cortex coordinates, Evidence searches PubMed through MCP, BiomarkerAnalyst reads labs, ProtocolPlanner drafts .bio files. Bring your own key, multi-provider.",
-            "stats": [
-                { "value": "@Cortex", "label": "orchestrator" },
-                { "value": "@Evidence", "label": "MCP · PubMed search" },
-                { "value": "@BiomarkerAnalyst", "label": "lab readings" },
-                { "value": "@ProtocolPlanner", "label": ".bio drafts" },
-                { "value": "BYO key", "label": "multi-provider" }
-            ],
-            "image": "/pictures/healthstack-ai-agents.webp",
-            "imageAlt": "Ask Cortex chat panel beside the Protocol Builder graph, with suggested prompts addressed to @BiomarkerAnalyst, @Evidence and @ProtocolPlanner and a note that agent tool calls ask for confirmation first.",
-            "placeholder": "Cortex",
-            "caption": "Dev build - Cortex chat"
         }
     ],
-    "dsl": {
-        "heading": "The DSL",
-        "body": "Protocols are data, not prose, and the language's type system is written in the language itself: `substance`, `intervention`, `stack`, and `protocol` are user-extendable `type` declarations in `.bio`, not hardcoded in the grammar. The editor below runs the real language server in this tab. Your data never leaves your machine. It opens with a sample that defines its own types, then extends them; the other samples cover a curated supplement library and the live interaction checker.",
-        "label": "Playground · .bio language server, runs in your browser",
-        "openFullScreen": "Open full screen · /playground/",
-        "iframeTitle": ".bio protocol playground",
-        "fallbackLabel": "Playground not bundled with this build",
-        "fallbackBody": "The .bio language server is not included here. Run the full build chain to embed the live editor on this page."
-    },
-    "status": {
-        "heading": "Status",
-        "title": "Preview build",
-        "body": "Everything on this page is the dev build: it runs, the DSL compiles, the diagnostics fire. Expect rough edges, no data guarantees, and no product promises. The screenshots are real, taken from the app as it works today. A public preview is not hosted yet; when it is, it will appear here.",
-        "tags": ["Theia", "Langium", "TypeScript", "Electron"]
+    "agents": {
+        "id": "ai-agents",
+        "heading": "AI agents",
+        "short": "Agents",
+        "body": "Cortex orchestrates *your Healthstack*: it takes each request and hands sub-questions to three specialists. The agents work on your biomarker database and your `.bio` files, and tool calls that change data ask for approval first. Bring your own key for the model provider you use.",
+        "list": [
+            {
+                "name": "@Cortex",
+                "role": "Orchestrator",
+                "description": "The default agent. Routes each request, records data, drafts protocols, and delegates to the specialists."
+            },
+            {
+                "name": "@Evidence",
+                "role": "Literature · MCP",
+                "description": "Clinical reference grounded in the literature, which it searches through [med-research-mcp](route:project_med_research). Also interprets biomarkers and checks interactions."
+            },
+            {
+                "name": "@BiomarkerAnalyst",
+                "role": "Lab readings",
+                "description": "Reads the biomarker database and summarizes trends and out-of-range markers."
+            },
+            {
+                "name": "@ProtocolPlanner",
+                "role": ".bio drafts",
+                "description": "Composes valid `.bio` protocol files for you to review and approve."
+            }
+        ],
+        "image": "/pictures/healthstack-ai-agents.webp",
+        "imageAlt": "Ask Cortex chat panel beside the Protocol Builder graph, with suggested prompts addressed to @BiomarkerAnalyst, @Evidence and @ProtocolPlanner and a note that agent tool calls ask for confirmation first.",
+        "caption": "Dev build - Cortex chat"
     }
 }

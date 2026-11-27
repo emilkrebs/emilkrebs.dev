@@ -1,20 +1,52 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { existsSync } from "fs";
 import { join } from "path";
 import content from "../../content/healthstack.json";
 import { PlaceholderPlate } from "../../components/placeholder-plate";
-import { PageSection, Plate, ProjectHero, ProjectShell } from "../../components/project-layout";
-import { Tag } from "../../components/tag";
+import {
+    HeadLink,
+    HeadMeta,
+    JumpRow,
+    PageSection,
+    Plate,
+    PROSE_MEASURE,
+    ProjectHero,
+    ProjectShell,
+} from "../../components/project-layout";
+import { LINK_CLASS } from "../../components/readme";
+import { PLAYGROUND_PATH } from "../../lib/constants";
+import { copy } from "../../lib/i18n";
 import { FULL_WIDTH_SIZES } from "../../lib/image-sizes";
 import { pageMetadata } from "../../lib/metadata";
+import { ROUTES, routePath, type RouteKey } from "../../lib/routes";
 
-interface FeatureSection {
+/**
+ * The Healthstack page, set in the same record grammar as /med-research-mcp
+ * (DESIGN.md > Pages): a head with the mark beside the name, the lead shared
+ * with the landing card, one block-link, the jump row and the metadata line
+ * with its exit; then one document, its h2s opening hairline-ruled sections.
+ * Headings, rules, spec tables, cards and the evidence (the live playground
+ * and the dev-build screenshots) all run the section's full measure, aligned
+ * with each other; only running prose stops at the prose measure. The agents
+ * close the document as a card group, as the skills close the record page.
+ */
+
+interface Spec {
+    label: string;
+    value: string;
+}
+
+interface CapabilitySection {
+    /** Heading slug: the jump row's target. */
+    id: string;
     heading: string;
-    /** `*accent*` renders in the serif italic. */
-    title: string;
-    proof: string;
-    stats: { value: string; label: string }[];
+    /** The jump row's label. */
+    short: string;
+    /** `*accent*` renders in the serif italic, `` `code` `` as inline code. */
+    body: string;
+    specs: Spec[];
     /** Screenshot path; until one exists, `placeholder` labels the pending plate. */
     image?: string;
     /** What the screenshot shows; required once `image` is set. */
@@ -23,39 +55,63 @@ interface FeatureSection {
     caption: string;
 }
 
+interface Agent {
+    name: string;
+    role: string;
+    /** Also takes `[label](route:<RouteKey>)` links. */
+    description: string;
+}
+
 interface HealthstackContent {
-    meta: { title: string; description: string };
-    hero: {
-        title: string;
+    meta: { title: string; description: string; imageAlt: string };
+    head: {
         status: string;
-        lead: string;
-        tags: string[];
-        image: string;
-        imageAlt: string;
-        caption: string;
+        tryLanguage: string;
+        contentsAria: string;
+        stack: string[];
+        playgroundExit: string;
     };
-    sections: FeatureSection[];
-    dsl: {
-        /** `` `code` `` renders as inline code. */
-        body: string;
+    intro: string;
+    preview: { label: string; body: string };
+    language: {
+        id: string;
         heading: string;
-        label: string;
+        short: string;
+        body: string;
+        caption: string;
         openFullScreen: string;
         iframeTitle: string;
         fallbackLabel: string;
         fallbackBody: string;
     };
-    status: { heading: string; title: string; body: string; tags: string[] };
+    sections: CapabilitySection[];
+    agents: {
+        id: string;
+        heading: string;
+        short: string;
+        body: string;
+        list: Agent[];
+        image: string;
+        imageAlt: string;
+        caption: string;
+    };
 }
 
 const page: HealthstackContent = content;
 
-// JPEG copy of the dashboard screenshot: link unfurlers do not reliably render WebP.
+/** The one-sentence lead, shared with the landing card so they cannot drift. */
+function healthstackLead(): string {
+    const flagship = copy.en.flagships.find((candidate) => candidate.id === "healthstack");
+    if (!flagship) throw new Error("Missing landing copy for flagship \"healthstack\"");
+    return flagship.description;
+}
+
+// JPEG copy of the landing plate: link unfurlers do not reliably render WebP.
 const OG_IMAGE = {
     url: "/og/healthstack.jpg",
     width: 1280,
     height: 800,
-    alt: page.hero.imageAlt,
+    alt: page.meta.imageAlt,
 };
 
 export const metadata: Metadata = pageMetadata({
@@ -65,8 +121,6 @@ export const metadata: Metadata = pageMetadata({
     image: OG_IMAGE,
 });
 
-const PLAYGROUND_URL = process.env.NEXT_PUBLIC_PLAYGROUND_URL ?? "";
-
 /**
  * In development the playground runs from the Vite dev server (hot reload)
  * and is assumed to be up. In a static build the bundled playground exists
@@ -74,28 +128,79 @@ const PLAYGROUND_URL = process.env.NEXT_PUBLIC_PLAYGROUND_URL ?? "";
  * missing, the section renders an honest fallback instead of a dead iframe.
  */
 function playgroundIsBuilt(): boolean {
-    if (PLAYGROUND_URL) return true;
+    if (process.env.NEXT_PUBLIC_PLAYGROUND_URL) return true;
     return existsSync(join(process.cwd(), "public", "playground", "index.html"));
 }
 
-/** Plain text with `*accent*` in the serif italic and `` `code` `` as inline code. */
+function isRouteKey(key: string): key is RouteKey {
+    return key in ROUTES;
+}
+
+/**
+ * Authored copy in the README's inline grammar: `*accent*` in the serif
+ * italic, `` `code` `` as the code chip, `[label](route:<key>)` as a link to
+ * a page of this site, resolved through the route table.
+ */
 function InlineText({ text }: { text: string }) {
-    return text.split(/(\*[^*]+\*|`[^`]+`)/).map((part, i) => {
+    return text.split(/(\*[^*]+\*|`[^`]+`|\[[^\]]+\]\(route:[a-z_]+\))/).map((part, i) => {
         if (part.length > 2 && part.startsWith("*") && part.endsWith("*")) {
-            return <em key={i} className="font-serif italic font-normal">{part.slice(1, -1)}</em>;
+            return <em key={i} className="font-serif italic">{part.slice(1, -1)}</em>;
         }
         if (part.length > 2 && part.startsWith("`") && part.endsWith("`")) {
-            return <code key={i} className="font-mono text-sm">{part.slice(1, -1)}</code>;
+            return (
+                <code key={i} className="bg-paper-deep font-mono text-[0.85em] px-1.5 py-0.5">
+                    {part.slice(1, -1)}
+                </code>
+            );
+        }
+        const link = /^\[([^\]]+)\]\(route:([a-z_]+)\)$/.exec(part);
+        if (link) {
+            const [, label, route] = link;
+            if (!isRouteKey(route)) throw new Error(`Unknown route "${route}" in Healthstack copy`);
+            return (
+                <Link key={i} href={routePath(route)} className={LINK_CLASS}>
+                    {label}
+                </Link>
+            );
         }
         return part;
     });
 }
 
-function SectionHeading({ children }: { children: string }) {
+/** An h2 set like the README's on /med-research-mcp: it opens a hairline-ruled section. */
+function DocHeading({ id, children }: { id: string; children: string }) {
     return (
-        <h2 className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft mb-10">
+        <h2
+            id={id}
+            className="mt-12 mb-4 scroll-mt-18 border-t border-hairline pt-6 text-2xl font-semibold leading-snug tracking-tight md:mt-16 md:text-3xl"
+        >
             {children}
         </h2>
+    );
+}
+
+/**
+ * A capability's facts in the README table's grammar: mono labels as in its
+ * head row, body-set values as in its cells, hairline rules, paper ground.
+ */
+function SpecTable({ specs }: { specs: Spec[] }) {
+    const fill = (6 - (specs.length % 6)) % 6;
+    return (
+        <dl className="mt-6 grid grid-cols-2 gap-px border border-hairline bg-hairline md:grid-cols-3">
+            {specs.map((spec) => (
+                <div key={spec.label} className="min-w-0 bg-paper px-4 py-3">
+                    <dt className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                        {spec.label}
+                    </dt>
+                    <dd className="mt-1 text-sm leading-relaxed [overflow-wrap:anywhere]">
+                        {spec.value}
+                    </dd>
+                </div>
+            ))}
+            {Array.from({ length: fill }).map((_, i) => (
+                <div key={`fill-${i}`} aria-hidden="true" className="bg-paper" />
+            ))}
+        </dl>
     );
 }
 
@@ -106,163 +211,161 @@ interface ShotProps {
     placeholder?: string;
 }
 
-function Shot({ src, alt, caption, placeholder }: ShotProps) {
+/** A body paragraph: full-measure left edge, stopped at the prose measure. */
+function Prose({ text, className = "" }: { text: string; className?: string }) {
     return (
-        <Plate caption={caption} className="aspect-16/10 bg-paper">
-            {src ? (
-                <Image
-                    src={src}
-                    alt={alt}
-                    fill
-                    sizes={FULL_WIDTH_SIZES}
-                    className="object-cover object-center"
-                />
-            ) : (
-                <PlaceholderPlate label={placeholder ?? ""} />
-            )}
-        </Plate>
+        <p className={className ? `leading-relaxed ${PROSE_MEASURE} ${className}` : `leading-relaxed ${PROSE_MEASURE}`}>
+            <InlineText text={text} />
+        </p>
     );
 }
 
-function StatTable({ stats }: { stats: { value: string; label: string }[] }) {
-    const fill = (6 - (stats.length % 6)) % 6;
+/** A dev-build screenshot on the full measure, so the UI keeps a legible size. */
+function Shot({ src, alt, caption, placeholder }: ShotProps) {
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-px bg-hairline border border-hairline">
-            {stats.map((stat) => (
-                <div key={stat.label} className="min-w-0 bg-paper-deep p-4 [overflow-wrap:anywhere]">
-                    <div className="font-mono text-sm md:text-base text-ink leading-snug">
-                        {stat.value}
-                    </div>
-                    <div className="mt-1 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
-                        {stat.label}
-                    </div>
-                </div>
-            ))}
-            {Array.from({ length: fill }).map((_, i) => (
-                <div
-                    key={`fill-${i}`}
-                    aria-hidden="true"
-                    className="bg-paper-deep p-4"
-                />
-            ))}
+        <div className="mt-10">
+            <Plate caption={caption} className="aspect-16/10 bg-paper">
+                {src ? (
+                    <Image
+                        src={src}
+                        alt={alt}
+                        fill
+                        sizes={FULL_WIDTH_SIZES}
+                        className="object-cover object-center"
+                    />
+                ) : (
+                    <PlaceholderPlate label={placeholder ?? ""} />
+                )}
+            </Plate>
         </div>
     );
 }
 
-function FeatureSection({ section }: { section: FeatureSection }) {
+function Capability({ section }: { section: CapabilitySection }) {
     return (
-        <PageSection className="py-16 md:py-20">
-            <SectionHeading>{section.heading}</SectionHeading>
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
-                <div className="md:col-span-5 flex flex-col">
-                    <h3 className="text-2xl md:text-3xl font-semibold tracking-tight leading-snug">
-                        <InlineText text={section.title} />
-                    </h3>
-                    <p className="mt-4 text-base leading-relaxed text-ink/85">
-                        {section.proof}
-                    </p>
-                </div>
-                <div className="md:col-span-7">
-                    <StatTable stats={section.stats} />
-                </div>
+        <>
+            <DocHeading id={section.id}>{section.heading}</DocHeading>
+            <Prose text={section.body} />
+            <SpecTable specs={section.specs} />
+            <Shot
+                src={section.image}
+                alt={section.imageAlt ?? `${section.heading} in the Healthstack dev build`}
+                caption={section.caption}
+                placeholder={section.placeholder}
+            />
+        </>
+    );
+}
+
+/** The live editor: same-origin, lazy, no consent gate (DESIGN.md > Pages > /playground). */
+function Playground({ built }: { built: boolean }) {
+    const { language } = page;
+    return (
+        <div className="mt-10">
+            <Plate
+                caption={language.caption}
+                captionAbove
+                action={
+                    built && (
+                        // A separate Vite app, not a Next.js route: a plain anchor, no client routing.
+                        <a href={PLAYGROUND_PATH} className="hover:text-signal transition-colors duration-150">
+                            {language.openFullScreen} <span className="text-signal" aria-hidden="true">→</span>
+                        </a>
+                    )
+                }
+                className="h-120 bg-paper md:h-168"
+            >
+                {built ? (
+                    <iframe
+                        src={`${PLAYGROUND_PATH}?sample=type-system`}
+                        title={language.iframeTitle}
+                        loading="lazy"
+                        className="absolute inset-0 block size-full"
+                    />
+                ) : (
+                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center">
+                        <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                            {language.fallbackLabel}
+                        </p>
+                        <p className="max-w-[52ch] text-sm leading-relaxed text-ink/85">
+                            {language.fallbackBody}
+                        </p>
+                    </div>
+                )}
+            </Plate>
+        </div>
+    );
+}
+
+/** A hairline card on paper, the anatomy of the skill cards on /med-research-mcp. */
+function AgentCard({ agent }: { agent: Agent }) {
+    return (
+        <article className="flex h-full flex-col border border-hairline">
+            <div className="flex-1 p-5">
+                <h3 className="text-base font-semibold [overflow-wrap:anywhere]">{agent.name}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink/85">
+                    <InlineText text={agent.description} />
+                </p>
             </div>
-            <div className="mt-8">
-                <Shot
-                    src={section.image}
-                    alt={section.imageAlt ?? `${section.heading} in the Healthstack dev build`}
-                    caption={section.caption}
-                    placeholder={section.placeholder}
-                />
+            <div className="border-t border-hairline px-5 py-3 font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
+                {agent.role}
             </div>
-        </PageSection>
+        </article>
     );
 }
 
 export default function HealthstackPage() {
-    const { hero, dsl, status } = page;
+    const { head, preview, language, sections, agents } = page;
+    const lead = healthstackLead();
     const playgroundBuilt = playgroundIsBuilt();
+    const contents = [language, ...sections, agents].map((section) => ({
+        href: `#${section.id}`,
+        label: section.short,
+    }));
     return (
         <ProjectShell
             route="healthstack"
             name={page.meta.title}
-            description={page.meta.description}
-            image={hero.image}
+            description={lead}
+            image="/pictures/healthstack-dashboard.webp"
             analytics
         >
-            <ProjectHero title={hero.title} status={hero.status} lead={hero.lead}>
-                <div className="mt-8 flex flex-wrap gap-2">
-                    {hero.tags.map((tag) => (
-                        <Tag key={tag}>{tag}</Tag>
-                    ))}
-                </div>
-                <div className="mt-10 md:mt-14">
-                    <Shot src={hero.image} alt={hero.imageAlt} caption={hero.caption} />
-                </div>
+            <ProjectHero title={page.meta.title} mark="/pictures/healthstack.svg" status={head.status} lead={lead}>
+                <HeadLink href={`#${language.id}`}>{head.tryLanguage}</HeadLink>
+                <JumpRow label={head.contentsAria} items={contents} />
+                <HeadMeta
+                    meta={head.stack.join(" · ")}
+                    exits={playgroundBuilt ? [{ label: head.playgroundExit, href: PLAYGROUND_PATH }] : []}
+                />
             </ProjectHero>
 
-            <PageSection id="dsl" className="py-16 md:py-20 scroll-mt-16">
-                <SectionHeading>{dsl.heading}</SectionHeading>
-                <p className="text-base md:text-lg leading-relaxed max-w-[62ch] mb-10">
-                    <InlineText text={dsl.body} />
-                </p>
-                <div className="bg-paper-deep border border-hairline p-8 md:p-10">
-                    <div className="flex flex-wrap items-center justify-between gap-2 pb-6">
-                        <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink/75">
-                            <span
-                                className="bg-signal w-1.5 h-1.5 shrink-0"
-                                aria-hidden="true"
-                            />
-                            {dsl.label}
-                        </div>
-                        {playgroundBuilt && (
-                            // A separate Vite app, not a Next.js route: a plain anchor, no client routing.
-                            <a
-                                href={`${PLAYGROUND_URL}/playground/`}
-                                className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft hover:text-ink transition-colors duration-150"
-                            >
-                                {dsl.openFullScreen}
-                            </a>
-                        )}
-                    </div>
-                    {playgroundBuilt ? (
-                        <iframe
-                            src={`${PLAYGROUND_URL}/playground/?sample=type-system`}
-                            title={dsl.iframeTitle}
-                            loading="lazy"
-                            className="block w-full h-120 md:h-160 border border-hairline bg-paper"
-                        />
-                    ) : (
-                        <div className="flex h-120 md:h-160 flex-col items-center justify-center gap-4 border border-hairline bg-paper px-6 text-center">
-                            <p className="font-mono text-xs uppercase tracking-[0.08em] text-ink-soft">
-                                {dsl.fallbackLabel}
-                            </p>
-                            <p className="max-w-[52ch] text-sm leading-relaxed text-ink/85">
-                                {dsl.fallbackBody}
-                            </p>
-                        </div>
-                    )}
-                </div>
-            </PageSection>
-
-            {page.sections.map((section) => (
-                <FeatureSection key={section.heading} section={section} />
-            ))}
-
-            <PageSection className="py-16 md:py-24">
-                <SectionHeading>{status.heading}</SectionHeading>
-                <div className="bg-paper-deep border border-hairline p-8 md:p-10">
-                    <h3 className="text-2xl md:text-3xl font-semibold tracking-tight">
-                        {status.title}
-                    </h3>
-                    <p className="mt-4 text-base leading-relaxed text-ink/85 max-w-[62ch]">
-                        {status.body}
+            <PageSection className="pt-12 pb-16 md:pt-16 md:pb-24">
+                <Prose text={page.intro} className="mb-6" />
+                {/* Set like the README's [!IMPORTANT] alert on /med-research-mcp. */}
+                <aside className="border border-hairline bg-paper-deep p-4 md:p-5">
+                    <p className="mb-2 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink">
+                        <span className="size-1.5 bg-signal" aria-hidden="true" />
+                        {preview.label}
                     </p>
-                    <div className="mt-6 flex flex-wrap gap-2">
-                        {status.tags.map((tag) => (
-                            <Tag key={tag}>{tag}</Tag>
-                        ))}
-                    </div>
+                    <Prose text={preview.body} />
+                </aside>
+
+                <DocHeading id={language.id}>{language.heading}</DocHeading>
+                <Prose text={language.body} />
+                <Playground built={playgroundBuilt} />
+
+                {sections.map((section) => (
+                    <Capability key={section.id} section={section} />
+                ))}
+
+                <DocHeading id={agents.id}>{agents.heading}</DocHeading>
+                <Prose text={agents.body} />
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                    {agents.list.map((agent) => (
+                        <AgentCard key={agent.name} agent={agent} />
+                    ))}
                 </div>
+                <Shot src={agents.image} alt={agents.imageAlt} caption={agents.caption} />
             </PageSection>
         </ProjectShell>
     );

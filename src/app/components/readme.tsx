@@ -2,6 +2,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { rehypeProjectDoc } from "../lib/rehype-project-doc";
+import { PROSE_MEASURE } from "./project-layout";
 import { SmartLink } from "./smart-link";
 
 /**
@@ -50,7 +51,8 @@ export function parseSkill(content: string): { description: string; body: string
     return { description, body: text.slice(match[0].length) };
 }
 
-const LINK_CLASS = "underline decoration-hairline underline-offset-4 hover:text-signal hover:decoration-signal transition-colors duration-150 [overflow-wrap:anywhere]";
+/** The document link style, shared with the authored record copy on /healthstack. */
+export const LINK_CLASS = "underline decoration-hairline underline-offset-4 hover:text-signal hover:decoration-signal transition-colors duration-150 [overflow-wrap:anywhere]";
 
 /** Shared by both documents; the plugin decides what survives and how. */
 const components = {
@@ -85,16 +87,16 @@ const components = {
                 </p>
             );
         }
-        return <p className="mb-4 leading-relaxed">{children}</p>;
+        return <p className={`mb-4 leading-relaxed ${PROSE_MEASURE}`}>{children}</p>;
     },
     a: ({ children, href }: { children?: React.ReactNode; href?: string }) => (
         <SmartLink href={href ?? ""} className={LINK_CLASS}>{children}</SmartLink>
     ),
     ul: ({ children }: { children?: React.ReactNode }) => (
-        <ul className="pl-6 mb-4 list-disc space-y-1">{children}</ul>
+        <ul className={`pl-6 mb-4 list-disc space-y-1 ${PROSE_MEASURE}`}>{children}</ul>
     ),
     ol: ({ children }: { children?: React.ReactNode }) => (
-        <ol className="pl-6 mb-4 list-decimal space-y-1">{children}</ol>
+        <ol className={`pl-6 mb-4 list-decimal space-y-1 ${PROSE_MEASURE}`}>{children}</ol>
     ),
     li: ({ children }: { children?: React.ReactNode }) => <li className="leading-relaxed">{children}</li>,
     strong: ({ children }: { children?: React.ReactNode }) => <strong className="font-semibold">{children}</strong>,
@@ -110,7 +112,7 @@ const components = {
         className?.includes("readme-alert") ? (
             <aside className="mb-6 border border-hairline bg-paper-deep p-4 md:p-5">{children}</aside>
         ) : (
-            <blockquote className="mb-4 border-l-2 border-ink/30 pl-4 text-ink/85">{children}</blockquote>
+            <blockquote className={`mb-4 border-l-2 border-ink/30 pl-4 text-ink/85 ${PROSE_MEASURE}`}>{children}</blockquote>
         ),
     hr: () => <hr className="my-8 border-hairline" />,
     table: ({ children }: { children?: React.ReactNode }) => (
