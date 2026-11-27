@@ -50,7 +50,8 @@ export function parseSkill(content: string): { description: string; body: string
     return { description, body: text.slice(match[0].length) };
 }
 
-const LINK_CLASS = "underline decoration-hairline underline-offset-4 hover:text-signal hover:decoration-signal transition-colors duration-150 [overflow-wrap:anywhere]";
+/** The document link style, shared with the authored record copy on /healthstack. */
+export const LINK_CLASS = "underline decoration-hairline underline-offset-4 hover:text-signal hover:decoration-signal transition-colors duration-150 [overflow-wrap:anywhere]";
 
 /** Shared by both documents; the plugin decides what survives and how. */
 const components = {
