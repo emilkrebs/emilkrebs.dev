@@ -6,12 +6,12 @@ import { join } from "path";
 import content from "../../content/healthstack.json";
 import { PlaceholderPlate } from "../../components/placeholder-plate";
 import {
-    DocColumn,
     HeadLink,
     HeadMeta,
     JumpRow,
     PageSection,
     Plate,
+    PROSE_MEASURE,
     ProjectHero,
     ProjectShell,
 } from "../../components/project-layout";
@@ -26,9 +26,10 @@ import { ROUTES, routePath, type RouteKey } from "../../lib/routes";
  * The Healthstack page, set in the same record grammar as /med-research-mcp
  * (DESIGN.md > Pages): a head with the mark beside the name, the lead shared
  * with the landing card, one block-link, the jump row and the metadata line
- * with its exit; then one document in the centered column, its h2s opening
- * hairline-ruled sections, with the evidence (the live playground and the
- * dev-build screenshots) set as wide figures over the column. The agents
+ * with its exit; then one document, its h2s opening hairline-ruled sections.
+ * Headings, rules, spec tables, cards and the evidence (the live playground
+ * and the dev-build screenshots) all run the section's full measure, aligned
+ * with each other; only running prose stops at the prose measure. The agents
  * close the document as a card group, as the skills close the record page.
  */
 
@@ -210,7 +211,16 @@ interface ShotProps {
     placeholder?: string;
 }
 
-/** A dev-build screenshot, set wide over the column so the UI keeps a legible size. */
+/** A body paragraph: full-measure left edge, stopped at the prose measure. */
+function Prose({ text, className = "" }: { text: string; className?: string }) {
+    return (
+        <p className={className ? `leading-relaxed ${PROSE_MEASURE} ${className}` : `leading-relaxed ${PROSE_MEASURE}`}>
+            <InlineText text={text} />
+        </p>
+    );
+}
+
+/** A dev-build screenshot on the full measure, so the UI keeps a legible size. */
 function Shot({ src, alt, caption, placeholder }: ShotProps) {
     return (
         <div className="mt-10">
@@ -234,13 +244,9 @@ function Shot({ src, alt, caption, placeholder }: ShotProps) {
 function Capability({ section }: { section: CapabilitySection }) {
     return (
         <>
-            <DocColumn>
-                <DocHeading id={section.id}>{section.heading}</DocHeading>
-                <p className="leading-relaxed">
-                    <InlineText text={section.body} />
-                </p>
-                <SpecTable specs={section.specs} />
-            </DocColumn>
+            <DocHeading id={section.id}>{section.heading}</DocHeading>
+            <Prose text={section.body} />
+            <SpecTable specs={section.specs} />
             <Shot
                 src={section.image}
                 alt={section.imageAlt ?? `${section.heading} in the Healthstack dev build`}
@@ -334,41 +340,31 @@ export default function HealthstackPage() {
             </ProjectHero>
 
             <PageSection className="pt-12 pb-16 md:pt-16 md:pb-24">
-                <DocColumn>
-                    <p className="mb-6 leading-relaxed">
-                        <InlineText text={page.intro} />
+                <Prose text={page.intro} className="mb-6" />
+                {/* Set like the README's [!IMPORTANT] alert on /med-research-mcp. */}
+                <aside className="border border-hairline bg-paper-deep p-4 md:p-5">
+                    <p className="mb-2 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink">
+                        <span className="size-1.5 bg-signal" aria-hidden="true" />
+                        {preview.label}
                     </p>
-                    {/* Set like the README's [!IMPORTANT] alert on /med-research-mcp. */}
-                    <aside className="border border-hairline bg-paper-deep p-4 md:p-5">
-                        <p className="mb-2 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.08em] text-ink">
-                            <span className="size-1.5 bg-signal" aria-hidden="true" />
-                            {preview.label}
-                        </p>
-                        <p className="leading-relaxed">{preview.body}</p>
-                    </aside>
+                    <Prose text={preview.body} />
+                </aside>
 
-                    <DocHeading id={language.id}>{language.heading}</DocHeading>
-                    <p className="leading-relaxed">
-                        <InlineText text={language.body} />
-                    </p>
-                </DocColumn>
+                <DocHeading id={language.id}>{language.heading}</DocHeading>
+                <Prose text={language.body} />
                 <Playground built={playgroundBuilt} />
 
                 {sections.map((section) => (
                     <Capability key={section.id} section={section} />
                 ))}
 
-                <DocColumn>
-                    <DocHeading id={agents.id}>{agents.heading}</DocHeading>
-                    <p className="leading-relaxed">
-                        <InlineText text={agents.body} />
-                    </p>
-                    <div className="mt-8 grid gap-4 md:grid-cols-2">
-                        {agents.list.map((agent) => (
-                            <AgentCard key={agent.name} agent={agent} />
-                        ))}
-                    </div>
-                </DocColumn>
+                <DocHeading id={agents.id}>{agents.heading}</DocHeading>
+                <Prose text={agents.body} />
+                <div className="mt-8 grid gap-4 md:grid-cols-2">
+                    {agents.list.map((agent) => (
+                        <AgentCard key={agent.name} agent={agent} />
+                    ))}
+                </div>
                 <Shot src={agents.image} alt={agents.imageAlt} caption={agents.caption} />
             </PageSection>
         </ProjectShell>

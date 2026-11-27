@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { ProjectDemo } from "./project-demo";
-import { DocColumn, HeadLink, HeadMeta, JumpRow, PageSection, ProjectHero, ProjectShell, type HeadExit } from "./project-layout";
+import { HeadLink, HeadMeta, JumpRow, PageSection, ProjectHero, ProjectShell, type HeadExit } from "./project-layout";
 import { parseSkill, parseContents, Readme, SkillBody } from "./readme";
 import { copy, type Locale, type ProjectPageCopy } from "../lib/i18n";
 import type { OgImage } from "../lib/metadata";
@@ -156,32 +156,28 @@ export function ProjectPage({ locale }: { locale: Locale }) {
             </PageSection>
 
             <PageSection className="py-12 md:py-16">
-                <DocColumn>
-                    <Readme content={readme[locale]} sha={meta.sha} liftContents={contents.length > 0} />
-                </DocColumn>
+                <Readme content={readme[locale]} sha={meta.sha} liftContents={contents.length > 0} />
             </PageSection>
 
             <PageSection className="py-12 md:py-16">
-                <DocColumn>
-                    <h2
-                        id={SKILLS_ANCHOR[locale]}
-                        className="mb-4 scroll-mt-18 text-2xl font-semibold leading-snug tracking-tight md:text-3xl"
-                    >
-                        {t.skillsHeading}
-                    </h2>
-                    <p className="max-w-[62ch] text-base leading-relaxed md:text-lg">{t.skillsLead}</p>
-                    <div className="mt-8 grid gap-4 md:grid-cols-3">
-                        {SKILL_SLUGS.map((slug) => (
-                            <SkillCard
-                                key={slug}
-                                slug={slug}
-                                description={t.skills.find((skill) => skill.id === slug)?.description ?? ""}
-                                t={t}
-                                locale={locale}
-                            />
-                        ))}
-                    </div>
-                </DocColumn>
+                <h2
+                    id={SKILLS_ANCHOR[locale]}
+                    className="mb-4 scroll-mt-18 text-2xl font-semibold leading-snug tracking-tight md:text-3xl"
+                >
+                    {t.skillsHeading}
+                </h2>
+                <p className="max-w-[62ch] text-base leading-relaxed md:text-lg">{t.skillsLead}</p>
+                <div className="mt-8 grid gap-4 md:grid-cols-3">
+                    {SKILL_SLUGS.map((slug) => (
+                        <SkillCard
+                            key={slug}
+                            slug={slug}
+                            description={t.skills.find((skill) => skill.id === slug)?.description ?? ""}
+                            t={t}
+                            locale={locale}
+                        />
+                    ))}
+                </div>
             </PageSection>
         </ProjectShell>
     );

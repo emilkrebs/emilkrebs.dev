@@ -10,7 +10,7 @@ import { projectPageSchema } from "../lib/structured-data";
 /**
  * The parts /healthstack and /med-research-mcp set the same way: the page
  * shell, the head and its rows (block-link, jump row, metadata line with the
- * exits), the hairline section, the document column and the captioned plate.
+ * exits), the hairline section, the prose measure and the captioned plate.
  * What is a page's own (the playground, spec tables and agent cards on
  * /healthstack, the README and skill cards on /med-research-mcp) stays in
  * that page.
@@ -146,10 +146,12 @@ export function HeadMeta({ meta, exits }: { meta: string; exits: HeadExit[] }) {
     );
 }
 
-/** The document column: prose and cards sit here, wide figures break out to the section's full measure. */
-export function DocColumn({ className = "", children }: { className?: string; children: ReactNode }) {
-    return <div className={className ? `mx-auto max-w-4xl ${className}` : "mx-auto max-w-4xl"}>{children}</div>;
-}
+/**
+ * The record pages' prose measure. Everything on a record page runs the
+ * section's full measure, aligned with the plates; only running prose
+ * (paragraphs, lists) stops here, so a line stays readable.
+ */
+export const PROSE_MEASURE = "max-w-4xl";
 
 interface PageSectionProps {
     id?: string;
